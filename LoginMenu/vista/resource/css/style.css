@@ -1,0 +1,124 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body{
+    font-family: "Roboto", sans-serif !important;
+    font-size: 16px !important;
+    color:#000;
+    background: #fff;
+
+}
+.checked {
+    color: orange;
+}
+.labelI{
+    color:black;
+    text-align: center;
+    padding: 10px;
+    margin: 10px auto;
+}
+.Itinerario-page{
+    background: transparent;
+}
+.form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+    opacity: 0.5
+}
+.titulo{
+    text-align: center;
+    color: #fff;
+}
+.form input[type="text"], .form input[type="checkbox"] {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    max-width: 76px;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 16px;
+}
+.border-container{
+    border: 1px solid #ddd;
+    padding: 18px;
+    margin-bottom: 18px;
+}
+.margen-izquierdo{
+    min-height: 1px;
+    margin-left: 15px;
+}
+.btn-group{
+    display: block !important;
+}
+.btn-group-ver input[type="button"]{
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    color: #000;
+    max-width: 600px;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border-radius: 16px;
+    opacity: 0.5;
+    overflow: auto;
+
+}
+.btn-group-ver input[type="button"]:hover{
+    opacity: 1;
+    
+}
+.active:hover{
+    background-color: #4CAF50 !important;
+}
+.back:hover{
+    background-color: #f03 !important;
+}
+.warning:hover{
+    background-color: #ffc107 !important;
+}
+.info{
+    background-color: #117a8b !important;
+}
+.form input[type="button"]:hover{
+    opacity: 1;
+}
+.user{
+    min-width: 300px;
+    width: 100%;
+    display: inline-block;
+    float: right;
+}
+.user a, .user h4 {
+    display: inline-block;
+    float: right;
+    color: rgba(255,255,255,.5);
+}
+/*Footer*/
+.footer{
+    background-color: #e9ecef; 
+    font-size: 12px;
+}
+.footer ul li {
+    text-decoration: none;
+    list-style-type: none;
+}
+
+
+
+
+
+
+
