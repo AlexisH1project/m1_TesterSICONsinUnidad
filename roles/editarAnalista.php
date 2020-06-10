@@ -455,11 +455,11 @@
 					<table class="table table-hover table-white">
 						<?php 
 							include "configuracion.php";
-
+							$existenD =0;
 							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
-
+/*
 								for($i=47; $i<=117; $i++){
 									if($ver[$i] == ""){
 										
@@ -481,8 +481,58 @@
 												</td>
 										";	
 									}
+								}*/
+								////////////// inicia la busqueda del archivo en carpeta 
+					$dir_subida = './Controller/documentos/';
+					// Arreglo con todos los nombres de los archivos
+					$files = array_diff(scandir($dir_subida), array('.', '..')); 
+					$contDoc=0;
+					foreach($files as $file){
+					    // Divides en dos el nombre de tu archivo utilizando el . 
+					    $data = explode("_",$file);
+					    $data2 = explode(".",$file);
+						$indice = count($data2);	
+
+						$extencion = $data2[$indice-1];
+					    // Nombre del archivo
+					    $extractRfc = $data[0];
+					    $extractDoc = $data[1];
+					    // Extensión del archivo 
+
+					    if($ver[4] == $extractRfc){
+					    	$existenD++;
+					    		//$losDocEnCarpeta[$contDoc] = $data[1];
+					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
+										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
+										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_.PDF";
+
+										echo "
+												<tr>
+												<td>$rowNombreDoc[0]</td>
+												<td>";
+					    		//$contDoc++;
+						?>
+							<button onclick="verDoc('<?php echo $nombreAdescargar ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+							<?php	echo "
+
+												</td>
+										";	
+					    }
+
+					}
+////////////// termina parte de ver nomebre desde la carpeta
+								if($existenD == 0){
+									echo('
+											<br>
+											<br>
+											<div class="col-sm-12 ">
+											<div class="plantilla-inputv text-dark ">
+											    <div class="card-body"><h2 align="center">No existen documentos adjuntos.</h2></div>
+										</div>
+										</div>');
 								}
-						 ?>
+					?>
 
 					
 
