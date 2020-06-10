@@ -307,10 +307,10 @@
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
-									$resRol=mysqli_query($conexion, $sqlRolDoc);
-									$idDoc = mysqli_fetch_row($resRol);
-
+										$resRol=mysqli_query($conexion, $sqlRolDoc);
+										$idDoc = mysqli_fetch_row($resRol);
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
+
 									$dir_subida = './Controller/documentos/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -379,9 +379,7 @@
 											}
 
 
-								$arrayDoc = explode("_", $concatenarNombDoc) ;
-								//$limite = count($arrayDoc);
-
+								$arrayDoc = explode("_", $enviarDoc) ;
 								//actualizamos la base para poder tener el registro de los documentos
 								include "./configuracion.php";
 								$usuarioSeguir = $_GET['usuario_rol'];
@@ -391,9 +389,8 @@
 								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								 		$rowHoy = mysqli_fetch_row($resultHoy);
 								 }
-
-
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
+									//echo "<script> alert ('$arrayDoc[$i]');</script>";
 									$nombreAsignar = $arrayDoc[$i];
 									$sqlAgregar = "UPDATE fomope SET $arrayDoc[$i] = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE rfc = '$elRfc'";
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
