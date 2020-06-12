@@ -86,8 +86,9 @@
 				});
 			});
 
-			function verDoc(nombre){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre;
+			function verDoc(nombre,laExtencion){
+				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+
 			}
 
 
@@ -181,7 +182,7 @@
 					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_.PDF";
+										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 
 										echo "
 												<tr>
@@ -189,7 +190,7 @@
 												<td>";
 					    		//$contDoc++;
 						?>
-							<button onclick="verDoc('<?php echo $nombreAdescargar ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+							<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
 							<?php	echo "
 
 												</td>

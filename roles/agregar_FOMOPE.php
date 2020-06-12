@@ -208,7 +208,7 @@
 					 echo "<script> alert('Se detecto incosistencia en las fechas');window.location.href='./form_FOMOPE.php?usuario=$usuario&id_rol=$usuario_rol&noFomope=$noFomope'</script>";
 		}
 	}else if($elBoton == "descargar" || $elBoton == "Aceptar rechazo por captura"){
-		$motivoR = $_POST['comentarioR'];
+		$motivoR = $_POST['comentarioR2'];
 
 //sdsd
 
