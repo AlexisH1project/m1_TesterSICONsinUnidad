@@ -146,6 +146,7 @@
 							include "configuracion.php";
 							$existenD =0;
 							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
 
@@ -197,7 +198,38 @@
 										";	
 					    }
 
+
 					}
+					
+					$sql2="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							$result2=mysqli_query($conexion,$sql2);
+							$ver2 = mysqli_fetch_row($result2);
+							$contdocs = 1;
+							$docnum = "";
+					for ($i = 47; $i < 118; ++$i){
+						if($ver2[$i] == NULL){
+							$docnum = "doc".$contdocs;
+							// echo $docnum;
+							echo $ver2[$i];
+							$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$docnum'";
+										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+										echo "
+												<tr>
+												<td>$rowNombreDoc2[0]</td>
+												<td>";
+					    		//$contDoc++;
+						?>
+							<button class="btn btn-danger" > X </button>
+							<?php	echo "
+
+												</td>
+										";
+						}
+						$contdocs++;
+					}
+
+
 ////////////// termina parte de ver nomebre desde la carpeta
 								if($existenD == 0){
 									echo('
