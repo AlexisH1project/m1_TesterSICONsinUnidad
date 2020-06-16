@@ -45,8 +45,9 @@
 		$fecha_recibo_dspo =$_POST['fechenvvb'];
 		$folio_spc = $_POST['foliospc'];
 
+	
 
-	function genearExcel(){
+	function genearExcel($elMotivo){
 				require "./librerias/conexion_excel.php";
 				include "configuracion.php";
 				include './librerias/Classes/PHPExcel/IOFactory.php';
@@ -54,11 +55,17 @@
 				$fileType = 'Excel5';
 				$fileName = './generarVolanteRechazo/rechazoT.xls';
 
+					$hoy = "select CURDATE()";
+
+				 if ($resultHoy = mysqli_query($conexion,$hoy)) {
+				 		$row = mysqli_fetch_row($resultHoy);
+				 }
+
 				// Read the file
 				$objReader = PHPExcel_IOFactory::createReader($fileType);
 				$objPHPExcel = $objReader->load($fileName);
-				$fecha_recibido =$_POST['fechareci'];
-				$motivoR = $_POST['comentarioR'];
+				$fecha_recibido =  $row[0]   ; 
+				$motivoR = $elMotivo;
 				$idfom = $_POST['noFomope'];
 				$usuario = $_POST['usuarioSeguir'];
 				$sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuario'";
@@ -208,8 +215,7 @@
 					 echo "<script> alert('Se detecto incosistencia en las fechas');window.location.href='./form_FOMOPE.php?usuario=$usuario&id_rol=$usuario_rol&noFomope=$noFomope'</script>";
 		}
 	}else if($elBoton == "descargar" || $elBoton == "Aceptar rechazo por captura"){
-		$motivoR = $_POST['comentarioR2'];
-
+		
 //sdsd
 
 		 $hoy = "select CURDATE()";
@@ -222,7 +228,6 @@
 
 		 $sql2 = "INSERT INTO historial (id_movimiento,usuario,fechaMovimiento,horaMovimiento) VALUES ('$idFomope','$usuarioEdito','$row[0]','$row2[0]')";
 
-		 $sql3 = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo) VALUES ($idFomope,'$motivoR','$usuarioEdito','$row[0]')";
 	
 		$hoy = "select CURDATE()";
 		$tiempo ="select curTime()";
@@ -233,9 +238,17 @@
 			 }
 
 			if ($elBoton == "Aceptar rechazo por captura"){
-				$sql1 = "UPDATE fomope SET justificacionRechazo = '$motivoR', usuario_name='$usuario',color_estado='negro',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario' WHERE id_movimiento = '$noFomope' " ;
+					$motivoR = $_POST['comentarioR2'];
+
+		 		$sql3 = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo) VALUES ($idFomope,'$motivoR','$usuarioEdito','$row[0]')";
+
+				$sql1 = "UPDATE fomope SET justificacionRechazo = '$motivoR2', usuario_name='$usuario',color_estado='negro',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario' WHERE id_movimiento = '$noFomope' " ;
 
 			}else{
+					$motivoR = $_POST['comentarioR'];
+
+		 		$sql3 = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo) VALUES ($idFomope,'$motivoR','$usuarioEdito','$row[0]')";
+
 				$sql1 = "UPDATE fomope SET justificacionRechazo = '$motivoR', usuario_name='$usuario',color_estado='negro1',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización' WHERE id_movimiento = '$noFomope' " ;
 
 			}
@@ -245,7 +258,7 @@
 					
 				if (mysqli_query($conexion,$sql1)) {
 					if (mysqli_query($conexion,$sql2) AND mysqli_query($conexion,$sql3) ) {
-							genearExcel();
+							genearExcel($motivoR);
 																			
 					}else {
 						echo '<script type="text/javascript">alert("Error en la conexion");</script>';

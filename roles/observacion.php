@@ -68,6 +68,9 @@
 		}else if($roWsqlRolReal[2] == 3){
 			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización'  WHERE id_movimiento = '$noFomope'";
 
+		}else if($roWsqlRolReal[2] == 4){
+			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización'  WHERE id_movimiento = '$noFomope'";
+
 		}
 	}else{
 		 echo "<script> alert('error en la BD'); ";//'$usuario
