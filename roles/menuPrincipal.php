@@ -264,6 +264,9 @@
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
 	          </li>
+	           <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
@@ -283,22 +286,7 @@
 
 	        </ul>
 
-	       <!-- <div class="mb-5">
-						<h3 class="h6 mb-3">Subscribe for newsletter</h3>
-						<form action="#" class="subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Enter Email Address">
-	            </div>
-	          </form>
-					</div>-->
-
-	        <!--<div class="footer">
-	        	<p>Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-						  Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.</p>
-	        </div>-->
-
+	     
 	      </div>
     	</nav>
 
