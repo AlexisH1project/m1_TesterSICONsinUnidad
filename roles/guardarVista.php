@@ -233,7 +233,7 @@
 									       die("Error cargando el conjunto de caracteres utf8");
 									}
 
-									$consulta = "SELECT * FROM m1ct_documentos";
+									$consulta = "SELECT * FROM m1ct_documentos ORDER BY  id_doc";
 									$resultado = mysqli_query($conexion , $consulta);
 									$contador=0;
 

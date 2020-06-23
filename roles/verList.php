@@ -146,6 +146,7 @@
 							include "configuracion.php";
 							$existenD =0;
 							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							$documentosPC="";
 							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
@@ -184,7 +185,7 @@
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
 										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
-
+										$documentosPC = $documentosPC."_".$data[1];
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>
@@ -201,22 +202,26 @@
 
 					}
 					
-					$sql2="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
-							$result2=mysqli_query($conexion,$sql2);
-							$ver2 = mysqli_fetch_row($result2);
-							$contdocs = 1;
-							$docnum = "";
-					for ($i = 47; $i < 118; ++$i){
-						if($ver2[$i] == NULL){
-							$docnum = "doc".$contdocs;
-							// echo $docnum;
-							echo $ver2[$i];
-							$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$docnum'";
+					$documentoPC = explode("_", $documentosPC);
+					echo count($documentoPC);
+					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+										$resTotalReg = mysqli_query($conexion,$sqlReg);
+										$rowTotal = mysqli_fetch_row($resTotalReg);
+					for ($i = 1; $i < $rowTotal[0] ; $i++){
+						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
-										echo "
+							$imprime = 0;
+						for ($j=1; $j < count($documentoPC) ; $j++) { 
+								if($rowNombreDoc2[2] == strtolower($documentoPC[$j])){  // strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
+									$imprime = 1;
+								}
+								
+						}
+						if($imprime == 0){
+								echo "
 												<tr>
-												<td>$rowNombreDoc2[0]</td>
+												<td>$rowNombreDoc2[1]</td>
 												<td>";
 					    		//$contDoc++;
 						?>
@@ -225,8 +230,8 @@
 
 												</td>
 										";
-						}
-						$contdocs++;
+								}
+
 					}
 
 
