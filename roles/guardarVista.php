@@ -215,7 +215,7 @@
 						    	<div class="form-group">
 						    <label  class="plantilla-label" for="archivo_1">Adjuntar un archivo</label>
 						    <!--  <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
-						    <input type="file" id="nameArchivo" name="nameArchivo" >
+						    <input type="file" id="nameArchivo" name="nameArchivo" required>
 						   <!--  <p class="help-block">Ejemplo de texto de ayuda.</p> -->
 						  </div>
 						</div>
@@ -294,7 +294,6 @@
 												';	
 												}
 
-
 							if(isset($_POST['guardarAdj'])){
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfc']);
@@ -304,6 +303,15 @@
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
 
+
+									 $hoy = "select CURDATE()";
+
+									 if ($resultHoy = mysqli_query($conexion,$hoy)) {
+									 		$row2 = mysqli_fetch_row($resultHoy);
+									 }
+									 $numEliminado = explode("-", $row2[0]);
+									 $numEliminado = $numEliminado[0].$numEliminado[1].$numEliminado[2];
+
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
@@ -312,6 +320,8 @@
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
 									$dir_subida = './Controller/documentos/';
+									$dir_subida2 = './Controller/documentosEliminados/';
+
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
@@ -325,15 +335,25 @@
 											    // Nombre del archivo
 											    $extractRfc = $data[0];
 											    $nameAdj = $data[1];
-											    // Extensión del archivo 
+												//echo "<script> alert(''); </script>";
 
-											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
-											      		unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
+											    // Extensión del archivo 
+											    if($elRfc == $extractRfc AND strtoupper($idDoc[1]) == $nameAdj){
+													//echo "<script> alert('$idDoc[1]'); </script>";
+	
+															$fichero_subido2 = $dir_subida2 . $file;
+															$extencion2 = explode(".",$fichero_subido2);
+															$tamnio = count($extencion2);
+
+															$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
+															$concatenarNombreC = $dir_subida2.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$numEliminado."_.".$extencion3);
+															copy($dir_subida.$file, $concatenarNombreC);
+														unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion);
 											        	break;
-											    }
+											   	}
 											}
 									//guardamos el archivo que se selecciono en la carpeta 
-											$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
+										$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
 											$extencion2 = explode(".",$fichero_subido);
 											$tamnio = count($extencion2);
 
