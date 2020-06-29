@@ -510,36 +510,26 @@
 						<label class="plantilla-label" for="listD">Documentos :</label>
 			</div>
 				<table class="table table-hover table-white">
-						<?php 
+					<?php 
 							include "configuracion.php";
 							$existenD =0;
 							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							$documentosPC="";
+							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
-/*
-								for($i=47; $i<=117; $i++){
-									if($ver[$i] == ""){
+
+							// 	for($i=47; $i<=117; $i++){
+							// 		if($ver[$i] == ""){
 										
-									}else{
-										$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$ver[$i]'";
-										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
-										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
+							// 		}else{
+							// 			$existenD ++;
+							// 			$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$ver[$i]'";
+							// 			$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
+							// 			$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
+							// 			$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
-										echo "
-												<tr>
-												<td>$rowNombreDoc[0]</td>
-												<td>";
-								?>
-
-												  <button onclick="verDoc('<?php echo $nombreAdescargar ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
-							<?php	echo "
-
-												</td>
-										";	
-									}
-								}*/
-								////////////// inicia la busqueda del archivo en carpeta 
+////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/documentos/';
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -562,8 +552,8 @@
 					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_.PDF";
-
+										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
+										$documentosPC = $documentosPC."_".$data[1];
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>
@@ -576,6 +566,7 @@
 												</td>
 										";	
 					    }
+
 
 					}
 ////////////// termina parte de ver nomebre desde la carpeta
