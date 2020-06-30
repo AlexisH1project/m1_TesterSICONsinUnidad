@@ -166,10 +166,10 @@
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
-		        <ul class="navbar-nav ml-auto">
-		        	<li class="nav-item">
-		            	<a class="nav-link" href='./LuluEventuales.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Eventuales</a>
-		          	</li>          
+		        <ul class="navbar-nav ml-auto">    
+		        <li class="nav-item">
+		            	<a class="nav-link" href='./Lulu.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Bandeja</a>
+		          	</li>         
 		         <li class="nav-item dropdown">
 		            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		              Acciones
@@ -221,16 +221,7 @@
 					} 
 
 				</script>
-			
-		<div class="row">
-				<div class="col text-center">
-
-					<td>
-									<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
-
-							</td>
-				</div>
-			</div>
+		
 			<br>
 
 			<form method="post" action=""> 
@@ -509,7 +500,7 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Autorizar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2>Autorizar Eventual</h2></div>
 					</div>
 			<form name="radioALL" id="radioALL" action="" method="POST"> 
 					<table class="table table-hover table-white">
@@ -534,20 +525,22 @@
 						<?php 
 							include "configuracion.php";
 
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso, codigoMovimiento, fechaAutorizacion, fechaCaptura
-									from fomope WHERE color_estado = 'verde2' OR color_estado = 'amarillo0'";
+							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
+									from fomope_qr WHERE estatus = 'Revisión'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
 
 							
-								$consulta2 = " SELECT * FROM fomope WHERE id_movimiento = ".$ver[0];
+								$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
 
 						        if($resultado2 = mysqli_query($conexion,$consulta2)){
 					        		$row = mysqli_fetch_assoc($resultado2);
-					        		$id_mov = $row['id_movimiento'];
+					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
-					        	switch ($ver[1]) {
+								$estadoF = 'DDSCH Autorización';
+
+					     /*   	switch ($ver[1]) {
 											
 											case 'amarillo0':
 												$estadoF = 'DDSCH Autorización';
@@ -560,7 +553,7 @@
 											default:
 												
 												break;
-										}
+										}*/
 
 
 						 ?>
@@ -573,13 +566,13 @@
 								</div>
 							</td>
 							<td><?php echo $estadoF ?></td>
-							<td><?php echo $ver[2] ?></td>
-							<td><?php echo $ver[3] ?></td>
-							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[5] ?></td>
-							<td><?php echo $ver[6] ?></td>
-							<td><?php echo $ver[7] ?></td>
-							<td><?php echo $ver[8] ?></td>
+							<td><?php echo $row['unidad'] ?></td>
+							<td><?php echo $row['rfc'] ?></td>
+							<td> 00 </td> <!-- falta QNA  <?php echo $ver[4] ?>-->
+							<td><?php echo $row['fini'] ?></td>
+							<td><?php echo $row['tipo_movimiento'] ?></td>
+							<!-- <td><?php echo $ver[7] ?></td>
+							<td><?php echo $ver[8] ?></td> -->
 
 							<td>
 								<?php
@@ -658,30 +651,11 @@
 											</div>
 
 			</div>
-			<?php 
-						 		include "configuracion.php";
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso
-									from fomope WHERE color_estado = 'verde'";
-							$result=mysqli_query($conexion,$sql);
-
-							$totalFilas    =    mysqli_num_rows($result);  
-							if($totalFilas == 0){
-									
-									echo('
-										<div class="col-sm-12 ">
-										<div class="plantilla-inputv text-dark">
-										    <div class="card-body"><h2>No existen fomopes por lotear</h2></div>
-									</div>
-									</div>');
-							}
-
-
-						  ?>
-
+			
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Rechazados</h2></div>
+						    <div class="card-body plantilla-inputg"><h2>Rechazados Eventuales</h2></div>
 					</div>
 					<table class="table table-hover table-white">
 						<thead>
@@ -786,126 +760,6 @@
 										<div class="col-sm-12 ">
 										<div class="plantilla-inputv text-dark">
 										    <div class="card-body"><h2>No existen fomopes por editar.</h2></div>
-									</div>
-									</div>');
-							}
-
-
-						  ?>
-
-			<div class="col-sm-12">
-				
-					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Escanear</h2></div>
-					</div>
-					<table class="table table-hover table-white">
-						<thead>
-						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Estado Fomope</th>
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha Ingreso</th>
-						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha Autorización</th>
-						      <th scope="titulo">Fecha de Captura</th>
-
-						   </tr>
-					 	 </thead>
-
-						<?php 
-							include "configuracion.php";
-
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso, codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'Verde'";
-							$result=mysqli_query($conexion,$sql);
-
-							while($ver=mysqli_fetch_row($result)){ 
-
-							
-								$consulta2 = " SELECT * FROM fomope WHERE id_movimiento = ".$ver[0];
-
-						        if($resultado2 = mysqli_query($conexion,$consulta2)){
-					        		$row = mysqli_fetch_assoc($resultado2);
-					        		$id_mov = $row['id_movimiento'];
-					        	}
-					        	$datos=$id_mov."||".
-								$ver[0]."||0";
-
-								switch ($ver[1]) {
-											
-											case 'verde':
-												$estadoF = 'DDSCH loteo';
-												break;
-											
-											default:
-												
-												break;
-										}
-						 ?>
-
-						<tr>
-							<td><?php echo $estadoF ?></td>
-							<td><?php echo $ver[2] ?></td>
-							<td><?php echo $ver[3] ?></td>
-							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[5] ?></td>
-							<td><?php echo $ver[6] ?></td>
-							<td><?php echo $ver[7] ?></td>
-							<td><?php echo $ver[8] ?></td>
-
-							<td>
-								<?php
-									$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
-
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-
-										if($totalColor != 0){
-										 if($ver[1] == "verde"){
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Capturar</button>
-
-								<?php	
-
-											}
-										}
-									}
-								
-								?>	
-									
-
-							</td>
-						</tr>
-						<?php 
-						
-						 
-					}
-						 ?>
-
-					</table>
-			</div>
-			<?php 
-						 		include "configuracion.php";
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso
-									from fomope WHERE color_estado = 'Verde'";
-							$result=mysqli_query($conexion,$sql);
-
-							$totalFilas    =    mysqli_num_rows($result);  
-							if($totalFilas == 0){
-									
-									echo('
-										<div class="col-sm-12 ">
-										<div class="plantilla-inputv text-dark">
-										    <div class="card-body"><h2>No existen fomopes por lotear</h2></div>
 									</div>
 									</div>');
 							}
