@@ -214,7 +214,7 @@
 					         }
 					     }
 					     if(contador > 0){
-							window.location.href = './Controller/autorizarTodoLulu.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol;
+							window.location.href = './Controller/autorizarTodoQr.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol;
 
 					     }
 					     //return false;
@@ -515,10 +515,9 @@
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha Autorización</th>
 						      <th scope="titulo">Fecha de Captura</th>
+						      <th scope="titulo">Tipo de ingreso</th>
 
-			           		
 						   </tr>
 					 	 </thead>
 
@@ -568,48 +567,14 @@
 							<td><?php echo $estadoF ?></td>
 							<td><?php echo $row['unidad'] ?></td>
 							<td><?php echo $row['rfc'] ?></td>
-							<td> 00 </td> <!-- falta QNA  <?php echo $ver[4] ?>-->
+							<td> 00 </td>
 							<td><?php echo $row['fini'] ?></td>
 							<td><?php echo $row['tipo_movimiento'] ?></td>
-							<!-- <td><?php echo $ver[7] ?></td>
-							<td><?php echo $ver[8] ?></td> -->
+							<td>...</td>
+							<td><?php echo $row['tipoRegistro'] ?></td>
 
 							<td>
-								<?php
-									$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
-
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-
-										if($totalColor != 0){
-											if($ver[1] == "amarillo0" ){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||3";
-
-										
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="ver" >Ver</button>
-								<?php	
-											}else if($ver[1] == "verde2"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||4";
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="ver2" >Ver</button>
-
-								<?php	
-
-											}
-										}
-									}
-								
-								?>	
-									
-
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $row['id_movimiento_qr'] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
 							</td>
 						</tr>
 						<?php 

@@ -658,26 +658,6 @@
 											</div>
 
 			</div>
-			<?php 
-						 		include "configuracion.php";
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso
-									from fomope WHERE color_estado = 'verde'";
-							$result=mysqli_query($conexion,$sql);
-
-							$totalFilas    =    mysqli_num_rows($result);  
-							if($totalFilas == 0){
-									
-									echo('
-										<div class="col-sm-12 ">
-										<div class="plantilla-inputv text-dark">
-										    <div class="card-body"><h2>No existen fomopes por lotear</h2></div>
-									</div>
-									</div>');
-							}
-
-
-						  ?>
-
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">

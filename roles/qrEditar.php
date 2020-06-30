@@ -285,19 +285,22 @@
 			include "configuracion.php";
 			$noFomope = $_GET['noFomope'];
 			//echo $noFomope;
-			$id_rol = $_GET['id_rol'];
+			//$id_rol = $_GET['id_rol'];
 			//echo $id_rol;
 			$usuarioSeguir = $_GET['usuario'];
 			//echo $usuario;
+		
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
 
 			 $consultaR = " SELECT * FROM usuarios WHERE usuario = '$usuarioSeguir'";
 
-		    if($resultado3 = mysqli_query($conexion,$consultaR)){
+		        if($resultado3 = mysqli_query($conexion,$consultaR)){
 	        		$row = mysqli_fetch_assoc($resultado3);
 					$id_rol1 = $row['id_rol'];
+
+					
 			}
 			$sql = "SELECT id_mov, cod_mov, tipo_mov, area_mov FROM ct_movimientosrh";
 			$sql2 = "SELECT rfc, apellido_1,apellido_2, nombre, unidad, justificacionRechazo FROM fomope WHERE id_movimiento = '$noFomope'";
@@ -309,8 +312,48 @@
 			$valor = "";
 			$hoy = "select CURDATE()";
 			$tiempo ="select curTime()";
+			$diaActual = "";
+
+			 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+			 		$rowF = mysqli_fetch_row($resultHoy);  // cambiamos formato de hora 
+			 		$fechaSistema = date("d-m-Y", strtotime($rowF[0])); //"14-04-2020";
+			 		$elDia = explode("-", $fechaSistema);
+			 		$rowHora = mysqli_fetch_row($resultTime);
+
+					$diaActual=date("w", strtotime($fechaSistema));
+					
+			 }
+
+			 $sqlQna = "SELECT * FROM m1ct_fechasnomina WHERE estadoActual = 'abierta'";
+
+			 if($resQna = mysqli_query($conexion,$sqlQna)){
+			 	$rowQna = mysqli_fetch_row($resQna);
+			 	//echo "OOOOOLLAA";
+			 	$fehaI = date("d-m-Y", strtotime($rowQna[4])); 
+			 	$fehaF = date("d-m-Y", strtotime($rowQna[5])); 
+			 	$newQna = $rowQna[0];
+			 }else{
+			 
+			 	echo "error sql";
+			 }
+
+			 if( strtotime($fehaF) < strtotime($fechaSistema)){
+			 		if($rowQna[0] != 24){
+			 			$newQna = $rowQna[0] + 1;
+			 		}else {
+			 			$newQna = 1;
+			 		}
+			 		$sqlCerrar = "UPDATE m1ct_fechasnomina SET estadoActual = 'cerrada' WHERE id_qna = '$rowQna[0]'";
+			 		$sqlAbrir = "UPDATE m1ct_fechasnomina SET estadoActual = 'abierta' WHERE id_qna = '$newQna'";
+			 		if($resC = mysqli_query($conexion,$sqlCerrar) && $resA = mysqli_query($conexion, $sqlAbrir) ){
+			 		}else{
+			 			echo "error con la conexion a la BD";
+			 		}
+
+			 }else{
+
 				
-		 ?>	
+		 ?>		
 
 		 <br>
     	<br>
@@ -331,47 +374,47 @@
 	        <ul class="list-unstyled components mb-5">
 	        	<br>
 	        	<center>
-	        	
 	        	<li class=" estilo-color">
-	            <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></a>
-	          </li>	
-
-	        	</center>
+	            <a ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
+	          </li>
+	      </center>
 	          <li class=" estilo-color">
-	            <a href= <?php if($id_rol1 == 3){echo ("'./CapturistaTostado.php?usuario_rol=$usuarioSeguir'"); } elseif ($id_rol1 == 2) {
-	            	
-	            echo ("'./analista.php?usuario_rol=$usuarioSeguir'"); }?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	            <a href=  <?php echo ("'./LuluEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	          </li>
+	           <li class=" estilo-color">
+	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
 	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	            <a href=  <?php echo ("'./generarReporte.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport.png" alt="x" height="17" width="20"/>Generar Reporte</a>
 	          </li>
-	          
-	          <br>
+	          <li class=" estilo-color">
+	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
-	        
-	            <br><br><br>
-			        <center>
-			          <li class=" estilo-color">
-		             		<H3> <FONT COLOR=#9f2241 class= 'estilo-colorn'> <?php  echo $rowQna[1];?> </FONT> </H3>	
-			          </li>
-
-			           
-			           <li class=" estilo-color">
-		             	<FONT SIZE=4 COLOR=9f2241 class= 'estilo-colorg'> <I><?php  echo $rowQna[4];?></I> -- <I><?php  echo $rowQna[5];?></I>  </FONT>
-
-			          </li>
-				</center>
-
+	          <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
+	          </li>
+	           <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
 	          <br>
+	           <br>      
 	          <br>
-
+	          <br>
+	          <br>
 	          <li class=" estilo-color">
 	              <a class="nav-link" href=  "../LoginMenu/vista/cerrarsesion.php" ><img src="./img/iclogout.png" alt="x" height="17" width="17"/> Cerrar Sesión</a>
+	          </li>
 	          
+	          </li>
+	          <li class=" estilo-color">
+             
+	          </li>
+
 	        </ul>
+
 	      </div>
     	</nav>
     	<br>
@@ -420,11 +463,11 @@
 					<?php 
 							include "configuracion.php";
 							$existenD =0;
-							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
 							$documentosPC="";
 							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
-							$ver = mysqli_fetch_row($result);
+							$ver = mysqli_fetch_assoc($result);
 
 							// 	for($i=47; $i<=117; $i++){
 							// 		if($ver[$i] == ""){
@@ -453,7 +496,7 @@
 					    $extractDoc = $data[1];
 					    // Extensión del archivo 
 
-					    if($ver[4] == $extractRfc){
+					    if($ver['rfc'] == $extractRfc){
 					    	$existenD++;
 					    		//$losDocEnCarpeta[$contDoc] = $data[1];
 					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
@@ -701,7 +744,11 @@
 		</div>
 
 		</div>
-	
+	<?php
+	 	
+	}
+
+		?>
 		<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 

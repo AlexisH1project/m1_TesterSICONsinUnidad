@@ -158,11 +158,8 @@ function agregafo(datos){
 	  window.location.href = 'form_FOMOPE.php?usuario_rol='+d;
 }
 function agregarfo(datos){
-
 	var d=datos;
-	
-
-	  window.location.href = 'agregar_FOMOPE.php?noFomope='+d;
+	window.location.href = 'agregar_FOMOPE.php?noFomope='+d;
 }
 
 function nobackbutton(){
@@ -171,3 +168,7 @@ function nobackbutton(){
 			   window.onhashchange=function(){window.location.hash="no-back-button";}
 			}
 
+function verDatosQr(movimiento, elUsuario){
+	var m = movimiento;
+	window.location.href = 'qrEditar.php?noFomope='+m+'&usuario='+elUsuario;
+}
