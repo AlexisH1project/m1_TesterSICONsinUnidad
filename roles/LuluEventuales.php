@@ -627,14 +627,14 @@
 						    <tr>
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
-						      <th scope="titulo">  Estado Fomope  </th>
+						      <th scope="titulo">Estado Fomope</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha Autorización</th>
 						      <th scope="titulo">Fecha de Captura</th>
+						      <th scope="titulo">Tipo de ingreso</th>
 
 						   </tr>
 					 	 </thead>
@@ -642,74 +642,59 @@
 						<?php 
 							include "configuracion.php";
 
-							$sql="SELECT id_movimiento,color_estado,unidad, rfc,quincenaAplicada,fechaIngreso, codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'gris' OR color_estado = 'negro' ";
+							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
+									from fomope_qr WHERE estatus = 'Rechazado duplicado'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
 
 							
-								$consulta2 = " SELECT * FROM fomope WHERE id_movimiento = ".$ver[0];
+								$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
 
 						        if($resultado2 = mysqli_query($conexion,$consulta2)){
 					        		$row = mysqli_fetch_assoc($resultado2);
-					        		$id_mov = $row['id_movimiento'];
+					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
-					        	$datos=$ver[0]."||".$usuarioSeguir."||1";
-					        	switch ($ver[1]) {
+								$estadoF = 'DDSCH Autorización';
+
+					     /*   	switch ($ver[1]) {
 											
-											case 'negro':
-												$estadoF = 'Unidad Edición';
+											case 'amarillo0':
+												$estadoF = 'DDSCH Autorización';
 												break;
 											
-											case 'gris':
-												$estadoF = 'DDSCH Edición';
-												break;
+											case 'verde2':
+												$estadoF = 'DDSCH Autorización Loteo';
+												break;	
 												
 											default:
 												
 												break;
-										}
+										}*/
+
+
 						 ?>
 
 						<tr>
 							<td><?php echo $estadoF ?></td>
-							<td><?php echo $ver[2] ?></td>
-							<td><?php echo $ver[3] ?></td>
-							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[5] ?></td>
-							<td><?php echo $ver[6] ?></td>
-							<td><?php echo $ver[7] ?></td>
-							<td><?php echo $ver[8] ?></td>
+							<td><?php echo $row['unidad'] ?></td>
+							<td><?php echo $row['rfc'] ?></td>
+							<td> 00 </td>
+							<td><?php echo $row['fini'] ?></td>
+							<td><?php echo $row['tipo_movimiento'] ?></td>
+							<td>...</td>
+							<td><?php echo $row['tipoRegistro'] ?></td>
 
 							<td>
-							   <?php
-								
-											 if($ver[1] == "gris"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||2";
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-
-								<?php	
-
-											}else if($ver[1] == "negro"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||1";
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="ver2" >Editar</button>
-
-								<?php	
-
-											}
-								
-								?>	
-									
-						</td>
-
-
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $row['id_movimiento_qr'] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
 						<?php 
 						
 						 
 					}
 						 ?>
+
 					</table>
 			</div>
 				<?php 

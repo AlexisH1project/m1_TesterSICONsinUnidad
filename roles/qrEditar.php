@@ -302,13 +302,6 @@
 
 					
 			}
-			$sql = "SELECT id_mov, cod_mov, tipo_mov, area_mov FROM ct_movimientosrh";
-			$sql2 = "SELECT rfc, apellido_1,apellido_2, nombre, unidad, justificacionRechazo FROM fomope WHERE id_movimiento = '$noFomope'";
-			if($result = mysqli_query($conexion,$sql2)){
-				$row = mysqli_fetch_row($result);
-
-			}
-
 			$valor = "";
 			$hoy = "select CURDATE()";
 			$tiempo ="select curTime()";
@@ -542,166 +535,167 @@
 				<div class="form-row">
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $ver['tipoRegistro']?>" readonly > 
 					</div>
 
 
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="llave">Llave: </label>
+									 <input type="text" class="form-control border border-dark" id="llave" name="llave" value="<?php echo $ver['llave']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="tipo_movimiento">Tipo de movimiento: </label>
+							<input type="text" class="form-control border border-dark" id="tipo_movimiento" name="tipo_movimiento" value="<?php echo $ver['tipo_movimiento']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="lote">Lote: </label>
+									 <input type="text" class="form-control border border-dark" id="lote" name="lote" value="<?php echo $ver['lote']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="rfc">RFC: </label>
+									 <input type="text" class="form-control border border-dark" id="rfc" name="rfc" value="<?php echo $ver['rfc']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="nombre">Nombre: </label>
+									 <input type="text" class="form-control border border-dark" id="nombre" name="nombre" value="<?php echo $ver['nombre']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="estado_civil">Estado Civil: </label>
+									 <input type="text" class="form-control border border-dark" id="estado_civil" name="estado_civil" value="<?php echo $ver['estado_civil']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="sar">Sar: </label>
+									 <input type="text" class="form-control border border-dark" id="sar" name="sar" value="<?php echo $ver['sar']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="curp">CURP: </label>
+									 <input type="text" class="form-control border border-dark" id="curp" name="curp" value="<?php echo $ver['curp']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="num_acta_banco">Num. Acta Banco: </label>
+									 <input type="text" class="form-control border border-dark" id="num_acta_banco" name="num_acta_banco" value="<?php echo $ver['num_acta_banco']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="clabe">Clabe: </label>
+									 <input type="text" class="form-control border border-dark" id="clabe" name="clabe" value="<?php echo $ver['clabe']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="tipo">Tipo: </label>
+									 <input type="text" class="form-control border border-dark" id="tipo" name="tipo" value="<?php echo $ver['tipo']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="banco">Banco: </label>
+									 <input type="text" class="form-control border border-dark" id="banco" name="banco" value="<?php echo $ver['banco']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="calle">Calle: </label>
+									 <input type="text" class="form-control border border-dark" id="calle" name="calle" value="<?php echo $ver['calle']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="num_exterior">Num. Exterior: </label>
+									 <input type="text" class="form-control border border-dark" id="num_exterior" name="num_exterior" value="<?php echo $ver['num_exterior']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="num_interior">Num. Int: </label>
+									 <input type="text" class="form-control border border-dark" id="num_interior" name="num_interior" value="<?php echo $ver['num_interior']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="colonia">Colonia: </label>
+									 <input type="text" class="form-control border border-dark" id="colonia" name="colonia" value="<?php echo $ver['colonia']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="codigo_post">C.P.: </label>
+									 <input type="text" class="form-control border border-dark" id="codigo_post" name="codigo_post" value="<?php echo $ver['codigo_post']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="estado_municipio">Municipio: </label>
+									 <input type="text" class="form-control border border-dark" id="estado_municipio" name="estado_municipio" value="<?php echo $ver['estado_municipio']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="cr">CR: </label>
+									 <input type="text" class="form-control border border-dark" id="cr" name="cr" value="<?php echo $ver['cr']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="ap">AP: </label>
+									 <input type="text" class="form-control border border-dark" id="ap" name="ap" value="<?php echo $ver['ap']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="unidad">Unidad: </label>
+									 <input type="text" class="form-control border border-dark" id="unidad" name="unidad" value="<?php echo $ver['unidad']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="partida">Partida: </label>
+									 <input type="text" class="form-control border border-dark" id="partida" name="partida" value="<?php echo $ver['partida']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="codigo_puesto">Cod. Puesto: </label>
+									 <input type="text" class="form-control border border-dark" id="codigo_puesto" name="codigo_puesto" value="<?php echo $ver['codigo_puesto']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="edo_ai">Estado AI: </label>
+									 <input type="text" class="form-control border border-dark" id="edo_ai" name="edo_ai" value="<?php echo $ver['edo_ai']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="gf">GF: </label>
+									 <input type="text" class="form-control border border-dark" id="gf" name="gf" value="<?php echo $ver['gf']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="funcion">Función: </label>
+									 <input type="text" class="form-control border border-dark" id="funcion" name="funcion" value="<?php echo $ver['funcion']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="subfunción">Subfunción: </label>
+									 <input type="text" class="form-control border border-dark" id="subfunción" name="subfunción" value="<?php echo $ver['subfuncion']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="num_puesto">Num. Puesto: </label>
+									 <input type="text" class="form-control border border-dark" id="num_puesto" name="num_puesto" value="<?php echo $ver['num_puesto']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="Tipo_trabajo">Tipo de trabajo: </label>
+									 <input type="text" class="form-control border border-dark" id="Tipo_trabajo" name="Tipo_trabajo" value="<?php echo $ver['Tipo_trabajo']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="fing_gf">Fecha de Ingreso GF: </label>
+									 <input type="text" class="form-control border border-dark" id="fing_gf" name="fing_gf" value="<?php echo $ver['fing_gf']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="fing_ssa">Fecha de Ingreso SSA: </label>
+									 <input type="text" class="form-control border border-dark" id="fing_ssa" name="fing_ssa" value="<?php echo $ver['fing_ssa']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="num_horas">Num. de horas: </label>
+									 <input type="text" class="form-control border border-dark" id="num_horas" name="num_horas" value="<?php echo $ver['num_horas']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="tip registro">Rango: </label>
+									 <input type="text" class="form-control border border-dark" id="rango" name="rango" value="<?php echo $ver['rango']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="quin">Quin: </label>
+									 <input type="text" class="form-control border border-dark" id="quin" name="quin" value="<?php echo $ver['quin']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="fini">Fecha de Inicio: </label>
+									 <input type="text" class="form-control border border-dark" id="fini" name="fini" value="<?php echo $ver['fini']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="fter">Fecha de Termino: </label>
+									 <input type="text" class="form-control border border-dark" id="fter" name="fter" value="<?php echo $ver['fter']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="con_36">Con 36: </label>
+									 <input type="text" class="form-control border border-dark" id="con_36" name="con_36" value="<?php echo $ver['con_36']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="genero">Genero: </label>
+									 <input type="text" class="form-control border border-dark" id="genero" name="genero" value="<?php echo $ver['genero']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
-							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
-									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $elDia[2]?>" > 
+							<label  class="plantilla-label" for="entidad_nac">Entidad Nac.: </label>
+									 <input type="text" class="form-control border border-dark" id="entidad_nac" name="entidad_nac" value="<?php echo $ver['entidad_nac']?>" readonly > 
 					</div>
+					
 				</div>
 				<!-- datos que se reciben para dar seguimiento  -->
 				<div class="form-row">
@@ -742,13 +736,62 @@
 			</form>
 
 		</div>
+		<?php
+				if($ver['estatus'] == "Rechazado duplicado"){
+
+		?>
+		<div class="form-row">
+		<form name="elimin" enctype="multipart/form-data" action="./Controller/eliminarEventual.php" method="POST"> 
+					<div class="form-group col-md-2">
+						
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal1">
+											Eliminar Fomope 
+											</button>
+				</div>
+							  			<br>
+
+						<div class="form-row">
+							<input type="text" class="form-control" id="noFomope" name="noFomope" value="<?php echo $ver['id_movimiento_qr']?>" style="display:none">
+						</div>
+						
+						<div class="form-row">
+							<input type="text" class="form-control" id="usuario" name="usuario" value="<?php echo $usuarioSeguir?>" style="display:none">
+						</div>
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="exampleModalLabel">Eliminar Información</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+											      <div class="modal-body">
+											        ¿Estás seguro de eliminar la información del fomope?
+											      </div>
+									<center>
+						     
+										</center>
+											      <div class="modal-footer">
+
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+							        				<input type="submit" class="btn btn-danger" value="Eliminar" name="accionB">
+											      </div>
+											    </div>
+											  </div>
+											</div>
+
+												</form>  
+			</div>
 
 		</div>
 	<?php
-	 	
+	 	}
 	}
 
 		?>
+	
 		<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 
