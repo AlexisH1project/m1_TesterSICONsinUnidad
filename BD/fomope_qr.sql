@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-07-2020 a las 09:35:29
+-- Tiempo de generación: 04-07-2020 a las 01:30:12
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -75,7 +75,9 @@ CREATE TABLE `fomope_qr` (
   `genero` varchar(1) COLLATE utf8_spanish_ci NOT NULL,
   `entidad_nac` varchar(2) COLLATE utf8_spanish_ci NOT NULL,
   `tex_con` varchar(600) COLLATE utf8_spanish_ci NOT NULL,
-  `usuario_modifco` varchar(20) COLLATE utf8_spanish_ci NOT NULL
+  `anio` varchar(4) COLLATE utf8_spanish_ci NOT NULL,
+  `usuario_modifco` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `fechaAutorizacion` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
