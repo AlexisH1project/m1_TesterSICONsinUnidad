@@ -297,14 +297,12 @@
 						    <tr>
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
-						      <th scope="titulo">Estado Fomope</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha de Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha Autorización</th>
-						      <th scope="titulo">Fecha de Captura</th>
+
 
 						   </tr>
 					 	 </thead>
@@ -321,41 +319,37 @@
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (  qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
 							}
-
-
-							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
-
 
 							if ($result = mysqli_query($conexion,$sql)) {
 
@@ -374,115 +368,58 @@
 
 
 					while($ver=mysqli_fetch_row($result)){ 
-						switch ($ver[1]) {
-											case 'negro1':
-												$estadoF = 'DDSCH Rechazo';
-												break;
-											case 'negro':
-												$estadoF = 'Unidad Edición';
-												break;
-											case 'amarillo':
-												$estadoF = 'DSPO captura';
-												break;		
-											case 'amarillo0':
-												$estadoF = 'DDSCH Autorización';
-												break;
-											case 'cafe':
-												$estadoF = 'DSPO Autorización';
-												break;	
-											case 'naranja':
-												$estadoF = 'DIPSP Autorización';
-												break;
-											case 'azul':
-												$estadoF= 'DGRHO Autorización';
-												break;
-											case 'rosa':
-												$estadoF = 'DSPO nomina';
-												break;		
-											case 'verde':
-												$estadoF = 'DDSCH loteo';
-												break;
-											case 'verde2':
-												$estadoF = 'DDSCH Autorización Loteo';
-												break;	
-											case 'gris':
-												$estadoF = 'DDSCH Edición';
-												break;
-											case 'guinda':
-												$estadoF = 'Finalizado';
-												break;		
-											default:
+						// switch ($ver[1]) {
+						// 					case 'negro1':
+						// 						$estadoF = 'DDSCH Rechazo';
+						// 						break;
+						// 					case 'negro':
+						// 						$estadoF = 'Unidad Edición';
+						// 						break;
+						// 					case 'amarillo':
+						// 						$estadoF = 'DSPO captura';
+						// 						break;		
+						// 					case 'amarillo0':
+						// 						$estadoF = 'DDSCH Autorización';
+						// 						break;
+						// 					case 'cafe':
+						// 						$estadoF = 'DSPO Autorización';
+						// 						break;	
+						// 					case 'naranja':
+						// 						$estadoF = 'DIPSP Autorización';
+						// 						break;
+						// 					case 'azul':
+						// 						$estadoF= 'DGRHO Autorización';
+						// 						break;
+						// 					case 'rosa':
+						// 						$estadoF = 'DSPO nomina';
+						// 						break;		
+						// 					case 'verde':
+						// 						$estadoF = 'DDSCH loteo';
+						// 						break;
+						// 					case 'verde2':
+						// 						$estadoF = 'DDSCH Autorización Loteo';
+						// 						break;	
+						// 					case 'gris':
+						// 						$estadoF = 'DDSCH Edición';
+						// 						break;
+						// 					case 'guinda':
+						// 						$estadoF = 'Finalizado';
+						// 						break;		
+						// 					default:
 												
-												break;
-										}
+						// 						break;
+						// 				}
 
 						 ?>
 						<tr>
 							
-							<td><?php echo $estadoF ?></td>
 							<td><?php echo $ver[2] ?></td>
 							<td><?php echo $ver[3] ?></td>
 							<td><?php echo $ver[4] ?></td>
 							<td><?php echo $ver[5] ?></td>
 							<td><?php echo $ver[6] ?></td>
-							<td><?php echo $ver[7] ?></td>
-							<td><?php echo $ver[8] ?></td>
-
 							<td>
-								
-								<?php
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-										if($totalColor != 0){
-											if($ver[1] == "negro" ){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||1";
-
-										
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php	
-											}else if($ver[1] == "verde2"){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||4";
-
-
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-								<?php
-											}else if($ver[1] == "verde"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Capturar</button>
-								<?php
-							}				else if($ver[1] == "gris"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||2";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php
-											}else if($ver[1] == "amarillo0"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||3";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-											
-											
-								<?php
-											}
-										}
-									}
-								
-								?>	
-															
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
 							</td>
 						</tr>
 						<?php 
@@ -509,13 +446,11 @@
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
 						      <th scope="titulo">Autorizar</th>
-						      <th scope="titulo">Estado Fomope</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha de Captura</th>
 						      <th scope="titulo">Tipo de ingreso</th>
 
 						   </tr>
@@ -537,8 +472,6 @@
 					        		$row = mysqli_fetch_assoc($resultado2);
 					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
-								$estadoF = 'DDSCH Autorización';
-
 					     /*   	switch ($ver[1]) {
 											
 											case 'amarillo0':
@@ -564,13 +497,11 @@
 								  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios"></label>
 								</div>
 							</td>
-							<td><?php echo $estadoF ?></td>
 							<td><?php echo $row['unidad'] ?></td>
 							<td><?php echo $row['rfc'] ?></td>
-							<td> 00 </td>
+							<td><?php echo $row['qna'] ?></td>
 							<td><?php echo $row['fini'] ?></td>
 							<td><?php echo $row['tipo_movimiento'] ?></td>
-							<td>...</td>
 							<td><?php echo $row['tipoRegistro'] ?></td>
 
 							<td>
@@ -627,13 +558,11 @@
 						    <tr>
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
-						      <th scope="titulo">Estado Fomope</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Fecha de Captura</th>
 						      <th scope="titulo">Tipo de ingreso</th>
 
 						   </tr>
@@ -676,13 +605,11 @@
 						 ?>
 
 						<tr>
-							<td><?php echo $estadoF ?></td>
 							<td><?php echo $row['unidad'] ?></td>
 							<td><?php echo $row['rfc'] ?></td>
-							<td> 00 </td>
+							<td><?php echo $row['qna'] ?></td>
 							<td><?php echo $row['fini'] ?></td>
 							<td><?php echo $row['tipo_movimiento'] ?></td>
-							<td>...</td>
 							<td><?php echo $row['tipoRegistro'] ?></td>
 
 							<td>
@@ -699,8 +626,7 @@
 			</div>
 				<?php 
 						 		include "configuracion.php";
-							$sql="SELECT id_movimiento, unidad, rfc,fechaOficio 
-									from fomope WHERE color_estado = 'gris' OR color_estado = 'negro'";
+							$sql="SELECT id_movimiento_qr, unidad, rfc from fomope_qr WHERE estatus = 'gris' OR estatus = 'negro'";
 							$result=mysqli_query($conexion,$sql);
 
 							$totalFilas    =    mysqli_num_rows($result);  

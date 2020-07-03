@@ -232,19 +232,7 @@
 							
 						</div>
 					</div>
-
 			</form>
-
-			<form enctype="multipart/form-data" method="post" action="">
-				<div class="form-group col-md-12">
-						<div class="col text-center">
-							<div class="columnaBoton">
-								<input type="submit" class="btn btn-secondary" name="borrar" value="Borrar">
-					</div>
-					</div>
-					</div>
-		</form>
-
 		</div>
 		<?php
 							$arrayView = explode("_", $listaMostrar);
@@ -446,19 +434,7 @@
 									
 									}
 								}
-
-									
 								 //Si no existe se inserta 
-						
-
-					if(isset($_POST['borrar'])){
-						$usuarioSeguir = $_GET['usuario_rol'];
-							//session_destroy();
-		   	  				echo "<script type='text/javascript'>javascript:window.location='./qrtxt.php?usuario_rol=$usuarioSeguir'</script>";  
-
-					}
-
-
 						?>	
 
 	</div>
@@ -473,14 +449,3 @@
 	</body>
 
 </html>
-
-
-/*
-VIMM570126GA6
-VILLAFAÑA
-MONROY
-MARGARITA
-S00 COMISIÓN FEDERAL PARA LA PROTECCIÓN CONTRA RIESGOS SANITARIOS
-10
-2020
-*/

@@ -560,6 +560,15 @@
 									 <input type="text" class="form-control border border-dark" id="nombre" name="nombre" value="<?php echo $ver['nombre']?>" readonly > 
 					</div>
 					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="apellido_p">Apellido Paterno: </label>
+									 <input type="text" class="form-control border border-dark" id="apellido_p" name="apellido_p" value="<?php echo $ver['apellido_p']?>" readonly > 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="apellido_m">Apellido Materno: </label>
+									 <input type="text" class="form-control border border-dark" id="apellido_m" name="apellido_m" value="<?php echo $ver['apellido_m']?>" readonly > 
+					</div>
+
+					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="estado_civil">Estado Civil: </label>
 									 <input type="text" class="form-control border border-dark" id="estado_civil" name="estado_civil" value="<?php echo $ver['estado_civil']?>" readonly > 
 					</div>
