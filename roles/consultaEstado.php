@@ -198,7 +198,17 @@
 										</select>
 							</div>
 						</div>
-	
+						<div class="col">
+
+							<div class="form-group col-md-12">
+								<label  class="plantilla-label estilo-colorg" for="laQna">Año: </label>
+									<select class="form-control border-dark" name="anioBus">									
+									  <option value=""></option>
+								      <option value="2019">2019</option>
+								      <option value="2020">2020</option>
+								    </select>	
+							</div>
+						</div>
 					</div>
 			
 				<div class="col-sm-12">
@@ -257,283 +267,403 @@
 							$apellidomBuscar = $_POST['apellidoMb'];
 							$unidadBuscar = $_POST['unidadBus'];
 							$qnaBuscar = $_POST['qnaOption'];
+							$anioBuscar = $_POST['anioBus'];
 							
 
-				   if($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != "" &&  $qnaBuscar != ""){
+				   
+ if($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != "" &&  $qnaBuscar != "" &&  $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != "" &&  $qnaBuscar != ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != "" &&  $qnaBuscar != "" &&  $anioBuscar != "" ){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 
- 							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+ 							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar != "") { //AQUI
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar'  AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar'  AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND unidad='$unidadBuscar')";
 	 							
 							}
-							elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( apellido_1='$apellidoBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' )";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND unidad='$unidadBuscar' )";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND  quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar != "" ) {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND  quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND  quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND  quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar != "" ) {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar != "" ) {//Aqui
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
 	 							
-							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar'  AND apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre = '$nombreBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
+							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 
- 							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+ 							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
+							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+ 							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_2='$apellidomBuscar')";
 								
-							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
+							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (unidad='$unidadBuscar')";
 
- 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+ 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
 								
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ) {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre = '$nombreBuscar' AND unidad='$unidadBuscar')";
 	 							
-							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
+							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar')";
-	 						}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+	 						}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( 
 								apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								
-							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != ""){
+							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" &&  $anioBuscar == "" ){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre = '$nombreBuscar' AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar'  AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE ( nombre='$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_2='$apellidomBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_1='$apellidoBuscar'  AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (apellido_2='$apellidomBuscar'  AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (unidad='$unidadBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar == ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar' AND unidad='$unidadBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar == ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar == ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != ""  &&  $anioBuscar == ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != ""  &&  $anioBuscar == ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
+
+ 							}elseif($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar == ""){
 
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad='$unidadBuscar')";
 
+ 							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == ""  &&  $anioBuscar != "") {
+								
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar' AND anio='$anioBuscar')";
+	 							
+							}
+
+
+
+							/*
+							elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND anio='$anioBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != ""  &&  $anioBuscar != ""){
+
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,usuario_name,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion,descripcionMovimiento FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+
  							}
- 						
+ 							*/
+
 
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
 

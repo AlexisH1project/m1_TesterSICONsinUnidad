@@ -55,6 +55,32 @@
 			$sqlNombre = "SELECT nombrePersonal, id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
+			$valor = "";
+			$hoy = "select CURDATE()";
+			$tiempo ="select curTime()";
+			$diaActual = "";
+
+			 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+			 		$rowF = mysqli_fetch_row($resultHoy);  // cambiamos formato de hora 
+			 		$fechaSistema = date("d-m-Y", strtotime($rowF[0])); //"05-04-2020";;
+			 		$rowHora = mysqli_fetch_row($resultTime);
+
+					$diaActual=date("w", strtotime($fechaSistema));
+					
+			 }
+
+			 $sqlQna = "SELECT * FROM m1ct_fechasnomina WHERE estadoActual = 'abierta'";
+
+			 if($resQna = mysqli_query($conexion,$sqlQna)){
+			 	$rowQna = mysqli_fetch_row($resQna);
+			 	$fehaI = date("d-m-Y", strtotime($rowQna[2])); 
+			 	$fehaF = date("d-m-Y", strtotime($rowQna[5])); 
+			 	$newQna = $rowQna[0];
+
+			 }else{
+			 
+			 	echo "error sql";
+			 }
 		 ?>
  <br>
  <br>
@@ -291,13 +317,41 @@
 			    fclose($archivo);
 			    					
 			    				$qrTexto2 = explode("\n", $cadena2);
+
 			    				//aqui va el for para separar el qr dependiendo los registros que vengan en el archivo
 			    				$tamqr = sizeof($qrTexto2);
 									for($i = 0; $i < $tamqr; $i++){
 	
 										$qrTexto = explode("|", $qrTexto2[$i]);
-										$llave = substr($qrTexto[0], 0, 4);
+										$llave = substr($qrTexto[0], 0, 5);
 					    				$tipoRegistro = '';
+
+					    				///ingresaar empleado ct_empleados
+											$sqlEmpleado = "SELECT rfc, curp FROM ct_empleados WHERE rfc = '$qrTexto[3]'";
+											$rfcEmp = mysqli_query($conexion,$sqlEmpleado);
+											$rfcArr = mysqli_fetch_row($rfcEmp);
+											$rfc = $rfcArr[0];
+											$apeP = explode(",", $qrTexto[4]);
+												$apeM = explode("/", $apeP[1]);
+												$nombreCom = $apeM[1];
+											if($rfc != $qrTexto[3]){ //si es igual quiere decir que existe un empleado con los mismos datos ... no se registra
+												
+												$sqlAgregarEmpl = "INSERT INTO ct_empleados (rfc, curp, apellido_1, apellido_2, nombre) VALUES ('$qrTexto[3]','$qrTexto[7]','$apeP[0]','$apeM[0]','$nombreCom')";
+												if ($resUpdateEmpl = mysqli_query($conexion, $sqlAgregarEmpl)){
+
+													//echo "<script>alert(' Se registro el empleado: El registro $rfc, $qrTexto[3],$qrTexto[7],$apeP[0],$apeM[0],$nombreCom: se mandó a rechazos') ;</script>";
+
+												}else{
+
+													//echo "<script>alert(' Error: El registro $qrTexto[3],$qrTexto[7],$apeP[0],$apeM[0],$nombreCom: se mandó a rechazos') ;</script>";												
+												}
+											}else{
+
+												
+	
+											}
+					    				
+
 										 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 										 		$rowHoy = mysqli_fetch_row($resultHoy);
 										 }
@@ -310,21 +364,21 @@
 												$estatus = "Rechazado duplicado";
 											
 														switch ($llave) {
-														 	case '4008':
+														 	case ' 4008':
 														 			$tipoRegistro = 'CARAVANAS'	;
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus','$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus','$tipoRegistro','$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$usuarioSeguir')";					 		
 														 		break;
-														 	case '4508':
+														 	case ' 4508':
 														 			$tipoRegistro = 'CARAVANAS'	;
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus', '$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$usuarioSeguir')";		 		
 														 		break;
-														 	case '4005':
+														 	case ' 4005':
 														 			$tipoRegistro = 'EVENTUALES';	
-														 			  $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus','$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]')";						 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus', '$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]', '$usuarioSeguir')";
 														 		break;
-														 	case '4505':
+														 	case ' 4505':
 														 			$tipoRegistro = 'EVENTUALES';
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus', '$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus', '$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]', '$usuarioSeguir')";	 		
 														 		break;
 
 														 	default:
@@ -333,10 +387,10 @@
 														 }
 														 if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
-													echo "<script>alert(' Duplicado: El registro $qrTexto[3] se mandó a rechazos') ;</script>";
+													//echo "<script>alert(' Duplicado: El registro $qrTexto[3] se mandó a rechazos') ;</script>";
 
 												}else{
-													echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 												
 											 }
 											 unset($qrTexto);
@@ -345,19 +399,19 @@
 											 			 switch ($llave) {
 														 	case '4008':
 														 			$tipoRegistro = 'CARAVANAS'	;
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus','$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$usuarioSeguir')";					 		
 														 		break;
 														 	case '4508':
 														 			$tipoRegistro = 'CARAVANAS'	;
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus', '$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$usuarioSeguir')";					 		
 														 		break;
 														 	case '4005':
 														 			$tipoRegistro = 'EVENTUALES';	
-														 			  $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus','$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]')";						 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus', '$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]', '$usuarioSeguir')";						 		
 														 		break;
 														 	case '4505':
 														 			$tipoRegistro = 'EVENTUALES';
-														 			 $sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$estatus', '$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]')";					 		
+														 			$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, usuario_modifco) VALUES ('$estatus', '$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]', '$usuarioSeguir')";					 		
 														 		break;
 
 														 	default:
@@ -366,14 +420,13 @@
 														 }
 											 		
 
-											 		/* $sqlAgregar = "INSERT INTO fomope_qr (tipoRegistro, llave, tipo_movimiento, lote, rfc, nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con) VALUES ('$tipoRegistro' ,'$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$qrTexto[4]','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$cadena2')";*/
-
+											 		
 											 	if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
-													echo "<script>alert('El registro $qrTexto[3] se agregó correctament') ;</script>";
+													//echo "<script>alert('El registro $qrTexto[3] se agregó correctament') ;</script>";
 
 												}else{
-													echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 												}
 											 }
 
