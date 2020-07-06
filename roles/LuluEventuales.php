@@ -624,25 +624,6 @@
 
 					</table>
 			</div>
-				<?php 
-						 		include "configuracion.php";
-							$sql="SELECT id_movimiento_qr, unidad, rfc from fomope_qr WHERE estatus = 'gris' OR estatus = 'negro'";
-							$result=mysqli_query($conexion,$sql);
-
-							$totalFilas    =    mysqli_num_rows($result);  
-							if($totalFilas == 0){
-									
-									echo('
-										<div class="col-sm-12 ">
-										<div class="plantilla-inputv text-dark">
-										    <div class="card-body"><h2>No existen fomopes por editar.</h2></div>
-									</div>
-									</div>');
-							}
-
-
-						  ?>
-			  
 	</center>
 	</body>
 
