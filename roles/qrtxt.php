@@ -441,6 +441,7 @@
 													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 												}
 
+
 											 }
 
 
@@ -457,6 +458,7 @@
 								 
 									
 									}
+
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 													echo "<script>alert('Los registros se hicieron correctamente; registros: $contNormales, registros duplicados: $contDuplicados, registros previamente registrados: $contReg') ;</script>";
@@ -464,6 +466,8 @@
 												}else{
 													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 												}
+												echo "<script>alert('Registros previamente registrados: $contReg') ;</script>";
+
 
 								}
 
