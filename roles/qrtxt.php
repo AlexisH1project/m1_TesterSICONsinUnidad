@@ -322,6 +322,7 @@
 			    				$tamqr = sizeof($qrTexto2);
 			    				$contDuplicados = 0;
 								$contNormales = 0;
+								$contReg = 0;
 									for($i = 0; $i < $tamqr; $i++){
 	
 										$qrTexto = explode("|", $qrTexto2[$i]);
@@ -361,11 +362,15 @@
 										 		$rowHoy = mysqli_fetch_row($resultHoy);
 										 }
 												
-											$sqlComparar =  "SELECT tex_con, rfc FROM fomope_qr WHERE tex_con = '$qrTexto2[$i]'";
+										$sqlComparar =  "SELECT tex_con, COUNT(tex_con) FROM fomope_qr WHERE tex_con = '$qrTexto2[$i]'";
 										$resBus = mysqli_query($conexion,$sqlComparar);
 										$text_con = mysqli_fetch_row($resBus);
 										$textoC = $text_con[0];
-										if($textoC == $qrTexto2[$i]){
+										$cantidad = $text_con[1];
+										if($textoC == $qrTexto2[$i] && $cantidad >= 2){
+												$contReg = $contReg + 1;
+											 unset($qrTexto);
+											}elseif($textoC == $qrTexto2[$i]){
 												$estatus = "Rechazado duplicado";
 												$contDuplicados = $contDuplicados + 1;
 														switch ($llave) {
@@ -392,13 +397,14 @@
 														 }
 														 if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
-													//echo "<script>alert(' Duplicado: El registro $qrTexto[3] se mandó a rechazos') ;</script>";
+													//echo "<script>alert('Registros encontrados: $cantidad') ;</script>";
 
 												}else{
 													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
-												
+													
 											 }
 											 unset($qrTexto);
+											 	
 											 	}else{
 											 		$contNormales = $contNormales + 1;
 											 		$estatus = "Revisión";
@@ -453,7 +459,7 @@
 									}
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
-													echo "<script>alert('Los registros se hicieron correctamente; registros: $contNormales, registros duplicados: $contDuplicados') ;</script>";
+													echo "<script>alert('Los registros se hicieron correctamente; registros: $contNormales, registros duplicados: $contDuplicados, registros previamente registrados: $contReg') ;</script>";
 
 												}else{
 													//echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
