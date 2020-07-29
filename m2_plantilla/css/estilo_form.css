@@ -1,0 +1,19 @@
+
+
+
+.formulario_fomope{
+	padding-left: 12px;
+	padding-right: 12px;
+}
+
+input{
+	text-transform: uppercase;
+}
+
+body {
+	 background-image: url(../img/fondo5.png);
+	   background-size: cover;
+	    font-family: "Roboto", sans-serif;   
+
+  padding-top: 56px;
+}
