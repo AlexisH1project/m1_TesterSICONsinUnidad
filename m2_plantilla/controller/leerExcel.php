@@ -180,7 +180,7 @@
 										$elNivel = $sheet->getCell("F".$row)->getValue();
 										$elCPuesto = $sheet->getCell("G".$row)->getValue();
 										$elRS = $sheet->getCell("H".$row)->getValue();
-										$elCFP = $sheet->getCell("I".$row)->getValue();
+										$elCFP = $sheet->getCell("I".$row)->getValue(); //**************
 										$elRSS = $sheet->getCell("J".$row)->getValue();
 										$laCS = $sheet->getCell("K".$row)->getValue();
 										$elTPlaza = $sheet->getCell("L".$row)->getValue();
@@ -200,6 +200,7 @@
 										$elEstatus = $sheet->getCell("Z".$row)->getValue();
 
 										echo "\n";
+
 
 								}
 						}
