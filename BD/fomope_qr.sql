@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-07-2020 a las 01:30:12
+-- Tiempo de generación: 03-08-2020 a las 08:35:41
 -- Versión del servidor: 10.4.11-MariaDB
--- Versión de PHP: 7.4.1
+-- Versión de PHP: 7.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -98,7 +97,7 @@ ALTER TABLE `fomope_qr`
 -- AUTO_INCREMENT de la tabla `fomope_qr`
 --
 ALTER TABLE `fomope_qr`
-  MODIFY `id_movimiento_qr` int(4) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_movimiento_qr` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
