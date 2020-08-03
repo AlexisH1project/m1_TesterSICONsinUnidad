@@ -98,13 +98,114 @@
 				include "configuracion.php";
 				$usuarioSeguir =  $_GET['usuario_rol'];
 
-			?>
 
-				<?php
-				include "configuracion.php";
-				$usuarioSeguir =  $_GET['usuario_rol'];
+				function leerPlantillaBD(){
+					   	require "./librerias/conexion_excel.php";
 
-			?>
+						include './librerias/Classes/PHPExcel/IOFactory.php';
+
+							$fileType = 'Excel5';
+							$archivo = './documentos/ARCHIVO_PLANTILLA.xls';
+
+							// Read the file
+							$inputFileType = PHPExcel_IOFactory::identify($archivo);
+							$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+
+						   $fila = 8;
+						   $estiloTituloColumnas = array(
+					    	'font' => array(
+								'name'  => 'Calibri',
+								'size' =>8,
+								'color' => array(
+									'rgb' => '000000'
+								)
+					    	),
+					    	'borders' => array(
+								'allborders' => array(
+									'style' => PHPExcel_Style_Border::BORDER_THIN
+								)
+					    	),
+					    	'alignment' =>  array(
+								'horizontal'=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+								'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
+					    	)
+						);
+							$estiloInformacion = new PHPExcel_Style();
+
+								$estiloInformacion->applyFromArray( array(
+							    	'font' => array(
+										'name'  => 'Calibri',
+										'size' =>11,
+										'color' => array(
+											'rgb' => '000000'
+										)
+							    	),
+							    	'fill' => array(
+										'type'  => PHPExcel_Style_Fill::FILL_SOLID
+									),
+							    	'borders' => array(
+										'allborders' => array(
+											'style' => PHPExcel_Style_Border::BORDER_THIN
+										)
+							    	),
+									'alignment' =>  array(
+										'horizontal'=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+										'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
+							    	)
+								));
+
+								$objPHPExcel = $objReader->load($archivo);
+								$sheet = $objPHPExcel->getSheet(0); 
+								$highestRow = $sheet->getHighestRow(); 
+								$highestColumn = $sheet->getHighestColumn();
+
+								echo $highestRow . "\n";
+								echo $highestColumn . "\n";
+
+
+								for ($row = 2; $row <= $highestRow; $row++){ 
+
+										if($sheet->getCell("A".$row)->getValue() == ""){
+											if($row == $highestRow){
+												break;
+											}
+											$row++;
+										}
+
+										$elRamo = $sheet->getCell("A".$row)->getValue();
+										$laUr = $sheet->getCell("B".$row)->getValue();
+										$elGP = $sheet->getCell("C".$row)->getValue();
+										$elGR = $sheet->getCell("D".$row)->getValue();
+										$laZE = $sheet->getCell("E".$row)->getValue();
+										$elNivel = $sheet->getCell("F".$row)->getValue();
+										$elCPuesto = $sheet->getCell("G".$row)->getValue();
+										$elRS = $sheet->getCell("H".$row)->getValue();
+										$elCFP = $sheet->getCell("I".$row)->getValue();
+										$elRSS = $sheet->getCell("J".$row)->getValue();
+										$laCS = $sheet->getCell("K".$row)->getValue();
+										$elTPlaza = $sheet->getCell("L".$row)->getValue();
+										$elTPersonal = $sheet->getCell("M".$row)->getValue();
+										$elTN = $sheet->getCell("N".$row)->getValue();
+										$elGJP = $sheet->getCell("O".$row)->getValue();
+										$elAP = $sheet->getCell("P".$row)->getValue();
+										$laFIV = $sheet->getCell("Q".$row)->getValue();
+										$laFFV = $sheet->getCell("R".$row)->getValue();
+										$elNPlazas = $sheet->getCell("S".$row)->getValue();
+										$elNHoras = $sheet->getCell("T".$row)->getValue();
+										$elITabulador = $sheet->getCell("U".$row)->getValue();
+										$elSTabulador = $sheet->getCell("V".$row)->getValue();
+										$elRFC = $sheet->getCell("W".$row)->getValue();
+										$nombreComp = $sheet->getCell("X".$row)->getValue();
+										$laObservacion = $sheet->getCell("Y".$row)->getValue();
+										$elEstatus = $sheet->getCell("Z".$row)->getValue();
+
+										echo "\n";
+
+								}
+						}
+
+		?>
+
 			<br>
 		  <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 	
@@ -152,21 +253,25 @@
 						<?php	
 
 							if(isset($_POST['leerExcel'])){
-											$dir_subida = './controller/documentos/';
+											$dir_subida = './documentos/';
 											$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
 											$extencion2 = explode(".",$fichero_subido);
 											$tamnio = count($extencion2);
-
+											$termino=0;
 											$extencion3 = $extencion2[$tamnio-1];
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
+												$termino = 1;
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper("archivoPlantilla.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper("archivo_Plantilla.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 											}else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}	
-												
+											
+											if($termino == 1){
+												leerPlantillaBD();
+											}
 							}
 
 						?>	

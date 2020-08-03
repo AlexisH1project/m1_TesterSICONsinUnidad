@@ -60,15 +60,48 @@
 			$sheet = $objPHPExcel->getSheet(0); 
 			$highestRow = $sheet->getHighestRow(); 
 			$highestColumn = $sheet->getHighestColumn();
-			
+
 			echo $highestRow . "\n";
 			echo $highestColumn . "\n";
 
 
-			for ($row = 4; $row <= $highestRow; $row++){ 
+			for ($row = 2; $row <= $highestRow; $row++){ 
+
+					if($sheet->getCell("A".$row)->getValue() == ""){
+						if($row == $highestRow){
+							break;
+						}
+						$row++;
+					}
 					echo $sheet->getCell("A".$row)->getValue()." - ";
 					echo $sheet->getCell("B".$row)->getValue()." - ";
-					echo $sheet->getCell("C".$row)->getValue();
+					echo $sheet->getCell("C".$row)->getValue()." - ";
+					echo $sheet->getCell("D".$row)->getValue()." - ";
+					echo $sheet->getCell("E".$row)->getValue()." - ";
+					echo $sheet->getCell("F".$row)->getValue()." - ";
+					echo $sheet->getCell("G".$row)->getValue()." - ";
+					echo $sheet->getCell("H".$row)->getValue()." - ";
+					echo $sheet->getCell("I".$row)->getValue()." - ";
+					echo $sheet->getCell("J".$row)->getValue()." - ";
+					echo $sheet->getCell("K".$row)->getValue()." - ";
+					echo $sheet->getCell("L".$row)->getValue()." - ";
+					echo $sheet->getCell("M".$row)->getValue()." - ";
+					echo $sheet->getCell("N".$row)->getValue()." - ";
+					echo $sheet->getCell("O".$row)->getValue()." - ";
+					echo $sheet->getCell("P".$row)->getValue()." - ";
+					echo $sheet->getCell("Q".$row)->getValue()." - ";
+					echo $sheet->getCell("R".$row)->getValue()." - ";
+					echo $sheet->getCell("S".$row)->getValue()." - ";
+					echo $sheet->getCell("T".$row)->getValue()." - ";
+					echo $sheet->getCell("U".$row)->getValue()." - ";
+					echo $sheet->getCell("V".$row)->getValue()." - ";
+					echo $sheet->getCell("W".$row)->getValue()." - ";
+					echo $sheet->getCell("X".$row)->getValue()." - ";
+					echo $sheet->getCell("Y".$row)->getValue()." - ";
+					echo $sheet->getCell("Z".$row)->getValue()." - ";
+
+					echo "\n";
+
 			}
       
 ?>
