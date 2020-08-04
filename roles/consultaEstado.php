@@ -94,20 +94,28 @@
 
 	</head>
 	<body onload="nobackbutton();">
-		<?php
+			<?php
 				include "configuracion.php";
 				$usuarioSeguir =  $_GET['usuario_rol'];
-
-			?>
-
-				<?php
-				include "configuracion.php";
-				$usuarioSeguir =  $_GET['usuario_rol'];
+				$consulta = "SELECT * FROM usuarios WHERE usuario = '$usuarioSeguir'";
+				if($resultadoSelect = mysqli_query($conexion, $consulta)){
+					$rowUser = mysqli_fetch_assoc($resultadoSelect);
+					
+					if($rowUser['id_rol'] == 6){
 
 			?>
 			<br>
-		  <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
-	
+		  				<a  href= <?php echo ("'./soloQrtxt.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+
+			<?php
+					}else{
+			?>
+		  			<a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+			<?php
+
+					}
+				}
+			?>
 
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">

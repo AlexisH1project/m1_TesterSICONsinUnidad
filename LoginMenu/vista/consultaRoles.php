@@ -55,6 +55,9 @@
             }if($ROL == 5){
                         //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
                     header('Location:../../roles/consultaEstado.php?usuario_rol='.urlencode($user));//cambiar
+            }if($ROL == 6){
+                        //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
+                    header('Location:../../roles/soloQrtxt.php?usuario_rol='.urlencode($user));//cambiar
             }
 
              
