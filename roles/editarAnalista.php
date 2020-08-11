@@ -506,8 +506,11 @@
 					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
-
+										if($conId == 7){
+									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+									 			}else{
+									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
+									 			}
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>

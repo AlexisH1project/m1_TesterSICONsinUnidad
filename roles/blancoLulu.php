@@ -52,6 +52,20 @@
 		  .modal-footer {
 		    background-color: #f9f9f9;
 		  }
+
+		   tbody {
+		      display:block;
+		      max-height:500px;
+		      overflow-y:auto;
+		  }
+		  thead, tbody tr {
+		      display:table;
+		      width:180%;
+		      table-layout:fixed;
+		  }
+		  thead {
+		      width: calc( 100% - 1em )
+		  } 
 		  </style>
 
 
@@ -227,7 +241,6 @@
 			function listaDeDoc(text, listaEnviar){
 				document.getElementById("listaDoc").value = text;
 				document.getElementById("guardarDoc").value = listaEnviar;
-
 			}
 	
 		</script>
@@ -552,26 +565,13 @@
 							<label class="radio-inline"><input id="TipoEntregaArchivo" type="radio" name="TipoEntregaArchivo" value="Ambos" required >Ambos</label>
 				  		</div> 
 				</div>
-				
-				<div class="col-md-8 col-md-offset-8">
-						 <div class="form-row">
+					<div class="col-md-9">
 
-						  	<div class="col">
-						  		<div class="md-form md-0">
-								    <!-- <label  class="plantilla-label" for="archivo_1">Adjuntar un archivos</label> -->
-								    <!--  <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
-								    <input type="file" id="nameArchivo" name="nameArchivo" required>
-								   <!--  <p class="help-block">Ejemplo de texto de ayuda.</p> -->
-								</div>
-							</div>
+					 <div class="form-row">
+							 	<div class="col">
 
-						   <!-- <label  class="plantilla-label" for="arch">Nombre del archivo: </label> -->
-						  	<div class="col">
-						  		<div class="md-form md-0">
-									<div class="box" >
-
-												<select class="form-control border border-dark custom-select" name="documentoSelct">
-													
+												<select class="form-control border border-dark mdb-select md-form" name="documentoSelct">
+											
 													<?php
 													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
 													       die("Error cargando el conjunto de caracteres utf8");
@@ -585,20 +585,41 @@
 													<option value="<?php echo $listDoc["nombre_documento"]; ?>"><?php echo $listDoc["nombre_documento"]; ?></option>
 													<?php }?>          
 													</select>
-										</div>
-
+									
 
 						  		<!-- <div class="md-form md-0">
 									<input type="text" class="form-control unexp border border-dark" id="archA" name="archA" placeholder="Ingresa el nombre del archivo" maxlength="35" required >
 								</div> -->
+				
+						</div>		
+					</div>		
+				</div>
+				<br>
+				<div class="col-md-8 col-md-offset-8">
+						 <div class="form-row">
+
+						  	<div class="col">
+						  		<div class="md-form md-0">
+								    <!-- <label  class="plantilla-label" for="archivo_1">Adjuntar un archivos</label> -->
+								    <!--  <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
+								    <input type="file" id="nameArchivo" name="nameArchivo" required>
+								   <!--  <p class="help-block">Ejemplo de texto de ayuda.</p> -->
+								</div>
 							</div>
-						</div>	
+
+						   <!-- <label  class="plantilla-label" for="arch">Nombre del archivo: </label> -->
+						 
 						<div class="col">
 						  	<div class="md-form md-0">
 								<input type="submit" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
 							</div>	
 							<br>
 						</div>	
+					</div>	
+					</div>
+			
+				<div class="col-md-8 col-md-offset-8">
+
 					<?php 
 
 								$arrayView = explode("_", $listaMostrar);
@@ -611,7 +632,7 @@
 
 												';	
 												}
-
+						$banderaBoton=0;
 							if(isset($_POST['guardarAdj'])){
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfcL_1']);
@@ -626,10 +647,9 @@
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
 									$resRol=mysqli_query($conexion, $sqlRolDoc);
 									$idDoc = mysqli_fetch_row($resRol);
+									$banderaBoton=1;
 
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
-
-								
 
 									$dir_subida = './Controller/documentos/';
 											// Arreglo con todos los nombres de los archivos
@@ -666,13 +686,15 @@
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
-												
+													
 												 
-												echo "
+											echo "
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
-												echo '
+											$arrayNumDoc = explode("_", $enviarDoc);		
+											$numeroDeDocs = count($arrayNumDoc);
+												/*	echo '
 													<br>	<br>		<br>
 													<center>
 													<div class="col-md-8 col-md-offset-8">
@@ -691,17 +713,80 @@
 													</div>	
 													</center>
 
-												';
+												';*/
 																									   	
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
 							}
 						?>	
+<!-- ***************************************************************************************** -->	
 
-					</div>	
-								
-				</div>	
+	<table class="table table-striped table-bordered" style="margin-bottom: 0">
+					<?php 
+							include "configuracion.php";
+							$existenD =0;
+////////////// inicia la busqueda del archivo en carpeta 
+					$dir_subida = './Controller/documentos/';
+					// Arreglo con todos los nombres de los archivos
+					
+					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+										$resTotalReg = mysqli_query($conexion,$sqlReg);
+										$rowTotal = mysqli_fetch_row($resTotalReg);
+					for ($i = 0; $i < $rowTotal[0] ; $i++){
+						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+							$imprime = 0;
+						
+						if($imprime == 0){
+								echo "
+												<tr>
+												<td>$rowNombreDoc2[1]</td>
+												<td>";
+					    		//$contDoc++;
+
+						?>
+
+						<?php	
+
+								if($banderaBoton == 1){
+										for ($j=0; $j < $numeroDeDocs ; $j++) { 	
+											
+									 		if($rowNombreDoc2[2] == $arrayNumDoc[$j] ){  //strtolower($documentoPC[$j])::: strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
+									 				
+									
+						?>
+												<button class="btn btn-success" > ✔ </button>
+												</td>
+														
+						<?php
+												break;
+											}else if($j == $numeroDeDocs-1){
+						?>
+												<button class="btn btn-danger" > X </button>
+												</td>
+						<?php						
+											}
+										}
+									}else{
+
+						?>
+												<button class="btn btn-danger" > X </button>
+												</td>
+
+						<?php
+									}
+							}
+						}
+						 ?>
+
+					
+
+					</table>
+
+<!-- ***************************************************************************************** -->	
+ 				</div>	
 				<br>
 
 <br> <br> 

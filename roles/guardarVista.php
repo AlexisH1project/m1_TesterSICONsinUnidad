@@ -36,6 +36,20 @@
 				color:  #6f7271 ;
 				font-weight: bold;
 			}
+
+			tbody {
+		      display:block;
+		      max-height:500px;
+		      overflow-y:auto;
+		  }
+		  thead, tbody tr {
+		      display:table;
+		      width:180%;
+		      table-layout:fixed;
+		  }
+		  thead {
+		      width: calc( 100% - 1em )
+		  } 
 		  </style>
 		<script type="text/javascript">
 			
@@ -293,8 +307,9 @@
 
 												';	
 												}
+							$banderaBoton = 0;
 
-							if(isset($_POST['guardarAdj'])){
+						if(isset($_POST['guardarAdj'])){
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfc']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
@@ -302,7 +317,7 @@
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
-
+									$banderaBoton = 1;
 
 									 $hoy = "select CURDATE()";
 
@@ -325,7 +340,7 @@
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
-											foreach($files as $file){
+											/*foreach($files as $file){
 											    // Divides en dos el nombre de tu archivo utilizando el . 
 											    $data = explode("_",$file);
 											    $data2 = explode(".",$file);
@@ -351,17 +366,27 @@
 														unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion);
 											        	break;
 											   	}
-											}
+											}*/
 									//guardamos el archivo que se selecciono en la carpeta 
 										$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
 											$extencion2 = explode(".",$fichero_subido);
 											$tamnio = count($extencion2);
 
 											$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
+											//----------------Sacamos la Hora 
+											$hoy = "select CURDATE()";
+											$tiempo ="select curTime()";
 
+												 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+												 		$row = mysqli_fetch_row($resultHoy);
+												 		$row2 = mysqli_fetch_row($resultTime);
+												 }
+												 $hora = str_replace ( ":", '',$row2[0] ); 
+												 $fecha = str_replace ( "-", '',$row[0] ); 
+											//----------------Sacamos la Hora 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
@@ -373,7 +398,7 @@
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
 												//imprimimos la lista de documentos que se han cargado
-												echo '
+												/*echo '
 													<br>	<br>		<br>
 													<center>
 													<div class="col-md-8 col-md-offset-8">
@@ -393,7 +418,78 @@
 													</center>
 
 												';
-																									   	
+												*/
+													$arrayNumDoc = explode("_", $enviarDoc);		
+													$numeroDeDocs = count($arrayNumDoc);											
+										?>
+										<!-- ***************************************************************************************** -->	
+
+								<table class="table table-striped table-bordered" style="margin-bottom: 0">
+													<?php 
+														include "configuracion.php";
+														$existenD =0;
+							////////////// inicia la busqueda del archivo en carpeta 
+												$dir_subida = './Controller/documentos/';
+												// Arreglo con todos los nombres de los archivos
+												
+												$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+																	$resTotalReg = mysqli_query($conexion,$sqlReg);
+																	$rowTotal = mysqli_fetch_row($resTotalReg);
+												for ($i = 0; $i < $rowTotal[0] ; $i++){
+													$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+																	$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+																	$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+														$imprime = 0;
+													
+													if($imprime == 0){
+															echo "
+																			<tr>
+																			<td>$rowNombreDoc2[1]</td>
+																			<td>";
+												    		//$contDoc++;
+
+													?>
+
+													<?php	
+
+															if($banderaBoton == 1){
+																	for ($j=0; $j < $numeroDeDocs ; $j++) { 	
+																		
+																 		if($rowNombreDoc2[2] == $arrayNumDoc[$j] ){  //strtolower($documentoPC[$j])::: strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
+																 				
+																
+													?>
+																			<button class="btn btn-success" > ✔ </button>
+																			</td>
+																					
+													<?php
+																			break;
+																		}else if($j == $numeroDeDocs-1){
+													?>
+																			<button class="btn btn-danger" > X </button>
+																			</td>
+													<?php						
+																		}
+																	}
+																}else{
+
+													?>
+																			<button class="btn btn-danger" > X </button>
+																			</td>
+
+													<?php
+																}
+														}
+													}
+													 ?>
+
+												
+
+												</table>
+
+							<!-- ***************************************************************************************** -->	
+
+										<?php													
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}

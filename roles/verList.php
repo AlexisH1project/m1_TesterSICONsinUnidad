@@ -141,7 +141,8 @@
 				<h3>Consulta de Estado FOMOPE</h3>
 				<br>
 				
-					<table class="table table-hover table-white">
+					<table class="table table-striped table-bordered">
+
 						<?php 
 							include "configuracion.php";
 							$existenD =0;
@@ -166,92 +167,78 @@
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
 					$contDoc=0;
-					foreach($files as $file){
-					    // Divides en dos el nombre de tu archivo utilizando el . 
-					    $data = explode("_",$file);
-					    $data2 = explode(".",$file);
-						$indice = count($data2);	
-
-						$extencion = $data2[$indice-1];
-					    // Nombre del archivo
-					    $extractRfc = $data[0];
-					    $extractDoc = $data[1];
-					    // Extensión del archivo 
-
-					    if($ver[4] == $extractRfc){
-					    	$existenD++;
-					    		//$losDocEnCarpeta[$contDoc] = $data[1];
-					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
-										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
-										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
-										$documentosPC = $documentosPC."_".$data[1];
-										echo "
-												<tr>
-												<td>$rowNombreDoc[0]</td>
-												<td>";
-					    		//$contDoc++;
-						?>
-							<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
-							<?php	echo "
-
-												</td>
-										";	
-					    }
 
 
-					}
+					// Arreglo con todos los nombres de los archivos
 					
-					$documentoPC = explode("_", $documentosPC);
-					echo count($documentoPC);
 					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
-					for ($i = 1; $i < $rowTotal[0] ; $i++){
+					for ($i = 0; $i < $rowTotal[0] ; $i++){
+						$banderaSI = 0;
+						$duplicado = 0;
 						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 							$imprime = 0;
-						for ($j=1; $j < count($documentoPC) ; $j++) { 
-								if($rowNombreDoc2[2] == strtolower($documentoPC[$j])){  // strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
-									$imprime = 1;
-								}
-								
-						}
+						
 						if($imprime == 0){
 								echo "
 												<tr>
 												<td>$rowNombreDoc2[1]</td>
 												<td>";
 					    		//$contDoc++;
+
 						?>
-							<button class="btn btn-danger" > X </button>
-							<?php	echo "
 
+						<?php	
+							
+										foreach($files as $file){	
+											$data = explode("_",$file);
+											$conId = count($data);
+										    $data2 = explode(".",$file);
+											$indice = count($data2);	
+
+											$extencion = $data2[$indice-1];
+										    // Nombre del archivo
+										    $extractRfc = $data[0];
+										    $extractDoc = $data[1];
+									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc)){
+									 			$duplicado++;
+									 			if($duplicado > 1){
+						
+										 					echo "
+													<tr>
+													<td>$rowNombreDoc2[1]</td>
+													<td>";
+									 			}
+									 			if($conId == 7){
+									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+									 			}else{
+									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
+									 			}
+												$banderaSI = 1;
+						?>
+												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+													</td>
+														
+						<?php
+												}
+										  }
+
+										  if($banderaSI == 0){
+
+						?>
+												<button class="btn btn-danger" > X </button>
 												</td>
-										";
+						<?php
+											}
 								}
-
-					}
-
-
-////////////// termina parte de ver nomebre desde la carpeta
-								if($existenD == 0){
-									echo('
-											<br>
-											<br>
-											<div class="col-sm-12 ">
-											<div class="plantilla-inputv text-dark ">
-											    <div class="card-body"><h2 align="center">No existen documentos adjuntos.</h2></div>
-										</div>
-										</div>');
-								}
-						 ?>
-
-					
-
-					</table>
-			
+							}
+						?>
+												
+						
+</table>
 	
 	</body>
 
