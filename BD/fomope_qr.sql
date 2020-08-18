@@ -75,7 +75,7 @@ CREATE TABLE `fomope_qr` (
   `entidad_nac` varchar(2) COLLATE utf8_spanish_ci NOT NULL,
   `tex_con` varchar(600) COLLATE utf8_spanish_ci NOT NULL,
   `anio` varchar(4) COLLATE utf8_spanish_ci NOT NULL,
-  `usuario_modifco` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
+  `usuario_modifico` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `fechaAutorizacion` varchar(30) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 

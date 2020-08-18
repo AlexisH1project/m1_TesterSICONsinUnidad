@@ -60,6 +60,8 @@
 
 //            $nombreUser = $_POST['usuario_rol'];
 			$arr = unserialize(stripslashes($_POST['array']));
+			$arr2 = unserialize(stripslashes($_POST['array2']));
+
 							//echo($arr[0]);
 							// foreach($arr as $nombre=>$telefono)
 				   //          {
