@@ -163,7 +163,7 @@
 						$objPHPExcel->getActiveSheet()->setCellValue('AS'.$fila, $imprimirRow[44]); 
 						$objPHPExcel->getActiveSheet()->setCellValue('AT'.$fila, $imprimirRow[45]); 
 						$objPHPExcel->getActiveSheet()->setCellValue('AU'.$fila, $imprimirRow[46]); 
-						$objPHPExcel->getActiveSheet()->setCellValue('AV'.$fila, $imprimirRow[47]); 
+					/*	$objPHPExcel->getActiveSheet()->setCellValue('AV'.$fila, $imprimirRow[47]); 
 						$objPHPExcel->getActiveSheet()->setCellValue('AW'.$fila, $imprimirRow[48]); 
 						$objPHPExcel->getActiveSheet()->setCellValue('AX'.$fila, $imprimirRow[49]); 
 						$objPHPExcel->getActiveSheet()->setCellValue('AY'.$fila, $imprimirRow[50]); 
@@ -233,10 +233,11 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('DK'.$fila, $imprimirRow[114]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('DL'.$fila, $imprimirRow[115]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('DM'.$fila, $imprimirRow[116]); 
-		                $objPHPExcel->getActiveSheet()->setCellValue('DN'.$fila, $imprimirRow[117]);
-		                $objPHPExcel->getActiveSheet()->setCellValue('DO'.$fila, $imprimirRow[118]);
-		                $objPHPExcel->getActiveSheet()->setCellValue('DP'.$fila, $imprimirRow[119]);
-		                $objPHPExcel->getActiveSheet()->setCellValue('DQ'.$fila, $imprimirRow[120]); 
+		                $objPHPExcel->getActiveSheet()->setCellValue('DN'.$fila, $imprimirRow[117]);*/
+		                $objPHPExcel->getActiveSheet()->setCellValue('AV'.$fila, $imprimirRow[118]);
+		                $objPHPExcel->getActiveSheet()->setCellValue('AW'.$fila, $imprimirRow[119]);
+		                $objPHPExcel->getActiveSheet()->setCellValue('AX'.$fila, $imprimirRow[120]); 
+		                $objPHPExcel->getActiveSheet()->setCellValue('AY'.$fila, $imprimirRow[125]); 
 
 		                $fila++;
 					}else{
@@ -245,8 +246,8 @@
 				}    
    
                         $fila--;
-                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:DQ".$fila);
-						$objPHPExcel->getActiveSheet()->getStyle("A8:DO".$fila)->applyFromArray($estiloTituloColumnas);
+                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:AY".$fila);
+						$objPHPExcel->getActiveSheet()->getStyle("A8:AY".$fila)->applyFromArray($estiloTituloColumnas);
                 // Write the file
                         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, $fileType);
                         //$objWriter->save("fomopeDESCARGA.xlsx");
