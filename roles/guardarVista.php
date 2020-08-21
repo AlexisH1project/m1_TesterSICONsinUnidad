@@ -52,6 +52,56 @@
 		  } 
 		  </style>
 		<script type="text/javascript">
+
+			$(document).ready(function(){
+				$(document).on('keydown', '.rfcL', function(){
+					var id = this.id;
+					var splitid = id.split('_');
+					var indice = splitid[1];
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_rfc.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+
+								},
+								success: function(data){
+									response(data);
+									
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.label);
+							var buscarid = ui.item.value;
+							console.log(buscarid);
+							//alert(buscarid);
+							$.ajax({
+								url: 'resultados_rfc.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+
+								},
+								success: function(data){
+									console.log(data);
+									var infEmpleado = eval(data);
+									//document.getElementById("rfc").value = infEmpleado[1] ;
+									document.getElementById("apellido1").value = infEmpleado[3] ;
+									document.getElementById("apellido2").value = infEmpleado[4] ;
+									document.getElementById("nombre").value = infEmpleado[5] ;
+
+
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
 			
 			function listaDeDoc(text, listaEnviar){
 				document.getElementById("listaDoc").value = text;
@@ -198,10 +248,15 @@
 						<div class="col">
 							<div class="form-group col-md-12">
 								<label class="plantilla-label" for="elRfc">*RFC:</label>
-								<input type="text" class="form-control unexp border border-dark" id="rfc" name="rfc" value="<?php if(isset($_POST["rfc"])){ echo $_POST["rfc"];} ?>" placeholder="Ingresa rfc" maxlength="13" >
+								
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="RFC" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
 							</div>
+
+						
 							<input type="text" style="display:none;" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="Apellido Paterno" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" >
 							<input type="text" class="form-control" id="guardarDoc" name="guardarDoc" value="<?php if(isset($_POST["guardarDoc"])){ echo $_POST["guardarDoc"];} ?>" style="display:none">
+
+
 						</div>
 
 						
@@ -210,19 +265,19 @@
 				  			<label  class="plantilla-label" for="nombreT">NOMBRE COMPLETO: </label>
 
 						   <div class="form-group col-md-12">
-						        <input type="text" class="form-control unexp border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" maxlength="30" value="<?php if(isset($_POST["apellido1"])){ echo $_POST["apellido1"];} ?>" required>
+						        <input type="text" class="form-control border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" value="<?php if(isset($_POST["apellido1"])){ echo $_POST["apellido1"];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						     <div class="form-group col-md-12">
-						        <input type="text" class="form-control unexp border border-dark" id="apellido2" name="apellido2" value="<?php if(isset($_POST["apellido2"])){ echo $_POST["apellido2"];} ?>" placeholder="Apellido Materno" maxlength="30" required>
+						        <input type="text" class="form-control border border-dark" id="apellido2" name="apellido2" placeholder="Apellido Materno" value="<?php if(isset($_POST["apellido2"])){ echo $_POST["apellido2"];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						     <div class="form-group col-md-12">
-						        <input type="text" class="form-control unexp border border-dark" id="nombre" name="nombre" value="<?php if(isset($_POST["nombre"])){ echo $_POST["nombre"];} ?>" placeholder="Nombre" maxlength="40" value="" required>
+						        <input type="text" class="form-control border border-dark" id="nombre" name="nombre" placeholder="Nombre" maxlength="40" value="<?php if(isset($_POST["nombre"])){ echo $_POST["nombre"];} ?>" required>
 						      </div>
 						    </div>
 
@@ -311,7 +366,7 @@
 
 						if(isset($_POST['guardarAdj'])){
 									$nombre = strtoupper($_POST['nombre'] );
-									$elRfc =  strtoupper($_POST['rfc']);
+									$elRfc =  strtoupper($_POST['rfcL_1']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
 									$elApellido2 = strtoupper ($_POST['apellido2']);
 									$nombreArch = $_POST['documentoSelct'];
