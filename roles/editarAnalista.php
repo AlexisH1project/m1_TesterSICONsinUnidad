@@ -491,6 +491,7 @@
 					foreach($files as $file){
 					    // Divides en dos el nombre de tu archivo utilizando el . 
 					    $data = explode("_",$file);
+						$conId = count($data);
 					    $data2 = explode(".",$file);
 						$indice = count($data2);	
 

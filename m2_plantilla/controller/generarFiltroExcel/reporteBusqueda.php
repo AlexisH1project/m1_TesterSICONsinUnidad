@@ -64,44 +64,57 @@
 			echo $highestRow . "\n";
 			echo $highestColumn . "\n";
 
+			//Creamos array para asignar los valores de las columnas y poder recorrer el arreglo y saber si el valor es vacio 
+			$columnasExcel = array(1 => "A",
+			 						2 => "B",
+			 						3 => "C",
+			 						4 => "D", 
+			 						5 => "E",
+			 						6 =>"F",
+			 						7 => "G",
+			 						8 => "H",
+			 						9 => "I",
+			 						10 => "J",
+			 						11 => "K",
+			 						12 => "L",
+			 						13 => "M",
+			 						14 => "N",
+			 						15 => "O",
+			 						16 => "P",
+			 						17 => "Q",
+			 						18 => "R",
+			 						19 => "S",
+			 						20 => "T",
+			 						21 => "U",
+			 						22 => "V",
+			 						23 => "W",
+			 						24 => "X",
+			 						25 => "Y",
+			 						26 => "Z");
 
 			for ($row = 2; $row <= $highestRow; $row++){ 
+				$alertaElim = 0;
+				if($row == $highestRow){
+					break;
+				}
 
-					if($sheet->getCell("A".$row)->getValue() == ""){
-						if($row == $highestRow){
+				for ($i=1; $i < count($columnasExcel)-1 ; $i++) { 
+						//echo $sheet->getCell($columnasExcel[$i].$row)->getValue()." - ";
+						if($sheet->getCell($columnasExcel[$i].$row)->getValue() == ""){
+							//echo "<script> alert('Hay columna en blanco'); </script>";
+
+							$alertaElim = 1;
+							//$row++;
 							break;
+							//$row++;
 						}
-						$row++;
+				}
+
+				if($alertaElim == 0){
+					for ($j=1; $j < count($columnasExcel)-1 ; $j++) { 
+						echo $sheet->getCell($columnasExcel[$j].$row)->getValue()." - ";
 					}
-					echo $sheet->getCell("A".$row)->getValue()." - ";
-					echo $sheet->getCell("B".$row)->getValue()." - ";
-					echo $sheet->getCell("C".$row)->getValue()." - ";
-					echo $sheet->getCell("D".$row)->getValue()." - ";
-					echo $sheet->getCell("E".$row)->getValue()." - ";
-					echo $sheet->getCell("F".$row)->getValue()." - ";
-					echo $sheet->getCell("G".$row)->getValue()." - ";
-					echo $sheet->getCell("H".$row)->getValue()." - ";
-					echo $sheet->getCell("I".$row)->getValue()." - ";
-					echo $sheet->getCell("J".$row)->getValue()." - ";
-					echo $sheet->getCell("K".$row)->getValue()." - ";
-					echo $sheet->getCell("L".$row)->getValue()." - ";
-					echo $sheet->getCell("M".$row)->getValue()." - ";
-					echo $sheet->getCell("N".$row)->getValue()." - ";
-					echo $sheet->getCell("O".$row)->getValue()." - ";
-					echo $sheet->getCell("P".$row)->getValue()." - ";
-					echo $sheet->getCell("Q".$row)->getValue()." - ";
-					echo $sheet->getCell("R".$row)->getValue()." - ";
-					echo $sheet->getCell("S".$row)->getValue()." - ";
-					echo $sheet->getCell("T".$row)->getValue()." - ";
-					echo $sheet->getCell("U".$row)->getValue()." - ";
-					echo $sheet->getCell("V".$row)->getValue()." - ";
-					echo $sheet->getCell("W".$row)->getValue()." - ";
-					echo $sheet->getCell("X".$row)->getValue()." - ";
-					echo $sheet->getCell("Y".$row)->getValue()." - ";
-					echo $sheet->getCell("Z".$row)->getValue()." - ";
-
 					echo "\n";
-
+				}
 			}
-      
 ?>

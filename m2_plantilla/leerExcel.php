@@ -39,58 +39,7 @@
 		}
 		  
 		  </style>
-		  <script type="text/javascript">
-			
-
-			$(document).ready(function(){
-				$(document).on('keydown', '.unexp', function(){
-					var id = this.id;
-					var splitid = id.split('_');
-					var indice = splitid[1];
-					$('#'+id).autocomplete({
-						source: function(request, response){
-							$.ajax({
-								url: "resultados_ur.php",
-								type: 'post',
-								dataType: "json",
-								data: {
-									busqueda: request.term,request:1
-								},
-								success: function(data){
-									response(data);
-								}
-							});
-						},
-						select: function (event, ui){
-							$(this).val(ui.item.label);
-							var buscarid = ui.item.value;
-							$.ajax({
-								url: 'resultados_ur.php',
-								type: 'post',
-								data: {
-									buscarid:buscarid,request:2
-								},
-								dataType: 'json',
-								success:function(response){
-									var len = response.length;
-									if(len > 0){
-										var idx2 = response[0]['idx2'];
-										var unexp = response[0]['unexp'];
-										document.getElementById('unexp_'+indice).value = unexp;
-									}
-								}
-							});
-							return false;
-						}
-					});
-				});
-			});
-
-
-
-		</script>
-
-
+		
 
 	</head>
 	<body onload="nobackbutton();">
