@@ -141,12 +141,10 @@
 									console.log(data);
 									var infEmpleado = eval(data);
 									//document.getElementById("rfc").value = infEmpleado[1] ;
-									document.getElementById("curp").value = infEmpleado[2] ;
-									document.getElementById("apellido1").value = infEmpleado[3] ;
-									document.getElementById("apellido2").value = infEmpleado[4] ;
-									document.getElementById("nombre").value = infEmpleado[5] ;
-
-
+									document.getElementById("curp").value = infEmpleado[0].curp ;
+									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
+									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
+									document.getElementById("nombre").value = infEmpleado[0].nombre ;
 								}
 							});
 							return false;

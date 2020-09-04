@@ -154,12 +154,10 @@
 									console.log(data);
 									var infEmpleado = eval(data);
 									//document.getElementById("rfc").value = infEmpleado[1] ;
-									document.getElementById("curp").value = infEmpleado[2] ;
-									document.getElementById("apellido1").value = infEmpleado[3] ;
-									document.getElementById("apellido2").value = infEmpleado[4] ;
-									document.getElementById("nombre").value = infEmpleado[5] ;
-
-
+									document.getElementById("curp").value = infEmpleado[0].curp ;
+									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
+									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
+									document.getElementById("nombre").value = infEmpleado[0].nombre ;
 								}
 							});
 							return false;
@@ -275,8 +273,9 @@
 			}
 
 			
-			
-			$sql = "SELECT * FROM fomope WHERE id_movimiento = '$idMovSeg'";
+//------ este codigo comentado lo identifique y no tiene que ir , no encontre su funcionalidad
+
+		/*	$sql = "SELECT * FROM fomope WHERE id_movimiento = '$idMovSeg'";
 
 			if($result = mysqli_query($conexion,$sql)){
 				$ver = mysqli_fetch_row($result);
@@ -284,7 +283,7 @@
 					echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 					echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 								
-			}
+			}*/
 
 			$valor = "";
 			$hoy = "select CURDATE()";
@@ -338,7 +337,7 @@
 ?>
 		
 
-    	<br>
+    	<br><br><br><br>
 
 		<div class="wrapper d-flex align-items-stretch">
 			<nav id="sidebar" class=" bordv">

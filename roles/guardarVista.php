@@ -53,6 +53,15 @@
 		  </style>
 		<script type="text/javascript">
 
+			function datosSelect(opcionSelect, opcion2){
+					var datos = opcionSelect;
+					var miSelect2 = document.getElementById("movFecha");
+				    var aTag = document.createElement('option');
+				    aTag.setAttribute('value',datos);
+				    aTag.innerHTML = opcion2;
+				    miSelect2.appendChild(aTag);
+			}
+
 			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
 					var id = this.id;
@@ -73,8 +82,7 @@
 									
 								}
 							});
-						},
-						select: function (event, ui){
+						},select: function (event, ui){
 							$(this).val(ui.item.label);
 							var buscarid = ui.item.value;
 							console.log(buscarid);
@@ -83,16 +91,31 @@
 								url: 'resultados_rfc.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:2
-
+									buscarid:buscarid,request:2,
+									
 								},
 								success: function(data){
-									console.log(data);
 									var infEmpleado = eval(data);
+									console.log(data);
+									console.log(infEmpleado[0].apellido1);
+								      console.log(infEmpleado.length);
+
 									//document.getElementById("rfc").value = infEmpleado[1] ;
-									document.getElementById("apellido1").value = infEmpleado[3] ;
-									document.getElementById("apellido2").value = infEmpleado[4] ;
-									document.getElementById("nombre").value = infEmpleado[5] ;
+									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
+									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
+									document.getElementById("nombre").value = infEmpleado[0].nombre ;
+									
+								  for(var i=1; i < infEmpleado.length; i++){ 
+								        console.log(infEmpleado[i]);
+									    if(infEmpleado[i].id != null){
+
+								        var miSelect2 = document.getElementById("movFecha");
+									    var aTag = document.createElement('option');
+									    aTag.setAttribute('value',infEmpleado[i].id);
+									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
+									    miSelect2.appendChild(aTag);
+										}
+									}
 
 
 								}
@@ -251,14 +274,24 @@
 								
 								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="RFC" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
 							</div>
-
-						
+		
 							<input type="text" style="display:none;" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="Apellido Paterno" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" >
 							<input type="text" class="form-control" id="guardarDoc" name="guardarDoc" value="<?php if(isset($_POST["guardarDoc"])){ echo $_POST["guardarDoc"];} ?>" style="display:none">
 
+						<div class="md-form md-0">
+							<div class="box" >
+								<label  class="plantilla-label" for="arch">Movimientos: </label>
+								
+								<select class="form-control border border-dark" id="movFecha" name="movFecha">
+									
+								</select>
+							
+								
+							</div>
 
 						</div>
 
+						</div>
 						
 						<div class="col">
 				  			<div class="col">
@@ -364,7 +397,7 @@
 												}
 							$banderaBoton = 0;
 
-						if(isset($_POST['guardarAdj'])){
+					if(isset($_POST['guardarAdj'])){
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfcL_1']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
@@ -372,7 +405,26 @@
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
+									if(isset($_POST['movFecha'])){
+										$optionSelec = $_POST['movFecha'];
+									}else{
+										$optionSelec = "x";
+									}
+									//echo "select:  ".$optionSelec;
 									$banderaBoton = 1;
+	if($optionSelec == "x"){
+		
+		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
+	}else if($optionSelec == "undefined"){
+		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
+	}else{	
+	         //------Buscamos los datos para mostrar en el select y mandar a la funcion en JS para poder cargar solo ese dato
+        							$consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion FROM fomope WHERE id_movimiento='$optionSelec'";
+        							if($resultSelect = mysqli_query($conexion, $consulta)){
+        								$rowSelect = mysqli_fetch_row($resultSelect);
+        								$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
+        								//echo $opcionCompleta;
+        							}else{ echo "errror";}
 
 									 $hoy = "select CURDATE()";
 
@@ -389,8 +441,8 @@
 										$idDoc = mysqli_fetch_row($resRol);
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/documentos/';
-									$dir_subida2 = './Controller/documentosEliminados/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/';
+									$dir_subida2 = './Controller/DOCUMENTOS_SUPR/';
 
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -428,7 +480,7 @@
 											$tamnio = count($extencion2);
 
 											$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
-											//----------------Sacamos la Hora 
+			//----------------Sacamos la Hora 
 											$hoy = "select CURDATE()";
 											$tiempo ="select curTime()";
 
@@ -438,20 +490,22 @@
 												 }
 												 $hora = str_replace ( ":", '',$row2[0] ); 
 												 $fecha = str_replace ( "-", '',$row[0] ); 
-											//----------------Sacamos la Hora 
+			// -------------- Guardamos archivo en carpeta				
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$optionSelec."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
 												
-												 //los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
+		//los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
 												echo "
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
+												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
+
 												//imprimimos la lista de documentos que se han cargado
 												/*echo '
 													<br>	<br>		<br>
@@ -484,7 +538,7 @@
 														include "configuracion.php";
 														$existenD =0;
 							////////////// inicia la busqueda del archivo en carpeta 
-												$dir_subida = './Controller/documentos/';
+												$dir_subida = './Controller/DOCUMENTOS_MOV/';
 												// Arreglo con todos los nombres de los archivos
 												
 												$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
@@ -573,6 +627,8 @@
 								}
 
 							}
+	}
+		
 
 					if(isset($_POST['borrar'])){
 						$usuarioSeguir = $_GET['usuario_rol'];

@@ -25,8 +25,8 @@ $soloNombre = explode(".", $nombreDeArchivoDescarga);
 //echo $nombreDeArchivoDescarga."  ".$tipoArchivo;
 //echo $usuarioSeguir."  ".$noFomope;
 
-$dir_subida = './documentos/';
-$dir_subida2 = './documentosEliminados/';
+$dir_subida = './'.$_POST['ruta'].'/';
+$dir_subida2 = './DOCUMENTOS_SUPR/';
 
 		// Arreglo con todos los nombres de los archivos
 		$files = array_diff(scandir($dir_subida), array('.', '..')); 
