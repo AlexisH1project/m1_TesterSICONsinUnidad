@@ -1,1 +1,8 @@
+<<<<<<< HEAD
 hola mundo victor
+=======
+Alexis  p1
+Alexis  p2
+Alexis  p2
+Alexis  p2
+>>>>>>> c004ab48f2e9138a7abaf3b1fb6c3889c88de65a
