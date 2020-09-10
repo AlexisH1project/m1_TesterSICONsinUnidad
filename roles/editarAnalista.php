@@ -483,15 +483,54 @@
 										";	
 									}
 								}*/
-								////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/documentos/';
+					////////////// inicia la busqueda del archivo en carpeta 
+					$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
+
+					////////////// inicia la busqueda del archivo en carpeta 
+					$dir_subida = './Controller/DOCUMENTOS/';
+					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
+
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
+					$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 					$contDoc=0;
+
+							foreach($files2 as $file){	
+											$data = explode("_",$file);
+											$conId = count($data);
+										    $data2 = explode(".",$file);
+											$indice = count($data2);	
+
+											$extencion = $data2[$indice-1];
+										    // Nombre del archivo
+										    $extractRfc = $data[0];
+										    $extractDoc = $data[1];
+									 		if($ver[4] == $extractRfc && $data[6] == $noFomope){
+									 			$banderaMov = 1;
+													$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+														$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+														$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+										 					echo "
+													<tr>
+													<td>$rowNombreDoc2[0]</td>
+													";
+									 			$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+											
+						?>	
+												<td>
+												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												</td>
+														
+						<?php
+												
+												}
+										  }
+
+		if($banderaMov == 0){
 					foreach($files as $file){
 					    // Divides en dos el nombre de tu archivo utilizando el . 
 					    $data = explode("_",$file);
-						$conId = count($data);
+					    $conId = count($data);
 					    $data2 = explode(".",$file);
 						$indice = count($data2);	
 
@@ -512,6 +551,7 @@
 									 			}else{
 									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 									 			}
+										$documentosPC = $documentosPC."_".$data[1];
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>
@@ -525,6 +565,7 @@
 										";	
 					    }
 
+
 					}
 ////////////// termina parte de ver nomebre desde la carpeta
 								if($existenD == 0){
@@ -537,6 +578,7 @@
 										</div>
 										</div>');
 								}
+					}
 					?>
 
 					
