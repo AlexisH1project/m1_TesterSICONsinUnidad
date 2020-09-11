@@ -172,3 +172,18 @@ function verDatosQr(movimiento, elUsuario){
 	var m = movimiento;
 	window.location.href = 'qrEditar.php?noFomope='+m+'&usuario='+elUsuario;
 }
+
+
+// mandamos a llamarlo desde la pagina consultaEstado.php
+function guardarId(id){
+	//document.getElementById("idMovHistorial").value = id;
+    console.log(id);
+   $.ajax({ 
+         url: 'Controller/envioID.php', 
+         type: 'POST', 
+         data: { val: id }
+        }).done( function(info){
+        	$("#exampleModal1 .modal-body").html(info);
+        	//$("#exampleModal1 .modal-body").modal("show");
+        }); 
+}

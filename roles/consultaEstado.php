@@ -127,9 +127,6 @@
 
 			
 			});
-
-
-
 		</script>
 
 
@@ -297,7 +294,7 @@
 		En el id de table se consulta que rol es para que solo esa persona pueda editar los apartados
 	-->
 	<div class="table-responsive">
-		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0">
+		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
 			
 						<thead>
 						    <tr>
@@ -793,7 +790,10 @@
 						<tr id="<?php echo $ver[0] ?>">
 							<td style="display: none;"><?php echo $ver[0] ?></td>
 							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[1] ?></td>
+							<td>
+				<!-- activamos funcion de .ajax para poder mostrar el histirial del proceso del fomope  -->
+							<button type="button"  onclick="guardarId(<?php echo $ver[0]; ?>)"  id="verHistorial" name="verHistorial" class='btn-secondary' data-toggle="modal" data-target="#exampleModal1" data-whatever="@getbootstrap"><?php echo $ver[1] ?></button>
+							</td>
 							<td><?php echo $ver[3] ?></td>
 							<td><?php echo $ver[44] ?></td>
 							<td><?php echo $ver[23] ?></td>
@@ -841,10 +841,24 @@
 
 					</form>
 
-
-
+				<!-- 	<div id="result" style="display: none;"> -->
 	</center>
 
+					<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Historial del FOMOPE</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">	          
+							      </div>
+							       
+							    </div>
+							  </div>
+							</div>
 	
 	</body>
 
