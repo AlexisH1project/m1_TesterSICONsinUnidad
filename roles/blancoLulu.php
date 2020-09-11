@@ -250,6 +250,7 @@
 		<?php 
 			include "Controller/configuracion.php";
 			$usuarioSeguir =  $_GET['usuario_rol'];
+			$banderaid = "x"; //bandera que si cambia de x es porque existe un id_movimiento y el registro ya esta en la BD
 
 					if(isset($_POST["listaDoc"])){ 
 						$listaMostrar = $_POST["listaDoc"];
@@ -631,15 +632,39 @@
 
 												';	
 												}
-						$banderaBoton=0;
+						$banderaBoton=0; //admin2
 							if(isset($_POST['guardarAdj'])){
+								    $unidad= $_POST['unexp_1'];
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfcL_1']);
+									$elCurp = strtoupper($_POST['curp']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
 									$elApellido2 = strtoupper ($_POST['apellido2']);
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
+									$lafechaIng = $_POST['fechaIngreso'];
+									$iniciolab = $_POST['del2'];
+									$finalizalab = $_POST['al3'];
+
+									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ";
+
+									$res1 = mysqli_query($conexion,$datosDobles);
+								    $res1Check = mysqli_num_rows($res1);
+
+                                   	if ($res1Check<1) {
+                                   		
+                                   		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
+
+                                   		if($datasub = mysqli_query($conexion,$newsql)){
+                                   		}		
+                                   	}
+
+									if($datasub2 = mysqli_query($conexion,$datosDobles)){
+                                   			$extid =mysqli_fetch_row($datasub2);
+                                   			$banderaid = $extid[0];
+                                   			echo $banderaid;
+                                   	}		
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
@@ -650,7 +675,7 @@
 
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/documentos/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
@@ -661,6 +686,16 @@
 												$indice = count($data2);	
 
 												$extencion = $data2[$indice-1];
+                         //----------------Sacamos la Hora 
+											$hoy = "select CURDATE()";
+											$tiempo ="select curTime()";
+											if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+												 		$rowfecha = mysqli_fetch_row($resultHoy);
+												 		$rowhora = mysqli_fetch_row($resultTime);
+												 }
+												 $hora = str_replace ( ":", '',$rowhora[0] ); 
+												 $fecha = str_replace ( "-", '',$rowfecha[0] ); 
+
 											    // Nombre del archivo
 											    $extractRfc = $data[0];
 											    $nameAdj = $data[1];
@@ -680,7 +715,7 @@
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
@@ -720,7 +755,7 @@
 							}
 						?>	
 <!-- ***************************************************************************************** -->	
-
+    <input style= "display: none;"type="text" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
 	<table class="table table-striped table-bordered" style="margin-bottom: 0">
 					<?php 
 							include "configuracion.php";

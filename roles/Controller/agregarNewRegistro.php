@@ -15,6 +15,7 @@
 		$motivoR = $_POST['comentarioR'];
 		$fechaDel = $_POST['del2'];
 		$fechaAl = $_POST['al3'];
+		$id_movIdentify = $_POST['id_env']; 
 
 		$laQna = $_POST['qnaActual'];
 		$documentosList = $_POST['guardarDoc'];
@@ -138,13 +139,30 @@
 					        		$unidadC = 	$rowU['unidadCorrespondiente'];
 		}
 
+			
 			if($id_rol == 0 AND $radioAdd_rechazar != "bandeja principal"){
+			
+			if($id_movIdentify != "x"){
+
+$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+
+				}else{
+
 					$sql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('$colorAccion','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$analista','$row[0] - $usuarioEdito')";
+				}
 			
 
 			}else if ($id_rol == 1 AND $radioAdd_rechazar != "bandeja principal"){
+			
+				if($id_movIdentify!= "x"){
+
+$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd',fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+ //cuando la fecha de autorizacion ya tenga un dato significa que puede pasar 
+				}else{
+
 				$sql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,fechaAutorizacion,analistaCap,  	fechaCaptura  ) VALUES ('$colorAccion','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$row[0] - $usuarioEdito', '$analista', '$row[0] - $usuarioEdito' )";
 
+			    }
 			}
 			/*
 
