@@ -311,6 +311,35 @@
 								<input  class="form-control unexp border border-dark" id="TipoEntregaArchivo" type="text" name="TipoEntregaArchivo" value="<?php echo $ver[11] ?>" required readonly >
 				  		</div>
 
+				  		  <div class="form-group col-md-8">
+									<div class="box" >
+
+										<label  class="plantilla-label estilo-colorg" for="elejir">¿A QUIEN SERÁ TURNADO?</label>
+												 
+												<select class="form-control border border-dark custom-select" name="usuar">
+													
+													<?php
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta2 = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$ver[45]'";
+													$resultado = mysqli_query($conexion , $consulta);
+													$resultado2 = mysqli_query($conexion , $consulta2);
+													$nombreUserSelec = mysqli_fetch_row($resultado2);
+													$contador=0;?>
+													<option value="<?php echo $ver[45]; ?>"> <?php echo $nombreUserSelec[0]; ?>  </option>
+												<?php
+													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
+													<?php }?>          
+												</select>
+										</div>
+										 <br>  
+
+							</div>
+
 				  		<div class="form-group col-md-12" >	
 					  		<label class="plantilla-label estilo-colorg" for="listaArchivos">LISTA DE ARCHIVOS: </label>
 						</div>
