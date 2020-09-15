@@ -179,6 +179,8 @@
 				    var f = $("#nombre").val();
 				    var g = $("#fechaIngreso").val();
 				    //var h = $("#TipoEntregaArchivo").val();
+				    var i = $("#del2").val();
+
 				     if (b !== '') {
 					      var tamRFC = b.length;
 					 	if (tamRFC<13){
@@ -194,7 +196,7 @@
 					 }
 				     var tamCURP = c.length;
 
-				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| $('input:radio[name=TipoEntregaArchivo]:checked').val() =="Ninguno" ) {
+				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| $('input:radio[name=TipoEntregaArchivo]:checked').val() =="Ninguno" || i=="" ) {
 				        alert("Falta completar campo");		
 				        return false;
 				      } else 
@@ -543,15 +545,15 @@
 							<div class="text-center">
 								<label class="plantilla-label estilo-colorg" for="del2">*Del:</label>
 							</div>
-							<input type="date" class="form-control border border-dark" id="del2" name="del2" value="<?php if(isset($_POST["del2"])){ echo $_POST["del2"];} ?>" placeholder="Del" >
-							<small name= "alertVigencia" id= "alertVigencia" class="text-danger">
+							    <input type="date" class="form-control border border-dark" id="del2" name="del2" placeholder="Del" value="<?php if(isset($_POST["del2"])){ echo $_POST["del2"];} ?>" required>
+
 				        	</small> 
 						</div>
 						<div class="form-group col-md-6">
 							<div class="text-center">
 								<label class="plantilla-label estilo-colorg" for="al3">al:</label>
 							</div>
-						<input  type="date" class="form-control border border-dark" id="al3" name="al3" value="<?php if(isset($_POST["al3"])){ echo $_POST["al3"];} ?>" placeholder="al"> <!--required-->
+						<input  type="date" class="form-control border border-dark" id="al3" name="al3" value="<?php if(isset($_POST["al3"])){ echo $_POST["al3"];} ?>" placeholder="al" requiered> <!--required-->
 						</div>
 					</div>
 				  		<div class="form-group col-md-12" >	
@@ -663,7 +665,7 @@
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
                                    			$extid =mysqli_fetch_row($datasub2);
                                    			$banderaid = $extid[0];
-                                   			echo $banderaid;
+                                   		//	echo $banderaid;
                                    	}		
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;

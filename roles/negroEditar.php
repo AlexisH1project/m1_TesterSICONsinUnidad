@@ -469,7 +469,7 @@
 						    <div class="col">
 						      <div class="md-form mt-0">
 						        <label class="plantilla-label estilo-colorg" for="CURP">CURP: </label>
-						   		 <input type="text" class="form-control border border-dark" id="curp" name="curp" placeholder="Ingresa CURP" maxlength="18" value="<?php echo $ver[5] ?>" >
+						   		 <input type="text" class="form-control border border-dark" id="curp" name="curp" placeholder="Ingresa CURP" maxlength="18" value="<?php echo $ver[5] ?>" required>
 						      </div>
 						    </div>
 						</div>
@@ -511,7 +511,7 @@
 							<div class="text-center">
 								<label  class="plantilla-label estilo-colorg" for="del">*Del:</label>
 							</div>
-							<input type="date" class="form-control border border-dark" id="del" value="<?php echo $ver[24] ?>" name="del" placeholder="Del">
+							<input type="date" class="form-control border border-dark" id="del" name="del" placeholder="Del" value="<?php echo $ver[24] ?>" required>
 							<small name= "alertVigencia" id= "alertVigencia" class="text-danger">
 				        	</small> 
 						</div>
@@ -602,17 +602,26 @@
 
 
 							if(isset($_POST['guardarAdj'])){
+									$unidad= $_POST['unexp_1'];
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfcL_1']);
+									$elCurp = strtoupper($_POST['curp']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
 									$elApellido2 = strtoupper ($_POST['apellido2']);
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
+									$lafechaIng = $_POST['fechaIngreso'];
+									$iniciolab = $_POST['del'];
+									$finalizalab = $_POST['al'];
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+
+									$sqlActualizar = "UPDATE fomope SET unidad = '$unidad', nombre = '$nombre', rfc = '$elRfc', curp = '$elCurp', apellido_1 = '$elApellido2', apellido_2 = '$elApellido2',fechaIngreso = '$lafechaIng', vigenciaDel = '$iniciolab', vigenciaAl = '$finalizalab' WHERE id_movimiento = '$idMovSeg'";
+									$dataActualizada = mysqli_query($conexion,$sqlActualizar);
+
 									$resRol=mysqli_query($conexion, $sqlRolDoc);
 									$idDoc = mysqli_fetch_row($resRol);
 
@@ -620,7 +629,7 @@
 
 								
 
-									$dir_subida = './Controller/documentos/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
@@ -635,6 +644,21 @@
 											    $extractRfc = $data[0];
 											    $nameAdj = $data[1];
 											    // Extensión del archivo 
+                         //----------------Sacamos la Hora 
+											$hoy = "select CURDATE()";
+											$tiempo ="select curTime()";
+											if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+												 		$rowfecha = mysqli_fetch_row($resultHoy);
+												 		$rowhora = mysqli_fetch_row($resultTime);
+												 }
+												 $hora = str_replace ( ":", '',$rowhora[0] ); 
+												 $fecha = str_replace ( "-", '',$rowfecha[0] ); 
+
+											    // Nombre del archivo
+											    $extractRfc = $data[0];
+											    $nameAdj = $data[1];
+											    // Extensión del archivo 
+
 
 											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
 											      		unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
@@ -649,8 +673,8 @@
 											$extencion3 = $extencion2[$tamnio-1];
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
-												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$idMovSeg."_.".$extencion3);
+
 												rename ($fichero_subido,$concatenarNombreC);
 												
 
