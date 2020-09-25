@@ -93,7 +93,7 @@
 
 
 	</head>
-	<body onload="nobackbutton();">
+	<body onload="nobackbutton();" >
 		<?php
 
 
@@ -373,7 +373,7 @@
 		?>
 
 			<br>
-		  <a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+		  <a  href= <?php echo ("");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 	
 
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
@@ -382,7 +382,7 @@
 		        <ul class="navbar-nav ml-auto">          
 		        
 		          <li class="nav-item">
-		            <a class="nav-link" href='../../LoginMenu/vista/cerrarsesion.php'><p style="color:red;">CERRAR SESIÓN</p></a>
+		            <a class="nav-link" href='../../LoginMenu/vista/cerrarsesion.php'>CERRAR SESIÓN</a>
 		          </li>
 		        </ul>
 		      </div>
