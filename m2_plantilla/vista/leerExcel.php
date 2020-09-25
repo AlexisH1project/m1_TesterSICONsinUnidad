@@ -430,7 +430,9 @@
 												$termino = 1;
 												sleep(3);
 												$concatenarNombreC = $dir_subida.strtoupper("archivo_Plantilla.".$extencion3);
+												error_reporting(0);
 												rename ($fichero_subido,$concatenarNombreC);
+												error_reporting(-1);
 											}else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}	
