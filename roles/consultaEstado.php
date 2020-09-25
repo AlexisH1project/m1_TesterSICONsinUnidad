@@ -352,10 +352,11 @@
 																<td><?php echo "
 
 										
-																<form method='post' action='./verListEventual.php'>
+																<form method='get' action='./verListEventual.php'>
 																	<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
 																	<input type='text' style='display: none;' name='idMov' value='$ver2[0]'>
 																	<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+
 
 															
 																</form> "
@@ -528,6 +529,7 @@
 								
 								$sql = "SELECT * FROM fomope WHERE (rfc='$rfcBuscar' AND nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad='$unidadBuscar')";
 								$sql2 = "SELECT * FROM fomope_qr WHERE rfc = '--'";
+	 							
 	 							
 							}elseif ($rfcBuscar != "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar != "") {
 								
