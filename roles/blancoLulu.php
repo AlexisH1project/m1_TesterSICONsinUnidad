@@ -651,8 +651,12 @@
 
 									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ";
 
-									$res1 = mysqli_query($conexion,$datosDobles);
-								    $res1Check = mysqli_num_rows($res1);
+									if($datasub2 = mysqli_query($conexion,$datosDobles)){
+                                   		$extid =mysqli_fetch_row($datasub2);
+                                   		$banderaid = $extid[0];
+                                   		//	echo $banderaid;
+                                   	}	
+								    $res1Check = mysqli_num_rows($datasub2);
 
                                    	if ($res1Check<1) {
                                    		
@@ -662,11 +666,7 @@
                                    		}		
                                    	}
 
-									if($datasub2 = mysqli_query($conexion,$datosDobles)){
-                                   			$extid =mysqli_fetch_row($datasub2);
-                                   			$banderaid = $extid[0];
-                                   		//	echo $banderaid;
-                                   	}		
+									
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
