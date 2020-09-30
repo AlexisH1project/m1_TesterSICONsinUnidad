@@ -653,21 +653,23 @@
 
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
                                    		$extid =mysqli_fetch_row($datasub2);
+								    	$res1Check = mysqli_num_rows($datasub2);
                                    		$banderaid = $extid[0];
                                    		//	echo $banderaid;
                                    	}	
-								    $res1Check = mysqli_num_rows($datasub2);
 
                                    	if ($res1Check<1) {
-                                   		
                                    		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
+                                   			if($datasub2 = mysqli_query($conexion,$datosDobles)){
+		                                   		$extid =mysqli_fetch_row($datasub2);
+										    	$res1Check = mysqli_num_rows($datasub2);
+		                                   		$banderaid = $extid[0];
+		                                   		//	echo $banderaid;
+		                                   	}	
                                    		}		
                                    	}
-
-									
-
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
@@ -757,7 +759,7 @@
 							}
 						?>	
 <!-- ***************************************************************************************** -->	
-    <input style= "display: none;"type="text" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
+    <input type="text" style = "display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
 	<table class="table table-striped table-bordered" style="margin-bottom: 0">
 					<?php 
 							include "configuracion.php";
