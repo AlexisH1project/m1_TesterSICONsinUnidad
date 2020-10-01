@@ -1,4 +1,3 @@
-
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -90,10 +89,11 @@
 				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 			}
 
-			function guardarDatosEliminar(nombre,laExtencion,direccionRuta){
+			function guardarDatosEliminar(nombre,laExtencion,direccionRuta,regresarPag){
 				document.getElementById("nombreDoc").value =nombre ;
 				document.getElementById("extencionDoc").value = laExtencion ;
 				document.getElementById("ruta").value = direccionRuta ;
+				document.getElementById("regreso").value = regresarPag ;
 			}
 
 
@@ -108,6 +108,7 @@
 				include "configuracion.php";
 					$noFomope =  $_GET['idMov'];
 					$usuarioSeguir =  $_GET['usuario_rol'];
+					$retorn = "verListEventual";
 					
 				/*if(isset($_GET["idMov"])){
 					$noFomope =  $_GET['idMov'];
@@ -161,7 +162,7 @@
 						<?php 
 							include "configuracion.php";
 							$existenD =0;
-							$sql="SELECT * from fomope WHERE id_movimiento = '$noFomope' ";
+							$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
 							$documentosPC="";
 							
 							// echo $noFomope;
@@ -180,11 +181,11 @@
 							// 			$sqlNombreDoc = "SELECT nombre_documento FROM ct_documentos_qr WHERE documentos = '$ver[$i]'";
 							// 			$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 							// 			$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-							// 			$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
+							// 			$nombreAdescargar = $ver[5]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/DOCUMENTOS/';
-					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
+					$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -199,7 +200,7 @@
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
 // ----- promer ciclo en la carpeta documentosMov
-					for ($i = 0; $i < $rowTotal[0] ; $i++){
+					for ($i = 1; $i <= $rowTotal[0] ; $i++){
 						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 						$banderaSI = 0;
 						$duplicado = 0;
@@ -223,13 +224,36 @@
 											$data = explode("_",$file);
 											$conId = count($data);
 										    $data2 = explode(".",$file);
-											$indice = count($data2);	
-
+											$indice = count($data2);										
 											$extencion = $data2[$indice-1];
-										    // Nombre del archivo
-										    $extractRfc = $data[0];
-										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope){
+
+                                            if($conId==2){
+                                            	$extractCurp = $data[0];
+                                            	$extractDocExt = explode(".", $data[1]);
+                                            	$extractDoc = $extractDocExt[0];
+
+                                            }else if($conId==3){
+                                            	$extractCurp = $data[0];
+                                            	$extractDocExt = explode(".", $data[1]."_".$data[2]);
+                                            	$extractDoc = $extractDocExt[0];
+
+                                            }else if($conId==4){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1];
+                                            	$extractQna = $data[2];
+                                            	$QuitarExtencion = explode(".", $data[3]);
+                                            	$extractDate = $QuitarExtencion[0];
+                                              
+                                            }else if($conId==5){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1]."_".$data[2];
+                                            	$extractQna = $data[3];
+                                            	$QuitarExtencion = explode(".", $data[4]);
+                                            	$extractDate = $QuitarExtencion[0];
+                                              
+                                            }
+
+									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
@@ -239,8 +263,15 @@
 													<td>$rowNombreDoc2[1]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
-												$banderaSI = 1;
+									 			if($conId==2 || $conId==3){
+									 			$nombreAdescargar = $extractCurp."_".$extractDoc."."."$extencion";
+									 		    }else if ($conId==4 || $conId==5){
+									 		    $nombreAdescargar = $extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }
+
+
+											$banderaSI = 1;
+
 						?>	
 												<td>
 												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
@@ -249,10 +280,10 @@
 												<?php
 											
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													$laRuta = "DOCUMENTOS_MOV";
+													$laRuta = "DOCUMENTOS_RES";
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>','<?php echo $retorn ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -262,72 +293,18 @@
 												}*/
 												}
 												}
-										  }
 
-								
 
-								if($banderaMov == 0){
 
-// --------- segundo ciclo en carpeta de documentos
-
-									
-												foreach($files as $file){	
-													$data = explode("_",$file);
-													$conId = count($data);
-												    $data2 = explode(".",$file);
-													$indice = count($data2);	
-
-													$extencion = $data2[$indice-1];
-												    // Nombre del archivo
-												    $extractRfc = $data[0];
-												    $extractDoc = $data[1];
-											 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc)){
-											 			$duplicado++;
-											 			if($duplicado > 1){
-								
-												 					echo "
-															<tr>
-															<td>$rowNombreDoc2[1]</td>
-															";
-											 			}
-											 			if($conId == 7){
-											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
-											 			}else{
-											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
-											 			}
-														$banderaSI = 1;
-								?>
-														<td>
-														<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
-														</td>
-															
-														<?php
-													
-														if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-															$laRuta = "DOCUMENTOS";
-														?>
-															<td>
-																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
-															</td>
-																
-								<?php
-														/*}else{
-																echo '<script> alert("Error en la en la conexion para Eliminar"); <\script>';
-																echo "ERRRROR";
-														}*/
-														}
-														}
-												  }
-
-												  if($banderaSI == 0){
-
-								?>
+										  }//cierra foreach
+										   if($banderaSI == 0){
+										   	?>
 														<td>
 														<button class="btn btn-danger" > X </button>
 														</td>
 								<?php
 													}
-										}
+
 								}
 							}
 								?>
@@ -350,6 +327,7 @@
       </div>
       <div class="modal-footer">
       	<form enctype="multipart/form-data" method="post" action="./Controller/eliminarDoc.php"> <!-- ./Controller/eliminarDoc.php -->
+      		    <input type="text" value="regreso" name="regreso" id="regreso" style="display: none">
       			<input type="text" value="nombreDoc" name="nombreDoc" id="nombreDoc" style="display: none">
       			<input type="text" value="extencionDoc" name="extencionDoc" id="extencionDoc" style="display: none">
       			<input type="text" value="ruta" name="ruta" id="ruta" style="display: none;">
