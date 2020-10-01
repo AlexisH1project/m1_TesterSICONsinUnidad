@@ -142,7 +142,7 @@
 			
 			if($id_rol == 0 AND $radioAdd_rechazar != "bandeja principal"){
 			
-			if($id_movIdentify != "x"){
+			if($id_movIdentify != "X"){
 
 $sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
 
@@ -154,7 +154,7 @@ $sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuari
 
 			}else if ($id_rol == 1 AND $radioAdd_rechazar != "bandeja principal"){
 			
-				if($id_movIdentify!= "x"){
+				if($id_movIdentify!= "X"){
 
 $sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd',fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
  //cuando la fecha de autorizacion ya tenga un dato significa que puede pasar 
