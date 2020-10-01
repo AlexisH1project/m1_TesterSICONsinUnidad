@@ -90,11 +90,10 @@
 				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 			}
 
-			function guardarDatosEliminar(nombre,laExtencion,direccionRuta,regresarPag){
+			function guardarDatosEliminar(nombre,laExtencion,direccionRuta){
 				document.getElementById("nombreDoc").value =nombre ;
 				document.getElementById("extencionDoc").value = laExtencion ;
 				document.getElementById("ruta").value = direccionRuta ;
-				document.getElementById("regreso").value = regresarPag ;
 			}
 
 
@@ -109,7 +108,6 @@
 				include "configuracion.php";
 					$noFomope =  $_GET['idMov'];
 					$usuarioSeguir =  $_GET['usuario_rol'];
-					$retorn = "verList";
 					
 				/*if(isset($_GET["idMov"])){
 					$noFomope =  $_GET['idMov'];
@@ -254,7 +252,7 @@
 													$laRuta = "DOCUMENTOS_MOV";
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>','<?php echo $retorn ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -309,7 +307,7 @@
 															$laRuta = "DOCUMENTOS";
 														?>
 															<td>
-																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>','<?php echo $retorn ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 															</td>
 																
 								<?php
@@ -352,7 +350,6 @@
       </div>
       <div class="modal-footer">
       	<form enctype="multipart/form-data" method="post" action="./Controller/eliminarDoc.php"> <!-- ./Controller/eliminarDoc.php -->
-      		    <input type="text" value="regreso" name="regreso" id="regreso" style="display: none">
       			<input type="text" value="nombreDoc" name="nombreDoc" id="nombreDoc" style="display: none">
       			<input type="text" value="extencionDoc" name="extencionDoc" id="extencionDoc" style="display: none">
       			<input type="text" value="ruta" name="ruta" id="ruta" style="display: none;">

@@ -1,7 +1,6 @@
 <?php
 		$noFomope =  $_POST['idMov'];
 		$usuarioSeguir =  $_POST['usuario_rol'];
-		$regresarList = $_POST['regreso'];
 
 /*$esGet = 0;
 	if(isset($_GET["idMov"])){
@@ -21,7 +20,6 @@
 
 $nombreDeArchivoDescarga = $_POST['nombreDoc'];
 $tipoArchivo = $_POST['extencionDoc'];
-$pagAnterior = $_POST['regreso'];
 $soloNombre = explode(".", $nombreDeArchivoDescarga);
 
 //echo $nombreDeArchivoDescarga."  ".$tipoArchivo;
@@ -60,14 +58,7 @@ $dir_subida2 = './DOCUMENTOS_SUPR/';
 	        		break;
 	   	}
 	}
-
-	if($pagAnterior == "verListEventual"){
-	echo "<script> alert('Documento Eliminado'); window.location.href = '../verListEventual.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";	
-    }else if($pagAnterior == "verList"){
-    echo "<script> alert('Documento Eliminado'); window.location.href = '../verList.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";	
-    }
-
-	
+	echo "<script> alert('Documento Eliminado'); window.location.href = '../verList.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
 	/*if($esGet == 0){
     	header('Location:../../roles/verList.php?usuario_rol='.$usuarioSeguir.'&idMov='.$noFomope);
 
