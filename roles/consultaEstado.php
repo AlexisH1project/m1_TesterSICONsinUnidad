@@ -325,8 +325,8 @@
 												$totalFilas    =    mysqli_num_rows($result2);
 												if($totalFilas == 0){
 													$matrizEventual = 0;
-													$mensaje++;
-													if($mensaje == 3){
+													//$mensaje++;
+													if($mensaje > 0 ){
 														echo('
 															<br>
 															<br>
@@ -745,7 +745,7 @@
 								$totalFilas    =    mysqli_num_rows($result);  
 								if($totalFilas == 0){
 										$imprimirNoExiste ++;
-										$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
+									//	$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 								}else{
 
 
@@ -822,7 +822,7 @@
 							$idMatriz++;
 							}
 						}
-						$imprimirNoExiste++;
+						//$imprimirNoExiste++;
 						$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 						
 						}else{

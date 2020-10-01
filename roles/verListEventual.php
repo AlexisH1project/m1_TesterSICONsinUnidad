@@ -173,11 +173,9 @@
 							// 			$nombreAdescargar = $ver[5]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
 ////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/DOCUMENTOS/';
 					$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
 
 					// Arreglo con todos los nombres de los archivos
-					$files = array_diff(scandir($dir_subida), array('.', '..')); 
 					$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 
 					$contDoc=0;
