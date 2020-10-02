@@ -355,6 +355,66 @@
 		
 
 		<?php 	
+		}else if ($nombreU[1] == 7) {
+
+	?>
+	 <br>
+
+
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar" class=" bordv">
+				<div class="custom-menu">
+			<button type="button" id="sidebarCollapse" class="btn btn-outline-secondary">
+	          <i class="fa fa-bars"></i>
+	          <br>
+	          <span class="sr-only">Menú</span>
+	       	</button>
+        </div>
+				<div class="p-4 ">
+
+		  		<img class="img-responsive" src="img/ss1.png" height="50" width="190">
+	        <ul class="list-unstyled components mb-5">
+	        	<br>
+	        	<center>
+	        	<li class=" estilo-color">
+	            <a ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
+	          </li>
+	      </center>
+	          <li class=" estilo-color">
+	            <a href=  <?php echo ("'./bandejaEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
+	          </li>
+	          <li class=" estilo-color">
+	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	          </li>
+	            <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
+	          <br>
+	          <br>
+	          <br>
+	          <br>
+	           <br>      
+	          <br>
+	          <br>
+	          <br>
+	          <li class=" estilo-color">
+	              <a class="nav-link" href=  "../LoginMenu/vista/cerrarsesion.php" ><img src="./img/iclogout.png" alt="x" height="17" width="17"/> Cerrar Sesión</a>
+	          </li>
+	          
+	          </li>
+	          <li class=" estilo-color">
+             
+	          </li>
+
+	        </ul>
+
+	     
+	      </div>
+    	</nav>
+		
+
+	<?php
+
 		}else{
 		 ?>
 	 <br>

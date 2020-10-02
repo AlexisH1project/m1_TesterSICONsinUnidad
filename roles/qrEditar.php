@@ -284,11 +284,7 @@
 
 			include "configuracion.php";
 			$noFomope = $_GET['noFomope'];
-			//echo $noFomope;
-			//$id_rol = $_GET['id_rol'];
-			//echo $id_rol;
 			$usuarioSeguir = $_GET['usuario'];
-			//echo $usuario;
 		
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
@@ -800,7 +796,66 @@
 	}
 
 		?>
-	
+
+
+					<br>
+							<button id="enviarT" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+											 Enviar
+											</button>
+							  			<br>
+
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+											      <div class="modal-body">
+											        ¿Estas seguro de enviar esta información?
+											      </div>
+									<center>
+						      <div class="form-group col-md-8">
+									<div class="box" >
+
+										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
+												
+												<select class="form-control border border-dark custom-select" id="user" name="user">
+													
+													<?php
+													
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 7";
+													$resultado = mysqli_query($conexion , $consulta);
+													$contador=0;
+
+													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
+													<?php }?>          
+													</select>
+										</div>
+										 <br>  
+
+								</div>
+										</center>
+											      <div class="modal-footer">
+
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+							        				<button type="button" onclick="reenviarDatos('<?php echo $noFomope ?>' , '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary" >
+							        				Enviar
+							        				 </button>
+											      </div>
+											    </div>
+											  </div>
+								</div>
+							<br>
+
 		<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 

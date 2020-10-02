@@ -173,7 +173,11 @@ function verDatosQr(movimiento, elUsuario){
 	window.location.href = 'qrEditar.php?noFomope='+m+'&usuario='+elUsuario;
 }
 
-
+function reenviarDatos(movimiento, elUsuario){
+	var m = movimiento;
+	var cod = document.getElementById("user").value;
+	window.location.href = './Controller/guardarAsignacion.php?noFomope='+m+'&usuario='+elUsuario+'&usuarioAsignado='+cod;	
+}
 // mandamos a llamarlo desde la pagina consultaEstado.php
 function guardarId(id){
 	//document.getElementById("idMovHistorial").value = id;
