@@ -52,6 +52,9 @@
             if($ROL == 4){
                         //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
                     header('Location:../../roles/dario.php?usuario_rol='.urlencode($user));//cambiar
+            }if($ROL == 6){
+                        //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
+                    header('Location:../../m2_plantilla/controller/plazas.php?usuario_rol='.urlencode($user));//cambiar
             }
 
              

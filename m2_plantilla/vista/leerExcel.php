@@ -164,8 +164,8 @@
 								$highestRow = $sheet->getHighestRow(); 
 								$highestColumn = $sheet->getHighestColumn();
 
-								echo $highestRow . "\n";
-								echo $highestColumn . "\n";
+								//echo $highestRow . "\n";
+								//echo $highestColumn . "\n";
 
 
 								for ($row = 2; $row <= $highestRow; $row++){ 
@@ -216,9 +216,9 @@
 			    	$usuarioSeguir =  $_GET['usuario_rol'];
 			    	$fileType = 'Excel5';
 					$nombreArchivo = '../controller/documentos/ARCHIVO_PLANTILLA.xls';
-
+                    $dupdata;
 			    	$objPHPExcel2 = PHPExcel_IOFactory::load($nombreArchivo);
-
+                    $dupdata[0]=0;
 			    	$objPHPExcel2->setActiveSheetIndex(0);
 
 			    	$numRows = $objPHPExcel2->setActiveSheetIndex(0)->getHighestRow();
@@ -293,6 +293,18 @@
 						}
 							$hora = str_replace ( ":", '',$rowhora[0] ); 
 							$fecha = str_replace ( "-", '',$rowfecha[0] ); 
+							$fechaSistema = date("Y-m-d", strtotime($rowfecha[0]));
+							$anio= date("Y", strtotime($rowfecha[0]));
+					// -------------------------- ahora detectamos en que qna nos encontramos
+						$queryQna = "SELECT * FROM m1ct_fechasnomina";
+						if($SiQueryQna = mysqli_query($conexion, $queryQna)){
+							while($rowFechas = mysqli_fetch_row($SiQueryQna)){
+								if($fechaSistema >= $rowFechas[2] AND $fechaSistema <= $rowFechas[5]){
+									$qnaAplicada = $rowFechas[0];
+									//echo "qna".$qnaAplicada."</br>";
+								}
+							}
+						}
 
 
                   //-----Tomamos el nombre que se extrae completo y lo partimos en apellidos y nombres
@@ -340,7 +352,7 @@
 
 				    	if ($rfcDuplicado != $rfcT ){
 	
-				    	$queryExcel= "INSERT INTO plazas_ctrlp_m2 (ramo, unidadResponsable, grupoPersonal, gfuncionalResposabilidad, zonaEconomica, nivel, codigoPuesto, rangoSalarial, codigoFederalPuestos, regimenDeSeguridadSocial, curvaSalarial, tipoPlaza, tipoPersonal, tipoNombramiento, grupoJerarquicoDePersonal, argumentoDePuestos, fechaInicioVigencia, fechaFinalVigencia, numDePlazas, numDeHoras, indiceTabulador, subIndiceTabulador, rfc, observacionesExtras, estatus, usuarioEdicion, fechaCaptura) VALUE ('$ramoT', '$urT', '$gpT', '$gfrT', '$zeT', '$nivelT', '$codigoT','$rsT','$codFedPueT','$rssT','$csT','$tpzsT','$tpT','$tnT', '$gjpT','$apT','$fivT','$ffvT','$pzsT','$nhT','$itT','$stT','$rfcT','$observacionesT','$estatusT', '$usuarioSeguir', '$fecha')";
+				    	$queryExcel= "INSERT INTO plazas_ctrlp_m2 (ramo, unidadResponsable, grupoPersonal, gfuncionalResposabilidad, zonaEconomica, nivel, codigoPuesto, rangoSalarial, codigoFederalPuestos, regimenDeSeguridadSocial, curvaSalarial, tipoPlaza, tipoPersonal, tipoNombramiento, grupoJerarquicoDePersonal, argumentoDePuestos, fechaInicioVigencia, fechaFinalVigencia, numDePlazas, numDeHoras, indiceTabulador, subIndiceTabulador, rfc, observacionesExtras, estatus, usuarioEdicion, fechaCaptura, quincenaAplicada, anio) VALUE ('$ramoT', '$urT', '$gpT', '$gfrT', '$zeT', '$nivelT', '$codigoT','$rsT','$codFedPueT','$rssT','$csT','$tpzsT','$tpT','$tnT', '$gjpT','$apT','$fivT','$ffvT','$pzsT','$nhT','$itT','$stT','$rfcT','$observacionesT','$estatusT', '$usuarioSeguir', '$fecha', '$qnaAplicada', '$anio')";
 
 				    	if($querylast = mysqli_query($conexion, $queryExcel)){
 
@@ -350,8 +362,9 @@
 
 
 				    }else{
-				    	$dupdata[$i-1] = $i;
-				    	
+			            
+				    	$dupdata[$i-2] = $i;
+				    	//echo $dupdata[$i-2];
 				    }
 
 
@@ -360,7 +373,7 @@
 			        }
   			        //echo '</table>';
 
-                        if(sizeof($dupdata)> 1){
+                        if(count($dupdata)> 1){
                         $arrayDupdata = implode(",", $dupdata);
                         echo "<script type='text/javascript'>alert('La(s) fila(s) $arrayDupdata del archivo Excel ya habia(n) sido registrada(s).');</script>";
   			        	//echo "<script> alert('La(s) fila(s) $arrayDupdata del archivo Excel ya habia(n) sido registrada(s).'); ";
@@ -373,7 +386,7 @@
 		?>
 
 			<br>
-		  <a  href= <?php echo ("");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+		  <a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 	
 
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
