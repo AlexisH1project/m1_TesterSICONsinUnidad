@@ -354,7 +354,16 @@
 										</div>');
 								}else{
 
-
+								$resultRegistro=mysqli_fetch_row($result);
+                                $sqlRegistro= "SELECT tipoRegistro FROM fomope_qr WHERE (id_movimiento_qr= '$resultRegistro[0]')";
+                                $resultRegistro = mysqli_query($conexion,$sqlRegistro);
+                                $tipoRegistroId=mysqli_fetch_row($resultRegistro);
+						       if($tipoRegistroId[0]=="CARAVANAS"){	
+								?>
+                      <div class="card bg-secondary text-white">
+						    <div class="card-body plantilla-inputg"><h2>Caravanas</h2></div>
+					</div>
+                         <?php 
 					while($ver=mysqli_fetch_row($result)){ 
 						// switch ($ver[1]) {
 						// 					case 'negro1':
@@ -397,8 +406,10 @@
 												
 						// 						break;
 						// 				}
-
+                        
+							
 						 ?>
+
 						<tr>
 							
 							<td><?php echo $ver[2] ?></td>
@@ -411,8 +422,76 @@
 							</td>
 						</tr>
 						<?php 
+
+						 }
+										}else if($tipoRegistroId[0]=="EVENTUALES"){
+						?>
+						<div class="card bg-secondary text-white">
+						    <div class="card-body plantilla-inputg"><h2>Eventuales</h2></div>
+                        </div>
+                         <?php 
+                         while($ver=mysqli_fetch_row($result)){ 
+						// switch ($ver[1]) {
+						// 					case 'negro1':
+						// 						$estadoF = 'DDSCH Rechazo';
+						// 						break;
+						// 					case 'negro':
+						// 						$estadoF = 'Unidad Edición';
+						// 						break;
+						// 					case 'amarillo':
+						// 						$estadoF = 'DSPO captura';
+						// 						break;		
+						// 					case 'amarillo0':
+						// 						$estadoF = 'DDSCH Autorización';
+						// 						break;
+						// 					case 'cafe':
+						// 						$estadoF = 'DSPO Autorización';
+						// 						break;	
+						// 					case 'naranja':
+						// 						$estadoF = 'DIPSP Autorización';
+						// 						break;
+						// 					case 'azul':
+						// 						$estadoF= 'DGRHO Autorización';
+						// 						break;
+						// 					case 'rosa':
+						// 						$estadoF = 'DSPO nomina';
+						// 						break;		
+						// 					case 'verde':
+						// 						$estadoF = 'DDSCH loteo';
+						// 						break;
+						// 					case 'verde2':
+						// 						$estadoF = 'DDSCH Autorización Loteo';
+						// 						break;	
+						// 					case 'gris':
+						// 						$estadoF = 'DDSCH Edición';
+						// 						break;
+						// 					case 'guinda':
+						// 						$estadoF = 'Finalizado';
+						// 						break;		
+						// 					default:
+												
+						// 						break;
+						// 				}
+                        
+						 ?>
+
+						<tr>
+							
+							<td><?php echo $ver[2] ?></td>
+							<td><?php echo $ver[3] ?></td>
+							<td><?php echo $ver[4] ?></td>
+							<td><?php echo $ver[5] ?></td>
+							<td><?php echo $ver[6] ?></td>
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
+						<?php 
+                                          }
+						 
 										}
-									}
+
+									} // cierra if total filas == 0 
 							}else{
 								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
