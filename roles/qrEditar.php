@@ -242,13 +242,14 @@
 			}
 
 
-			function verBoton(){
-					var a = $("#ofunid").val();
-				    var b = $("#fechaofi").val();
-				    var c = $("#fechareci").val();
-				    var d = $("#codigo").val();
-				    var e = $("#cod2_1").val();
-				    var f = $("#del2").val();
+			function verBoton(elID , userLogin){
+		      	var textRechazo = document.getElementById('MotivoRechazo').value;
+		      	var btn_2 = document.getElementById('bandejaEntrada');
+			    btn_2.style.display = 'inline';
+		      	$('#enviarQr').hide();
+				window.location.href = 'Controller/rechazosQr.php?noFomope='+elID+'&usuario='+userLogin+'&comentarioR='+textRechazo;
+
+					/*
 				    //$("#MotivoRechazo").val();
 			  
 				    //var h = $("#TipoEntregaArchivo").val();
@@ -263,7 +264,7 @@
 			      		$('#genera').hide();
 				      	var btn_2 = document.getElementById('bandejaEntrada');
 			            	btn_2.style.display = 'inline';
-			       	  }
+			       	  }*/
 			}
 			function nobackbutton(){
 			   window.location.hash="no-back-button";
@@ -783,6 +784,7 @@
 											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
 							        				<input type="submit" class="btn btn-danger" value="Eliminar" name="accionB">
 											      </div>
+
 											    </div>
 											  </div>
 											</div>
@@ -792,18 +794,26 @@
 
 		</div>
 	<?php
+	 	}else{
+	?>
+		<br>
+							<button id="enviarT" type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+											 Enviar
+											</button>
+							  			<br>
+							  			<br>
+							    <div class="form-group col-md-60">
+													<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
+
+
+												</div>
+							<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+
+	<?php	 		
 	 	}
 	}
 
 		?>
-
-
-					<br>
-							<button id="enviarT" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-											 Enviar
-											</button>
-							  			<br>
-
 											<!-- Modal -->
 											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											  <div class="modal-dialog" role="document">
@@ -851,10 +861,36 @@
 							        				Enviar
 							        				 </button>
 											      </div>
+											    
 											    </div>
 											  </div>
 								</div>
 							<br>
+
+								<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Volante de rechazo</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							         <textarea class="form-control border border-dark" id="MotivoRechazo" rows = "4" name="comentarioR" placeholder="Redactar el volante de rechazo" required></textarea>
+							       
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
+									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton('<?php echo $usuarioSeguir ?>', '<?php echo $noFomope ?>')" name="accionB"  value="descargar">
+							      </div>
+							     
+							    </div>
+							  </div>
+							</div>
+
+				</div>
+
+
 
 		<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
