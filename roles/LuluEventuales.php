@@ -198,29 +198,6 @@
 						<h3 class="estilo-color plantilla-subtitulospr">Sistema de Control de Registro de Formato de Movimiento de Personal (SICON).</h3>
 				<br>
 				<h5  class=" plantilla-subtitulop" > DEPARTAMENTO DE DICTAMINACIÓN SALARIAL Y CONTRATOS POR HONORARIOS - DDSCH</h5>
-
-				<script type="text/javascript">
-
-					function obtenerRadioSeleccionado(formulario, nombre, userRol){
-						var contador = 0;
-					     elementosSelectR = [];
-					     elementos = document.getElementById(formulario).elements;
-					     longitud = document.getElementById(formulario).length;
-					     for (var i = 0; i < longitud; i++){
-					         if(elementos[i].name == nombre && elementos[i].type == "checkbox" && elementos[i].checked == true){
-										elementosSelectR[contador]=elementos[i].value;
-										//alert(elementosSelectR[contador]);
-										contador++;
-					         }
-					     }
-					     if(contador > 0){
-							window.location.href = './Controller/autorizarTodoQr.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol;
-
-					     }
-					     //return false;
-					} 
-
-				</script>
 		
 			<br>
 
@@ -522,9 +499,6 @@
 					<table class="table table-hover table-white">
 						<thead>
 						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Autorizar</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
@@ -539,7 +513,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Revisión'";
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -570,12 +544,6 @@
 						 ?>
 
 						<tr>
-							
-							<td>
-								<div class="custom-control custom-radio">
-								  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios"></label>
-								</div>
-							</td>
 							<td><?php echo $row['unidad'] ?></td>
 							<td><?php echo $row['rfc'] ?></td>
 							<td><?php echo $row['qna'] ?></td>
@@ -596,34 +564,10 @@
 					</table>
 						
 				</form>
-				
-				<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal">
-											 Autorizar
-				</button>
+		
 							  			<br>
 							  			<br>
 							  			<br>
-
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de autorizar esta información?
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-											       	<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL','radios', '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary">Aceptar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
 
 			</div>
 			
@@ -651,7 +595,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado'";
+									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1'" ;
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -664,7 +608,6 @@
 					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
 								$estadoF = 'DDSCH Autorización';
-
 					     /*   	switch ($ver[1]) {
 											
 											case 'amarillo0':

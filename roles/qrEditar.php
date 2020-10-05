@@ -207,73 +207,24 @@
 
 			}
 
-			function eliminarReq(){
-					 $('#MotivoRechazo').removeAttr("required");
-					  $('#idProfesional').removeAttr("required");
-			  		$("#MotivoRechazoCap").removeAttr("required");
-
-
-			}
-			function eliminarReq2(){
-					 $('#MotivoRechazo').removeAttr("required");
-			  		$("#MotivoRechazoCap").removeAttr("required");
-
-
-			}
-
-			function rechazarPorCapI(){
-					$("#ofunid").removeAttr("required");
-				    $("#fechaofi").removeAttr("required");
-				    $("#fechareci").removeAttr("required");
-				    $("#codigo").removeAttr("required");
-				     $("#cod2_1").removeAttr("required");
-				     $("#del2").removeAttr("required");
-				    //var g = $("#MotivoRechazo").val();
-			  		$("#MotivoRechazo").removeAttr("required");
-				    //var h = $("#TipoEntregaArchivo").val();
-					 $('#idProfesional').removeAttr("required");
-
-					$('#capturaF').hide();
-			      		$('#rechazo').hide();
-			      		$('#genera').hide();
-			      		$('#rechazoInicial').hide();
-				      	var btn_2 = document.getElementById('bandejaEntrada');
-			            	btn_2.style.display = 'inline';
-			}
-
-
-			function verBoton(elID , userLogin){
+			function verBoton(userLogin, elID){
 		      	var textRechazo = document.getElementById('MotivoRechazo').value;
-		      	var btn_2 = document.getElementById('bandejaEntrada');
-			    btn_2.style.display = 'inline';
-		      	$('#enviarQr').hide();
-				window.location.href = 'Controller/rechazosQr.php?noFomope='+elID+'&usuario='+userLogin+'&comentarioR='+textRechazo;
-
-					/*
-				    //$("#MotivoRechazo").val();
-			  
-				    //var h = $("#TipoEntregaArchivo").val();
-					 $('#idProfesional').removeAttr("required");
-				    
-				    if (a=="" || b=="" || c==""|| d==""|| e==""|| f=="") {
-				      		return false;
-				      }else{
-			  			$("#MotivoRechazoCap").removeAttr("required");
-				      	$('#capturaF').hide();
-			      		$('#rechazo').hide();
-			      		$('#genera').hide();
-				      	var btn_2 = document.getElementById('bandejaEntrada');
-			            	btn_2.style.display = 'inline';
-			       	  }*/
+		      	if (textRechazo == ""){
+		      		alert ("Es necesario ingresar el motivo de rechazo") ;
+		      	}else{
+			      	var btn_2 = document.getElementById('bandejaEntrada');
+				    btn_2.style.display = 'inline';
+			      	$('#enviarQr').hide();
+					window.location.href = 'Controller/rechazosQr.php?noFomope='+elID+'&usuario='+userLogin+'&comentarioR='+textRechazo;
+				}
 			}
+
 			function nobackbutton(){
 			   window.location.hash="no-back-button";
 			   window.location.hash="Again-No-back-button" //chrome
 			   window.onhashchange=function(){window.location.hash="no-back-button";}
 			}
-
-
-			
+		
 		</script>
 		
 		<script src="js/funciones.js"></script>
@@ -701,7 +652,12 @@
 							<label  class="plantilla-label" for="entidad_nac">Entidad Nac.: </label>
 									 <input type="text" class="form-control border border-dark" id="entidad_nac" name="entidad_nac" value="<?php echo $ver['entidad_nac']?>" readonly > 
 					</div>
-					
+
+					<label  class="plantilla-label" for="rechazo">Motivo de rechazo: </label>
+					 <textarea class="form-control border border-dark" id="verMotivoR" rows = "4" name="verMotivoR" readonly><?php echo $ver['motivo_rechazo']?></textarea>
+					<br>
+					<br>
+					<br>
 				</div>
 				<!-- datos que se reciben para dar seguimiento  -->
 				<div class="form-row">
@@ -712,31 +668,6 @@
 						</div>
 						<div class="form-row">
 							<input type="text" class="form-control" id="usuarioSeguir" name="usuarioSeguir" value="<?php echo $usuarioSeguir?>" style="display:none">
-				</div>
-					
-				<div class="form-row">
-						<div class="modal fade" id="RechInicial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Rechazo por captura</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control border border-dark" id="MotivoRechazoCap" rows = "4" name="comentarioR2" placeholder="Redactar el volante de rechazo" required></textarea>
-							       
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="rechI" onclick="rechazarPorCapI()" name="accionB"  value="Aceptar rechazo por captura">
-							      </div>
-							     
-							    </div>
-							  </div>
-							</div>
-
-						</div>
 				</div>
 
 			</form>
@@ -797,7 +728,7 @@
 	 	}else{
 	?>
 		<br>
-							<button id="enviarT" type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+							<button type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 											 Enviar
 											</button>
 							  			<br>
@@ -807,26 +738,26 @@
 
 
 												</div>
-							<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+							<input type="submit" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
 
 	<?php	 		
 	 	}
 	}
 
 		?>
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de enviar esta información?
-											      </div>
+					<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        ¿Estas seguro de enviar esta información?
+					      </div>
 									<center>
 						      <div class="form-group col-md-8">
 									<div class="box" >
@@ -866,7 +797,6 @@
 											  </div>
 								</div>
 							<br>
-
 								<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
 							    <div class="modal-content">

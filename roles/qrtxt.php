@@ -60,11 +60,11 @@
 				document.getElementById("anioSeleccionado").value = selected;
 			}
 
-			function guardarTurnado(){
+			/*function guardarTurnado(){
 				var combo = document.getElementById("turnadoOption");
 				var selected = combo.options[combo.selectedIndex].text;
 				document.getElementById("turnadoSeleccionado").value = selected;
-			}
+			}*/
 
 		</script>
 	</head>
@@ -334,7 +334,7 @@
 							 <div class="form-group col-md-8 ">
 									<label  class="plantilla-label" for="laUsuario">*ASIGNAR A: </label>
 										 
-										<select class="rounded border border-dark" id="usuarioOption" name="usuarioOption" onchange="guardarTurnado();" required>
+										<select class="rounded border border-dark" id="usuarioOption" name="usuarioOption" onchange="guardarTurnado();">
 											<?php
 											if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
 											       die("Error cargando el conjunto de caracteres utf8");
@@ -343,9 +343,12 @@
 											$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 7";
 											$resultado = mysqli_query($conexion , $consulta);
 											$contador=0;
-
+											?>
+												<option  data-subtext=""></option>
+											<?php
+											
 											while($turnado = mysqli_fetch_assoc($resultado)){ $contador++;?>
-											<option  data-subtext="<?php echo $turnado["id_turnado"]; ?>"><?php echo $turnado["usuario"]; ?></option>
+												<option  data-subtext="<?php echo $turnado["id_turnado"]; ?>"><?php echo $turnado["usuario"]; ?></option>
 											<?php }?>          
 											</select>
 							</div>
@@ -434,7 +437,7 @@
 
 				if($id_rol_res[0] == ""){
 					$colorFomopeQr="amarillo0";
-				}else if($id_rol_res[0] == 3 OR $id_rol_res == 7){
+				}else if($id_rol_res[0] == 3 OR $id_rol_res[0] == 7){
                     $colorFomopeQr="amarillo";
 				}
 			//guardamos el archivo que se selecciono en la carpeta 

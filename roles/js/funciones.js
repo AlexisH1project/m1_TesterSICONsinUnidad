@@ -173,11 +173,18 @@ function verDatosQr(movimiento, elUsuario){
 	window.location.href = 'qrEditar.php?noFomope='+m+'&usuario='+elUsuario;
 }
 
+// -----> mando a llamar de qrEditar.php en roles
 function reenviarDatos(movimiento, elUsuario){
 	var m = movimiento;
 	var cod = document.getElementById("user").value;
 	window.location.href = './Controller/guardarAsignacion.php?noFomope='+m+'&usuario='+elUsuario+'&usuarioAsignado='+cod;	
 }
+
+// -----> mando a llamar de qrEditar.php en roles
+function enviarBandejaPrincipal(userLogin){
+	window.location.href = './LuluEventuales.php?usuario_rol='+userLogin;
+}
+
 // mandamos a llamarlo desde la pagina consultaEstado.php
 function guardarId(id){
 	//document.getElementById("idMovHistorial").value = id;
