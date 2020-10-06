@@ -276,30 +276,8 @@
 							$qnaBuscar = $_POST['qnaOption'];
 							$rfcBuscar = $_POST['rfc'];
 							$anioBuscar = $_POST['anio'];
-		?>					
 
-		<table class="table table-hover table-white">
-			        <div class="card bg-secondary text-white">
-					<div class="card-body plantilla-inputg"><h2>Caravanas</h2></div>
-					</div>
-						<thead>
-						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha de Ingreso</th>
-						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Tipo de ingreso</th>
-
-
-						   </tr>
-					 	 </thead>
-
-					<?php 
-
-							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
+												//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
 								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
@@ -333,6 +311,28 @@
 								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
 							}
+		?>					
+
+		<table class="table table-hover table-white">
+			        <div class="card bg-secondary text-white">
+					<div class="card-body plantilla-inputg"><h2>Caravanas</h2></div>
+					</div>
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+						      <th scope="titulo">Unidad</th>
+						      <th scope="titulo">RFC</th>
+						      <th scope="titulo">QNA</th>
+						      <th scope="titulo">Fecha de Ingreso</th>
+						      <th scope="titulo">Codigo Mov.</th>
+						      <th scope="titulo">Tipo de ingreso</th>
+
+
+						   </tr>
+					 	 </thead>
+
+					<?php 
 
 							if ($result = mysqli_query($conexion,$sql)) {
 
@@ -392,8 +392,6 @@
 						// 						break;
 						// 				}
                         
-
-
 						       if($ver[8]=="CARAVANAS"){	
 
 
@@ -469,6 +467,117 @@
 
 						       if($ver[8]=="EVENTUALES"){	
 
+
+						 ?>
+
+						<tr>
+							
+							<td><?php echo $ver[2] ?></td>
+							<td><?php echo $ver[3] ?></td>
+							<td><?php echo $ver[4] ?></td>
+							<td><?php echo $ver[5] ?></td>
+							<td><?php echo $ver[6] ?></td>
+							<td><?php echo $ver[8] ?></td>
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
+						<?php 
+
+						 }
+										}                                 
+						 										
+									} // cierra if total filas == 0 
+							}else{
+								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
+								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+							}		
+
+
+							
+
+												 ?>
+		</table>
+
+<!-- ****************** TABLA PERSONAL Confianza -->
+		<table class="table table-hover table-white">
+			        <div class="card bg-secondary text-white">
+					<div class="card-body plantilla-inputg"><h2>Personal de Confianza</h2></div>
+					</div>
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+						      <th scope="titulo">Unidad</th>
+						      <th scope="titulo">RFC</th>
+						      <th scope="titulo">QNA</th>
+						      <th scope="titulo">Fecha de Ingreso</th>
+						      <th scope="titulo">Codigo Mov.</th>
+						      <th scope="titulo">Tipo de ingreso</th>
+
+
+						   </tr>
+					 	 </thead>
+
+					<?php 
+							if ($result = mysqli_query($conexion,$sql)) {
+
+								$totalFilas    =    mysqli_num_rows($result);  
+								if($totalFilas == 0){
+										
+										echo('
+											<br>
+											<br>
+											<div class="col-sm-12 ">
+											<div class="plantilla-inputv text-dark ">
+											    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+										</div>
+										</div>');
+								}else{
+                              								
+					           while($ver=mysqli_fetch_row($result)){ 
+					           							// switch ($ver[1]) {
+						// 					case 'negro1':
+						// 						$estadoF = 'DDSCH Rechazo';
+						// 						break;
+						// 					case 'negro':
+						// 						$estadoF = 'Unidad Edición';
+						// 						break;
+						// 					case 'amarillo':
+						// 						$estadoF = 'DSPO captura';
+						// 						break;		
+						// 					case 'amarillo0':
+						// 						$estadoF = 'DDSCH Autorización';
+						// 						break;
+						// 					case 'cafe':
+						// 						$estadoF = 'DSPO Autorización';
+						// 						break;	
+						// 					case 'naranja':
+						// 						$estadoF = 'DIPSP Autorización';
+						// 						break;
+						// 					case 'azul':
+						// 						$estadoF= 'DGRHO Autorización';
+						// 						break;
+						// 					case 'rosa':
+						// 						$estadoF = 'DSPO nomina';
+						// 						break;		
+						// 					case 'verde':
+						// 						$estadoF = 'DDSCH loteo';
+						// 						break;
+						// 					case 'verde2':
+						// 						$estadoF = 'DDSCH Autorización Loteo';
+						// 						break;	
+						// 					case 'gris':
+						// 						$estadoF = 'DDSCH Edición';
+						// 						break;
+						// 					case 'guinda':
+						// 						$estadoF = 'Finalizado';
+						// 						break;		
+						// 					default:
+												
+						// 						break;
+						// 				}
+                         if($ver[8]=="PERSONAL DE CONFIANZA (ALTA)" || $ver[8]=="PERSONAL DE CONFIANZA (REINGRESO)"){
 
 						 ?>
 
@@ -680,6 +789,90 @@
 					</table>
 						
 				</form>
+<!-- ****************************************************TABLA: PERSONAL DE CONFIANZA  -->
+
+				<div class="card bg-secondary text-white">
+					    <div class="card-body plantilla-inputg"><h2>Autorizar Personal de Confianza</h2></div>
+				</div>
+				<form name="radioALL" id="radioALL" action="" method="POST"> 
+					<table class="table table-hover table-white">
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+						      <th scope="titulo">Autorizar</th>
+						      <th scope="titulo">Unidad</th>
+						      <th scope="titulo">RFC</th>
+						      <th scope="titulo">QNA</th>
+						      <th scope="titulo">Fecha Ingreso</th>
+						      <th scope="titulo">Codigo Mov.</th>
+						      <th scope="titulo">Tipo de ingreso</th>
+
+						   </tr>
+					 	 </thead>
+
+						<?php 
+							include "configuracion.php";
+
+							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0'";
+							$result=mysqli_query($conexion,$sql);
+
+							while($ver=mysqli_fetch_row($result)){ 
+
+							
+								$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
+
+						        if($resultado2 = mysqli_query($conexion,$consulta2)){
+					        		$row = mysqli_fetch_assoc($resultado2);
+					        		$id_mov = $row['id_movimiento_qr'];
+					        	}
+					     /*   	switch ($ver[1]) {
+											
+											case 'amarillo0':
+												$estadoF = 'DDSCH Autorización';
+												break;
+											
+											case 'verde2':
+												$estadoF = 'DDSCH Autorización Loteo';
+												break;	
+												
+											default:
+												
+												break;
+										}*/
+
+                         if($row['tipoRegistro']=="PERSONAL DE CONFIANZA (ALTA)" || $row['tipoRegistro']=="PERSONAL DE CONFIANZA (REINGRESO)"){
+						 ?>
+
+						<tr>
+							
+							<td>
+								<div class="custom-control custom-radio">
+								  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios"></label>
+								</div>
+							</td>
+							<td><?php echo $row['unidad'] ?></td>
+							<td><?php echo $row['rfc'] ?></td>
+							<td><?php echo $row['qna'] ?></td>
+							<td><?php echo $row['fini'] ?></td>
+							<td><?php echo $row['tipo_movimiento'] ?></td>
+							<td><?php echo $row['tipoRegistro'] ?></td>
+
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $row['id_movimiento_qr'] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
+						<?php 
+						
+						 }
+					}
+						 ?>
+
+					</table>
+						
+				</form>				
+<!-- ****************************************************FIN: TABLA: PERSONAL DE CONFIANZA  -->
 				
 				<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal">
 											 Autorizar

@@ -674,7 +674,7 @@
 
 		</div>
 		<?php
-				if($ver['estatus'] == "Rechazado duplicado"){
+				if($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] = "negro_1"){
 
 		?>
 		<div class="form-row">
