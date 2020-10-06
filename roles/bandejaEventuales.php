@@ -280,7 +280,19 @@
 		<br>
 		<br>
 
+		<?php 
+						include "configuracion.php";
+
+						if(isset($_POST['buscar'])){
+							$qnaBuscar = $_POST['qnaOption'];
+							$rfcBuscar = $_POST['rfc'];
+							$anioBuscar = $_POST['anio'];
+		?>					
+
 		<table class="table table-hover table-white">
+			        <div class="card bg-secondary text-white">
+					<div class="card-body plantilla-inputg"><h2>Caravanas</h2></div>
+					</div>
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -290,52 +302,46 @@
 						      <th scope="titulo">QNA</th>
 						      <th scope="titulo">Fecha de Ingreso</th>
 						      <th scope="titulo">Codigo Mov.</th>
+						      <th scope="titulo">Tipo de ingreso</th>
 
 
 						   </tr>
 					 	 </thead>
 
 					<?php 
-						include "configuracion.php";
-
-						if(isset($_POST['buscar'])){
-							$qnaBuscar = $_POST['qnaOption'];
-							$rfcBuscar = $_POST['rfc'];
-							$anioBuscar = $_POST['anio'];
-
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar' AND qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (  qna='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (  qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion FROM fomope_qr WHERE (anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,estatus,unidad,rfc,qna,fini,tipo_movimiento, fechaAutorizacion, tipoRegistro FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
 							}
 
@@ -353,61 +359,9 @@
 										</div>
 										</div>');
 								}else{
-
-								$resultRegistro=mysqli_fetch_row($result);
-                                $sqlRegistro= "SELECT tipoRegistro FROM fomope_qr WHERE (id_movimiento_qr= '$resultRegistro[0]')";
-                                $resultRegistro = mysqli_query($conexion,$sqlRegistro);
-                                $tipoRegistroId=mysqli_fetch_row($resultRegistro);
-						       if($tipoRegistroId[0]=="CARAVANAS"){	
-								?>
-                      <div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Caravanas</h2></div>
-					</div>
-                         <?php 
-					while($ver=mysqli_fetch_row($result)){ 
-						// switch ($ver[1]) {
-						// 					case 'negro1':
-						// 						$estadoF = 'DDSCH Rechazo';
-						// 						break;
-						// 					case 'negro':
-						// 						$estadoF = 'Unidad Edición';
-						// 						break;
-						// 					case 'amarillo':
-						// 						$estadoF = 'DSPO captura';
-						// 						break;		
-						// 					case 'amarillo0':
-						// 						$estadoF = 'DDSCH Autorización';
-						// 						break;
-						// 					case 'cafe':
-						// 						$estadoF = 'DSPO Autorización';
-						// 						break;	
-						// 					case 'naranja':
-						// 						$estadoF = 'DIPSP Autorización';
-						// 						break;
-						// 					case 'azul':
-						// 						$estadoF= 'DGRHO Autorización';
-						// 						break;
-						// 					case 'rosa':
-						// 						$estadoF = 'DSPO nomina';
-						// 						break;		
-						// 					case 'verde':
-						// 						$estadoF = 'DDSCH loteo';
-						// 						break;
-						// 					case 'verde2':
-						// 						$estadoF = 'DDSCH Autorización Loteo';
-						// 						break;	
-						// 					case 'gris':
-						// 						$estadoF = 'DDSCH Edición';
-						// 						break;
-						// 					case 'guinda':
-						// 						$estadoF = 'Finalizado';
-						// 						break;		
-						// 					default:
-												
-						// 						break;
-						// 				}
-                        
-							
+                              								
+					           while($ver=mysqli_fetch_row($result)){                                 
+						       if($ver[8]=="CARAVANAS"){	
 						 ?>
 
 						<tr>
@@ -417,6 +371,7 @@
 							<td><?php echo $ver[4] ?></td>
 							<td><?php echo $ver[5] ?></td>
 							<td><?php echo $ver[6] ?></td>
+							<td><?php echo $ver[8] ?></td>
 							<td>
 								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
 							</td>
@@ -424,95 +379,37 @@
 						<?php 
 
 						 }
-										}else if($tipoRegistroId[0]=="EVENTUALES"){
-						?>
-						<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Eventuales</h2></div>
-                        </div>
-                         <?php 
-                         while($ver=mysqli_fetch_row($result)){ 
-						// switch ($ver[1]) {
-						// 					case 'negro1':
-						// 						$estadoF = 'DDSCH Rechazo';
-						// 						break;
-						// 					case 'negro':
-						// 						$estadoF = 'Unidad Edición';
-						// 						break;
-						// 					case 'amarillo':
-						// 						$estadoF = 'DSPO captura';
-						// 						break;		
-						// 					case 'amarillo0':
-						// 						$estadoF = 'DDSCH Autorización';
-						// 						break;
-						// 					case 'cafe':
-						// 						$estadoF = 'DSPO Autorización';
-						// 						break;	
-						// 					case 'naranja':
-						// 						$estadoF = 'DIPSP Autorización';
-						// 						break;
-						// 					case 'azul':
-						// 						$estadoF= 'DGRHO Autorización';
-						// 						break;
-						// 					case 'rosa':
-						// 						$estadoF = 'DSPO nomina';
-						// 						break;		
-						// 					case 'verde':
-						// 						$estadoF = 'DDSCH loteo';
-						// 						break;
-						// 					case 'verde2':
-						// 						$estadoF = 'DDSCH Autorización Loteo';
-						// 						break;	
-						// 					case 'gris':
-						// 						$estadoF = 'DDSCH Edición';
-						// 						break;
-						// 					case 'guinda':
-						// 						$estadoF = 'Finalizado';
-						// 						break;		
-						// 					default:
-												
-						// 						break;
-						// 				}
-                        
-						 ?>
-
-						<tr>
-							
-							<td><?php echo $ver[2] ?></td>
-							<td><?php echo $ver[3] ?></td>
-							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[5] ?></td>
-							<td><?php echo $ver[6] ?></td>
-							<td>
-								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
-							</td>
-						</tr>
-						<?php 
-                                          }
-						 
-										}
-
+										}                                 
+						 										
 									} // cierra if total filas == 0 
 							}else{
 								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
-							}
-						}
-						 ?>
+							}		
+
+
+							
+
+												 ?>
 		</table>
+
+	
+<?php 
+
+           }
+
+		?>
 		
 
-			<div class="col-sm-12">
+					<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Autorizar Eventual</h2></div>
+						    <div class="card-body plantilla-inputg"><h2>Autorizar Caravana</h2></div>
 					</div>
 			<form name="radioALL" id="radioALL" action="" method="POST"> 
 					<table class="table table-hover table-white">
 						<thead>
 						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Autorizar</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
 						      <th scope="titulo">QNA</th>
@@ -527,7 +424,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Revisión'";
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -554,16 +451,10 @@
 												break;
 										}*/
 
-
+                           if($row['tipoRegistro']=="CARAVANAS"){
 						 ?>
 
 						<tr>
-							
-							<td>
-								<div class="custom-control custom-radio">
-								  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios"></label>
-								</div>
-							</td>
 							<td><?php echo $row['unidad'] ?></td>
 							<td><?php echo $row['rfc'] ?></td>
 							<td><?php echo $row['qna'] ?></td>
@@ -577,48 +468,24 @@
 						</tr>
 						<?php 
 						
-						 
+						 }
 					}
 						 ?>
 
 					</table>
 						
 				</form>
-				
-				<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal">
-											 Autorizar
-				</button>
+		
 							  			<br>
 							  			<br>
 							  			<br>
-
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de autorizar esta información?
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-											       	<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL','radios', '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary">Aceptar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
 
 			</div>
 			
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Rechazados Eventuales</h2></div>
+						    <div class="card-body plantilla-inputg"><h2>Rechazados Caravanas</h2></div>
 					</div>
 					<table class="table table-hover table-white">
 						<thead>
@@ -639,7 +506,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado'";
+									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1'" ;
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -652,7 +519,6 @@
 					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
 								$estadoF = 'DDSCH Autorización';
-
 					     /*   	switch ($ver[1]) {
 											
 											case 'amarillo0':
@@ -668,7 +534,7 @@
 												break;
 										}*/
 
-
+                            if($row['tipoRegistro']=="CARAVANAS"){
 						 ?>
 
 						<tr>
@@ -684,7 +550,7 @@
 							</td>
 						</tr>
 						<?php 
-						
+						}
 						 
 					}
 						 ?>
