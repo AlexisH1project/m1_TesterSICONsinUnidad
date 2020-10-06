@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2020 a las 00:59:51
+-- Tiempo de generación: 06-10-2020 a las 23:50:06
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -37,19 +37,6 @@ CREATE TABLE `historial_qr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Volcado de datos para la tabla `historial_qr`
---
-
-INSERT INTO `historial_qr` (`id_registro_qr`, `id_movimiento_qr`, `usuario`, `fechaMovimiento`, `horaMovimiento`) VALUES
-(9, 175, 'Lulu', '2020-09-30', '23:40:46'),
-(10, 177, 'Lulu', '2020-09-30', '23:40:56'),
-(11, 785, 'Lulu', '2020-10-05', '17:26:44'),
-(12, 628, 'Lulu', '2020-10-05', '17:27:09'),
-(13, 634, 'Lulu', '2020-10-05', '17:55:26'),
-(14, 635, 'Lulu', '2020-10-05', '17:57:44'),
-(15, 631, 'Lulu', '2020-10-05', '17:58:34');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -57,8 +44,7 @@ INSERT INTO `historial_qr` (`id_registro_qr`, `id_movimiento_qr`, `usuario`, `fe
 -- Indices de la tabla `historial_qr`
 --
 ALTER TABLE `historial_qr`
-  ADD PRIMARY KEY (`id_registro_qr`),
-  ADD KEY `id_movimiento_qr` (`id_movimiento_qr`);
+  ADD PRIMARY KEY (`id_registro_qr`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -68,7 +54,17 @@ ALTER TABLE `historial_qr`
 -- AUTO_INCREMENT de la tabla `historial_qr`
 --
 ALTER TABLE `historial_qr`
-  MODIFY `id_registro_qr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id_registro_qr` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `historial_qr`
+--
+ALTER TABLE `historial_qr`
+  ADD CONSTRAINT `historial_qr_ibfk_1` FOREIGN KEY (`id_movimiento_qr`) REFERENCES `fomope_qr` (`id_movimiento_qr`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

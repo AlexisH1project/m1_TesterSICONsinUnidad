@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-10-2020 a las 00:59:41
+-- Tiempo de generación: 06-10-2020 a las 23:50:22
 -- Versión del servidor: 10.4.11-MariaDB
 -- Versión de PHP: 7.4.1
 
@@ -37,17 +37,6 @@ CREATE TABLE `rechazos_qr` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
--- Volcado de datos para la tabla `rechazos_qr`
---
-
-INSERT INTO `rechazos_qr` (`id_movimiento_qr`, `id_rechazo_qr`, `justificacionRechazo`, `usuario`, `fechaRechazo`) VALUES
-(785, 1, 'aaa', 'Lulu', '2020-10-05'),
-(628, 2, 'aaaa', 'Lulu', '2020-10-05'),
-(634, 3, 'SNS', 'Lulu', '2020-10-05'),
-(635, 4, 'XDSXSXSXS', 'Lulu', '2020-10-05'),
-(631, 5, 'SCSCASCASAS', 'Lulu', '2020-10-05');
-
---
 -- Índices para tablas volcadas
 --
 
@@ -65,7 +54,7 @@ ALTER TABLE `rechazos_qr`
 -- AUTO_INCREMENT de la tabla `rechazos_qr`
 --
 ALTER TABLE `rechazos_qr`
-  MODIFY `id_rechazo_qr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_rechazo_qr` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

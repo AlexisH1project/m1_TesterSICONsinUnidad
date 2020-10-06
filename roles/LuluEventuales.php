@@ -789,6 +789,10 @@
 					</table>
 						
 				</form>
+				<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal">
+											 Autorizar
+				</button>
+				<br>	<br>
 <!-- ****************************************************TABLA: PERSONAL DE CONFIANZA  -->
 
 				<div class="card bg-secondary text-white">
@@ -905,11 +909,11 @@
 											</div>
 
 			</div>
-			
+
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Rechazados Caravanas</h2></div>
+						    <div class="card-body plantilla-inputg"><h2>Rechazados</h2></div>
 					</div>
 					<table class="table table-hover table-white">
 						<thead>
@@ -930,7 +934,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1'" ;
+									from fomope_qr WHERE estatus = 'Rechazado duplicado' AND color_estado= 'negro_1' OR estatus = 'Rechazado duplicado' AND color_estado= 'amarillo0'" ;
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -943,97 +947,6 @@
 					        		$id_mov = $row['id_movimiento_qr'];
 					        	}
 								$estadoF = 'DDSCH Autorización';
-					     /*   	switch ($ver[1]) {
-											
-											case 'amarillo0':
-												$estadoF = 'DDSCH Autorización';
-												break;
-											
-											case 'verde2':
-												$estadoF = 'DDSCH Autorización Loteo';
-												break;	
-												
-											default:
-												
-												break;
-										}*/
-
-                            if($row['tipoRegistro']=="CARAVANAS"){
-						 ?>
-
-						<tr>
-							<td><?php echo $row['unidad'] ?></td>
-							<td><?php echo $row['rfc'] ?></td>
-							<td><?php echo $row['qna'] ?></td>
-							<td><?php echo $row['fini'] ?></td>
-							<td><?php echo $row['tipo_movimiento'] ?></td>
-							<td><?php echo $row['tipoRegistro'] ?></td>
-
-							<td>
-								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $row['id_movimiento_qr'] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
-							</td>
-						</tr>
-						<?php 
-						
-						 }
-					}
-						 ?>
-
-					</table>
-			</div>
-
-			<div class="col-sm-12">
-				
-					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Rechazados Eventuales</h2></div>
-					</div>
-					<table class="table table-hover table-white">
-						<thead>
-						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha Ingreso</th>
-						      <th scope="titulo">Codigo Mov.</th>
-						      <th scope="titulo">Tipo de ingreso</th>
-
-						   </tr>
-					 	 </thead>
-
-						<?php 
-							include "configuracion.php";
-
-							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1'" ;
-							$result=mysqli_query($conexion,$sql);
-
-							while($ver=mysqli_fetch_row($result)){ 
-
-							
-								$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
-
-						        if($resultado2 = mysqli_query($conexion,$consulta2)){
-					        		$row = mysqli_fetch_assoc($resultado2);
-					        		$id_mov = $row['id_movimiento_qr'];
-					        	}
-								$estadoF = 'DDSCH Autorización';
-					     /*   	switch ($ver[1]) {
-											
-											case 'amarillo0':
-												$estadoF = 'DDSCH Autorización';
-												break;
-											
-											case 'verde2':
-												$estadoF = 'DDSCH Autorización Loteo';
-												break;	
-												
-											default:
-												
-												break;
-										}*/
-                          if($row['tipoRegistro']=="EVENTUALES"){
 
 						 ?>
 
@@ -1050,8 +963,6 @@
 							</td>
 						</tr>
 						<?php 
-						}
-						 
 					}
 						 ?>
 
