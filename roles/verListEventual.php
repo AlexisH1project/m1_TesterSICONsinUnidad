@@ -174,7 +174,34 @@
 
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
+					$ruta = $dir_subidaMov;
+					$index=0;
 
+					if(is_dir($ruta)) {
+                    if($dir = opendir($ruta)) {
+                    while(($archivo = readdir($dir)) !== false) {    
+                    if($archivo != '.' && $archivo != '..') {   
+                    if (is_dir($ruta.$archivo)) {                
+                    $leercarpeta = $ruta.$archivo. "/";
+                    if(is_dir($leercarpeta)){
+                    if($dir2 = opendir($leercarpeta)){
+                    while(($archivo2 = readdir($dir2)) !== false){
+                    if($archivo2 != '.' && $archivo2 != '..') {
+                    
+                    $datosPDF[$index]= $archivo2;
+                    $index++;
+
+                } }                   
+                    closedir($dir2);
+                    } }
+                    } } }
+                    closedir($dir);
+                    } }
+
+
+                    //echo count($datosPDF);
+
+                    
 					// Arreglo con todos los nombres de los archivos
 					$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 
@@ -207,7 +234,7 @@
 
 						<?php	
 							
-										foreach($files2 as $file){	
+										foreach($datosPDF as $file){	
 											$data = explode("_",$file);
 											$conId = count($data);
 										    $data2 = explode(".",$file);
