@@ -27,10 +27,23 @@ function generarExcel(){
 					if($resName = mysqli_query($conexion, $sqlNombre)){
 						$rowUser = mysqli_fetch_row($resName);
 					}
+					$movQuery = "SELECT * FROM ct_movimientosrh WHERE
+					    tipo_mov = '$rowQr['tipo_movimiento']'";
+					if($resMovimientos = mysqli_query($conexion, $movQuery)){
+						$rowMovimientos = mysqli_fetch_row($resMovimientos);
+					}
+
+					$unidadQuery = "SELECT * FROM ct_unidades WHERE
+					    UR = '$rowQr['unidad']'";
+					if($resUnidad = mysqli_query($conexion, $unidadQuery)){
+						$rowUnidad = mysqli_fetch_row($resUnidad);
+					}
+
+
 					$objPHPExcel->getActiveSheet()->setCellValue('H11',$fecha_recibido); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D13', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D15', $rowQr['tipo_movimiento']); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D19', $rowQr['unidad']); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D15', $rowMovimientos[4]); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D19', $rowUnidad[1]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D23', $motivoR); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('B32', $rowUser[4]); 
 				//---> Write the file

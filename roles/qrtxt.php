@@ -435,7 +435,7 @@
 				$resColor = mysqli_query($conexion,$sql_id_rol);
 				$id_rol_res = mysqli_fetch_row($resColor);
 
-				if($id_rol_res[0] == ""){
+				if($id_rol_res[0] == "" OR $id_rol_res[0] == 0){
 					$colorFomopeQr="amarillo0";
 				}else if($id_rol_res[0] == 3 OR $id_rol_res[0] == 7){
                     $colorFomopeQr="amarillo";
