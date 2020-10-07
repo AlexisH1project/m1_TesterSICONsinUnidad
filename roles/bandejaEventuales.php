@@ -167,6 +167,9 @@
 					$rowUser = mysqli_fetch_assoc($resutUser);
 					if($rowUser['id_rol'] == 2 || $rowUser['id_rol'] == 3 || $rowUser['id_rol'] == 7){
 						$colorSee = "amarillo";
+					}else{
+						$colorSee = "amarillo0";
+
 					}
 					$colorRechazo = "negro_".strval($rowUser['id_rol']);
 				}

@@ -167,7 +167,10 @@
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
-		        <ul class="navbar-nav ml-auto">          
+		        <ul class="navbar-nav ml-auto">    
+		        <li class="nav-item">
+		            	<a class="nav-link" href='./bandejaEventuales.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Eventuales</a>
+		          	</li>         
 		         <li class="nav-item dropdown">
 		            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		              Acciones

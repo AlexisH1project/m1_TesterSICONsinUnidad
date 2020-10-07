@@ -410,6 +410,13 @@
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_assoc($result);
 
+							$queryUser = "SELECT * FROM usuarios WHERE usuario = '$usuarioSeguir'";
+
+							if($resutUser = mysqli_query($conexion, $queryUser)){
+								$rowUser = mysqli_fetch_assoc($resutUser);
+								$colorRechazo = "negro_".strval($rowUser['id_rol']);
+							}
+
 							// 	for($i=47; $i<=117; $i++){
 							// 		if($ver[$i] == ""){
 										
@@ -674,7 +681,7 @@
 
 		</div>
 		<?php
-				if($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] = "negro_1"){
+				if($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo){
 
 		?>
 		<div class="form-row">

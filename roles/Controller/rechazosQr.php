@@ -27,19 +27,14 @@ function generarExcel(){
 					if($resName = mysqli_query($conexion, $sqlNombre)){
 						$rowUser = mysqli_fetch_row($resName);
 					}
-					$movQuery = "SELECT * FROM ct_movimientosrh WHERE
-					    tipo_mov = '$rowQr['tipo_movimiento']'";
+					$movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov =".$rowQr['tipo_movimiento'];
 					if($resMovimientos = mysqli_query($conexion, $movQuery)){
 						$rowMovimientos = mysqli_fetch_row($resMovimientos);
 					}
-
-					$unidadQuery = "SELECT * FROM ct_unidades WHERE
-					    UR = '$rowQr['unidad']'";
+					$unidadQuery = "SELECT * FROM ct_unidades WHERE UR =".$rowQr['unidad'];
 					if($resUnidad = mysqli_query($conexion, $unidadQuery)){
 						$rowUnidad = mysqli_fetch_row($resUnidad);
 					}
-
-
 					$objPHPExcel->getActiveSheet()->setCellValue('H11',$fecha_recibido); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D13', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D15', $rowMovimientos[4]); 
@@ -74,8 +69,11 @@ function generarExcel(){
 			$sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuarioEdito'";
 			if($resName = mysqli_query($conexion, $sqlNombre)){
 				$rowUser = mysqli_fetch_row($resName);
-				if($rowUser[2] == 1){
+				if($rowUser[2] == 0){
 					$sql = "UPDATE fomope_qr SET color_estado = 'negro_1', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
+					
+				}else if($rowUser[2] == 1){
+					$sql = "UPDATE fomope_qr SET color_estado = 'negro_0', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
 					
 				}else if($rowUser[2] == 2){
 					$sql = "UPDATE fomope_qr SET color_estado = 'negro_3', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;

@@ -934,7 +934,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado' AND color_estado= 'negro_1' OR estatus = 'Rechazado duplicado' AND color_estado= 'amarillo0'" ;
+									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1' OR estatus = 'Rechazado duplicado' AND color_estado= 'amarillo0'" ;
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
