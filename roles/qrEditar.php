@@ -320,7 +320,15 @@
 	          </li>
 	      </center>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./LuluEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	          	<!-- redireccionamos a la interfaz correcta  -->
+	          	<?php
+	          		if($id_rol1 == 1){
+	          			$namePHP = "LuluEventuales.php";
+	          		}else{
+	          			$namePHP = "bandejaEventuales.php";
+	          		}
+	          	?>
+	            <a href=  <?php echo ("'./".$namePHP."?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
 	           <li class=" estilo-color">
 	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
@@ -414,6 +422,12 @@
 
 							if($resutUser = mysqli_query($conexion, $queryUser)){
 								$rowUser = mysqli_fetch_assoc($resutUser);
+								if($rowUser['id_rol'] == 2 || $rowUser['id_rol'] == 3 || $rowUser['id_rol'] == 7){
+									$colorSee = "amarillo";
+								}else{
+									$colorSee = "amarillo0";
+
+								}
 								$colorRechazo = "negro_".strval($rowUser['id_rol']);
 							}
 
@@ -681,7 +695,7 @@
 
 		</div>
 		<?php
-				if($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo){
+				if(($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo) AND ($id_rol1 == 1 OR $id_rol1 == 2 OR $id_rol1 == 7) ){
 
 		?>
 		<div class="form-row">
@@ -732,7 +746,7 @@
 
 		</div>
 	<?php
-	 	}else{
+	 	}else if($id_rol1 == 1 AND $colorSee == "amarillo0" AND $ver['personaAsignada'] == ""){
 	?>
 		<br>
 							<button type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -748,10 +762,55 @@
 							<input type="submit" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
 
 	<?php	 		
+	 	}else{
+	?>
+		<br>
+		<button type="button" id="aceptarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalaAceptarQr">
+						 Confirmar
+						</button>
+		  			<br>
+		  			<br>
+		    <div class="form-group col-md-60">
+								<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
+
+
+							</div>
+		<input type="submit" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+
+	<?php
 	 	}
 	}
 
 		?>
+		<!-- Modal de aceptarQr.... -->
+					<div class="modal fade" id="exampleModalaAceptarQr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        ¿Estás seguro de confirmar esta información?
+					      </div>
+									<center>
+						      <div class="form-group col-md-8">
+							
+										</center>
+											      <div class="modal-footer">
+
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+							        				<button type="button" onclick="aceptarQr('<?php echo $noFomope ?>' , '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary" >
+							        				Enviar
+							        				 </button>
+											      </div>
+											    
+											    </div>
+											  </div>
+								</div>
+							<br>
 					<!-- Modal -->
 					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 					  <div class="modal-dialog" role="document">
@@ -796,7 +855,7 @@
 
 											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
 							        				<button type="button" onclick="reenviarDatos('<?php echo $noFomope ?>' , '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary" >
-							        				Enviar
+							        				Aceptar
 							        				 </button>
 											      </div>
 											    
