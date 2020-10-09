@@ -5,11 +5,28 @@
 		
 		//header("Content-type: application/PDF");
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
-		$nombreFileAver = "";
+		
 		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-		$from = './docs/';
 		//$to = '../roles/Controller/DOCUMENTOS_RES/';
-		$to = './docs2/';
+		$to = './SICON/';
+	
+		//$numParametros = count($data);
+//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si es el que ya se tiene o si es nuevo con el mismo nombr
+		/*if($numParametros == 1){
+			$nameFileSICON = "0";
+		}else if($numParametros == 2){
+			$separarExtencion = explode(".", $data[1]);
+			$nameC_SICON = $separarExtencion[0];
+		}else if($numParametros == 3){
+			$separarExtencion = explode(".", $data[2]);
+			$nameC_SICON = $data[1]."_".$separarExtencion[0];
+		}else if($numParametros == 4){
+			$nameC_SICON = $data[1];
+		}else if($numParametros == 5){
+			$nameC_SICON = $data[1]."_".$data[2];
+		}
+*/
+		$from = './OTRO/';
 
 		//Abro el directorio que voy a leer
 		/*$dir = opendir($from);
@@ -43,7 +60,10 @@ function asignarIDfecha(){
 function showFiles($from){
 	include "configuracion.php";
 	//$to = '../roles/Controller/DOCUMENTOS_RES/';
-	$to = './docs2/';
+	$nombreFilVer = "AADV880113HDFLZC06";
+	$nameCarpetaOTRO= explode("/OTRO/", $from);
+	$to = './SICON/'.$nameCarpetaOTRO[1];
+    $nameCarpetaSICON= explode("/SICON/", $to);
 	
     $dir = opendir($from);
     $files = array();
@@ -60,7 +80,7 @@ function showFiles($from){
     }
     echo '<h2>'.$from.'</h2>';
     echo '<ul>';
-
+    
     $iterator = new DirectoryIterator($from);
     $iterator2 = new DirectoryIterator($to);
 	foreach ($iterator as $fileinfo) { //----------> iniciamos a recorrer los docuementos de la carpeta del servidor donde se van a extraer
@@ -71,10 +91,14 @@ function showFiles($from){
 	        echo $fileinfo->getFilename() . " cambiado en " . $fileinfo->getMTime();  
 	        // Arreglo con todos los nombres de los archivos
 			$nombreDocServ = explode(".",$fileinfo);
+			$curpInterator = explode("_",$nombreDocServ[0]);
 			//echo("nombre:: ". $nombreDocServ[0]);
 											//$files = array_diff(scandir($to), array('.', '..')); 
    			$totalDoc = count(glob($to.'{*.pdf,*.PDF}',GLOB_BRACE));  //---> total de documentos en la carpeta a la cual se van a pasar 
-												
+    		echo '<h2> COMÁRANDO: '.$nameCarpetaSICON[1].'</h2>';
+    		echo '<h2> COMÁRANDO: '.$nameCarpetaOTRO[1].'</h2>';
+
+			if($nombreFilVer == $curpInterator[0]){												
 											foreach($iterator2 as $file){
 												$contadorExistenDoc ++;
 											    // Divides en dos el nombre de tu archivo utilizando el . 
@@ -129,7 +153,7 @@ function showFiles($from){
 											   	}else if($nameFileSICON == $nombreDocServ[0]){
 											   		$existeRFC = 1;
 											   	}
-											}
+											} // ---->> termina el for anidado
 											echo "entro? : ". $docModificado."  contador: ". $contadorExistenDoc. " total En carpeta: ". $totalDoc;
 											if($docModificado == 0 AND $contadorExistenDoc-2 == $totalDoc AND $existeRFC == 0) {
 			 									echo "creeeeeea el docccc". "\n";
@@ -209,6 +233,8 @@ function showFiles($from){
 											 		}
 											 			
 											 }
+		}// --->> IF si se encuentra en la misma capeta
+
 	    }
 	    echo '<br/>';
 
