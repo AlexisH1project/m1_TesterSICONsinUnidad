@@ -199,7 +199,7 @@
                     } }
 
 
-                    //echo count($datosPDF);
+                    echo count($datosPDF);
 
                     
 					// Arreglo con todos los nombres de los archivos
@@ -279,9 +279,9 @@
 													";
 									 			}
 									 			if($conId==2 || $conId==3){
-									 			$nombreAdescargar = $extractCurp."_".$extractDoc."."."$extencion";
+									 			$nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 									 		    }else if ($conId==4 || $conId==5){
-									 		    $nombreAdescargar = $extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    $nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
 									 		    }
 
 
