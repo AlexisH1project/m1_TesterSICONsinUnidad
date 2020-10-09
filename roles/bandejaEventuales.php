@@ -178,7 +178,25 @@
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
-		        <ul class="navbar-nav ml-auto">    
+		        <ul class="navbar-nav ml-auto">   
+		        <?php
+		        if($rowUser['id_rol'] == 0 ){
+		        ?>
+		        	<li class="nav-item">
+		            	<a class="nav-link" href='./luluConsulta.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Bandeja</a>
+		          	</li>         
+		         	<li class="nav-item dropdown">
+		            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		              Acciones
+		            </a>
+		            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		              <a class="dropdown-item" href="./FiltroDescargar.php?usuario_rol=<?php echo $usuarioSeguir ?>">Descarga de documentos</a>
+		              <a class="dropdown-item" href="./generarReporte.php?usuario_rol=<?php echo $usuarioSeguir ?>">Generar reportes</a>
+		            </div>
+		          </li>
+		        <?php
+		        }
+		        ?> 
 		          <li class="nav-item">
 		            <a class="nav-link" href='../LoginMenu/vista/cerrarsesion.php'>CERRAR SESIÓN</a>
 		          </li>
