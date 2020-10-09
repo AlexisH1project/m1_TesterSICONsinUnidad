@@ -6,8 +6,8 @@
 		//header("Content-type: application/PDF");
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 	
-		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-		$from = './docs/';
+		$from = '\\\\PWIDGRHOSISFO01\\Archivos\\';
+		//$from = './docs/';
 		$to = '../roles/Controller/DOCUMENTOS_RES/';
 
 		//Abro el directorio que voy a leer
