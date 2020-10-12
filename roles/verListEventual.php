@@ -99,12 +99,21 @@
 				$noFomope =  $_GET['idMov'];
 				$usuarioSeguir =  $_GET['usuario_rol'];
 
+	            $sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
+	            $result=mysqli_query($conexion,$sql);
+	            $rowQr = mysqli_fetch_row($result);
+
 
 		//header("Content-type: application/PDF");
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		
 		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
+	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+	    $to = './Controller/DOCUMENTOS_PDC/';	
+	    }else{
 		$to = './Controller/DOCUMENTOS_RES/';
+	    }
+
 		$from = './Controller/OTRO/';
 
 //---> funcion para poder asiganar un id diferente y no se duplique el documento
@@ -137,7 +146,13 @@ function showFiles($from){
 	
 	$nameCarpetaOTRO= explode("/OTRO/", $from);
 	//$to = './SICON/'.$nameCarpetaOTRO[1];
-	$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
+    
+    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+	   $to = './Controller/DOCUMENTOS_PDC/'.$nameCarpetaOTRO[1];
+	}else{
+		$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
+    }
+
     $dir = opendir($from);
     $files = array();
     while ($current = readdir($dir)){
@@ -315,7 +330,13 @@ function showFiles($from){
 							// 			$nombreAdescargar = $ver[5]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
 ////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
+					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
+	                     }else{
+		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
+            
+	                     
+	                    }
 					$ruta = $dir_subidaMov;
 					$index=0;
 
@@ -432,7 +453,11 @@ function showFiles($from){
 												<?php
 											
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													$laRuta = "DOCUMENTOS_RES";
+													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+	                                                      $laRuta = "DOCUMENTOS_PDC";
+	                                                      }else{
+		                                                  $laRuta = "DOCUMENTOS_RES";
+	                                                      }
 												
 												}
 												}

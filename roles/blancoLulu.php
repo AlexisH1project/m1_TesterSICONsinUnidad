@@ -872,7 +872,10 @@
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
-													<?php }?>          
+													<?php 
+													$analista = $misdatos["nombrePersonal"];
+
+												}?>          
 													</select>
 										</div>
 										 <br>  
