@@ -201,6 +201,30 @@
 		
 			<br>
 
+				<script type="text/javascript">
+
+					function obtenerRadioSeleccionado(formulario, nombre, userRol){
+						var contador = 0;
+					     elementosSelectR = [];
+					     elementos = document.getElementById(formulario).elements;
+					     longitud = document.getElementById(formulario).length;
+					     var cap = document.getElementById("usuar").value;
+					     for (var i = 0; i < longitud; i++){
+					         if(elementos[i].name == nombre && elementos[i].type == "checkbox" && elementos[i].checked == true){
+										elementosSelectR[contador]=elementos[i].value;
+										//alert(elementosSelectR[contador]);
+										contador++;
+					         }
+					     }
+					     if(contador > 0){
+							window.location.href = './Controller/autorizarTodoEventualLulu.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol+'&capturista='+cap;
+
+					     }
+					     //return false;
+					} 
+
+				</script>
+
 			<form method="post" action=""> 
 				<div class="plantilla-inputv text-center">
 					<div class="form-row">
@@ -888,7 +912,7 @@
 							  			<br>
 
 											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+																						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											  <div class="modal-dialog" role="document">
 											    <div class="modal-content">
 											      <div class="modal-header">
@@ -898,15 +922,50 @@
 											        </button>
 											      </div>
 											      <div class="modal-body">
-											        ¿Estas seguro de autorizar esta información?
+											        ¿Estas seguro de enviar esta información?
 											      </div>
+									<center>
+						      <div class="form-group col-md-8">
+									<div class="box" >
+
+										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
+												 
+												<select class="form-control border border-dark custom-select" name="usuar" id="usuar">
+													
+													<?php
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$resultado = mysqli_query($conexion , $consulta);
+													$contador=0;
+
+													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
+													<?php 
+                                                    
+
+												}?>          
+													</select>
+													
+										</div>
+										 <br>  
+
+								</div>
+
+										</center>
 											      <div class="modal-footer">
+
 											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-											       	<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL','radios', '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary">Aceptar</button>
+							        				<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL','radios', '<?php echo $usuarioSeguir ?>')" class="btn btn-primary">Aceptar</button>
 											      </div>
 											    </div>
 											  </div>
 											</div>
+
+
+							<br>
 
 			</div>
 
