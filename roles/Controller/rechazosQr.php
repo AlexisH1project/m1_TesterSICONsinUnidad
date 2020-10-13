@@ -7,19 +7,9 @@ function generarExcel(){
 			    $usuario = $_GET['usuario'];
 				$noFomope = $_GET['noFomope'];
 				$motivoR = $_GET['comentarioR'];
-				$sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuario'";
 
-				if($resName = mysqli_query($conexion, $sqlNombre)){
-					$rowUser = mysqli_fetch_row($resName);
-				}
-				$movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov =".$rowQr['tipo_movimiento'];
-				if($resMovimientos = mysqli_query($conexion, $movQuery)){
-					$rowMovimientos = mysqli_fetch_row($resMovimientos);
-				}
-				$unidadQuery = "SELECT * FROM ct_unidades WHERE UR =".$rowQr['unidad'];
-				if($resUnidad = mysqli_query($conexion, $unidadQuery)){
-					$rowUnidad = mysqli_fetch_row($resUnidad);
-				}
+				
+			    
 
 				
 
@@ -37,7 +27,23 @@ function generarExcel(){
 				if($resultSelect = mysqli_query($conexion, $queryID)){
 					$rowQr = mysqli_fetch_assoc($resultSelect);
 					$apellido1Add = $rowQr['apellido_p'] ;	
-					$apellido2Add = $rowQr['apellido_m'];	
+					$apellido2Add = $rowQr['apellido_m'];
+
+                    $sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuario'";
+				    if($resName = mysqli_query($conexion, $sqlNombre)){
+					$rowUser = mysqli_fetch_row($resName);
+				    }
+
+				    $movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov =".$rowQr['tipo_movimiento'];
+				    if($resMovimientos = mysqli_query($conexion, $movQuery)){
+					$rowMovimientos = mysqli_fetch_row($resMovimientos);
+				    }
+
+				    $unidadQuery = "SELECT * FROM ct_unidades WHERE UR =".$rowQr['unidad'];
+				    if($resUnidad = mysqli_query($conexion, $unidadQuery)){
+					$rowUnidad = mysqli_fetch_row($resUnidad);
+				}
+
 					$nombreAdd = $rowQr['nombre'] ;
 					$fecha_recibido = $rowQr['fini'];
                
@@ -146,7 +152,6 @@ function generarExcel(){
 					}
 /*		}else if($laAccion == "bandeja de entrada"){
 		              		echo "<script>window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
-
 		}*/
 
  ?>
