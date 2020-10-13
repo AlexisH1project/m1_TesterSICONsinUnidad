@@ -108,7 +108,7 @@
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		
 		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	    $to = './Controller/DOCUMENTOS_PDC/';	
 	    }else{
 		$to = './Controller/DOCUMENTOS_RES/';
@@ -147,7 +147,7 @@ function showFiles($from){
 	$nameCarpetaOTRO= explode("/OTRO/", $from);
 	//$to = './SICON/'.$nameCarpetaOTRO[1];
     
-    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	   $to = './Controller/DOCUMENTOS_PDC/'.$nameCarpetaOTRO[1];
 	}else{
 		$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
@@ -330,7 +330,7 @@ function showFiles($from){
 							// 			$nombreAdescargar = $ver[5]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
 ////////////// inicia la busqueda del archivo en carpeta 
-					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
 	                     }else{
 		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
@@ -453,7 +453,7 @@ function showFiles($from){
 												<?php
 											
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)"){
+													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	                                                      $laRuta = "DOCUMENTOS_PDC";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";

@@ -144,7 +144,7 @@
 
 			?>
 			<br>
-		  				<a  href= <?php echo ("'./soloQrtxt.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+		  				<a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 
 			<?php
 					}else{
