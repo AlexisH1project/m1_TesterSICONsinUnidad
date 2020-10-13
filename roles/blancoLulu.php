@@ -608,7 +608,7 @@
 								   <!--  <p class="help-block">Ejemplo de texto de ayuda.</p> -->
 								</div>
 							</div>
-
+							<br>			<br>						<br>
 						   <!-- <label  class="plantilla-label" for="arch">Nombre del archivo: </label> -->
 						 
 						<div class="col">
@@ -648,17 +648,23 @@
 									$lafechaIng = $_POST['fechaIngreso'];
 									$iniciolab = $_POST['del2'];
 									$finalizalab = $_POST['al3'];
+									$leerMov = $_POST['id_env'];
 
-									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ";
+									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento";
 
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
                                    		$extid =mysqli_fetch_row($datasub2);
 								    	$res1Check = mysqli_num_rows($datasub2);
-                                   		$banderaid = $extid[0];
+								    	if ($res1Check == NULL){
+								    		$res1Check = 0;
+								    	}else{
+								    		$res1Check = 1;
+								    		$banderaid = $extid[0];
+								    	}                                 		
                                    		//	echo $banderaid;
                                    	}	
 
-                                   	if ($res1Check<1) {
+                                   	if ($leerMov == "x") { //$res1Check<1
                                    		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
@@ -758,8 +764,8 @@
 											}
 							}
 						?>	
+<input type="text" style="display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
 <!-- ***************************************************************************************** -->	
-    <input type="text" style = "display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
 	<table class="table table-striped table-bordered" style="margin-bottom: 0">
 					<?php 
 							include "configuracion.php";

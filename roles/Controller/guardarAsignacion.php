@@ -20,11 +20,13 @@
 					//ingresamos el color al fomope_qr
 					if($rowRol[0] == 3 OR $rowRol[0] == 7){
 			            $colorFomopeQr="amarillo";
+					}else{
+						$colorFomopeQr="amarillo0";
 					}
-					$sqlH = "INSERT INTO historial (usuario,fechaMovimiento,horaMovimiento) VALUES ('$rolSegimiento','$row[0]','$row2[0]')";
+					$sqlH = "INSERT INTO historial_qr (usuario,fechaMovimiento,horaMovimiento) VALUES ('$rolSegimiento','$row[0]','$row2[0]')";
 					$resultH = mysqli_query($conexion,$sqlH);	
 					if($rowRol[0] == '1'){
-						$sqlCL = "UPDATE fomope_qr SET color_estado = 'colorFomopeQr' , usuario_modifico = '$rolSegimiento', personaAsignada = '$asignado', fechaAutorizacion= '$row[0] - $rolSegimiento' WHERE id_movimiento_qr = '$noFomope'";
+						$sqlCL = "UPDATE fomope_qr SET color_estado = '$colorFomopeQr' , usuario_modifico = '$rolSegimiento', personaAsignada = '$asignado', fechaAutorizacion= '$row[0] - $rolSegimiento' WHERE id_movimiento_qr = '$noFomope'";
 							if(mysqli_query($conexion,$sqlCL)){
 	               				echo "<script> alert('Fomope Actualizado'); window.location.href = '../LuluEventuales.php?usuario_rol=$rolSegimiento'</script>";
 							}else{
