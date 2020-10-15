@@ -21,7 +21,9 @@
 			 }
 		 	$queryUser = "SELECT * FROM usuarios WHERE usuario = '$userSelect'";
 
-			if($resutUser = mysqli_query($conexion, $queryUser)){
+				if ($userSelect == "autorizado") {
+					$colorSee = "guinda";
+				}else if($resutUser = mysqli_query($conexion, $queryUser)){
 				$rowUser = mysqli_fetch_assoc($resutUser);
 				if($rowUser['id_rol'] == 2 || $rowUser['id_rol'] == 3 || $rowUser['id_rol'] == 7){
 					$colorSee = "amarillo";
@@ -41,7 +43,6 @@
 			 if (mysqli_query($conexion,$sql) AND mysqli_query($conexion,$sql2) AND $resR = mysqli_query($conexion,$sqlRol) ){
 
 					$rowRol = mysqli_fetch_row($resR);
-					echo $rowRol[0];
 					if($rowRol[0] == 1){
 
               			echo "<script> alert('Fomope Enviado'); window.location.href = '../LuluEventuales.php?usuario_rol=$usuarioEdito'</script>";
@@ -49,8 +50,6 @@
 					}else{
               			echo "<script> alert('Fomope Enviado'); window.location.href = '../bandejaEventuales.php?usuario_rol=$usuarioEdito'</script>";
 					}
-
-			
 
 			}else {
 				echo '<script type="text/javascript">alert("Error en la conexion");</script>';

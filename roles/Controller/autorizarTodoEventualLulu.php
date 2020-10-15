@@ -10,8 +10,21 @@
 		 $hoy = "select CURDATE()";
 		 $tiempo ="select curTime()";
 
-			
+			$queryUser = "SELECT * FROM usuarios WHERE usuario = '$capturista'";
 
+				if ($capturista == "autorizado") {
+					$colorSee = "guinda";
+				}else if($resutUser = mysqli_query($conexion, $queryUser)){
+					$rowUser = mysqli_fetch_assoc($resutUser);
+					if($rowUser['id_rol'] == 2 || $rowUser['id_rol'] == 3 || $rowUser['id_rol'] == 7){
+						$colorSee = "amarillo";
+					}else if($rowUser['id_rol'] == 4){
+						$colorSee = "azul";
+					}else{
+						$colorSee = "amarillo0";
+					}
+					$colorRechazo = "negro_".strval($rowUser['id_rol']);
+				}
 
 			for ($i = 0; $i < count($porAutorizar); $i++) {
 				$sql = "SELECT color_estado FROM fomope_qr WHERE id_movimiento_qr = '$porAutorizar[$i]'";
@@ -23,7 +36,7 @@
 									 		$fechaH = mysqli_fetch_row($resultHoy);
 									 		$horaH = mysqli_fetch_row($resultTime);
 									 }
-									$sql2 = "UPDATE fomope_qr SET color_estado = 'azul', usuario_modifico = '$userSeguir', fechaAutorizacion = '$fechaH[0] - $userSeguir' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
+									$sql2 = "UPDATE fomope_qr SET color_estado = '$colorSee', usuario_modifico = '$userSeguir', fechaAutorizacion = '$fechaH[0] - $userSeguir', personaAsignada = '$capturista' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
 
 							if(mysqli_query($conexion, $sql2)){
 								 

@@ -312,6 +312,8 @@
 	          	<?php
 	          		if($id_rol1 == 1){
 	          			$namePHP = "LuluEventuales.php";
+	          		}else if($id_rol1 == 4){
+	          			$namePHP = "bandejaEventuales_D.php";
 	          		}else{
 	          			$namePHP = "bandejaEventuales.php";
 	          		}
@@ -662,39 +664,44 @@
 							<label  class="plantilla-label" for="entidad_nac">Entidad Nac.: </label>
 									 <input type="text" class="form-control border border-dark" id="entidad_nac" name="entidad_nac" value="<?php echo $ver['entidad_nac']?>" readonly > 
 					</div>
+			<?php
+			if($rowUser['id_rol'] == 1 OR $rowUser['id_rol'] == 0){
+				?>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="ofico">Oficio: </label>
-									 <input type="text" class="form-control border border-dark" id="oficio" name="oficio"> 
+									 <input type="text" class="form-control border border-dark" value="<?php echo $ver['oficio']?>" id="oficio" name="oficio"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="recep">Recepcion: </label>
-									 <input type="date" class="form-control border border-dark" id="recepcion" name="recepcion"> 
+									 <input type="date" class="form-control border border-dark" id="recepcion" value="<?php echo $ver['Frecepcion']?>" name="recepcion"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="enFirma">En firma: </label>
-									 <input type="date" class="form-control border border-dark" id="enFirma" name="enFirma"> 
+									 <input type="date" class="form-control border border-dark" id="enFirma" value="<?php echo $ver['Fen_firma']?>" name="enFirma"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="firmado">Firmado: </label>
-									 <input type="date" class="form-control border border-dark" id="firmado" name="firmado"> 
+									 <input type="date" class="form-control border border-dark" id="firmado" value="<?php echo $ver['Ffirmado']?>" name="firmado"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="entregaUR">Entrega a la UR: </label>
-									 <input type="date" class="form-control border border-dark" id="entregaUR" name="entregaUR"> 
+									 <input type="date" class="form-control border border-dark" id="entregaUR" value="<?php echo $ver['Fentrega_ur']?>" name="entregaUR"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="envioPersonal">Envio a personal: </label>
-									 <input type="date" class="form-control border border-dark" id="envioPersonal" name="envioPersonal"> 
+									 <input type="date" class="form-control border border-dark" id="envioPersonal" value="<?php echo $ver['envio_personal']?>" name="envioPersonal"> 
 					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="archivo">Archivo: </label>
-									 <input type="date" class="form-control border border-dark" id="archivo" name="archivo"> 
+									 <input type="date" class="form-control border border-dark" id="archivo" value="archivo" name="archivo"> 
 					</div>
 				<!-- datos que se reciben para dar seguimiento  -->
 
 					<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
 					<input type="text" style="display: none;" name="noFomope" value="<?php echo $noFomope; ?>" > 
-
+				<?php
+		}
+				?>
 					<div class="form-group col-md-9">
 						<label  class="plantilla-label" for="rechazo">Motivo de rechazo: </label>
 						 <textarea class="form-control border border-dark" id="verMotivoR" rows = "4" name="verMotivoR" readonly><?php echo $ver['motivo_rechazo']?></textarea>
@@ -706,7 +713,7 @@
 		
 		</div>
 	<?php
-	 	if($id_rol1 == 1 AND $colorSee == "amarillo0" AND $ver['personaAsignada'] == "" AND $ver['color_estado'] != "negro_0"){
+	 	if($ver['color_estado'] != "negro_0" OR $ver['color_estado'] != "negro_1" OR $ver['color_estado'] != "negro_2" OR $ver['color_estado'] != "negro_3" OR $ver['color_estado'] != "negro_4"){ //$id_rol1 == 1 AND $colorSee == "amarillo0" AND $ver['personaAsignada'] == "" AND
 	?>
 		<br>
 							<button type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -742,20 +749,20 @@
 										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
 												
 												<select class="form-control border border-dark custom-select" id="user" name="user">
-													
 													<?php
 													
 													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 0 OR id_rol = 7 OR id_rol = 4";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 1 OR id_rol = 0 OR id_rol = 7";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
-													<?php }?>          
+													<?php }?>   
+													<option value="autorizado">AUTORIZAR</option>
 													</select>
 										</div>
 										 <br>  
@@ -858,7 +865,7 @@
 		<form method="post" name="bde" action="">
 		    <div id="content" class="p-4 p-md-5 pt-5">
 				<div class="formulario_qr">
-						<input type="button" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+						<input type="button" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>', '<?php echo $rowUser['id_rol'] ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
 				</div>
 			</div>
 		</form>

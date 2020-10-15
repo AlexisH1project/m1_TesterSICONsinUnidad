@@ -168,17 +168,9 @@
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
 		        <ul class="navbar-nav ml-auto">    
 		        <li class="nav-item">
-		            	<a class="nav-link" href='./Lulu.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Bandeja</a>
+		            	<a class="nav-link" href='./dario.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Bandeja</a>
 		          	</li>         
-		         <li class="nav-item dropdown">
-		            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		              Acciones
-		            </a>
-		            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-		              <a class="dropdown-item" href="./FiltroDescargar.php?usuario_rol=<?php echo $usuarioSeguir ?>">Descarga de documentos</a>
-		              <a class="dropdown-item" href="./generarReporte.php?usuario_rol=<?php echo $usuarioSeguir ?>">Generar reportes</a>
-		            </div>
-		          </li>
+		         
 		          <li class="nav-item">
 		            <a class="nav-link" href='../LoginMenu/vista/cerrarsesion.php'>CERRAR SESIÓN</a>
 		          </li>
@@ -665,7 +657,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0' AND personaAsignada = ''";
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'azul'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -753,17 +745,16 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 0 OR id_rol = 1";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
 													<?php 
-														}
-													?>          
-													<option value="autorizado">AUTORIZAR</option>
+                                                    
 
+												}?>          
 													</select>
 													
 										</div>
@@ -815,7 +806,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0' AND personaAsignada = ''";
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'azul'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -907,16 +898,16 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE  id_rol = 0 OR id_rol = 1";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
 													<?php 
-												}?>       
-													<option value="autorizado">AUTORIZAR</option>
+                                                    
 
+												}?>          
 													</select>
 													
 										</div>
@@ -962,7 +953,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0' AND personaAsignada = ''";
+									from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'azul'";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -1051,16 +1042,16 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 0 OR id_rol = 1";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
 													<?php 
-												}?>       
-													<option value="autorizado">AUTORIZAR</option>
-													   
+                                                    
+
+												}?>          
 													</select>
 													
 										</div>
@@ -1078,6 +1069,8 @@
 											  </div>
 											</div>
 <!-------------------------------------------------------FIN: MODAL  -->
+
+
 			</div>
 
 
@@ -1112,7 +1105,7 @@
 							include "configuracion.php";
 
 							$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_1' OR color_estado= 'negro_0' OR estatus = 'Rechazado duplicado' AND color_estado= 'amarillo0'" ;
+									from fomope_qr WHERE estatus = 'Rechazado duplicado' OR color_estado= 'negro_4' OR estatus = 'Rechazado duplicado' AND color_estado= 'azul'" ;
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 

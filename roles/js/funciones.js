@@ -186,8 +186,15 @@ function reenviarDatos(movimiento, elUsuario){
 }*/
 
 // -----> mando a llamar de qrEditar.php en roles
-function enviarBandejaPrincipal(userLogin){
-	window.location.href = './LuluEventuales.php?usuario_rol='+userLogin;
+function enviarBandejaPrincipal(userLogin, rol){
+
+	if(rol == 1){
+		window.location.href = './LuluEventuales.php?usuario_rol='+userLogin;
+	}else if(rol == 4){
+		window.location.href = './bandejaEventuales_D.php?usuario_rol='+userLogin;
+	}else{
+		window.location.href = './bandejaEventuales.php?usuario_rol='+userLogin;
+	}
 }
 
 // mandamos a llamarlo desde la pagina consultaEstado.php

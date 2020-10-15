@@ -157,11 +157,18 @@
 
 	</head>
 	<body>
+		 	<?php
+				include "configuracion.php";
+				$usuarioSeguir =  $_GET['usuario_rol'];
+
+			?>
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
 		        <ul class="navbar-nav ml-auto">          
-		        
+		        	<li class="nav-item">
+		            	<a class="nav-link" href='./bandejaEventuales_D.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Eventuales</a>
+		          	</li>   
 		          <li class="nav-item">
 		            <a class="nav-link" href='../LoginMenu/vista/cerrarsesion.php'>CERRAR SESIÓN</a>
 		          </li>
@@ -169,11 +176,7 @@
 		      </div>
 		    </div>
 		  </nav>
-		  	<?php
-				include "configuracion.php";
-				$usuarioSeguir =  $_GET['usuario_rol'];
-
-			?>
+		 
 			<br>
 		  <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 		
