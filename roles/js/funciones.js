@@ -179,11 +179,12 @@ function reenviarDatos(movimiento, elUsuario){
 	var cod = document.getElementById("user").value;
 	window.location.href = './Controller/guardarAsignacion.php?noFomope='+m+'&usuario='+elUsuario+'&usuarioAsignado='+cod;	
 }
-function aceptarQr(movimiento, elUsuario){
+/*function aceptarQr(movimiento, elUsuario){
 	var m = movimiento;
 	var cod = document.getElementById("user").value;
 	window.location.href = './Controller/autorizarQr.php?noFomope='+m+'&usuario='+elUsuario+'&usuarioAsignado='+cod;	
-}
+}*/
+
 // -----> mando a llamar de qrEditar.php en roles
 function enviarBandejaPrincipal(userLogin){
 	window.location.href = './LuluEventuales.php?usuario_rol='+userLogin;

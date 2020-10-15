@@ -15,10 +15,12 @@
 			 }
 		
 			$sqlRol = "SELECT id_rol FROM usuarios WHERE usuario = '$rolSegimiento'";
-				if ($result = mysqli_query($conexion,$sqlRol)) {
+			$sqlRolAsignado = "SELECT id_rol FROM usuarios WHERE usuario = '$asignado'";
+				if ($result = mysqli_query($conexion,$sqlRol) AND $result2 = mysqli_query($conexion,$sqlRolAsignado)) {
 					$rowRol = mysqli_fetch_row($result);
+					$rowRolAsignado = mysqli_fetch_row($result2);
 					//ingresamos el color al fomope_qr
-					if($rowRol[0] == 3 OR $rowRol[0] == 7){
+					if($rowRolAsignado[0] == 3 OR $rowRolAsignado[0] == 7 OR $rowRolAsignado[0] == 2){
 			            $colorFomopeQr="amarillo";
 					}else{
 						$colorFomopeQr="amarillo0";
