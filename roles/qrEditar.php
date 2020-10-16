@@ -44,6 +44,29 @@
 		  .modal-footer {
 		    background-color: #f9f9f9;
 		  }
+
+		   tbody {
+		      display:block;
+		      max-height:500px;
+		      overflow-y:auto;
+		  }
+		  thead, tbody tr {
+		      display:table;
+		      width:180%;
+		      table-layout:fixed;
+		  }
+		  thead {
+		      width: calc( 100% - 1em )
+		  } 
+		      #div1 {
+         overflow:scroll;
+         height:400px;
+         width:1000px;
+    }
+    #div1 table {
+        width:500px;
+        background-color:lightgray;
+    }
 		  </style>
 
 				
@@ -237,6 +260,23 @@
 			include "configuracion.php";
 			$noFomope = $_GET['noFomope'];
 			$usuarioSeguir = $_GET['usuario'];
+
+			 $sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
+	            $result=mysqli_query($conexion,$sql);
+	            $rowQr = mysqli_fetch_row($result);
+
+
+		//header("Content-type: application/PDF");
+		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
+		
+		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
+	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+	    $to = './Controller/DOCUMENTOS_PDC/';	
+	    }else{
+		$to = './Controller/DOCUMENTOS_RES/';
+	    }
+
+		$from = './Controller/OTRO/';
 		
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
@@ -408,6 +448,8 @@
 			<div class="form-group col-md-6">
 						<label class="plantilla-label" for="listD">Documentos :</label>
 			</div>
+			<center>
+			<div id="div1">
 				<table class="table table-hover table-white">
 					<?php 
 							include "configuracion.php";
@@ -431,72 +473,160 @@
 								$colorRechazo = "negro_".strval($rowUser['id_rol']);
 							}
 
-							// 	for($i=47; $i<=117; $i++){
-							// 		if($ver[$i] == ""){
-										
-							// 		}else{
-							// 			$existenD ++;
-							// 			$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$ver[$i]'";
-							// 			$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
-							// 			$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-							// 			$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
+						  if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
+	                     }else{
+		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
+            
+	                     
+	                    }
+					$ruta = $dir_subidaMov;
+					$index=0;
 
-////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/documentos/';
+					if(is_dir($ruta)) {
+                    if($dir = opendir($ruta)) {
+                    while(($archivo = readdir($dir)) !== false) {    
+                    if($archivo != '.' && $archivo != '..') {   
+                    if (is_dir($ruta.$archivo)) {                
+                    $leercarpeta = $ruta.$archivo. "/";
+                    if(is_dir($leercarpeta)){
+                    if($dir2 = opendir($leercarpeta)){
+                    while(($archivo2 = readdir($dir2)) !== false){
+                    if($archivo2 != '.' && $archivo2 != '..') {
+                    
+                    $datosPDF[$index]= $archivo2;
+                    $index++;
+
+                } }                   
+                    closedir($dir2);
+                    } }
+                    } } }
+                    closedir($dir);
+                    } }
 					// Arreglo con todos los nombres de los archivos
-					$files = array_diff(scandir($dir_subida), array('.', '..')); 
+					$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
+
 					$contDoc=0;
-					foreach($files as $file){
-					    // Divides en dos el nombre de tu archivo utilizando el . 
-					    $data = explode("_",$file);
-					    $data2 = explode(".",$file);
-						$indice = count($data2);	
 
-						$extencion = $data2[$indice-1];
-					    // Nombre del archivo
-					    $extractRfc = $data[0];
-					    $extractDoc = $data[1];
-					    // Extensión del archivo 
 
-					    if($ver['rfc'] == $extractRfc){
-					    	$existenD++;
-					    		//$losDocEnCarpeta[$contDoc] = $data[1];
-					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
-										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
-										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
-										$documentosPC = $documentosPC."_".$data[1];
-										echo "
+					// Arreglo con todos los nombres de los archivos
+					
+					$sqlReg =  "SELECT COUNT(*) id_docqr FROM ct_documentos_qr";
+										$resTotalReg = mysqli_query($conexion,$sqlReg);
+										$rowTotal = mysqli_fetch_row($resTotalReg);
+// ----- promer ciclo en la carpeta documentos_res
+					for ($i = 1; $i <= $rowTotal[0] ; $i++){
+						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
+						$banderaSI = 0;
+						$duplicado = 0;
+						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_qr WHERE id_docqr = '$i'";
+										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+							$imprime = 0;
+						
+						if($imprime == 0){
+								echo "
 												<tr>
-												<td>$rowNombreDoc[0]</td>
-												<td>";
+												<td>$rowNombreDoc2[1]</td>
+												";
 					    		//$contDoc++;
+
 						?>
-							<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
-							<?php	echo "
 
+						<?php	
+							
+										foreach($datosPDF as $file){	
+											$data = explode("_",$file);
+											$conId = count($data);
+										    $data2 = explode(".",$file);
+											$indice = count($data2);										
+											$extencion = $data2[$indice-1];
+
+
+                                            if($conId==2){
+                                            	$extractCurp = $data[0];
+                                            	$extractDocExt = explode(".", $data[1]);
+                                            	$extractDoc = $extractDocExt[0];
+
+                                            }else if($conId==3){
+                                            	$extractCurp = $data[0];
+                                            	$extractDocExt = explode(".", $data[1]."_".$data[2]);
+                                            	$extractDoc = $extractDocExt[0];
+
+                                            }else if($conId==4){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1];
+                                            	$extractQna = $data[2];
+                                            	$QuitarExtencion = explode(".", $data[3]);
+                                            	$extractDate = $QuitarExtencion[0];
+                                              
+                                            }else if($conId==5){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1]."_".$data[2];
+                                            	$extractQna = $data[3];
+                                            	$QuitarExtencion = explode(".", $data[4]);
+                                            	$extractDate = $QuitarExtencion[0];
+                                              
+                                            }
+
+									 		if($ver['curp'] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
+									 			$banderaMov = 1;
+									 			$duplicado++;
+									 			if($duplicado > 1){
+						
+										 					echo "
+													<tr>
+													<td>$rowNombreDoc2[1]</td>
+													";
+									 			}
+									 			if($conId==2 || $conId==3){
+									 			$nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+									 		    }else if ($conId==4 || $conId==5){
+									 		    $nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }
+
+
+											$banderaSI = 1;
+
+						?>	
+												<td>
+												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
 												</td>
-										";	
-					    }
+													
+												<?php
+											
+												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
+													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+	                                                      $laRuta = "DOCUMENTOS_PDC";
+	                                                      }else{
+		                                                  $laRuta = "DOCUMENTOS_RES";
+	                                                      }
+												
+												}
+												}
 
 
-					}
-////////////// termina parte de ver nomebre desde la carpeta
-								if($existenD == 0){
-									echo('
-											<br>
-											<br>
-											<div class="col-sm-12 ">
-											<div class="plantilla-inputv text-dark ">
-											    <div class="card-body"><h2 align="center">No existen documentos adjuntos.</h2></div>
-										</div>
-										</div>');
+
+										  }//cierra foreach
+										   if($banderaSI == 0){
+										   	?>
+														<td>
+														<button class="btn btn-danger" > X </button>
+														</td>
+								<?php
+													}
+
 								}
+							}	
 					?>
 
 					
 
 					</table>
+				</div>
+			</center>
+
+
 			<br>
 
 		
