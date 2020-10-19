@@ -45,19 +45,7 @@
 		    background-color: #f9f9f9;
 		  }
 
-		   tbody {
-		      display:block;
-		      max-height:500px;
-		      overflow-y:auto;
-		  }
-		  thead, tbody tr {
-		      display:table;
-		      width:180%;
-		      table-layout:fixed;
-		  }
-		  thead {
-		      width: calc( 100% - 1em )
-		  } 
+		 
 		      #div1 {
          overflow:scroll;
          height:400px;
