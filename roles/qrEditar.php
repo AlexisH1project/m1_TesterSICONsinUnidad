@@ -278,6 +278,7 @@
 	        		$row = mysqli_fetch_assoc($resultado3);
 					$id_rol1 = $row['id_rol'];
 
+
 					
 			}
 			$valor = "";
@@ -570,14 +571,14 @@
 													
 												<?php
 											
-												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
+												//if($row['id_rol'] == 1 OR $row['id_rol'] == 2){
 													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	                                                      $laRuta = "DOCUMENTOS_PDC";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
 	                                                      }
 												
-												}
+											//	}
 												}
 
 
