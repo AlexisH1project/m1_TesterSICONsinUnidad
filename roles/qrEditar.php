@@ -44,17 +44,16 @@
 		  .modal-footer {
 		    background-color: #f9f9f9;
 		  }
-
-		 
+		  
 		      #div1 {
-         overflow:scroll;
-         height:400px;
-         width:1000px;
-    }
-    #div1 table {
-        width:500px;
-        background-color:lightgray;
-    }
+		         overflow:scroll;
+		         height:400px;
+		         width:1000px;
+		    }
+		    #div1 table {
+		        width:500px;
+		        background-color:lightgray;
+		    }
 		  </style>
 
 				
@@ -235,6 +234,10 @@
 			   window.location.hash="Again-No-back-button" //chrome
 			   window.onhashchange=function(){window.location.hash="no-back-button";}
 			}
+
+			function quitarRequier(){
+				$('#MotivoRechazo').removeAttr("required");
+			}
 		
 		</script>
 		
@@ -248,24 +251,23 @@
 			include "configuracion.php";
 			$noFomope = $_GET['noFomope'];
 			$usuarioSeguir = $_GET['usuario'];
+			
+			$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
+            $result=mysqli_query($conexion,$sql);
+            $rowQr = mysqli_fetch_row($result);
 
-			 $sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
-	            $result=mysqli_query($conexion,$sql);
-	            $rowQr = mysqli_fetch_row($result);
+
+			//header("Content-type: application/PDF");
+			//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
+			
+			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
+		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+		    $to = './Controller/DOCUMENTOS_PDC/';	
+		    }else{
+			$to = './Controller/DOCUMENTOS_RES/';
+		    }
 
 
-		//header("Content-type: application/PDF");
-		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
-		
-		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	    $to = './Controller/DOCUMENTOS_PDC/';	
-	    }else{
-		$to = './Controller/DOCUMENTOS_RES/';
-	    }
-
-		$from = './Controller/OTRO/';
-		
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
@@ -305,23 +307,7 @@
 			 
 			 	echo "error sql";
 			 }
-
-			 if( strtotime($fehaF) < strtotime($fechaSistema)){
-			 		if($rowQna[0] != 24){
-			 			$newQna = $rowQna[0] + 1;
-			 		}else {
-			 			$newQna = 1;
-			 		}
-			 		$sqlCerrar = "UPDATE m1ct_fechasnomina SET estadoActual = 'cerrada' WHERE id_qna = '$rowQna[0]'";
-			 		$sqlAbrir = "UPDATE m1ct_fechasnomina SET estadoActual = 'abierta' WHERE id_qna = '$newQna'";
-			 		if($resC = mysqli_query($conexion,$sqlCerrar) && $resA = mysqli_query($conexion, $sqlAbrir) ){
-			 		}else{
-			 			echo "error con la conexion a la BD";
-			 		}
-
-			 }else{
-
-				
+		
 		 ?>		
 
 		 <br>
@@ -352,6 +338,8 @@
 	          	<?php
 	          		if($id_rol1 == 1){
 	          			$namePHP = "LuluEventuales.php";
+	          		}else if($id_rol1 == 4){
+	          			$namePHP = "bandejaEventuales_D.php";
 	          		}else{
 	          			$namePHP = "bandejaEventuales.php";
 	          		}
@@ -428,7 +416,6 @@
 		    <br>
 		  </nav>
 
-	
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
 		<div class="formulario_qr">
@@ -616,9 +603,7 @@
 
 
 			<br>
-
-		
-			<form method="post" name="qrs" action="agregar_FOMOPE.php"> 
+			<form method="post" name="qrs" action="./Controller/autorizarQr.php"> 
 				<div class="form-row">
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
@@ -791,31 +776,154 @@
 							<label  class="plantilla-label" for="entidad_nac">Entidad Nac.: </label>
 									 <input type="text" class="form-control border border-dark" id="entidad_nac" name="entidad_nac" value="<?php echo $ver['entidad_nac']?>" readonly > 
 					</div>
-
-					<label  class="plantilla-label" for="rechazo">Motivo de rechazo: </label>
-					 <textarea class="form-control border border-dark" id="verMotivoR" rows = "4" name="verMotivoR" readonly><?php echo $ver['motivo_rechazo']?></textarea>
-					<br>
-					<br>
-					<br>
-				</div>
+			<?php
+			if($rowUser['id_rol'] == 1 OR $rowUser['id_rol'] == 0){
+				?>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="ofico">Oficio: </label>
+									 <input type="text" class="form-control border border-dark" value="<?php echo $ver['oficio']?>" id="oficio" name="oficio"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="recep">Recepcion: </label>
+									 <input type="date" class="form-control border border-dark" id="recepcion" value="<?php echo $ver['Frecepcion']?>" name="recepcion"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="enFirma">En firma: </label>
+									 <input type="date" class="form-control border border-dark" id="enFirma" value="<?php echo $ver['Fen_firma']?>" name="enFirma"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="firmado">Firmado: </label>
+									 <input type="date" class="form-control border border-dark" id="firmado" value="<?php echo $ver['Ffirmado']?>" name="firmado"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="entregaUR">Entrega a la UR: </label>
+									 <input type="date" class="form-control border border-dark" id="entregaUR" value="<?php echo $ver['Fentrega_ur']?>" name="entregaUR"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="envioPersonal">Envio a personal: </label>
+									 <input type="date" class="form-control border border-dark" id="envioPersonal" value="<?php echo $ver['envio_personal']?>" name="envioPersonal"> 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="archivo">Archivo: </label>
+									 <input type="date" class="form-control border border-dark" id="archivo" value="archivo" name="archivo"> 
+					</div>
 				<!-- datos que se reciben para dar seguimiento  -->
-				<div class="form-row">
-							<input type="text" class="form-control" id="noFomope" name="noFomope" value="<?php echo $noFomope?>" style="display:none">
-						</div>
-						<div class="form-row">
-							<input type="text" class="form-control" id="id_rol" name="id_rol" value="<?php echo $id_rol?>" style="display:none">
-						</div>
-						<div class="form-row">
-							<input type="text" class="form-control" id="usuarioSeguir" name="usuarioSeguir" value="<?php echo $usuarioSeguir?>" style="display:none">
+
+					<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
+					<input type="text" style="display: none;" name="noFomope" value="<?php echo $noFomope; ?>" > 
+				<?php
+		}
+				?>
+					<div class="form-group col-md-9">
+						<label  class="plantilla-label" for="rechazo">Motivo de rechazo: </label>
+						 <textarea class="form-control border border-dark" id="verMotivoR" rows = "4" name="verMotivoR" readonly><?php echo $ver['motivo_rechazo']?></textarea>
+					</div>
+					<br>
+					<br>
+					<br>
 				</div>
+		
+		</div>
+	<?php
+	 	if($ver['color_estado'] != "negro_0" OR $ver['color_estado'] != "negro_1" OR $ver['color_estado'] != "negro_2" OR $ver['color_estado'] != "negro_3" OR $ver['color_estado'] != "negro_4"){ //$id_rol1 == 1 AND $colorSee == "amarillo0" AND $ver['personaAsignada'] == "" AND
+	?>
+		<br>
+							<button type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+											 Enviar
+											</button>
+							  			<br>
+							  			<br>
+							    <div class="form-group col-md-60">
+									<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
+								</div>
+
+	<?php	 		
+	 	}
+	?>
+		<br>
+		<!-- Modal -->
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        ¿Estas seguro de enviar esta información?
+					      </div>
+									<center>
+						      <div class="form-group col-md-8">
+									<div class="box" >
+
+										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
+												
+												<select class="form-control border border-dark custom-select" id="user" name="user">
+													<?php
+													
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 1 OR id_rol = 0 OR id_rol = 7";
+													$resultado = mysqli_query($conexion , $consulta);
+													$contador=0;
+
+													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
+													<?php }?>   
+													<option value="autorizado">AUTORIZAR</option>
+													</select>
+										</div>
+										 <br>  
+
+								</div>
+										</center>
+											      <div class="modal-footer">
+
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+							        				<!-- <button type="submit" onclick="quitarRequier()" class="btn btn-primary" >
+							        				Aceptar
+							        				 </button> -->
+							        				 <input type="submit" class="btn btn-primary" onclick="quitarRequier()" name="accionB"  value="aceptar">
+											      </div>
+											    
+											    </div>
+											  </div>
+								</div>
+							<br>
 
 			</form>
 
 		</div>
-		<?php
-				if(($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo) AND ($id_rol1 == 1 OR $id_rol1 == 2 OR $id_rol1 == 7) ){
+						
+								<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Volante de rechazo</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							         <textarea class="form-control border border-dark" id="MotivoRechazo" rows = "4" name="comentarioR" placeholder="Redactar el volante de rechazo" required></textarea>
+							       
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
+									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton('<?php echo $usuarioSeguir ?>', '<?php echo $noFomope ?>')" name="accionB"  value="descargar">
+							      </div>
+							     
+							    </div>
+							  </div>
+							</div>
 
-		?>
+				</div>
+			<?php
+				if(($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo) AND ($id_rol1 == 1 OR $id_rol1 == 2 OR $id_rol1 == 7)){
+			?>
 		<div class="form-row">
 		<form name="elimin" enctype="multipart/form-data" action="./Controller/eliminarEventual.php" method="POST"> 
 					<div class="form-group col-md-2">
@@ -859,153 +967,20 @@
 											  </div>
 											</div>
 
-												</form>  
+			</form>  
 			</div>
-
-		</div>
-	<?php
-	 	}else if($id_rol1 == 1 AND $colorSee == "amarillo0" AND $ver['personaAsignada'] == ""){
-	?>
-		<br>
-							<button type="button" id="enviarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-											 Enviar
-											</button>
-							  			<br>
-							  			<br>
-							    <div class="form-group col-md-60">
-													<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
+			<?php
+			}
+			?>
 
 
-												</div>
-							<input type="submit" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
-
-	<?php	 		
-	 	}else{
-	?>
-		<br>
-		<button type="button" id="aceptarQr" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalaAceptarQr">
-						 Confirmar
-						</button>
-		  			<br>
-		  			<br>
-		    <div class="form-group col-md-60">
-								<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
-
-
-							</div>
-		<input type="submit" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
-
-	<?php
-	 	}
-	}
-
-		?>
-		<!-- Modal de aceptarQr.... -->
-					<div class="modal fade" id="exampleModalaAceptarQr" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        ¿Estás seguro de confirmar esta información?
-					      </div>
-									<center>
-						      <div class="form-group col-md-8">
-							
-										</center>
-											      <div class="modal-footer">
-
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<button type="button" onclick="aceptarQr('<?php echo $noFomope ?>' , '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary" >
-							        				Enviar
-							        				 </button>
-											      </div>
-											    
-											    </div>
-											  </div>
-								</div>
-							<br>
-					<!-- Modal -->
-					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog" role="document">
-					    <div class="modal-content">
-					      <div class="modal-header">
-					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					          <span aria-hidden="true">&times;</span>
-					        </button>
-					      </div>
-					      <div class="modal-body">
-					        ¿Estas seguro de enviar esta información?
-					      </div>
-									<center>
-						      <div class="form-group col-md-8">
-									<div class="box" >
-
-										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
-												
-												<select class="form-control border border-dark custom-select" id="user" name="user">
-													
-													<?php
-													
-													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
-													       die("Error cargando el conjunto de caracteres utf8");
-													}
-
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 0 OR id_rol = 7";
-													$resultado = mysqli_query($conexion , $consulta);
-													$contador=0;
-
-													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
-													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
-													<?php }?>          
-													</select>
-										</div>
-										 <br>  
-
-								</div>
-										</center>
-											      <div class="modal-footer">
-
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<button type="button" onclick="reenviarDatos('<?php echo $noFomope ?>' , '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary" >
-							        				Aceptar
-							        				 </button>
-											      </div>
-											    
-											    </div>
-											  </div>
-								</div>
-							<br>
-								<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Volante de rechazo</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control border border-dark" id="MotivoRechazo" rows = "4" name="comentarioR" placeholder="Redactar el volante de rechazo" required></textarea>
-							       
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton('<?php echo $usuarioSeguir ?>', '<?php echo $noFomope ?>')" name="accionB"  value="descargar">
-							      </div>
-							     
-							    </div>
-							  </div>
-							</div>
-
+		<form method="post" name="bde" action="">
+		    <div id="content" class="p-4 p-md-5 pt-5">
+				<div class="formulario_qr">
+						<input type="button" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>', '<?php echo $rowUser['id_rol'] ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
 				</div>
-
-
-
+			</div>
+		</form>
 		<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 
