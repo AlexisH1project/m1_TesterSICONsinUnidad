@@ -32,37 +32,31 @@
 			<style type="text/css">
 
 		  <style>
-		  .modal-header, h4, .close {
-		    background-color: #5cb85c;
-		    color:white !important;
-		    text-align: center;
-		    font-size: 30px;
-		  }
-		  .modal-footer {
-		    background-color: #f9f9f9;
-		  }
 
-		  .columnaBoton {
-			  width:50%;
-			  float:left;
+
+		table {
+    width: 100%;
+    display:block;
+}
+thead {
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    background: white;
+}
+tbody {
+    max-height: 400px;
+    display: inline-block;
+    width: 100%;
+    overflow: scroll;
+}
+
+		th, td{
+			min-width: 150px;
+			max-width: 151px;
 		}
 
 
-		tbody {
-		      display:block;
-		      max-height:500px;
-		      overflow-y:auto;
-		  }
-
-		  thead, tbody tr {
-		      display:table;
-		      width:110%;
-		      table-layout:fixed;
-		  }
-
-		  thead {
-		      width: calc( 98% - 1em )
-		  } 
 
 
 		  </style>
@@ -301,16 +295,16 @@
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
 							
-							<th scope="titulo" style="display: none;"></th>
-							 <th scope="titulo" style="text-align: center">RFC</th>
-						      <th scope="titulo" style="text-align: center"   style="text-align: center">Estado FOMOPE</th>
-						      <th scope="titulo"  style="text-align: center">Unidad</th>
-						      <th scope="titulo"  style="text-align: center">Última modificación</th>
-						       <th scope="titulo" style="text-align: center">Movimiento</th>
-						       <th scope="titulo" style="text-align: center">Entrega operados a la unidad</th>
-						       <th scope="titulo" style="text-align: center">Entrega expediente relaciones laborales</th>
-						       <th scope="titulo" style="text-align: center">Envío a validación</th>
-						      
+							<th scope="titulo" style="display: none;" class="sticky"></th>
+							 <th scope="titulo" style="text-align: center" style="width: 400px" class="sticky">RFC</th>
+						      <th scope="titulo" style="text-align: center"   style="text-align: center" class="sticky">Estado FOMOPE</th>
+						      <th scope="titulo"  style="text-align: center" class="sticky">Unidad</th>
+						      <th scope="titulo"  style="text-align: center" class="sticky">Última modificación</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Movimiento</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Entrega operados a la unidad</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Entrega expediente relaciones laborales</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Envío a validación</th>
+						       
 						   </tr>
 						</thead>
 				 <tbody>
