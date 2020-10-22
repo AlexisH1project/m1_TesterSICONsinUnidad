@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2020 a las 20:10:02
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.33
+-- Tiempo de generación: 21-10-2020 a las 21:46:11
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -57,7 +57,12 @@ INSERT INTO `ct_documentos_qr` (`id_docqr`, `nombre_documento`, `documentos`) VA
 (17, 'Carta protesta de decir verdad en la que el interesado manifieste que todos los documentos originales y copias son fidedignos', 'N_JUI'),
 (18, 'PERF', 'PERF'),
 (19, 'Registro Federal de Contribuyentes (R.F.C.) ', 'RFC'),
-(20, 'Seguros', 'SEG');
+(20, 'Seguros', 'SEG'),
+(21, 'Oficio de Solicitud Para Ingreso de Movimiento', 'OSIM'),
+(22, 'Fomope Operado', 'FO'),
+(23, 'Acuse de Archivo', 'AA'),
+(24, 'Acuse de Fomope Operado a la Unidad', 'AFOUR'),
+(25, 'Acuse de Fomope en Validación de Personal ', 'AFVP');
 
 --
 -- Índices para tablas volcadas
@@ -77,7 +82,7 @@ ALTER TABLE `ct_documentos_qr`
 -- AUTO_INCREMENT de la tabla `ct_documentos_qr`
 --
 ALTER TABLE `ct_documentos_qr`
-  MODIFY `id_docqr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_docqr` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -109,9 +109,9 @@
 		
 		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
 	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	    $to = './Controller/DOCUMENTOS_PDC/';	
+	    $from = './Controller/DOCUMENTOS_PDC/';	
 	    }else{
-		$to = './Controller/DOCUMENTOS_RES/';
+		$from = './Controller/DOCUMENTOS_RES/';
 	    }
 
 		$from = './Controller/OTRO/';
@@ -133,146 +133,7 @@ function asignarIDfecha(){
 	//----------------Sacamos la Hora 
 	return $fecha.$hora;
 }
-
-//---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
-function showFiles($from){
-	include "configuracion.php";
-	//$to = '../roles/Controller/DOCUMENTOS_RES/';
-	$noFomope =  $_GET['idMov'];
-	$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
-	$result=mysqli_query($conexion,$sql);
-	$rowQr = mysqli_fetch_row($result);
-	$curpQr = $rowQr[13]; // asignamos curp del renglon del movimiento qr
-	
-	$nameCarpetaOTRO= explode("/OTRO/", $from);
-	//$to = './SICON/'.$nameCarpetaOTRO[1];
-    
-    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	   $to = './Controller/DOCUMENTOS_PDC/'.$nameCarpetaOTRO[1];
-	}else{
-		$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
-    }
-
-    $dir = opendir($from);
-    $files = array();
-    while ($current = readdir($dir)){
-        if( $current != "." && $current != "..") {
-            if(is_dir($from.$current)) {
-                showFiles($from.$current.'/');
-            }
-            else {
-                $files[] = $current;
-				
-            }
-        }
-    }
-   
-    $iterator = new DirectoryIterator($from);
-    $iterator2 = new DirectoryIterator($to);
-	foreach ($iterator as $fileinfo) { //----------> iniciamos a recorrer los docuementos de la carpeta del servidor donde se van a extraer
-		$docModificado = 0 ;
-		$contadorExistenDoc = 0; 
-		$existeRFC = 0;
-	    if ($fileinfo->isFile()) {
-	        // Arreglo con todos los nombres de los archivos
-			$nombreDocServ = explode(".",$fileinfo);
-			$curpInterator = explode("_",$nombreDocServ[0]);
-			//echo("nombre:: ". $nombreDocServ[0]);
-											//$files = array_diff(scandir($to), array('.', '..')); 
-   			$totalDoc = count(glob($to.'{*.pdf,*.PDF}',GLOB_BRACE));  //---> total de documentos en la carpeta a la cual se van a pasar 
-			if($curpQr == $curpInterator[0]){												
-											foreach($iterator2 as $file){
-												$contadorExistenDoc ++;
-											    // Divides en dos el nombre de tu archivo utilizando el . 
-											    $data = explode("_",$file);
-											    $data2 = explode(".",$file);
-												$indice = count($data2);	
-												//echo strtoupper($file->getFilename())."\n";
-												$extencion = $data2[$indice-1];
-											    // Nombre del archivo
-											    //$nameAdj = $data[1];
-												$extractRfc = $data[0];
-												$numParametros = count($data);
-						//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si es el que ya se tiene o si es nuevo con el mismo nombr
-												if($numParametros == 1){
-													$nameFileSICON = "0";
-												}else if($numParametros == 2){
-													$separarExtencion = explode(".", $data[1]);
-													$nameFileSICON = $extractRfc."_".$separarExtencion[0];
-												}else if($numParametros == 3){
-													$separarExtencion = explode(".", $data[2]);
-													$nameFileSICON = $data[0]."_".$data[1]."_".$separarExtencion[0];
-												}else if($numParametros == 4){
-													$nameFileSICON = $data[0]."_".$data[1];
-												}else if($numParametros == 5){
-													$nameFileSICON = $data[0]."_".$data[1]."_".$data[2];
-												}
-											 //	echo $nameFileSICON ."### </br>";
-											    // Extensión del archivo 
-											    $propiedadesSICONf = stat($to.$file->getFilename());
-											    $propiedadesServf = stat($from.$fileinfo->getFilename());
-								// -----> Esta comparacion es para saber si existen los documentos con las mismas caracteristicas 
-											    if((filectime($from.$fileinfo->getFilename()) != filemtime($to.$file->getFilename()) AND filectime($from.$fileinfo->getFilename()) != fileatime($to.$file->getFilename()) AND $nameFileSICON == $nombreDocServ[0]) OR $nameFileSICON == $nombreDocServ[0]){
-			
-											    		$arrayArchivosRepetidos[$docModificado] = $to.$file->getFilename(); // -- > guardamos en un arreglo los nombre de documentos con el mismo monbre 
-														$docModificado ++ ; 
-														$nameFileServ = $from.$fileinfo->getFilename();
-														$nombreCompSICON = $fileinfo; // ---> ocupamos al hacer la comparacion con los que se guardaron en el arreglo
-											 				//echo "Se podria duplicar entro  </br>";
-											   	}else if($nameFileSICON == $nombreDocServ[0]){
-											   		$existeRFC = 1;
-											   	}
-											} // ---->> termina el for anidado
-											if($docModificado == 0 AND $contadorExistenDoc-2 == $totalDoc AND $existeRFC == 0) {
-			 									$bktimea = filectime($from.$fileinfo->getFilename()); // obtener tiempo unix
-			 									$fromV =$from.$fileinfo->getCTime(); // ----> antes de copiar , se obtiene su id de creacion 
-												copy($from.$fileinfo->getFilename(), $to.$fileinfo->getFilename());
-												touch($to.$fileinfo->getFilename(), $bktimea); // establecemos la fecha/hora original...
-			 									$bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
-											 }else if($docModificado > 0){
-											 	$siExisteFile=0;
-											 	$soloNombre = explode(".", $nombreCompSICON);
-											 		for ($i=0; $i < count($arrayArchivosRepetidos); $i++) { // ----> recorremos el arreglo con los documentos repetidos con el mismo nombre
-														 	$propiedadesSICONf2 = stat($arrayArchivosRepetidos[$i]);
-														    $propiedadesServf2 = stat($nameFileServ);
-											 				if( filectime($nameFileServ) == filemtime($arrayArchivosRepetidos[$i]) AND $propiedadesServf2['size'] == $propiedadesSICONf2['size'] AND $soloNombre[0] == $nombreDocServ[0]){ // ----> comparamos sus caracteristicas si son iguales
-											 					$siExisteFile = 1; // ----> indica que si existe un doc igual entonces ya no es necesario guardar
-											 					 
-											 				}
-											 		}
-											 		if($siExisteFile == 0){ // ---->> como no se detecto doc con las mismas caractristicas se va a copiar el archivo pero con id y numero de qna
-										 				$generarID = asignarIDfecha();
-										 			//-- > sacamos la hora 
-										 				$hoy = "select CURDATE()";
-														if ($resultHoy = mysqli_query($conexion,$hoy)) {
-														 		$rowF = mysqli_fetch_row($resultHoy);  // cambiamos formato de hora 
-														 		$fechaSistema = date("Y-m-d", strtotime($rowF[0])); //"14-04-2020" "d-m-Y"
-														 }
-													// ---> ahora detectamos en que qna nos encontramos
-														 $queryQna = "SELECT * FROM m1ct_fechasnomina";
-														 if($SiQueryQna = mysqli_query($conexion, $queryQna)){
-															 while($rowFechas = mysqli_fetch_row($SiQueryQna)){
-															 	if($fechaSistema >= $rowFechas[2] AND $fechaSistema <= $rowFechas[5]){
-															 		$qnaAplicada = $rowFechas[0];
-															 	}
-															 }
-														}
-										 				$extencionFile = explode(".",$nombreCompSICON);
-										 				$timeFsevidor = filectime($from.$nombreCompSICON);
-					 									copy($from.$nombreCompSICON , $to.$extencionFile[0]."_".$qnaAplicada."_".$generarID.".".$extencionFile[1]);
-														touch($to.$extencionFile[0]."_".$qnaAplicada."_".$generarID.".".$extencionFile[1], $timeFsevidor); 
-																
-											 		}
-											 			
-											 }
-				}// --->> IF si se encuentra en la misma capeta
-
-			    }
-			}
-		}
-		// --> todo empieza al iniciar esta funcion 
-			showFiles($from);
-			?>
+?>
 
 			<br>
 		  <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
@@ -331,12 +192,12 @@ function showFiles($from){
 
 ////////////// inicia la busqueda del archivo en carpeta 
 					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
+		                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
+		                     $asiganarRutaDoc = './DOCUMENTOS_PDC/';
 	                     }else{
-		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
-            
-	                     
-	                    }
+		                 	$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
+		                     $asiganarRutaDoc = './DOCUMENTOS_RES/';
+		                 }
 					$ruta = $dir_subidaMov;
 					$index=0;
 
@@ -376,6 +237,7 @@ function showFiles($from){
 						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 						$banderaSI = 0;
 						$duplicado = 0;
+						$idMovDoc = -1;
 						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_qr WHERE id_docqr = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
@@ -424,26 +286,44 @@ function showFiles($from){
                                             	$QuitarExtencion = explode(".", $data[4]);
                                             	$extractDate = $QuitarExtencion[0];
                                               
+                                            }else if($conId==6){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1];
+                                            	$extractQna = $data[2];
+                                            	$extractDate = $data[3];
+                                            	$idMovDoc = $data[4];
+                                            }else if($conId==7){
+                                            	$extractCurp = $data[0];
+                                            	$extractDoc = $data[1]."_".$data[2];
+                                            	$extractQna = $data[3];
+                                            	$extractDate = $data[4];
+                                            	$idMovDoc = $data[5];
                                             }
-
 									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
-									 			$banderaMov = 1;
 									 			$duplicado++;
+									 			if ($conId==6 || $conId==7){
+									 		    	if($idMovDoc == $noFomope){
+										 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."_".$idMovDoc."_."."$extencion";
+														$banderaSI = 1;
+													}else{
+									 		    		$duplicado = 0 ;	
+									 		   		 }
+									 		    }
 									 			if($duplicado > 1){
 						
-										 					echo "
+										 			echo "
 													<tr>
 													<td>$rowNombreDoc2[1]</td>
 													";
 									 			}
 									 			if($conId==2 || $conId==3){
-									 			$nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+										 			$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+													$banderaSI = 1;
 									 		    }else if ($conId==4 || $conId==5){
-									 		    $nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
-									 		    }
-
-
-											$banderaSI = 1;
+									 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													$banderaSI = 1;
+									 		    } 
+								if($banderaSI == 1){
 
 						?>	
 												<td>
@@ -451,7 +331,7 @@ function showFiles($from){
 												</td>
 													
 												<?php
-											
+								}
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
 													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	                                                      $laRuta = "DOCUMENTOS_PDC";

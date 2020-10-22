@@ -267,6 +267,9 @@
 	           <li class=" estilo-color">
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
+	              <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(Eventuales)</i></b></center></a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
