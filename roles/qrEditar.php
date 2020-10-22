@@ -262,9 +262,11 @@
 			
 			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
 		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-		    $to = './Controller/DOCUMENTOS_PDC/';	
+			$to = './Controller/DOCUMENTOS_PDC/';	
+			$rutaEnviar = './DOCUMENTOS_PDC/';
 		    }else{
 			$to = './Controller/DOCUMENTOS_RES/';
+			$rutaEnviar = './DOCUMENTOS_RES/';
 		    }
 
 
@@ -277,8 +279,6 @@
 		        if($resultado3 = mysqli_query($conexion,$consultaR)){
 	        		$row = mysqli_fetch_assoc($resultado3);
 					$id_rol1 = $row['id_rol'];
-
-
 					
 			}
 			$valor = "";
@@ -449,7 +449,7 @@
 								$colorRechazo = "negro_".strval($rowUser['id_rol']);
 							}
 
-						  if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+						 if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
 	                     }else{
 		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
@@ -556,9 +556,9 @@
 													";
 									 			}
 									 			if($conId==2 || $conId==3){
-									 			$nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+									 			$nombreAdescargar = $rutaEnviar.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 									 		    }else if ($conId==4 || $conId==5){
-									 		    $nombreAdescargar = "/".$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    $nombreAdescargar = $rutaEnviar.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
 									 		    }
 
 

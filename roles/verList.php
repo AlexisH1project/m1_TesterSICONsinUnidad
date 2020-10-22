@@ -185,13 +185,35 @@
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/DOCUMENTOS/';
 					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
+					$asiganarRutaDoc = './DOCUMENTOS_MOV/';
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
-					$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
+					$ruta = $dir_subidaMov;
+					$index=0;
 
-					$contDoc=0;
+					if(is_dir($ruta)) {
+                    if($dir = opendir($ruta)) {
+                    while(($archivo = readdir($dir)) !== false) {    
+                    if($archivo != '.' && $archivo != '..') {   
+                    if (is_dir($ruta.$archivo)) {                
+                    $leercarpeta = $ruta.$archivo. "/";
+                    if(is_dir($leercarpeta)){
+                    if($dir2 = opendir($leercarpeta)){
+                    while(($archivo2 = readdir($dir2)) !== false){
+                    if($archivo2 != '.' && $archivo2 != '..') {
+                    
+                    $datosPDF[$index]= $archivo2;
+                    $index++;
 
+	                } }                   
+                    closedir($dir2);
+                    } }
+                    } } }
+                    closedir($dir);
+                    } }
+					// Arreglo con todos los nombres de los archivos
+					//$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 
 					// Arreglo con todos los nombres de los archivos
 					
@@ -219,7 +241,7 @@
 
 						<?php	
 							
-										foreach($files2 as $file){	
+										foreach($datosPDF as $file){	
 											$data = explode("_",$file);
 											$conId = count($data);
 										    $data2 = explode(".",$file);
@@ -239,7 +261,7 @@
 													<td>$rowNombreDoc2[1]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
 												$banderaSI = 1;
 						?>	
 												<td>
@@ -249,10 +271,10 @@
 												<?php
 											
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													$laRuta = "DOCUMENTOS_MOV";
+													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -291,7 +313,7 @@
 															";
 											 			}
 											 			if($conId == 7){
-											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+											 				$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
 											 			}else{
 											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
@@ -307,7 +329,7 @@
 															$laRuta = "DOCUMENTOS";
 														?>
 															<td>
-																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 															</td>
 																
 								<?php

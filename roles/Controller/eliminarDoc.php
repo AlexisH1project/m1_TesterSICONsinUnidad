@@ -19,6 +19,7 @@
 	}*/
 
 $nombreDeArchivoDescarga = $_POST['nombreDoc'];
+
 $tipoArchivo = $_POST['extencionDoc'];
 $soloNombre = explode(".", $nombreDeArchivoDescarga);
 
@@ -28,37 +29,19 @@ $soloNombre = explode(".", $nombreDeArchivoDescarga);
 $dir_subida = './'.$_POST['ruta'].'/';
 $dir_subida2 = './DOCUMENTOS_SUPR/';
 
-		// Arreglo con todos los nombres de los archivos
-		$files = array_diff(scandir($dir_subida), array('.', '..')); 
-
-	foreach($files as $file){
-	    // Divides en dos el nombre de tu archivo utilizando el . 
-	    $data = explode("_",$file);
-	    $data2 = explode(".",$file);
-		$indice = count($data2);	
-
-		$extencion = $data2[$indice-1];
-	    // Nombre del archivo
-	    $extractRfc = $data[0];
-	    $nameAdj = $data[1];
-		//echo "<script> alert(''); </script>";
-
-	    // Extensión del archivo 
-	    if($data2[0] == $soloNombre[0]){
-			//echo "<script> alert('$idDoc[1]'); </script>";
-
-					$fichero_subido2 = $dir_subida2 . $file;
-					$extencion2 = explode(".",$fichero_subido2);
-					$tamnio = count($extencion2);
-					$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
-
+					echo $dir_subida.$nombreDeArchivoDescarga;
 					$concatenarNombreC = $dir_subida2.strtoupper($nombreDeArchivoDescarga);
-					copy($dir_subida.$file, $concatenarNombreC);
+					copy($dir_subida.$nombreDeArchivoDescarga, $concatenarNombreC);
 					unlink($dir_subida.$nombreDeArchivoDescarga);
-	        		break;
-	   	}
+	
+$separarNombreRuta = explode("/", $_POST['ruta']); 
+
+	if($separarNombreRuta[0] == "DOCUMENTOS_MOV"){
+		echo "<script> alert('Documento Eliminado'); window.location.href = '../verList.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
+	}else{
+		echo "<script> alert('Documento Eliminado'); window.location.href = '../verListEventuales.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
 	}
-	echo "<script> alert('Documento Eliminado'); window.location.href = '../verList.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
+
 	/*if($esGet == 0){
     	header('Location:../../roles/verList.php?usuario_rol='.$usuarioSeguir.'&idMov='.$noFomope);
 

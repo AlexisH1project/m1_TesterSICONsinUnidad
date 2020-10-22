@@ -441,7 +441,7 @@
 										$idDoc = mysqli_fetch_row($resRol);
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/DOCUMENTOS_MOV/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
 									$dir_subida2 = './Controller/DOCUMENTOS_SUPR/';
 
 											// Arreglo con todos los nombres de los archivos
