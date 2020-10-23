@@ -279,7 +279,6 @@
 //------ este codigo comentado lo identifique y no tiene que ir , no encontre su funcionalidad
 
 		/*	$sql = "SELECT * FROM fomope WHERE id_movimiento = '$idMovSeg'";
-
 			if($result = mysqli_query($conexion,$sql)){
 				$ver = mysqli_fetch_row($result);
 			}else{
@@ -631,7 +630,6 @@
 													<div class="form-group col-md-12 estilo-colorn" >	
 					  									<label for="existe">Existen Documentos adjuntos. </label>
 													</div>
-
 												';	
 												}
 						$banderaBoton=0; //admin2
@@ -685,7 +683,7 @@
 
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/DOCUMENTOS_MOV/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
@@ -696,19 +694,21 @@
 												$indice = count($data2);	
 
 												$extencion = $data2[$indice-1];
-                         //----------------Sacamos la Hora 
+                    	//----------------Sacamos la Hora 
 											$hoy = "select CURDATE()";
 											$tiempo ="select curTime()";
-											if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
-												 		$rowfecha = mysqli_fetch_row($resultHoy);
-												 		$rowhora = mysqli_fetch_row($resultTime);
+
+												 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+												 		$row = mysqli_fetch_row($resultHoy);
+												 		$row2 = mysqli_fetch_row($resultTime);
 												 }
-												 $hora = str_replace ( ":", '',$rowhora[0] ); 
-												 $fecha = str_replace ( "-", '',$rowfecha[0] ); 
+												 $hora = str_replace ( ":", '',$row2[0] ); 
+												 $fecha = str_replace ( "-", '',$row[0] ); 
 
 											    // Nombre del archivo
 											    $extractRfc = $data[0];
-											    $nameAdj = $data[1];
+											     $nameAdj=strtoupper($idDoc[1]);
+											    
 											    // Extensión del archivo 
 
 											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
@@ -756,7 +756,6 @@
 														</ul>
 													</div>	
 													</center>
-
 												';*/
 																									   	
 											} else{
@@ -942,7 +941,6 @@
 
 			 			echo("
     	
-
 												<br>
 												<br>
 											<div class='col-sm-12'>
@@ -959,4 +957,3 @@
 
 </body>
 </html>
-
