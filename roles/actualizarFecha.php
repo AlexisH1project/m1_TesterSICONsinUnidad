@@ -55,12 +55,7 @@ tbody {
 			min-width: 150px;
 			max-width: 151px;
 		}
-
-
-
-
 		  </style>
-
 
 		  <script type="text/javascript">
 
@@ -121,6 +116,55 @@ tbody {
 
 			
 			});
+
+
+			function obtenerRadioSeleccionado(formulario, nombre, userRol, tabla){
+					var contador = 0;
+						elementosSelectR = [];
+						elementos = document.getElementById(formulario).elements;
+						longitud = document.getElementById(formulario).length;
+						var fechaValidacion = document.getElementById("fechaValidacionPersonal").value;
+						var fechaLab = document.getElementById("fechaEntregaRlabores").value;
+						var fechaUr = document.getElementById("fechaEntregaUnidad").value;
+						console.log(fechaValidacion);
+						for (var i = 0; i < longitud; i++){
+							if(elementos[i].name == nombre && elementos[i].type == "checkbox" && elementos[i].checked == true){
+									elementosSelectR[contador]=elementos[i].value;
+									//alert(elementosSelectR[contador]);
+									contador++;
+							}
+						}
+						if(contador > 0){
+							window.location.href = './Controller/actualizarTodoFechas.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol+'&Fvalidacion='+fechaValidacion+'&Flab='+fechaLab+'&Fur='+fechaUr+'&tabBD='+tabla;
+						}
+						//return false;
+			}
+			
+			function obtenerRadioSeleccionado2(formulario, nombre, userRol, tabla){
+					var contador = 0;
+						elementosSelectR = [];
+						elementos = document.getElementById(formulario).elements;
+						longitud = document.getElementById(formulario).length;
+						var fechaEnFirma = document.getElementById("enFirma").value;
+						var fechaPersonla = document.getElementById("envioPersonal").value;
+						var fechaUr = document.getElementById("entregaUR").value;
+						var fechaFirmado = document.getElementById("firmado").value;
+						var fechaRecepcion = document.getElementById("recepcion").value;
+						
+						for (var i = 0; i < longitud; i++){
+							if(elementos[i].name == nombre && elementos[i].type == "checkbox" && elementos[i].checked == true){
+									elementosSelectR[contador]=elementos[i].value;
+									//alert(elementosSelectR[contador]);
+									contador++;
+							}
+						}
+						if(contador > 0){
+							window.location.href = './Controller/actualizarTodoFechas.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol+'&FenFirma='+fechaEnFirma+'&Fpersonla='+fechaPersonla+'&Fur='+fechaUr+'&Ffirmado='+fechaFirmado+'&Frecepcion='+fechaRecepcion+'&tabBD='+tabla;
+
+						}
+						//return false;
+			}
+
 		</script>
 
 
@@ -163,10 +207,6 @@ tbody {
 		    </div>
 		  </nav>		
 		  <br>
-
-		
-
-		
 		<center>			
 
 		<center>	
@@ -414,8 +454,7 @@ tbody {
 							</td>
 							<td><?php echo $ver[4] ?></td>
 							<td>
-				<!-- activamos funcion de .ajax para poder mostrar el histirial del proceso del fomope  -->
-							<button type="button"  onclick="guardarId(<?php echo $ver[0]; ?>)"  id="verHistorial" name="verHistorial" class='btn-secondary' data-toggle="modal" data-target="#exampleModal1" data-whatever="@getbootstrap"><?php echo $ver[1] ?></button>
+								<?php echo $ver[1]; ?>
 							</td>
 							<td><?php echo $ver[3] ?></td>
 							<td><?php echo $ver[44] ?></td>
@@ -458,60 +497,48 @@ tbody {
 	<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal1">
 											 Autorizar
 				</button>
-					<br>
-
-							  			<br>
-
+					<br><br>
 				<!--------modal--------------------------------------------------------------------------------------------------------->
 				<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de enviar esta información?
-											      </div>
-									<center>
-						      <div class="form-group col-md-8">
-									<div class="box" >
-
-					<div class="form-group col-md-2">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        ¿Estas seguro de enviar esta información?
+				      </div>
+				<center>
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="fechaValidacionPersonal">Fecha Validacion Personal: </label>
-									 <input type="date" class="form-control border border-dark" id="fechaValidacionPersonal" value="<?php echo $ver[125]?>" name="fechaValidacionPersonal"> 
+									 <input type="date" class="form-control border border-dark" id="fechaValidacionPersonal" name="fechaValidacionPersonal"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="fechaEntregaRlabores">Fecha Entrega R Labores: </label>
-									 <input type="date" class="form-control border border-dark" id="fechaEntregaRlabores" value="<?php echo $ver[39]?>" name="fechaEntregaRlabores"> 
+									 <input type="date" class="form-control border border-dark" id="fechaEntregaRlabores"  name="fechaEntregaRlabores"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="fechaEntregaUnidad">Fecha Entrega Unidad: </label>
-									 <input type="date" class="form-control border border-dark" id="fechaEntregaUnidad" value="<?php echo $ver[42]?>" name="fechaEntregaUnidad"> 
+									 <input type="date" class="form-control border border-dark" id="fechaEntregaUnidad"  name="fechaEntregaUnidad"> 
+				</div>
+
+				</center>
+					      <div class="modal-footer">
+						  	<?php $tabla = "fomope"; ?>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+	        				<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL1','radios1', '<?php echo $usuarioSeguir ?>', '<?php echo $tabla ?>')" class="btn btn-primary">Aceptar</button>
+					      </div>
+					    </div>
+					  </div>
 					</div>
-												
-													
-										</div>
-										 <br>  
-
-								</div>
-
-										</center>
-											      <div class="modal-footer">
-
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL1','radios1', '<?php echo $usuarioSeguir ?>')" class="btn btn-primary">Aceptar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
 <!-------------------------------------------------------FIN: MODAL  -->
 
 
-									<div class="card bg-secondary text-white">
-						    <div class="card-body"><h2>Consulta Eventuales</h2></div>
+					<div class="card bg-secondary text-white">
+		    <div class="card-body"><h2>Consulta Eventuales</h2></div>
 					</div>
 	<!-- <div style="overflow-x:auto;"> 
 		En el id de table se consulta que rol es para que solo esa persona pueda editar los apartados
@@ -671,103 +698,59 @@ tbody {
 
 <!--------modal--------------------------------------------------------------------------------------------------------->
 				<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        Indica las fechas:
-											      </div>
+					  <div class="modal-dialog" role="document">
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					          <span aria-hidden="true">&times;</span>
+					        </button>
+					      </div>
+					      <div class="modal-body">
+					        Indica las fechas:
+					      </div>
 									<center>
-						      <div class="form-group col-md-8">
-									<div class="box" >
+					
 												 
-									<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="recep">Recepcion: </label>
-									 <input type="date" class="form-control border border-dark" id="recepcion" value="<?php echo $ver_qr[53]?>" name="recepcion"> 
+									 <input type="date" class="form-control border border-dark" id="recepcion"  name="recepcion"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="enFirma">En firma: </label>
-									 <input type="date" class="form-control border border-dark" id="enFirma" value="<?php echo $ver_qr[54]?>" name="enFirma"> 
+									 <input type="date" class="form-control border border-dark" id="enFirma"  name="enFirma"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="firmado">Firmado: </label>
-									 <input type="date" class="form-control border border-dark" id="firmado" value="<?php echo $ver_qr[55]?>" name="firmado"> 
+									 <input type="date" class="form-control border border-dark" id="firmado"  name="firmado"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="entregaUR">Entrega a la UR: </label>
-									 <input type="date" class="form-control border border-dark" id="entregaUR" value="<?php echo $ver_qr[56]?>" name="entregaUR"> 
+									 <input type="date" class="form-control border border-dark" id="entregaUR"  name="entregaUR"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="envioPersonal">Envio a personal: </label>
-									 <input type="date" class="form-control border border-dark" id="envioPersonal" value="<?php echo $ver_qr[57]?>" name="envioPersonal"> 
+									 <input type="date" class="form-control border border-dark" id="envioPersonal"  name="envioPersonal"> 
 					</div>
-					<div class="form-group col-md-2">
+					<div class="form-group col-md-8">
 							<label  class="plantilla-label" for="archivo">Archivo: </label>
-									 <input type="date" class="form-control border border-dark" id="archivo" value="archivo" name="archivo"> 
+									 <input type="date" class="form-control border border-dark" id="archivo"  name="archivo"> 
 					</div>
-													
-										</div>
-										 <br>  
-
-								</div>
-
-										</center>
-											      <div class="modal-footer">
-
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL2','radios2', '<?php echo $usuarioSeguir ?>')" class="btn btn-primary">Aceptar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
+				</center>
+					      <div class="modal-footer">
+						  	<?php $tabla = "fomope_qr"; ?>
+					        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+	        				<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado2('radioALL2','radios2', '<?php echo $usuarioSeguir ?>', '<?php echo $tabla ?>')" class="btn btn-primary">Aceptar</button>
+					      </div>
+					    </div>
+				</div>
+				</div>
 <!-------------------------------------------------------FIN: MODAL  -->
-
-			
-
-
-
-
-
-
-
-
 <?php
 			}
 						?>
-
-				<!--	<form method="post" action="./generarFiltroExcel/reporteBusqueda.php">
-							<input type='hidden' name='array' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matriz); ?>'>
-							<input type='hidden' name='array2' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matriz_qr); ?>'>
-
-							<input type='submit' name='lista' class='btn btn btn-success text-white bord' value="Generar Excel">
-							
-
-					</form> -->
-
-				<!-- 	<div id="result" style="display: none;"> -->
+					
 	</center>
-
-					<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Historial del FOMOPE</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">	          
-							      </div>
-							       
-							    </div>
-							  </div>
-							</div>
-	
 	</body>
 
 
