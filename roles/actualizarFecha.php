@@ -100,23 +100,8 @@ tbody {
 							return false;
 						}
 					});
-				});
-				
-
-				$('#data_table').Tabledit({
-						deleteButton: false,
-						editButton: false,
-						columns: {
-						identifier: [0, 'id'],
-						editable: [[6,'entregaUnidad'],[7,'relacionesL'],[8,'validacionPersonal']]
-						},
-						hideIdentifier: true,
-						url: 'editTabla.php'
-				});
-
-			
+				});	
 			});
-
 
 			function obtenerRadioSeleccionado(formulario, nombre, userRol, tabla){
 					var contador = 0;
@@ -229,6 +214,7 @@ tbody {
 								<label class="plantilla-label estilo-colorg" for="nombreB">Analista:</label>
 
 								<select class="form-control border border-dark custom-select" name="analistaBus">
+													<option value=""></option>
 													
 													<?php
 													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
@@ -242,8 +228,7 @@ tbody {
 													while($misdatos2 = mysqli_fetch_assoc($resultado)){ $contador2++;?>
 													<option value="<?php echo $misdatos2["usuario"]; ?>"><?php echo $misdatos2["nombrePersonal"]; ?></option>
 													<?php 
-												}?>       
-
+												}?> 
 													</select>
 							</div>
 
@@ -338,7 +323,7 @@ tbody {
 	-->
 	<div class="table-responsive">
 		<form name="radioALL1" id="radioALL1" action="" method="POST"> 
-		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
+		<table class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
 			
 						<thead>
 						    <tr>
@@ -409,8 +394,15 @@ tbody {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar')";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar == "") {
-								echo '<script type="text/javascript">alert("No se ha ingresado ningún dato");</script>';
-								
+								$sql = "SELECT * FROM fomope WHERE (anio='x')";
+								echo('
+															<br>
+															<br>
+															<div class="col-sm-12 ">
+															<div class="plantilla-inputv text-dark">
+															    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+														</div>
+														</div>');
 							}
 
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
@@ -421,6 +413,14 @@ tbody {
 
 								$totalFilas    =    mysqli_num_rows($result);  
 								if($totalFilas == 0){
+									echo('
+															<br>
+															<br>
+															<div class="col-sm-12 ">
+															<div class="plantilla-inputv text-dark">
+															    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+														</div>
+														</div>');
 										$imprimirNoExiste ++;
 									//	$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 								}else{
@@ -566,7 +566,7 @@ tbody {
 	-->
 	<div class="table-responsive">
 		<form name="radioALL2" id="radioALL2" action="" method="POST"> 
-		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
+		<table class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
 			
 						<thead>
 						    <tr>
@@ -638,6 +638,8 @@ tbody {
 							}elseif ($anioBuscar != "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								$sql2 = "SELECT * FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
+							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+								$sql2 = "SELECT * FROM fomope_qr WHERE (anio='x')";
 							}
 							////////////////////////////////////////////
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
@@ -648,6 +650,14 @@ tbody {
 
 								$totalFilas    =    mysqli_num_rows($result_qr);  
 								if($totalFilas == 0){
+										echo('
+															<br>
+															<br>
+															<div class="col-sm-12 ">
+															<div class="plantilla-inputv text-dark">
+															    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+														</div>
+														</div>');
 										$imprimirNoExiste ++;
 								}else{
 
