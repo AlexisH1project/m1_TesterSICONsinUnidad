@@ -90,7 +90,7 @@
 						// echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 						
 			}
-   		//echo "<script> alert('Autorizacion Correcta'); window.location.href = '../analista.php?usuario_rol=$userSeguir'</script>";
+			echo "<script> alert('Autorización correcta'); window.location.href = '../actualizarFecha.php?usuario_rol=$userSeguir'</script>";
 
 
 

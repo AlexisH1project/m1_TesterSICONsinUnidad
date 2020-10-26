@@ -227,7 +227,24 @@ tbody {
 						<div class="col">
 							<div class="form-group col-md-12">
 								<label class="plantilla-label estilo-colorg" for="nombreB">Analista:</label>
-								<input type="text" class="form-control border-dark" id="analistaBus" name="analistaBus" value="<?php if(isset($_POST['analistaBus'])){ echo $_POST['analistaBus']; } ?>" maxlength="40">no
+
+								<select class="form-control border border-dark custom-select" name="analistaBus">
+													
+													<?php
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM usuarios WHERE  id_rol = 0 OR id_rol = 1 OR id_rol=2 OR id_rol=3";
+													$resultado = mysqli_query($conexion , $consulta);
+													$contador2=0;
+
+													while($misdatos2 = mysqli_fetch_assoc($resultado)){ $contador2++;?>
+													<option value="<?php echo $misdatos2["usuario"]; ?>"><?php echo $misdatos2["nombrePersonal"]; ?></option>
+													<?php 
+												}?>       
+
+													</select>
 							</div>
 
 						</div>
@@ -350,28 +367,28 @@ tbody {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND analistaCap='$analistaBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
 
  							}elseif($anioBuscar == "" && $analistaBuscar != ""   && $unidadBuscar != "" &&  $qnaBuscar != ""){
- 								$sql = "SELECT * FROM fomope WHERE (analistaCap='$analistaBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+ 								$sql = "SELECT * FROM fomope WHERE (analistaCap='$analistaBuscar' AND unidad='$unidadBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 
  							}elseif ($anioBuscar != "" && $analistaBuscar == ""   && $unidadBuscar != ""  &&  $qnaBuscar != "") {
- 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+ 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND unidad='$unidadBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 								
 							}elseif ($anioBuscar != "" && $analistaBuscar != ""   && $unidadBuscar == ""  &&  $qnaBuscar != "") {
-								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND analistaCap='$analistaBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND analistaCap='$analistaBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 								
 							}elseif ($anioBuscar != "" && $analistaBuscar != ""   && $unidadBuscar != ""  &&  $qnaBuscar == "") {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND analistaCap='$analistaBuscar' AND unidad='$unidadBuscar')";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar != ""  &&  $qnaBuscar != "") {
-								$sql = "SELECT * FROM fomope WHERE (unidad='$unidadBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (unidad='$unidadBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar != ""   && $unidadBuscar == ""  &&  $qnaBuscar != "") {
-								$sql = "SELECT * FROM fomope WHERE (analistaCap='$analistaBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (analistaCap='$analistaBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar != ""   && $unidadBuscar != ""  &&  $qnaBuscar == "") {
 								$sql = "SELECT * FROM fomope WHERE (analistaCap='$analistaBuscar' AND unidad='$unidadBuscar')";
 								
 							}elseif ($anioBuscar != "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar != "") {
-								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar'))";
 								
 							}elseif ($anioBuscar != "" && $analistaBuscar == ""   && $unidadBuscar != ""  &&  $qnaBuscar == "") {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND unidad='$unidadBuscar')";
@@ -380,7 +397,7 @@ tbody {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar' AND analistaCap='$analistaBuscar')";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar != "") {
-								$sql = "SELECT * FROM fomope WHERE (quincenaAplicada='$qnaBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (quincenaAplicada='$qnaBuscar' OR qnaDeAfectacion ='$qnaBuscar')";
 								
 							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar != ""  &&  $qnaBuscar == "") {
 								$sql = "SELECT * FROM fomope WHERE (unidad='$unidadBuscar')";
@@ -391,7 +408,11 @@ tbody {
 							}elseif ($anioBuscar != "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								$sql = "SELECT * FROM fomope WHERE (anio='$anioBuscar')";
 								
+							}elseif ($anioBuscar == "" && $analistaBuscar == ""   && $unidadBuscar == ""  &&  $qnaBuscar == "") {
+								echo '<script type="text/javascript">alert("No se ha ingresado ningún dato");</script>';
+								
 							}
+
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
 
 							$idMatriz = 0;
@@ -559,9 +580,12 @@ tbody {
 						      <th scope="titulo"  style="text-align: center" class="sticky">Unidad</th>
 						      <th scope="titulo"  style="text-align: center" class="sticky">Última modificación</th>
 						       <th scope="titulo" style="text-align: center" class="sticky">Movimiento</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Entrega operados a la unidad</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Entrega expediente relaciones laborales</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Envío a validación</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Fecha de recepción</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Fecha de entregado firma</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Fecha de firmado</th>
+                               <th scope="titulo" style="text-align: center" class="sticky">Entrega operados a la unidad</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Entrega expediente envio personal</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Archivo</th>
 						       
 						   </tr>
 						</thead>
@@ -654,10 +678,12 @@ tbody {
 							<td><?php echo $rowUnidad[1] ?></td>
 							<td><?php echo $ver_qr[48]." ".$ver_qr[47] ?></td>
 							<td><?php echo $rowMovimientos[4] ?></td>
+							<td><?php echo $ver_qr[53] ?></td>
+							<td><?php echo $ver_qr[54] ?></td>
+							<td><?php echo $ver_qr[55] ?></td>
 							<td><?php echo $ver_qr[56] ?></td>
-							<td></td>
+							<td><?php echo $ver_qr[57] ?></td>
 							<td><?php echo $ver_qr[58] ?></td>
-							
 						<!--	<td><?php echo "
 
 	
