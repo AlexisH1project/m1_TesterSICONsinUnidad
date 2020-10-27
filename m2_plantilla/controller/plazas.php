@@ -382,60 +382,7 @@
 							<td><?php echo $ver[8] ?></td>
 
 							<td>
-								
-								<?php
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-										if($totalColor != 0){
-											if($ver[1] == "negro" ){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||1";
-
-										
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php	
-											}else if($ver[1] == "verde2"){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||4";
-
-
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-								<?php
-											}else if($ver[1] == "verde"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Capturar</button>
-								<?php
-							}				else if($ver[1] == "gris"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||2";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php
-											}else if($ver[1] == "amarillo0"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||3";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-											
-											
-								<?php
-											}
-										}
-									}
-								
-								?>	
-															
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
 							</td>
 						</tr>
 						<?php 
