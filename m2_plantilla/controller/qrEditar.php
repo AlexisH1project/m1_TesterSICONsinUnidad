@@ -341,16 +341,8 @@
 	      </center>
 	          <li class=" estilo-color">
 	          	<!-- redireccionamos a la interfaz correcta  -->
-	          	<?php
-	          		if($id_rol1 == 1){
-	          			$namePHP = "LuluEventuales.php";
-	          		}else if($id_rol1 == 4){
-	          			$namePHP = "bandejaEventuales_D.php";
-	          		}else{
-	          			$namePHP = "bandejaEventuales.php";
-	          		}
-	          	?>
-	            <a href=  <?php echo ("'../vista/plazas.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	          	
+	            <a href=  <?php echo ("'./plazas.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'../vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
