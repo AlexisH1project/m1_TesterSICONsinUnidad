@@ -59,19 +59,13 @@
 	<body>
 		<?php 
 		include "configuracion.php";
-		$noFomope = $_GET['noFomope'];
-				//echo $noFomope;
-				
-				$usuarioSeguir = $_GET['usuario_rol'];
+		$usuarioSeguir = $_GET['usuario_rol'];
 
 			$sqlNombre = "SELECT nombrePersonal, id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
-
+			echo "<br><br><br><br>"; 
 			if($nombreU[1] == 2){ 
-
-
-			
 
 		 ?>
 	 <br>

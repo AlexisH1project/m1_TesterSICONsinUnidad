@@ -221,7 +221,7 @@ tbody {
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE  id_rol = 0 OR id_rol = 1 OR id_rol=2 OR id_rol=3";
+													$consulta = "SELECT * FROM usuarios WHERE  id_rol = 0 OR id_rol = 1 OR id_rol=2 OR id_rol=3 ORDER BY id_rol ";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador2=0;
 
