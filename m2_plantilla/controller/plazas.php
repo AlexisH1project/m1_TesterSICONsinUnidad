@@ -1,4 +1,5 @@
 
+
 <html>
 	<head>
 		<!-- ola kevss -->
@@ -50,6 +51,13 @@
 			}
 			input{
 				text-transform: uppercase;
+			}
+
+			.sticky{
+				position: sticky;
+				top: 0;
+
+
 			}
 
 			.estilo-color{
@@ -153,6 +161,7 @@
 				font-weight: bold;
 				font-size: 13px;
 			}
+
 
 		</style>
 
@@ -283,6 +292,59 @@
 		<br>
 
 
+					<table class="table table-hover table-white" height="400">
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+						      <th scope="titulo" class="sticky">Ramo</th>
+						      <th scope="titulo" class="sticky">Unidad</th>
+						      <th scope="titulo" class="sticky">RFC</th>
+						      <th scope="titulo" class="sticky">QNA</th>
+						      <th scope="titulo" class="sticky">Fecha de Inicio</th>
+						      <th scope="titulo" class="sticky">Codigo Puesto</th>
+						      <th scope="titulo" class="sticky">Codigo Federal</th>
+						      <th scope="titulo" class="sticky">Fecha de Captura</th>
+
+						   </tr>
+					 	 </thead>
+
+					 	 <tbody>
+                            
+					 	 	<?php
+					 	 	
+					 	 	$sql2="SELECT * FROM plazas_ctrlp_m2 ORDER BY id_plaza DESC LIMIT 0,50";
+					 	 	if ($result = mysqli_query($conexion,$sql2)) {
+                              while($ver2=mysqli_fetch_row($result)){ 
+?>
+                            						<tr>
+							
+							<td><?php echo $ver2[1] ?></td>
+							<td><?php echo $ver2[2] ?></td>
+							<td><?php echo $ver2[3] ?></td>
+							<td><?php echo $ver2[4] ?></td>
+							<td><?php echo $ver2[5] ?></td>
+							<td><?php echo $ver2[6] ?></td>
+							<td><?php echo $ver2[7] ?></td>
+							<td><?php echo $ver2[8] ?></td>
+
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver2[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
+
+
+
+<?php
+                         
+
+                              }
+					 	 	}
+
+?>
+					 	 
+
+
 
 					<?php 
 						include "./librerias/configuracion.php";
@@ -291,26 +353,11 @@
 							$qnaBuscar = $_POST['qnaOption'];
 							$rfcBuscar = $_POST['rfc'];
 							$anioBuscar = $_POST['anio'];
-?>
 
-									<table class="table table-hover table-white">
-						<thead>
-						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Ramo</th>
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha de Inicio</th>
-						      <th scope="titulo">Codigo Puesto</th>
-						      <th scope="titulo">Codigo Federal</th>
-						      <th scope="titulo">Fecha de Captura</th>
 
-						   </tr>
-					 	 </thead>
+						
 
-<?php 
+
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
@@ -394,6 +441,7 @@
 							}
 						}
 						 ?>
+		</tbody>
 		</table>
 		
 

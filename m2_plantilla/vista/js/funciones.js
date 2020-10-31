@@ -170,7 +170,7 @@ function nobackbutton(){
 
 function verDatosQr(movimiento, elUsuario){
 	var m = movimiento;
-	window.location.href = 'qrEditar.php?noFomope='+m+'&usuario='+elUsuario;
+	window.location.href = '../controller/mostrarPlaza.php?id_plaza='+m+'&usuario='+elUsuario;
 }
 
 

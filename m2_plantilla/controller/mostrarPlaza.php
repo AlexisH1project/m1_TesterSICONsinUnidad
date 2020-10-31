@@ -225,7 +225,7 @@
 			      	var btn_2 = document.getElementById('bandejaEntrada');
 				    btn_2.style.display = 'inline';
 			      	$('#enviarQr').hide();
-					window.location.href = 'Controller/rechazosQr.php?noFomope='+elID+'&usuario='+userLogin+'&comentarioR='+textRechazo;
+					window.location.href = 'Controller/rechazosQr.php?id_plaza='+elID+'&usuario='+userLogin+'&comentarioR='+textRechazo;
 				}
 			}
 
@@ -249,17 +249,17 @@
 <?php 
 
 			include "./librerias/configuracion.php";
-			$noFomope = $_GET['noFomope'];
+			$id_plaza = $_GET['id_plaza'];
 			$usuarioSeguir = $_GET['usuario'];
 			
-			$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
+			$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$id_plaza' ";
             $result=mysqli_query($conexion,$sql);
             $rowQr = mysqli_fetch_row($result);
 
 							$existenD =0;
-			$sql="SELECT * from plazas_ctrlp_m2 WHERE id_plaza = '$noFomope' ";
+			$sql="SELECT * from plazas_ctrlp_m2 WHERE id_plaza = '$id_plaza' ";
 			$documentosPC="";
-			// echo $noFomope;
+			// echo $id_plaza;
 			$result=mysqli_query($conexion,$sql);
 			$ver = mysqli_fetch_assoc($result);
 	//header("Content-type: application/PDF");
@@ -619,7 +619,7 @@
 							       
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton('<?php echo $usuarioSeguir ?>', '<?php echo $noFomope ?>')" name="accionB"  value="descargar">
+									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton('<?php echo $usuarioSeguir ?>', '<?php echo $id_plaza ?>')" name="accionB"  value="descargar">
 							      </div>
 							     
 							    </div>

@@ -318,9 +318,34 @@ tbody {
 							$anioBuscar = $_POST['anioBus'];
 							$qnaBuscar = $_POST['qnaOption'];
 							
-							
+							if($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
 
-	 if($rfcBuscar != "" && $estatusBuscar != "" && $nivelBuscar != "" && $codigoPuestoBuscar != "" && $qnaBuscar != "" &&  $codigoFederalPuestosBuscar != ""){
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar')";
+ 							
+ 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar != ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND quincenaAplicada ='$qnaBuscar')";
+ 							
+ 							}elseif($rfcBuscar != "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND rfc='$rfcBuscar')";
+
+ 							}elseif($rfcBuscar == "" && $estatusBuscar != "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND estatus='$estatusBuscar)";
+ 							
+ 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar != "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND nivel='$nivelBuscar')";
+ 							
+ 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar != "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND codigoPuesto='$codigoPuestoBuscar')";
+ 							
+ 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar != "" && $anioBuscar != ""){
+
+								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND codigoFederalPuestos='$codigoFederalPuestosBuscar')";
+ 							}elseif($rfcBuscar != "" && $estatusBuscar != "" && $nivelBuscar != "" && $codigoPuestoBuscar != "" && $qnaBuscar != "" &&  $codigoFederalPuestosBuscar != ""){
 
 								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (rfc='$rfcBuscar' AND estatus='$estatusBuscar' AND nivel='$nivelBuscar' AND codigoPuesto='$codigoPuestoBuscar' AND quincenaAplicada='$qnaBuscar' AND codigoFederalPuestos='$codigoFederalPuestosBuscar')";
 
@@ -601,33 +626,6 @@ tbody {
 
 								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (rfc='$rfcBuscar' AND estatus='$estatusBuscar' AND nivel='$nivelBuscar' AND codigoPuesto='$codigoPuestoBuscar' AND quincenaAplicada='$qnaBuscar')";
 
- 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar')";
- 							
- 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar != ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND quincenaAplicada ='$qnaBuscar')";
- 							
- 							}elseif($rfcBuscar != "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND rfc='$rfcBuscar')";
-
- 							}elseif($rfcBuscar == "" && $estatusBuscar != "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND estatus='$estatusBuscar)";
- 							
- 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar != "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND nivel='$nivelBuscar')";
- 							
- 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar != "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar == "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND codigoPuesto='$codigoPuestoBuscar')";
- 							
- 							}elseif($rfcBuscar == "" && $estatusBuscar == "" && $nivelBuscar == "" && $codigoPuestoBuscar == "" && $qnaBuscar == ""  &&  $codigoFederalPuestosBuscar != "" && $anioBuscar != ""){
-
-								$sql = "SELECT * FROM plazas_ctrlp_m2 WHERE (anio='$anioBuscar' AND codigoFederalPuestos='$codigoFederalPuestosBuscar')";
  							}
 
 
@@ -674,6 +672,9 @@ tbody {
 							<td><?php echo $ver[9] ?></td>
 							<td><?php echo $ver[14] ?></td>
 							<td><?php echo $ver[16] ?></td>
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
 				
 						</tr>
 						<?php 
