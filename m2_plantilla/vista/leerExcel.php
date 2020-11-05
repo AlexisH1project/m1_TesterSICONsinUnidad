@@ -99,8 +99,8 @@
 
 
 		        require_once "../controller/librerias/conexion_excel.php";
-				include_once "../controller/librerias/Classes/PHPExcel/IOFactory.php";
 				include "../controller/librerias/configuracion.php";
+				include_once "../controller/librerias/Classes/PHPExcel/IOFactory.php";
 
 
 				$usuarioSeguir =  $_GET['usuario_rol'];

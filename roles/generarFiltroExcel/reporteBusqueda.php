@@ -58,7 +58,7 @@
 		    	)
 			));
 
-//            $nombreUser = $_POST['usuario_rol'];
+            $nombreUser = $_POST['usuario_rol'];
 			$arr = unserialize(stripslashes($_POST['array']));
 			$arr2 = unserialize(stripslashes($_POST['array2']));
 
@@ -68,11 +68,10 @@
 				   //             // echo "<br>".$nombre." => ".$telefono;
 				   //                 echo "{$nombre} => {$telefono} ";
 				   //          }
+					
+		if($arr[0] != NULL OR $arr2[0] != NULL){
+			if($arr[0] != NULL){
 				$tamanio = count($arr);
-				$tamanio2 = count($arr2);
-						var_dump($arr[1]);
-		if($tamanio > 0 OR $tamanio2>0){
-			if($tamanio>0){
 				for($i=0; $i<$tamanio; $i++){
 					$sqlImp  = "SELECT * FROM fomope WHERE id_movimiento = '$arr[$i]'";
 					if($resImp = mysqli_query($conexion, $sqlImp)){
@@ -118,7 +117,7 @@
 												
 												break;
 										}
-										$objPHPExcel->setActiveSheetIndexByName('Hoja1');
+										$objPHPExcel->setActiveSheetIndexByName('Estructura');
 						$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $imprimirRow[0]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $estadoF); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $imprimirRow[2]); 
@@ -251,11 +250,11 @@
                         $fila--;
                     	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:AY".$fila);
 						$objPHPExcel->getActiveSheet()->getStyle("A8:AY".$fila)->applyFromArray($estiloTituloColumnas);
-				}	
-				
-    if($tamanio2>0){
+				}
+    if($arr2[0] != NULL){
     	$fila = 8;
-    	$objPHPExcel->setActiveSheetIndexByName('Hoja2');
+		$objPHPExcel->setActiveSheetIndexByName('Eventuales');
+		$tamanio2 = count($arr2);
 				for($i=0; $i<$tamanio2; $i++){
 					$sqlImp2  = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$arr2[$i]'";
 					if($resImp2 = mysqli_query($conexion, $sqlImp2)){
@@ -355,7 +354,7 @@
                 
 
             }else{
-                echo "<script> alert('No hay informacion de busqueda para generar reporte'); window.location.href = '../consultaEstado.php?usuario_rol=$nombreUser'</script>";
+                echo "<script> alert('No hay informacion de busqueda para generr reporte');</script>"; // window.location.href = '../consultaEstado.php?usuario_rol=$nombreUser'
 
             }
 			

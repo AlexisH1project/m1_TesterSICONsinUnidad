@@ -326,6 +326,7 @@ tbody {
 													$matrizEventual = 0;
 													//$mensaje++;
 													if($mensaje > 0 ){
+														$matrizEventuales[0][0]=0;
 														echo('
 															<br>
 															<br>
@@ -350,16 +351,6 @@ tbody {
 					                                            $rowUnidad = mysqli_fetch_row($resUnidad);
 				}
 												?>
-
-
-
-
-
-
-
-
-
-
 
 																<tr id="<?php echo $ver2[0] ?>">
 																<td style="display: none;"><?php echo $ver2[0] ?></td>
@@ -423,9 +414,7 @@ tbody {
 							$unidadBuscar = $_POST['unidadBus'];
 							$qnaBuscar = $_POST['qnaOption'];
 							$anioBuscar = $_POST['anioBus'];
-							echo $anioBuscar;
-
-
+						
                            if($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "" && $anioBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE anio = '$anioBuscar'";
@@ -831,6 +820,15 @@ tbody {
 								$totalFilas    =    mysqli_num_rows($result);  
 								if($totalFilas == 0){
 										$imprimirNoExiste ++;
+										$matriz[0][0] = 0;
+										echo('
+															<br>
+															<br>
+															<div class="col-sm-12 ">
+															<div class="plantilla-inputv text-dark">
+															    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+														</div>
+														</div>');
 									//	$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 								}else{
 
@@ -925,7 +923,7 @@ tbody {
 	</div>	
 	<?php
 
-	$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
+		$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 	?>
 <?php
 		}
@@ -934,7 +932,7 @@ tbody {
 					<form method="post" action="./generarFiltroExcel/reporteBusqueda.php">
 							<input type='hidden' name='array' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matriz); ?>'>
 							<input type='hidden' name='array2' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matrizEventuales); ?>'>
-
+							<input type='hidden' name='usuario_rol' class='btn btn btn-success text-white bord' value='<?php  echo $usuarioSeguir; ?>'>
 							<input type='submit' name='lista' class='btn btn btn-success text-white bord' value="Generar Excel">
 							
 
