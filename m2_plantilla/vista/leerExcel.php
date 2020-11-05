@@ -37,7 +37,27 @@
 			  width:50%;
 			  float:left;
 		}
-		  
+		  table {
+    width: 100%;
+    display:block;
+}
+thead {
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    background: white;
+}
+tbody {
+    max-height: 400px;
+    display: inline-block;
+    width: 100%;
+    
+}
+
+		th, td{
+			min-width: 150px;
+			max-width: 151px;
+		}
 		  </style>
 		  <script type="text/javascript">
 			
@@ -223,6 +243,29 @@
 
 			    	$numRows = $objPHPExcel2->setActiveSheetIndex(0)->getHighestRow();
 
+			    	?>
+<center>
+                     <div class="table-responsive">
+		             <table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >	
+						<thead>
+						    <tr>
+						       <th scope="titulo" style="text-align: center" class="sticky">Unidad</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Nivel</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Código de Puesto</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Código Federal de Puesto</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Estatus</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Quincena Aplicada</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Ramo</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Rango Salarial</th>
+						   </tr>
+						</thead>
+				 <tbody>
+
+
+
+
+			    	<?php
+
 			    	//echo '<table border=1>';
 
 			    	for ($i=2; $i<= $numRows; $i++){
@@ -297,12 +340,12 @@
 							$anio= date("Y", strtotime($rowfecha[0]));
 					// -------------------------- ahora detectamos en que qna nos encontramos
 						$queryQna = "SELECT * FROM m1ct_fechasnomina";
+
 						if($SiQueryQna = mysqli_query($conexion, $queryQna)){
 							while($rowFechas = mysqli_fetch_row($SiQueryQna)){
-								if($fechaSistema >= $rowFechas[2] AND $fechaSistema <= $rowFechas[5]){
 									$qnaAplicada = $rowFechas[0];
 									//echo "qna".$qnaAplicada."</br>";
-								}
+								
 							}
 						}
 
@@ -356,6 +399,21 @@
 
 				    	if($querylast = mysqli_query($conexion, $queryExcel)){
 
+				    		   ?>
+
+                        <tr>
+                            <td><?php echo $urT ?></td>
+							<td><?php echo $nivelT ?></td>
+							<td><?php echo $codigoT ?></td>
+							<td><?php echo $codFedPueT ?></td>
+							<td><?php echo $estatusT ?></td>
+							<td><?php echo $qnaAplicada ?></td>
+							<td><?php echo $ramoT ?></td>
+							<td><?php echo $rsT ?></td>
+                        </tr>
+
+                        <?php
+
 				    	}
 				    	
 
@@ -372,6 +430,13 @@
 				   
 			        }
   			        //echo '</table>';
+
+  			        ?>
+  			        </tbody>
+		</table>
+	</div>
+	</center>
+<?php
 
                         if(count($dupdata)> 1){
                         $arrayDupdata = implode(",", $dupdata);

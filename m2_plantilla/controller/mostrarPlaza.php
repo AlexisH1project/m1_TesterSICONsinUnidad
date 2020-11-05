@@ -3,7 +3,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>FOMOPE</title>
+		<title>Mostrar Plaza</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -252,10 +252,6 @@
 			$id_plaza = $_GET['id_plaza'];
 			$usuarioSeguir = $_GET['usuario'];
 			
-			$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$id_plaza' ";
-            $result=mysqli_query($conexion,$sql);
-            $rowQr = mysqli_fetch_row($result);
-
 							$existenD =0;
 			$sql="SELECT * from plazas_ctrlp_m2 WHERE id_plaza = '$id_plaza' ";
 			$documentosPC="";
@@ -264,14 +260,6 @@
 			$ver = mysqli_fetch_assoc($result);
 	//header("Content-type: application/PDF");
 			//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
-			
-			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-		    $to = './Controller/DOCUMENTOS_PDC/';	
-		    }else{
-			$to = './Controller/DOCUMENTOS_RES/';
-		    }
-
 
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);

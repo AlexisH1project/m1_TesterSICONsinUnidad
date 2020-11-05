@@ -59,6 +59,26 @@
 
 
 			}
+			table {
+    width: 100%;
+    display:block;
+}
+thead {
+    display: inline-block;
+    width: 100%;
+    height: 60px;
+    background: white;
+}
+tbody {
+    max-height: 400px;
+    display: inline-block;
+    width: 100%;
+}
+
+		th, td{
+			min-width: 150px;
+			max-width: 151px;
+		}
 
 			.estilo-color{
 				font-family: Monserrat, Medium;
@@ -292,7 +312,22 @@
 		<br>
 
 
-					<table class="table table-hover table-white" height="400">
+				
+					 	 
+
+
+
+					<?php 
+						include "./librerias/configuracion.php";
+
+						if(isset($_POST['buscar'])){
+							$qnaBuscar = $_POST['qnaOption'];
+							$rfcBuscar = $_POST['rfc'];
+							$anioBuscar = $_POST['anio'];
+
+							?>
+							<div class="table-responsive">
+		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -311,50 +346,8 @@
 
 					 	 <tbody>
                             
-					 	 	<?php
-					 	 	
-					 	 	$sql2="SELECT * FROM plazas_ctrlp_m2 ORDER BY id_plaza DESC LIMIT 0,50";
-					 	 	if ($result = mysqli_query($conexion,$sql2)) {
-                              while($ver2=mysqli_fetch_row($result)){ 
-?>
-                            						<tr>
-							
-							<td><?php echo $ver2[1] ?></td>
-							<td><?php echo $ver2[2] ?></td>
-							<td><?php echo $ver2[3] ?></td>
-							<td><?php echo $ver2[4] ?></td>
-							<td><?php echo $ver2[5] ?></td>
-							<td><?php echo $ver2[6] ?></td>
-							<td><?php echo $ver2[7] ?></td>
-							<td><?php echo $ver2[8] ?></td>
 
-							<td>
-								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver2[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
-							</td>
-						</tr>
-
-
-
-<?php
-                         
-
-                              }
-					 	 	}
-
-?>
-					 	 
-
-
-
-					<?php 
-						include "./librerias/configuracion.php";
-
-						if(isset($_POST['buscar'])){
-							$qnaBuscar = $_POST['qnaOption'];
-							$rfcBuscar = $_POST['rfc'];
-							$anioBuscar = $_POST['anio'];
-
-
+                    	<?php
 						
 
 
@@ -443,6 +436,7 @@
 						 ?>
 		</tbody>
 		</table>
+	</div>
 		
 
 			  
