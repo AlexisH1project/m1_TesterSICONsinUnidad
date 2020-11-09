@@ -235,6 +235,12 @@ tbody {
 					     //return false;
 					} 
 
+
+
+					function ocultar() {
+                    document.getElementById('tabla1').style.display="none";
+}
+
 				</script>
 			
 		<div class="row">
@@ -294,7 +300,7 @@ tbody {
 
 					<div class="form-group col-md-12">
 						<div class="col text-center">
-							<input type="submit" name="buscar" onclick="'<?php $_GET['usuario_rol']; ?>'" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Buscar"><br>
+							<input type="submit" name="buscar" onclick="'<?php $_GET['usuario_rol'] ; ?>'" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Buscar"><br>
 
 							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
 						</div>
@@ -312,22 +318,12 @@ tbody {
 		<br>
 
 
-				
-					 	 
 
 
 
-					<?php 
-						include "./librerias/configuracion.php";
 
-						if(isset($_POST['buscar'])){
-							$qnaBuscar = $_POST['qnaOption'];
-							$rfcBuscar = $_POST['rfc'];
-							$anioBuscar = $_POST['anio'];
-
-							?>
-							<div class="table-responsive">
-		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
+						<div class="table-responsive" id="tabla1">
+		<table id="tabla1" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -345,9 +341,91 @@ tbody {
 					 	 </thead>
 
 					 	 <tbody>
-                            
+				
+                <?php
+              
 
-                    	<?php
+                $sqlReg="SELECT id_plaza,ramo,unidadResponsable,rfc,quincenaAplicada,fechaInicioVigencia,codigoPuesto, codigoFederalPuestos, fechaCaptura FROM plazas_ctrlp_m2 ORDER BY id_plaza DESC LIMIT 0, 50";
+                if ($result2 = mysqli_query($conexion,$sqlReg)){ 
+                	while($ver2=mysqli_fetch_row($result2)){ 
+?>
+                		<tr>
+							
+							<td><?php echo $ver2[1] ?></td>
+							<td><?php echo $ver2[2] ?></td>
+							<td><?php echo $ver2[3] ?></td>
+							<td><?php echo $ver2[4] ?></td>
+							<td><?php echo $ver2[5] ?></td>
+							<td><?php echo $ver2[6] ?></td>
+							<td><?php echo $ver2[7] ?></td>
+							<td><?php echo $ver2[8] ?></td>
+
+							<td>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver2[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+							</td>
+						</tr>
+
+                  
+
+<?php
+                             }
+
+                 
+                  	}
+                 
+                 
+
+
+
+                ?>
+               		</tbody>
+		</table>
+	</div>
+
+                 
+
+					<?php 
+						include "./librerias/configuracion.php";
+
+						if(isset($_POST['buscar'])){
+							$qnaBuscar = $_POST['qnaOption'];
+							$rfcBuscar = $_POST['rfc'];
+							$anioBuscar = $_POST['anio'];
+
+
+
+						?>
+                         
+					     <script language="javascript">
+                        ocultar();
+                        </script>
+		                <table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+						      <th scope="titulo" class="sticky">Ramo</th>
+						      <th scope="titulo" class="sticky">Unidad</th>
+						      <th scope="titulo" class="sticky">RFC</th>
+						      <th scope="titulo" class="sticky">QNA</th>
+						      <th scope="titulo" class="sticky">Fecha de Inicio</th>
+						      <th scope="titulo" class="sticky">Codigo Puesto</th>
+						      <th scope="titulo" class="sticky">Codigo Federal</th>
+						      <th scope="titulo" class="sticky">Fecha de Captura</th>
+
+						   </tr>
+					 	 </thead>
+
+					 	 <tbody>
+
+
+
+
+
+
+
+						<?php
+
 						
 
 
@@ -426,16 +504,28 @@ tbody {
 							</td>
 						</tr>
 						<?php 
+                               $segIngreso="x";
 										}
 									}
 							}else{
 								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 							}
+					?>
+                        <div class="form-row">
+							<input type="text" class="form-control" id="segIngreso" name="segIngreso" value="<?php echo $segIngreso ?>" style="display:none">
+						</div>
+
+
+					<?php
 						}
 						 ?>
 		</tbody>
 		</table>
+                        
+
+
+
 	</div>
 		
 
