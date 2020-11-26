@@ -127,6 +127,7 @@
 			}
 			if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 						 		$row = mysqli_fetch_row($resultHoy);
+						 		$anioActual = explode("-", $row[0]);
 						 		$row2 = mysqli_fetch_row($resultTime);
 					 		}
 
@@ -144,7 +145,7 @@
 			
 			if($id_movIdentify != "x"){
 
-$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+				$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$anioActual[0]', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
 
 				}else{
 
@@ -156,11 +157,11 @@ $sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuari
 			
 				if($id_movIdentify!= "x"){
 
-$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', justificacionRechazo = '$motivoR', quincenaAplicada = '$laQna', anio = '', oficioUnidad = '', fechaOficio = '', fechaRecibido ='', codigo = '', n_puesto = '', clavePresupuestaria = '', codigoMovimiento = '', descripcionMovimiento = '', entidad = '', consecutivoMaestroPuestos = '', puestos = '', observaciones = '', fechaEnviadaRubricaDspo = '', fechaEnviadaRubricaDipsp= '',fechaEnviadaRubricaDgrho = '', fechaRecepcionSpc = '', fechaEnvioSpc= '', fechaReciboDspo = '',folioSpc = '', fechaCapturaNomina = '', fechaEntregaArchivo = '$fechaArchivoAdd', fechaEntregaRLaborales = '$fechaRLaboralesAdd', OfEntregaRLaborales = '$ofEntregaRLAdd', fomopeDigital = '$archivoScan', fechaEntregaUnidad = '$fechaEntregaUnidadAdd', ofEntregaUnidad = '$ofEntregaUnidadAdd',fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+					$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$anioActual[0]', fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
  //cuando la fecha de autorizacion ya tenga un dato significa que puede pasar 
 				}else{
 
-				$sql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,fechaAutorizacion,analistaCap,  	fechaCaptura  ) VALUES ('$colorAccion','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$row[0] - $usuarioEdito', '$analista', '$row[0] - $usuarioEdito' )";
+					$sql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,fechaAutorizacion,analistaCap,  	fechaCaptura  ) VALUES ('$colorAccion','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$row[0] - $usuarioEdito', '$analista', '$row[0] - $usuarioEdito' )";
 
 			    }
 			}
