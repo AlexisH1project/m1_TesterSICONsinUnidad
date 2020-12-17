@@ -243,10 +243,15 @@ tbody {
 
 							<div class="form-group col-md-12">
 								<label  class="plantilla-label estilo-colorg" for="laQna">Año: </label>
-									<select class="form-control border-dark" name="anioBus">									
-									  <option value=""></option>
-								      <option value="2019">2019</option>
-								      <option value="2020">2020</option>
+									<select class="form-control border-dark" name="anioBus">							 <?php
+										
+										$ConsultaAnio = "SELECT * FROM ct_anios";
+										$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+										$contadorA=0;
+
+										while($misdatosAnio = mysqli_fetch_assoc($resultadoA)){ $contadorA++;?>
+										<option  data-subtext="<?php echo $misdatosAnio["id_anio"]; ?>"><?php echo $misdatosAnio["num_anio"]; ?></option>
+										<?php }?>
 								    </select>	
 							</div>
 						</div>

@@ -250,9 +250,15 @@
 								<label  class="plantilla-label" for="elAnio">AÑO: </label>
 									 
 									<select class="form-control custom-select border-dark" name="anio">
-										<option value=""></option>
-										<option value="2019">2019</option>
-	  									<option value="2020">2020</option>	
+										 <?php
+										
+										$ConsultaAnio = "SELECT * FROM ct_anios";
+										$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+										$contadorA=0;
+
+										while($misdatosAnio = mysqli_fetch_assoc($resultadoA)){ $contadorA++;?>
+										<option  data-subtext="<?php echo $misdatosAnio["id_anio"]; ?>"><?php echo $misdatosAnio["num_anio"]; ?></option>
+										<?php }?>
 									</select>
 							</div>
 						</div>		
