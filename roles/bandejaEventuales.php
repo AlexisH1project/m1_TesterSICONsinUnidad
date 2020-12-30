@@ -280,9 +280,18 @@
 								<label  class="plantilla-label" for="elAnio">AÑO: </label>
 									 
 									<select class="form-control custom-select border-dark" name="anio">
-										<option value=""></option>
-										<option value="2019">2019</option>
-	  									<option value="2020">2020</option>	
+										<?php
+										if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+										       die("Error cargando el conjunto de caracteres utf8");
+										}
+
+										$consulta = "SELECT * FROM ct_anios";
+										$resultado = mysqli_query($conexion , $consulta);
+										$contador=0;
+
+										while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+										<option  data-subtext="<?php echo $misdatos["id_anio"]; ?>"><?php echo $misdatos["num_anio"]; ?></option>
+										<?php }?>       
 									</select>
 							</div>
 						</div>		
