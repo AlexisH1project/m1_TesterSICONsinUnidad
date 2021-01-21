@@ -809,6 +809,7 @@ tbody {
 						       <th scope="titulo" style="text-align: center" class="sticky">Entrega operados a la unidad</th>
 						       <th scope="titulo" style="text-align: center" class="sticky">Entrega expediente relaciones laborales</th>
 						       <th scope="titulo" style="text-align: center" class="sticky">Envío a validación</th>
+						       <th scope="titulo" style="text-align: center" class="sticky">Fomope Loteado y Firmado</th>
 						       
 						   </tr>
 						</thead>
@@ -891,6 +892,20 @@ tbody {
 							<td><?php echo $ver[42] ?></td>
 							<td><?php echo $ver[39] ?></td>
 							<td><?php echo $ver[125] ?></td>
+							<td>
+								<?php
+									if($ver[126] == "doc76"){
+								?>
+										<button class="btn btn-success" > ✔ </button>
+								<?php
+									}else{
+								?>
+
+										<button class="btn btn-danger" > X </button>
+								<?php
+									}
+								?>
+							</td>
 							
 							<td><?php echo "
 

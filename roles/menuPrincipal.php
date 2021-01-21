@@ -384,11 +384,14 @@
 	          <li class=" estilo-color">
 	            <a href=  <?php echo ("'./bandejaEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
 	          </li>
-	          <li class=" estilo-color">
-	              <a href= <?php echo ("'../m2_plantilla/vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	           <li class=" estilo-color">
+	              <a  href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	            <li class=" estilo-color">
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
+	          <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./guardarVistaBajas.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(Bajas)</i></b></center></a>
@@ -442,7 +445,7 @@
 	          </li>
 	      </center>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'../m2_plantilla/vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	              <a  href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	           <li class=" estilo-color">
 	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
@@ -469,7 +472,7 @@
 	     
 	      </div>
     	</nav>
-		
+
 
 	<?php
 
