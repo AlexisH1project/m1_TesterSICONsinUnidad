@@ -114,6 +114,8 @@
 									    aTag.setAttribute('value',infEmpleado[i].id);
 									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
 									    miSelect2.appendChild(aTag);
+										}else{
+											$('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
 										}
 									}
 

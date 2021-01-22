@@ -69,8 +69,8 @@
 				   //                 echo "{$nombre} => {$telefono} ";
 				   //          }
 					
-		if($arr[0] != NULL OR $arr2[0] != NULL){
-			if($arr[0] != NULL){
+		if($arr[1][0] != NULL OR $arr2[1][0] != NULL){   // ponemos esa posicion de arreglo ya que en el nos damos cuenta si no se agrego algun dato mas ya que por defaul en la posicion [0][0] se agrga un 0
+			if($arr[1][0] != NULL){
 				$tamanio = count($arr);
 				for($i=0; $i<$tamanio; $i++){
 					$sqlImp  = "SELECT * FROM fomope WHERE id_movimiento = '$arr[$i]'";
@@ -252,8 +252,8 @@
                         $fila--;
                     	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:AZ".$fila);
 						$objPHPExcel->getActiveSheet()->getStyle("A8:AZ".$fila)->applyFromArray($estiloTituloColumnas);
-				}
-    if($arr2[0] != NULL){
+		}
+    if($arr2[1][0] != NULL){
     	$fila = 8;
 		$objPHPExcel->setActiveSheetIndexByName('Eventuales');
 		$tamanio2 = count($arr2);
@@ -321,7 +321,8 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BD'.$fila, $imprimirRow[55]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('BE'.$fila, $imprimirRow[56]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('BF'.$fila, $imprimirRow[57]); 
-		                $objPHPExcel->getActiveSheet()->setCellValue('BG'.$fila, $imprimirRow[58]);     
+		                $objPHPExcel->getActiveSheet()->setCellValue('BG'.$fila, $imprimirRow[58]);
+		                $objPHPExcel->getActiveSheet()->setCellValue('BH'.$fila, $imprimirRow[59]);     
 
 		                $fila++;
 					}else{
@@ -356,7 +357,7 @@
                 
 
             }else{
-                echo "<script> alert('No hay informacion de busqueda para generr reporte');</script>"; // window.location.href = '../consultaEstado.php?usuario_rol=$nombreUser'
+                echo "<script> alert('No hay informacion de busqueda para generar reporte');</script>"; // window.location.href = '../consultaEstado.php?usuario_rol=$nombreUser'
 
             }
 			

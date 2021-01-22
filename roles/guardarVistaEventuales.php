@@ -114,6 +114,8 @@
 									    aTag.setAttribute('value',infEmpleado[i].id);
 									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
 									    miSelect2.appendChild(aTag);
+										}else{
+											$('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
 										}
 									}
 
@@ -580,7 +582,27 @@
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
+								$arrayDoc = explode("_", $enviarDoc) ;
+								//actualizamos la base para poder tener el registro de los documentos
+								include "./configuracion.php";
+								$usuarioSeguir = $_GET['usuario_rol'];
 
+								 $hoy = "select CURDATE()";
+
+								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
+								 		$rowHoy = mysqli_fetch_row($resultHoy);
+								 }
+								// for($i=0; $i < count($arrayDoc)-1 ; $i++){
+									//echo "<script> alert ('$arrayDoc[$i]');</script>";
+									$nombreAsignar = $arrayDoc[$i];
+									$sqlAgregar = "UPDATE fomope_qr SET FomopeOp = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
+									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
+
+									}else{
+										echo "<script> alert ('error');</script>";
+									}
+
+								// }
 
 
 							}
