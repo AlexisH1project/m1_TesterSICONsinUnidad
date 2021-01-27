@@ -238,6 +238,7 @@ function asignarIDfecha(){
 						$banderaSI = 0;
 						$duplicado = 0;
 						$idMovDoc = -1;
+						$anio = "2020";
 						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_qr WHERE id_docqr = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
@@ -246,7 +247,7 @@ function asignarIDfecha(){
 						if($imprime == 0){
 								echo "
 												<tr>
-												<td>$rowNombreDoc2[1]</td>
+												<td>$rowNombreDoc2[1] </td>
 												";
 					    		//$contDoc++;
 
@@ -278,26 +279,32 @@ function asignarIDfecha(){
                                             	$extractQna = $data[2];
                                             	$QuitarExtencion = explode(".", $data[3]);
                                             	$extractDate = $QuitarExtencion[0];
-                                              
+                                            	$anio = substr($extractDate, 0, -10);
+                                              	
                                             }else if($conId==5){
                                             	$extractCurp = $data[0];
                                             	$extractDoc = $data[1]."_".$data[2];
                                             	$extractQna = $data[3];
                                             	$QuitarExtencion = explode(".", $data[4]);
                                             	$extractDate = $QuitarExtencion[0];
-                                              
+                                            	$anio = substr($extractDate, 0, -10);
+                                              	
                                             }else if($conId==6){
                                             	$extractCurp = $data[0];
                                             	$extractDoc = $data[1];
                                             	$extractQna = $data[2];
                                             	$extractDate = $data[3];
                                             	$idMovDoc = $data[4];
+                                            	$anio = substr($extractDate, 0, -10);
+
                                             }else if($conId==7){
                                             	$extractCurp = $data[0];
                                             	$extractDoc = $data[1]."_".$data[2];
                                             	$extractQna = $data[3];
                                             	$extractDate = $data[4];
                                             	$idMovDoc = $data[5];
+                                            	$anio = substr($extractDate, 0, -10);
+
                                             }
 									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
 									 			$duplicado++;
@@ -313,7 +320,7 @@ function asignarIDfecha(){
 						
 										 			echo "
 													<tr>
-													<td>$rowNombreDoc2[1]</td>
+													<td>$rowNombreDoc2[1] <b><i> $anio </i></b></td>
 													";
 									 			}
 									 			if($conId==2 || $conId==3){
