@@ -500,7 +500,11 @@
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
-												
+
+													$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$optionSelec', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up doc', '$idDoc[1]')";
+													$resultH = mysqli_query($conexion,$queryHistorial);	
+
+
 		//los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
 												echo "
 													<script>
@@ -508,28 +512,7 @@
 													</script >";
 												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
 
-												//imprimimos la lista de documentos que se han cargado
-												/*echo '
-													<br>	<br>		<br>
-													<center>
-													<div class="col-md-8 col-md-offset-8">
-														<ul class="list-group">';
-															for($i=0; $i<=$tamanioList-1; $i++){
-																if($arrayDoc[$i] == ""){
-																	
-																}else{
-																	echo "
-																	<li class='list-group-item'>$arrayDoc[$i]</li>
-																	";	
-																}
-															}
-												echo '
-														</ul>
-													</div>	
-													</center>
-
-												';
-												*/
+											
 													$arrayNumDoc = explode("_", $enviarDoc);		
 													$numeroDeDocs = count($arrayNumDoc);											
 										?>

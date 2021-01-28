@@ -500,7 +500,9 @@
 												
 													$arrayDoc = explode("#", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
-												
+												$queryHistorial = "INSERT INTO historial_qr (id_movimiento_qr, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$optionSelec', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up doc', '$idDoc[1]')";
+													$resultH = mysqli_query($conexion,$queryHistorial);	
+
 		//los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
 												echo "
 													<script>
