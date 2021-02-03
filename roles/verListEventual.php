@@ -256,6 +256,8 @@ function asignarIDfecha(){
 						<?php	
 							
 										foreach($datosPDF as $file){	
+											$anio = "2020";
+
 											$data = explode("_",$file);
 											$conId = count($data);
 										    $data2 = explode(".",$file);

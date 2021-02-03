@@ -242,6 +242,7 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('AX'.$fila, $imprimirRow[120]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('AY'.$fila, $imprimirRow[125]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('AZ'.$fila, $imprimirRow[126]); 
+		                $objPHPExcel->getActiveSheet()->setCellValue('BA'.$fila, $imprimirRow[127]); 
 
 		                $fila++;
 					}else{
@@ -250,8 +251,8 @@
 				}    
    
                         $fila--;
-                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:AZ".$fila);
-						$objPHPExcel->getActiveSheet()->getStyle("A8:AZ".$fila)->applyFromArray($estiloTituloColumnas);
+                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BA".$fila);
+						$objPHPExcel->getActiveSheet()->getStyle("A8:BA".$fila)->applyFromArray($estiloTituloColumnas);
 		}
     if($arr2[1][0] != NULL){
     	$fila = 8;
@@ -323,6 +324,7 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BF'.$fila, $imprimirRow[57]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('BG'.$fila, $imprimirRow[58]);
 		                $objPHPExcel->getActiveSheet()->setCellValue('BH'.$fila, $imprimirRow[59]);     
+		                $objPHPExcel->getActiveSheet()->setCellValue('BI'.$fila, $imprimirRow[61]);     
 
 		                $fila++;
 					}else{
@@ -331,8 +333,8 @@
 				}    
    
                         $fila--;
-                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:AY".$fila);
-						$objPHPExcel->getActiveSheet()->getStyle("A8:AY".$fila)->applyFromArray($estiloTituloColumnas);
+                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BI".$fila);
+						$objPHPExcel->getActiveSheet()->getStyle("A8:BI".$fila)->applyFromArray($estiloTituloColumnas);
 				}	
 
 
