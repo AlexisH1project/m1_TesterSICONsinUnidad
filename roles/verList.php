@@ -216,10 +216,91 @@
 					//$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 
 					// Arreglo con todos los nombres de los archivos
-					
 					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
+
+// *********************** hacemos el mismo ciclo para poder imprimir los arcchivos que les importa como primera vista 
+										// declaramos el arreglo en el que se encuentran los documentos que quieren ver en un principio
+					$nameFIleP = array(
+									array("Fomope Loteado y firmado","doc76"),
+									array("Oficio Sellado","doc77")
+								);
+                    // ----- hacemos el ciclo en donde recorremos las dos pocisiones del areglo bidimencional anterior
+					for ($i = 0; $i < 2 ; $i++){
+						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
+						$banderaSI = 0;
+						$duplicado = 0;
+						$imprime = 0;
+						
+						if($imprime == 0){
+								echo "
+												<tr>
+												<td>
+												";
+										echo $nameFIleP[$i][0];
+								echo "
+												</td>
+												";
+					    		//$contDoc++;
+										foreach($datosPDF as $file){	
+											$data = explode("_",$file);
+											$conId = count($data);
+										    $data2 = explode(".",$file);
+											$indice = count($data2);	
+
+											$extencion = $data2[$indice-1];
+										    // Nombre del archivo
+										    $extractRfc = $data[0];
+										    $extractDoc = $data[1];
+									 		if($ver[4] == $extractRfc && $nameFIleP[$i][1] == strtolower($extractDoc) && $data[6] == $noFomope){
+									 			$banderaMov = 1;
+									 			$duplicado++;
+									 			if($duplicado > 1){
+						
+										 					echo "
+													<tr>
+													<td>$nameFIleP[$i][0]</td>
+													";
+									 			}
+									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+												$banderaSI = 1;
+						?>	
+												<td>
+												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												</td>
+													
+												<?php
+											
+												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
+													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
+												?>
+													<td>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+													</td>
+														
+						<?php
+												/*}else{
+														echo '<script> alert("Error en la en la conexion para Eliminar"); <\script>';
+														echo "ERRRROR";
+												}*/
+												}
+												}
+										  }
+
+										   if($banderaSI == 0){
+
+								?>
+														<td>
+														<button class="btn btn-danger" > X </button>
+														</td>
+						<?php
+										}
+						}
+					}
+						echo "  <tr class='table-dark'><td class='table-dark'></td><td class='table-dark'></td>"; // imprimimos el espacio en la tabla para que se pueda separar los primeros dos elementos requeridos 
+					
+								
 // ----- promer ciclo en la carpeta documentosMov
 					for ($i = 0; $i < $rowTotal[0] ; $i++){
 						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
