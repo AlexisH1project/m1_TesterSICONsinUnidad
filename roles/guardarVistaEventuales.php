@@ -594,17 +594,16 @@
 								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								 		$rowHoy = mysqli_fetch_row($resultHoy);
 								 }
-								// for($i=0; $i < count($arrayDoc)-1 ; $i++){
-									//echo "<script> alert ('$arrayDoc[$i]');</script>";
+								for($i=0; $i < count($arrayDoc)-1 ; $i++){
 									$nombreAsignar = $arrayDoc[$i];
-									$sqlAgregar = "UPDATE fomope_qr SET FomopeOp = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
+									$sqlAgregar = "UPDATE fomope_qr SET  $arrayDoc[$i] = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 									}else{
 										echo "<script> alert ('error');</script>";
 									}
 
-								// }
+								}
 
 
 							}
