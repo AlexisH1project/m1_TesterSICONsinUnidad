@@ -242,6 +242,218 @@
 				document.getElementById("listaDoc").value = text;
 				document.getElementById("guardarDoc").value = listaEnviar;
 			}
+
+// ****************************************************** form_fomope
+					$(document).ready(function(){
+				$(document).on('keydown', '.cod2', function(){
+					var id = this.id;
+					var splitid = id.split('_');
+					var indice = splitid[1];
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_cmov.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.label);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_cmov.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										var idmov = response[0]['idmov'];
+										var cod2 = response[0]['cod2'];
+										var nomb_mov = response[0]['nomb_mov'];
+										document.getElementById('cod2_'+indice).value = cod2;
+										document.getElementById('nomb_mov_'+indice).value = nomb_mov;
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
+
+		$(document).ready(function(){
+				$(document).on('keydown', '.cod4', function(){
+					var id = this.id;
+					var splitid = id.split('_');
+					var indice = splitid[1];
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_cmov.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.label);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_cmov.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										var idmov = response[0]['idmov'];
+										var cod2 = response[0]['cod4'];
+										var nomb_mov = response[0]['nomb_mov'];
+										document.getElementById('cod4_'+indice).value = cod2;
+										document.getElementById('nomb_mov_'+indice).value = nomb_mov;
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
+
+			$(document).ready(function(){
+				$(document).on('keydown', '.cod3', function(){
+					var id = this.id;
+					var splitid = id.split('_');
+					var indice = splitid[1];
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_estado.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.label);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_estado.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										var idmov = response[0]['idEstado'];
+										var cod3 = response[0]['cod3'];
+										var nomb_edo = response[0]['nomb_edo'];
+										document.getElementById('cod3_'+indice).value = cod3;
+										document.getElementById('nomb_edo_'+indice).value = nomb_edo;
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+			
+			
+			function verDoc(nombre,laExtencion){
+				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+
+			}
+
+			function eliminarReq(){
+					 $('#MotivoRechazo').removeAttr("required");
+					  $('#idProfesional').removeAttr("required");
+			  		$("#MotivoRechazoCap").removeAttr("required");
+
+
+			}
+			function eliminarReq2(){
+					 $('#MotivoRechazo').removeAttr("required");
+			  		$("#MotivoRechazoCap").removeAttr("required");
+
+
+			}
+
+			function rechazarPorCapI(){
+					$("#ofunid").removeAttr("required");
+				    $("#fechaofi").removeAttr("required");
+				    $("#fechareci").removeAttr("required");
+				    $("#codigo").removeAttr("required");
+				     $("#cod2_1").removeAttr("required");
+				     $("#del2").removeAttr("required");
+				    //var g = $("#MotivoRechazo").val();
+			  		$("#MotivoRechazo").removeAttr("required");
+				    //var h = $("#TipoEntregaArchivo").val();
+					 $('#idProfesional').removeAttr("required");
+
+					$('#capturaF').hide();
+			      		$('#rechazo').hide();
+			      		$('#genera').hide();
+			      		$('#rechazoInicial').hide();
+				      	var btn_2 = document.getElementById('bandejaEntrada');
+			            	btn_2.style.display = 'inline';
+			}
+
+
+			function verBoton(){
+					var a = $("#ofunid").val();
+				    var b = $("#fechaofi").val();
+				    var c = $("#fechareci").val();
+				    var d = $("#codigo").val();
+				    var e = $("#cod2_1").val();
+				    var f = $("#del2").val();
+				    //$("#MotivoRechazo").val();
+			  
+				    //var h = $("#TipoEntregaArchivo").val();
+					 $('#idProfesional').removeAttr("required");
+				    
+				    if (a=="" || b=="" || c==""|| d==""|| e==""|| f=="") {
+				      		return false;
+				      }else{
+			  			$("#MotivoRechazoCap").removeAttr("required");
+				      	$('#capturaF').hide();
+			      		$('#rechazo').hide();
+			      		$('#genera').hide();
+				      	var btn_2 = document.getElementById('bandejaEntrada');
+			            	btn_2.style.display = 'inline';
+			       	  }
+			}
+
+			function nobackbutton(){
+			   window.location.hash="no-back-button";
+			   window.location.hash="Again-No-back-button" //chrome
+			   window.onhashchange=function(){window.location.hash="no-back-button";}
+			}
 	
 		</script>
 <script src="js/funciones.js"></script>
@@ -260,32 +472,21 @@
 						$listaMostrar = "";
 					}
 
-			
-
 			$sqlNombre = "SELECT nombrePersonal FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
-
+			
 			$consultaR = " SELECT * FROM usuarios WHERE usuario = '$usuarioSeguir'";
-
 		        if($resultado3 = mysqli_query($conexion,$consultaR)){
 	        		$row = mysqli_fetch_assoc($resultado3);
 					$id_rol1 = $row['id_rol'];
+				}
+			$sql = "SELECT id_mov, cod_mov, tipo_mov, area_mov FROM ct_movimientosrh";
+			$sql2 = "SELECT rfc, apellido_1,apellido_2, nombre, unidad, justificacionRechazo FROM fomope WHERE id_movimiento = '$noFomope'";
+			if($result = mysqli_query($conexion,$sql2)){
+				$row = mysqli_fetch_row($result);
 
-					
 			}
-
-			
-//------ este codigo comentado lo identifique y no tiene que ir , no encontre su funcionalidad
-
-		/*	$sql = "SELECT * FROM fomope WHERE id_movimiento = '$idMovSeg'";
-			if($result = mysqli_query($conexion,$sql)){
-				$ver = mysqli_fetch_row($result);
-			}else{
-					echo '<script type="text/javascript">alert("Error en la conexion");</script>';
-					echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
-								
-			}*/
 
 			$valor = "";
 			$hoy = "select CURDATE()";
@@ -294,7 +495,8 @@
 
 			 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 			 		$rowF = mysqli_fetch_row($resultHoy);  // cambiamos formato de hora 
-			 		$fechaSistema = date("d-m-Y", strtotime($rowF[0])); //"05-04-2020";;
+			 		$fechaSistema = date("d-m-Y", strtotime($rowF[0])); //"14-04-2020";
+			 		$elDia = explode("-", $fechaSistema);
 			 		$rowHora = mysqli_fetch_row($resultTime);
 
 					$diaActual=date("w", strtotime($fechaSistema));
@@ -306,11 +508,9 @@
 			 if($resQna = mysqli_query($conexion,$sqlQna)){
 			 	$rowQna = mysqli_fetch_row($resQna);
 			 	//echo "OOOOOLLAA";
-			 	$fehaI = date("d-m-Y", strtotime($rowQna[2])); 
+			 	$fehaI = date("d-m-Y", strtotime($rowQna[4])); 
 			 	$fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 			 	$newQna = $rowQna[0];
-
-
 			 }else{
 			 
 			 	echo "error sql";
@@ -332,8 +532,6 @@
 			 		}
 
 			 }else{
-
-				 
 
 
 ?>
@@ -555,47 +753,8 @@
 						<input  type="date" class="form-control border border-dark" id="al3" name="al3" value="<?php if(isset($_POST["al3"])){ echo $_POST["al3"];} ?>" placeholder="al" requiered> <!--required-->
 						</div>
 					</div>
-				  		<div class="form-group col-md-12" >	
-					  		<label class="plantilla-label estilo-colorg" for="TipoEntregaArchivo">TIPO DE ENTREGA: </label>
-						</div>
-
-				  		<div class="form-group col-md-12" >
-				  			<input id="TipoEntregaArchivo" type="radio" name="TipoEntregaArchivo" value="Ninguno" style="display:none" checked >
-							<label class="radio-inline"><input id="TipoEntregaArchivo" type="radio" name="TipoEntregaArchivo" value="Fisico" required>Fisico</label>
-							<label class="radio-inline"><input id="TipoEntregaArchivo" type="radio" name="TipoEntregaArchivo" value="Digital" required >Digital</label>
-							<label class="radio-inline"><input id="TipoEntregaArchivo" type="radio" name="TipoEntregaArchivo" value="Ambos" required >Ambos</label>
-				  		</div> 
 				</div>
 					<div class="col-md-9">
-
-					 <div class="form-row">
-							 	<div class="col">
-
-												<select class="form-control border border-dark mdb-select md-form" name="documentoSelct">
-											
-													<?php
-													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
-													       die("Error cargando el conjunto de caracteres utf8");
-													}
-
-													$consulta = "SELECT * FROM m1ct_documentos";
-													$resultado = mysqli_query($conexion , $consulta);
-													$contador=0;
-
-													while($listDoc = mysqli_fetch_assoc($resultado)){ $contador++;?>
-													<option value="<?php echo $listDoc["nombre_documento"]; ?>"><?php echo $listDoc["nombre_documento"]; ?></option>
-													<?php }?>          
-													</select>
-									
-
-						  		<!-- <div class="md-form md-0">
-									<input type="text" class="form-control unexp border border-dark" id="archA" name="archA" placeholder="Ingresa el nombre del archivo" maxlength="35" required >
-								</div> -->
-				
-						</div>		
-					</div>		
-				</div>
-
 						<div class="form-row">
 						<div class="modal fade" id="exampleModalR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 							  <div class="modal-dialog" role="document">
@@ -725,7 +884,7 @@
 					</div>
 					<div class="form-row">
 					
-
+<!-- 
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="fecharecspc">*Fecha de recibido en SPC:</label>
 						<input  type="date" class="form-control border border-dark" id="fecharecspc" name="fecharecspc" placeholder="Fecha de recibido en SPC"  >
@@ -750,7 +909,7 @@
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="foliospc">*Folio SPC:</label>
 						<input  type="text" class="form-control colon border border-dark" id="foliospc" name="foliospc" placeholder="Ej. 2020" value="" maxlength="5"  >
-					</div>
+					</div> -->
 						<div class="form-group col-md-12">
 								<button type="button" class="btn btn-primary" name="capturaF" id="capturaF" data-toggle="modal" data-target="#exampleModal1">Capturar Fomope </button>
 							
@@ -771,7 +930,33 @@
 
 						</div>
 					</div>
+									 <div class="form-row">
+							 	<div class="col">
 
+												<select class="form-control border border-dark mdb-select md-form" name="documentoSelct">
+											
+													<?php
+													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+													       die("Error cargando el conjunto de caracteres utf8");
+													}
+
+													$consulta = "SELECT * FROM m1ct_documentos";
+													$resultado = mysqli_query($conexion , $consulta);
+													$contador=0;
+
+													while($listDoc = mysqli_fetch_assoc($resultado)){ $contador++;?>
+													<option value="<?php echo $listDoc["nombre_documento"]; ?>"><?php echo $listDoc["nombre_documento"]; ?></option>
+													<?php }?>          
+													</select>
+									
+
+						  		<!-- <div class="md-form md-0">
+									<input type="text" class="form-control unexp border border-dark" id="archA" name="archA" placeholder="Ingresa el nombre del archivo" maxlength="35" required >
+								</div> -->
+				
+						</div>		
+					</div>		
+				</div>
 						<br>
 							
 								<!-- Modal -->
@@ -925,6 +1110,43 @@
 									$finalizalab = $_POST['al3'];
 									$leerMov = $_POST['id_env'];
 
+									// $usuarioSegimiento = $_POST['usuarioSeguir'];
+									// $noFomope = $_POST['noFomope'];
+									// $usuario_rol = $_POST['id_rol'];
+									// $usuario = $_POST['usuarioSeguir'];
+									$elBoton = $_POST['accionB'];
+
+									$idFomope = $_POST['noFomope'];
+									$elRol = $_POST['id_rol'];
+									$usuarioEdito = $_POST['usuarioSeguir'];
+
+									
+									$qna_Add =$_POST['qnaOption'];
+									$anio_Add =$_POST['anio'];
+									$of_unidad =$_POST['ofunid'];
+									$fecha_oficio =$_POST['fechaofi'];
+									$fecha_recibido =$_POST['fechareci'];
+									$codigo =$_POST['codigo'];
+									$no_puesto =$_POST['num_pues'];
+									$clave_presupuestaria =$_POST['clavepres'];
+									
+									//$codigo_movimiento =$_POST['cod2_1'];
+									//$concepto =$_POST['concept'];//descripción del movimiento		 
+									$movimientoYcodigo = $_POST['cod2_1'];
+									$nombreCompletoMov = explode("_", $_POST['cod2_1']);
+									$codigo_movimiento = $nombreCompletoMov[0];
+									$concepto = $nombreCompletoMov[1];
+									$del_1 =$_POST['del2'];
+									$al_1 =$_POST['al3'];
+									$estado_en =$_POST['cod3_1'];
+									$consecutivo_maestro_impuestos =$_POST['consema'];
+									$observaciones =$_POST['observ'];
+									// $fecha_recibido_spc =$_POST['fecharecspc'];
+									// $fecha_envio_spc =$_POST['fechenvvb'];
+									// $fecha_recibo_dspo =$_POST['fechenvvb'];
+									// $folio_spc = $_POST['foliospc'];
+
+
 									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
 
 
@@ -942,6 +1164,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
+                                   		$newsql = "INSERT INTO fomope (unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$qna_Add','$anio_Add','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$analista','$row[0] - $usuarioEdito')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
