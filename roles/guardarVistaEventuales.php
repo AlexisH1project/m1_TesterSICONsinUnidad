@@ -62,6 +62,7 @@
 				    miSelect2.appendChild(aTag);
 			}
 
+			
 			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
 					var id = this.id;
@@ -95,6 +96,11 @@
 									
 								},
 								success: function(data){
+									const select = document.querySelector("#movFecha");
+									for (let i = select.options.length; i >= 0; i--) {
+										    	select.remove(i);
+											}
+									console.log(data);
 									var infEmpleado = eval(data);
 									console.log(data);
 									console.log(infEmpleado[0].apellido1);
@@ -108,14 +114,16 @@
 								  for(var i=1; i < infEmpleado.length; i++){ 
 								        console.log(infEmpleado[i]);
 									    if(infEmpleado[i].id != null){
-
-								        var miSelect2 = document.getElementById("movFecha");
-									    var aTag = document.createElement('option');
-									    aTag.setAttribute('value',infEmpleado[i].id);
-									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
-									    miSelect2.appendChild(aTag);
+									        var miSelect2 = document.getElementById("movFecha");
+										    var aTag = document.createElement('option');
+										    aTag.setAttribute('value',infEmpleado[i].id);
+										    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
+										    miSelect2.appendChild(aTag);
+										    console.log(select.options.length);
 										}else{
-											$('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
+											for (let i = select.options.length; i >= 0; i--) {
+										    	select.remove(i);
+											}
 										}
 									}
 

@@ -95,6 +95,10 @@
 									
 								},
 								success: function(data){
+										const select = document.querySelector("#movFecha");
+										for (let i = select.options.length; i >= 0; i--) {
+										    	select.remove(i);
+											}
 									var infEmpleado = eval(data);
 									console.log(data);
 									console.log(infEmpleado[0].apellido1);
@@ -115,7 +119,10 @@
 									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
 									    miSelect2.appendChild(aTag);
 										}else{
-											$('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
+											// $('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
+											for (let i = select.options.length; i >= 0; i--) {
+										    	select.remove(i);
+											}
 										}
 									}
 
