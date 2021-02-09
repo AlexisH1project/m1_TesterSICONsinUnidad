@@ -142,6 +142,13 @@ function agregaform(datos){
 
 }
 
+function bajaf(datos){
+
+	var d=datos;
+	
+
+	  window.location.href = 'capturaBaja.php?usuario_rol='+d;
+}
 
 function agregaf(datos){
 
