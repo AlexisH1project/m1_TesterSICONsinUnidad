@@ -196,7 +196,7 @@
 					 }
 				     var tamCURP = c.length;
 
-				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| $('input:radio[name=TipoEntregaArchivo]:checked').val() =="Ninguno" || i=="" ) {
+				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| i=="" ) {
 				        alert("Falta completar campo");		
 				        return false;
 				      } else 
@@ -205,7 +205,6 @@
 		
 			function eliminarRequier(){
 					 $('#comentarioR').removeAttr("required");
-
 			}
 
 			function rechazarDoc(){
@@ -482,11 +481,6 @@
 					$id_rol1 = $row['id_rol'];
 				}
 			$sql = "SELECT id_mov, cod_mov, tipo_mov, area_mov FROM ct_movimientosrh";
-			$sql2 = "SELECT rfc, apellido_1,apellido_2, nombre, unidad, justificacionRechazo FROM fomope WHERE id_movimiento = '$noFomope'";
-			if($result = mysqli_query($conexion,$sql2)){
-				$row = mysqli_fetch_row($result);
-
-			}
 
 			$valor = "";
 			$hoy = "select CURDATE()";
@@ -756,25 +750,7 @@
 				</div>
 					<div class="col-md-9">
 						<div class="form-row">
-						<div class="modal fade" id="exampleModalR" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Motivo de rechazo</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control z-depth-1" id="comentarioR" name="comentarioR" rows="3" placeholder="Escribe el motivo del rechazo..."></textarea>
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        <input type="submit" class="btn btn-primary" value="Rechazar" name="botonAccion">
-							      </div>
-							    </div>
-							  </div>
-							</div>
+					
 							
 							<div class="form-group col-md-2">
 								<label  class="plantilla-label" for="laQna">*QNA: </label>
@@ -805,7 +781,7 @@
 				<div class="form-row">
 						<div class="form-group col-md-5">
 								<label class="plantilla-label" for="ofunid">*Oficio unidad:</label>
-								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="ofunid" name="ofunid" placeholder="Ej. OAG-CA-3735-2020" value="" maxlength="80" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+								<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="ofunid" name="ofunid" placeholder="Ej. OAG-CA-3735-2020" value="" maxlength="80" onkeyup="javascript:this.value=this.value.toUpperCase();" >
 							</div>
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="fechaofi">*Fecha de oficio:</label>
@@ -816,13 +792,6 @@
 				</div>
 
 						<div class="form-row">
-					<div class="form-group col-md-5">
-						<label class="plantilla-label" for="fechareci">*Fecha de recibido:</label>
-						<input type="date" class="form-control border border-dark" id="fechareci" name="fechareci" placeholder="Fecha de recibido" required>
-						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
-				        </small>  
-
-					</div>
 					<div class="form-group col-md-4">
 						<label class="plantilla-label" for="codigo">*Código:</label><div class="container">
 							 <input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="codigo" name="codigo" placeholder="Ej. 123" value="" maxlength="9" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
@@ -882,55 +851,7 @@
 						<label class="plantilla-label" for="observ">*Observaciones:</label>
 						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="observ" name="observ" placeholder="Ej. 11-01-19 LA DIRECTORA GENERAL INDICA QUE SE REQUIERE OFICIO DE AUTORIZACION CON JUSTIFICACION PARA OCUPACION." value="" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" >
 					</div>
-					<div class="form-row">
-					
-<!-- 
-					<div class="form-group col-md-6">
-						<label class="plantilla-label" for="fecharecspc">*Fecha de recibido en SPC:</label>
-						<input  type="date" class="form-control border border-dark" id="fecharecspc" name="fecharecspc" placeholder="Fecha de recibido en SPC"  >
-						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
-				        </small>  
-					
-					</div>
-
-					<div class="form-group col-md-6">
-						<label class="plantilla-label" for="fechenvvb">*Fecha de envio a VoBo SPC:</label>
-						<input type="date" class="form-control border border-dark" id="fechenvvb" name="fechenvvb" placeholder="Fecha de envio a VoBo SPC"  >
-						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
-				        </small>  
-					</div>
-					<div class="form-group col-md-6">
-						<label class="plantilla-label" for="fecharecdspo">*Fecha de recibo DSPO:</label>
-						<input  type="date" class="form-control border border-dark" id="fecharecdspo" name="fecharecdspo" placeholder="Fecha de envio a VoBo SPC" >
-						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
-				        </small>  
-					</div>
-					
-					<div class="form-group col-md-6">
-						<label class="plantilla-label" for="foliospc">*Folio SPC:</label>
-						<input  type="text" class="form-control colon border border-dark" id="foliospc" name="foliospc" placeholder="Ej. 2020" value="" maxlength="5"  >
-					</div> -->
-						<div class="form-group col-md-12">
-								<button type="button" class="btn btn-primary" name="capturaF" id="capturaF" data-toggle="modal" data-target="#exampleModal1">Capturar Fomope </button>
-							
-							<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
-							 
-								 
-
-						</div>
-
-						<div class="form-group col-md-60">
-							<button type="button" name="rechazo" id="rechazo" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalRT" >Rechazo por validacion </button>
-
-
-						</div>
-						<div class="form-group col-md-10">
-							<button type="button" name="genera" id="genera" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalPC" >Reporte profesional de Carrera</button>
-
-
-						</div>
-					</div>
-									 <div class="form-row">
+				 <div class="form-row">
 							 	<div class="col">
 
 												<select class="form-control border border-dark mdb-select md-form" name="documentoSelct">
@@ -958,106 +879,7 @@
 					</div>		
 				</div>
 						<br>
-							
-								<!-- Modal -->
-								<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-								  <div class="modal-dialog" role="document">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h5 class="modal-title" id="exampleModalLabel1">Captura Fomope</h5>
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								          <span aria-hidden="true">&times;</span>
-								        </button>
-								      </div>
-								      <div class="modal-body">
-								        ¿Está seguro que quiere capturar la información del FOMOPE? 
-								      	NOTA: Las fechas no deben ser mayores a la actual 
-								      </div>
-								      <div class="modal-footer">
-								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-										<input type="submit" class="btn btn-primary" onclick="eliminarReq()" name="accionB" value="Capturar">
 
-								       	<!-- <button type="submit" class="btn btn-primary">Capturar</button> -->
-								       	
-								      </div>
-								    </div>
-								  </div>
-								</div>
-							
-							<div class="modal fade" id="RechInicial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Rechazo por captura</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control border border-dark" id="MotivoRechazoCap" rows = "4" name="comentarioR2" placeholder="Redactar el volante de rechazo" required></textarea>
-							       
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="rechI" onclick="rechazarPorCapI()" name="accionB"  value="Aceptar rechazo por captura">
-							      </div>
-							     
-							    </div>
-							  </div>
-							</div>
-
-				</div>
-
-
-		
-
-						<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Volante de rechazo</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control border border-dark" id="MotivoRechazo" rows = "4" name="comentarioR" placeholder="Redactar el volante de rechazo" required></textarea>
-							       
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="descargar" onclick="verBoton()" name="accionB"  value="descargar">
-							      </div>
-							     
-							    </div>
-							  </div>
-							</div>
-
-				</div>
-
-
-						<div class="modal fade" id="exampleModalPC" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel2">Reporte Profesional de carrera</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							         <textarea class="form-control border border-dark" id="idProfesional" rows = "4" name="idProfesional" placeholder="id Profesional de carrera" required></textarea>
-							       
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="generar" onclick="eliminarReq2()" name="accionB"  value="generar">
-							      </div>
-							     
-							    </div>
-							  </div>
-							</div>
-
-				</div>
-
-				<br>
 				<div class="col-md-8 col-md-offset-8">
 						 <div class="form-row">
 
@@ -1096,20 +918,26 @@
 												}
 						$banderaBoton=0; //admin2
 							if(isset($_POST['guardarAdj'])){
-								    $unidad= $_POST['unexp_1'];
-									$nombre = strtoupper($_POST['nombre'] );
-									$elRfc =  strtoupper($_POST['rfcL_1']);
-									$elCurp = strtoupper($_POST['curp']);
-									$elApellido1 = strtoupper ($_POST['apellido1']);
-									$elApellido2 = strtoupper ($_POST['apellido2']);
+
+									$usuarioEdito = $_POST['userName'];
+									$unidadAdd = $_POST['unexp_1'];
+									$rfcAdd = strtoupper($_POST['rfcL_1']);
+									$curpAdd = strtoupper($_POST['curp']);	
+									$apellido1Add = strtoupper($_POST['apellido1']);	
+									$apellido2Add = strtoupper($_POST['apellido2']);	
+									$nombreAdd = strtoupper($_POST['nombre']);
+									$fechaIngresoAdd = $_POST['fechaIngreso'];
+									$radioAdd_rechazar = $_POST['botonAccion'];
+									$motivoR = $_POST['comentarioR'];
+									$fechaDel = $_POST['del2'];
+									$fechaAl = $_POST['al3'];
+									$leerMov = $_POST['id_env'];
+
+									$laQna = $_POST['qnaActual'];
+
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
-									$lafechaIng = $_POST['fechaIngreso'];
-									$iniciolab = $_POST['del2'];
-									$finalizalab = $_POST['al3'];
-									$leerMov = $_POST['id_env'];
-
 									// $usuarioSegimiento = $_POST['usuarioSeguir'];
 									// $noFomope = $_POST['noFomope'];
 									// $usuario_rol = $_POST['id_rol'];
@@ -1118,14 +946,11 @@
 
 									$idFomope = $_POST['noFomope'];
 									$elRol = $_POST['id_rol'];
-									$usuarioEdito = $_POST['usuarioSeguir'];
-
 									
 									$qna_Add =$_POST['qnaOption'];
 									$anio_Add =$_POST['anio'];
 									$of_unidad =$_POST['ofunid'];
 									$fecha_oficio =$_POST['fechaofi'];
-									$fecha_recibido =$_POST['fechareci'];
 									$codigo =$_POST['codigo'];
 									$no_puesto =$_POST['num_pues'];
 									$clave_presupuestaria =$_POST['clavepres'];
@@ -1136,8 +961,7 @@
 									$nombreCompletoMov = explode("_", $_POST['cod2_1']);
 									$codigo_movimiento = $nombreCompletoMov[0];
 									$concepto = $nombreCompletoMov[1];
-									$del_1 =$_POST['del2'];
-									$al_1 =$_POST['al3'];
+								
 									$estado_en =$_POST['cod3_1'];
 									$consecutivo_maestro_impuestos =$_POST['consema'];
 									$observaciones =$_POST['observ'];
@@ -1147,7 +971,7 @@
 									// $folio_spc = $_POST['foliospc'];
 
 
-									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
+									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidadAdd' AND rfc = '$rfcAdd' AND apellido_1 = '$apellido1Add' AND apellido_2 = '$apellido2Add' AND nombre = '$nombreAdd' AND curp ='$curpAdd' AND fechaIngreso = '$fechaIngresoAdd' AND vigenciaDel = '$fechaDel' AND vigenciaAl = '$fechaAl' ORDER BY id_movimiento DESC";
 
 
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1164,7 +988,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$analista','$row[0] - $usuarioEdito')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','','$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','','')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1176,7 +1000,6 @@
                                    		}		
                                    	}else{
                                    		$sql1 = "UPDATE fomope SET usuario_name='$usuario',color_estado='$colorAenviar',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = '$estadoFecha' WHERE id_movimiento = '$noFomope' " ;
-
                                    	}
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
@@ -1215,8 +1038,8 @@
 											    
 											    // Extensión del archivo 
 
-											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
-											      		unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
+											    if($rfcAdd == $extractRfc AND $idDoc[1] == $nameAdj){
+											      		unlink($dir_subida.$rfcAdd."_".$nameAdj."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd.".".$extencion);
 											        	break;
 											    }
 											}
@@ -1229,7 +1052,7 @@
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($rfcAdd."_".$idDoc[1]."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
@@ -1406,33 +1229,7 @@
 							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
 						</div>
 						
-					<div class="form-group col-md-6">
-
-						<button type="button" id="rechazarT" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal1" data-whatever="@getbootstrap">Rechazar</button>
-
-						<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="botonAccion" style="display: none;" onclick="rechazarDoc()" value="bandeja principal">
-						
-					</div>
-							<div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							  <div class="modal-dialog" role="document">
-							    <div class="modal-content">
-							      <div class="modal-header">
-							        <h5 class="modal-title" id="exampleModalLabel">Motivo de rechazo</h5>
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-							          <span aria-hidden="true">&times;</span>
-							        </button>
-							      </div>
-							      <div class="modal-body">
-							          <textarea class="form-control border border-dark" id="comentarioR" name="comentarioR" rows="3" placeholder="Escribe el motivo del rechazo..." required ></textarea> 
-							      </div>
-							      <div class="modal-footer">
-							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        <input type="submit" class="btn btn-primary" onclick="rechazarDoc();" value="Rechazar" name="botonAccion">
-							      </div>
-							    </div>
-							  </div>
-							</div>
-
+		
 			
 				</div>
 
