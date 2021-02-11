@@ -785,7 +785,7 @@
 							</div>
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="fechaofi">*Fecha de oficio:</label>
-						<input type="date" class="form-control border border-dark" id="fechaofi" name="fechaofi" placeholder="Fecha Oficio" required>
+						<input type="date" class="form-control border border-dark" id="fechaofi" name="fechaofi" placeholder="Fecha Oficio">
 						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
 				        </small>  
 					</div>
@@ -988,7 +988,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','','$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','','')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','','')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1158,80 +1158,6 @@
 <!-- ***************************************************************************************** -->	
  				</div>	
 				<br>
-
-<br> <br> 
-					
-				  		<!-- <div class="form-group col-md-12">
-								<div class="col text-center">
-								  	<input type="submit" class="btn btn-primary" name="botonAccion" value="Agregar Informacion">
-								</div>
-						</div> -->
-							<br>
-							<button id="enviarT" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-											 Enviar
-											</button>
-							  			<br>
-
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de enviar esta información?
-											      </div>
-									<center>
-						      <div class="form-group col-md-8">
-									<div class="box" >
-
-										<label  class="plantilla-label estilo-colorg" for="laQna">¿A quien será turnado?</label>
-												 
-												<select class="form-control border border-dark custom-select" name="usuar">
-													
-													<?php
-													if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
-													       die("Error cargando el conjunto de caracteres utf8");
-													}
-
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
-													$resultado = mysqli_query($conexion , $consulta);
-													$contador=0;
-
-													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
-													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
-													<?php 
-													$analista = $misdatos["nombrePersonal"];
-
-												}?>          
-													</select>
-										</div>
-										 <br>  
-
-								</div>
-										</center>
-											      <div class="modal-footer">
-
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<input type="button" onclick="enviarDatos();" class="btn btn-primary" value="Aceptar" name="botonAccion">
-											      </div>
-											    </div>
-											  </div>
-											</div>
-
-
-							<br>
-						<div class="form-row">
-							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
-						</div>
-						
-		
-			
-				</div>
 
 			</form>
 
