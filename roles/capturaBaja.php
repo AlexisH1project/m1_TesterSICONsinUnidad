@@ -204,7 +204,21 @@
 		 }
 		
 			function eliminarRequier(){
-					 $('#comentarioR').removeAttr("required");
+					$('#comentarioR').removeAttr("required");
+					var miSelect2 = document.getElementById("qnaOption");
+					// console.log(miSelect2);
+					 var x = document.getElementById("qnaOption").selectedIndex;
+					  var y = document.getElementById("qnaOption").options;
+					//   alert("Index: " + y[x].index + " is " + y[x].text);
+				    var aTag = document.createElement('option');
+				    aTag.setAttribute('value', y[x].text);
+				    aTag.innerHTML = y[x].text;
+				const select = document.querySelector("#qnaOption");
+				for (let i = select.options.length; i >= 0; i--) {
+										    	select.remove(i);
+				}
+				select.appendChild(aTag);
+
 			}
 
 			function rechazarDoc(){
@@ -781,11 +795,11 @@
 				<div class="form-row">
 						<div class="form-group col-md-5">
 								<label class="plantilla-label" for="ofunid">*Oficio unidad:</label>
-								<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="ofunid" name="ofunid" placeholder="Ej. OAG-CA-3735-2020" value="" maxlength="80" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+								<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="ofunid" name="ofunid" placeholder="Ej. OAG-CA-3735-2020" value="<?php if(isset($_POST["ofunid"])){ echo $_POST["ofunid"]; } ?>" maxlength="80" onkeyup="javascript:this.value=this.value.toUpperCase();" >
 							</div>
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="fechaofi">*Fecha de oficio:</label>
-						<input type="date" class="form-control border border-dark" id="fechaofi" name="fechaofi" placeholder="Fecha Oficio">
+						<input type="date" class="form-control border border-dark" id="fechaofi" name="fechaofi" placeholder="Fecha Oficio" value="<?php if(isset($_POST["fechaofi"])){ echo $_POST["fechaofi"]; } ?>">
 						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
 				        </small>  
 					</div>
@@ -794,45 +808,27 @@
 						<div class="form-row">
 					<div class="form-group col-md-4">
 						<label class="plantilla-label" for="codigo">*Código:</label><div class="container">
-							 <input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="codigo" name="codigo" placeholder="Ej. 123" value="" maxlength="9" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+							 <input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="codigo" name="codigo" placeholder="Ej. 123" value="<?php if(isset($_POST["codigo"])){echo $_POST["codigo"];} ?>" maxlength="9" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
 						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
 				        </small>  
 							</div>
 					</div>
 					<div class="form-group col-md-2">
 						<label class="plantilla-label" for="NO">No. de puesto:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="num_pues" name="num_pues" placeholder="Ej. 0001" value="" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();">
+						<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="num_pues" name="num_pues" placeholder="Ej. 0001" value="<?php if(isset($_POST["num_pues"])){ echo $_POST["num_pues"];} ?>" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();">
 					</div>
 				</div>
 
 				<div class="form-row">
 					<div class="form-group col-md-4">
 						<label class="plantilla-label" for="NO">Clave presupuestaria:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="clavepres" name="clavepres" placeholder="Ej. 0001" value="" maxlength="35" onkeyup="javascript:this.value=this.value.toUpperCase();">
+						<input onkeypress="return pulsar(event)" type="text" class="form-control border border-dark" id="clavepres" name="clavepres" placeholder="Ej. 0001" value=" <?php if(isset($_POST["clavepres"])){echo $_POST["clavepres"];} ?>" maxlength="35" onkeyup="javascript:this.value=this.value.toUpperCase();">
 					</div>
 					<div class="form-group col-md-8">
 						<label class="plantilla-label" for="codmov">*Código de movimiento:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control cod2 border border-dark" id="cod2_1" name="cod2_1" placeholder="Ej. 4550" value="" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+						<input onkeypress="return pulsar(event)" type="text" class="form-control cod2 border border-dark" id="cod2_1" name="cod2_1" placeholder="Ej. 4550" value="<?php if(isset($_POST["cod2_1"])){ echo $_POST["cod2_1"]; } ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
 					</div>
 				</div>
-
-						<div class="form-row">
-					<div class="form-group col-md-5">
-							<div class="text-center">
-								<label class="plantilla-label" for="del2">*Del:</label>
-							</div>
-							<input type="date" class="form-control border border-dark" id="del2" name="del2" placeholder="Del"required>
-							<small name= "alertVigencia" id= "alertVigencia" class="text-danger">
-				        	</small> 
-						</div>
-						<div class="form-group col-md-5">
-							<div class="text-center">
-								<label class="plantilla-label" for="al3">al:</label>
-							</div>
-						<input  type="date" class="form-control border border-dark" id="al3" name="al3" placeholder="al"> <!--required-->
-						</div>
-					</div>
-
 					<div class="form-row">
 						<div class="form-group col-mt-8">
 						<label class="plantilla-label" for="estad">*Estado:</label>
@@ -841,7 +837,7 @@
 
 					<div class="form-group col-mt-8">
 						<label class="plantilla-label" for="consema">*Consecutivo maestro de puestos:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="consema" name="consema" placeholder="Ej. 170" value="" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="consema" name="consema" placeholder="Ej. 170" value="<?php if(isset($_POST["consema"])){echo $_POST["consema"];} ?>" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();" >
 					</div>
 					<div class="col-md-4">
 					</div>
@@ -849,7 +845,7 @@
 
 					<div class="form-group col-md-6">
 						<label class="plantilla-label" for="observ">*Observaciones:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="observ" name="observ" placeholder="Ej. 11-01-19 LA DIRECTORA GENERAL INDICA QUE SE REQUIERE OFICIO DE AUTORIZACION CON JUSTIFICACION PARA OCUPACION." value="" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="observ" name="observ" placeholder="Ej. 11-01-19 LA DIRECTORA GENERAL INDICA QUE SE REQUIERE OFICIO DE AUTORIZACION CON JUSTIFICACION PARA OCUPACION." value="<?php if(isset($_POST["observ"])){ echo $_POST["observ"]; } ?>" maxlength="150" onkeyup="javascript:this.value=this.value.toUpperCase();" >
 					</div>
 				 <div class="form-row">
 							 	<div class="col">
@@ -969,7 +965,16 @@
 									// $fecha_envio_spc =$_POST['fechenvvb'];
 									// $fecha_recibo_dspo =$_POST['fechenvvb'];
 									// $folio_spc = $_POST['foliospc'];
+										//----------------Sacamos la Hora 
+									$hoy = "select CURDATE()";
+									$tiempo ="select curTime()";
 
+										 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+										 		$row = mysqli_fetch_row($resultHoy);
+										 		$row2 = mysqli_fetch_row($resultTime);
+										 }
+										 $hora = str_replace ( ":", '',$row2[0] ); 
+										 $fecha = str_replace ( "-", '',$row[0] ); 
 
 									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidadAdd' AND rfc = '$rfcAdd' AND apellido_1 = '$apellido1Add' AND apellido_2 = '$apellido2Add' AND nombre = '$nombreAdd' AND curp ='$curpAdd' AND fechaIngreso = '$fechaIngresoAdd' AND vigenciaDel = '$fechaDel' AND vigenciaAl = '$fechaAl' ORDER BY id_movimiento DESC";
 
@@ -988,7 +993,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','','')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1021,27 +1026,12 @@
 												$indice = count($data2);	
 
 												$extencion = $data2[$indice-1];
-                    	//----------------Sacamos la Hora 
-											$hoy = "select CURDATE()";
-											$tiempo ="select curTime()";
-
-												 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
-												 		$row = mysqli_fetch_row($resultHoy);
-												 		$row2 = mysqli_fetch_row($resultTime);
-												 }
-												 $hora = str_replace ( ":", '',$row2[0] ); 
-												 $fecha = str_replace ( "-", '',$row[0] ); 
-
+                    
 											    // Nombre del archivo
 											    $extractRfc = $data[0];
 											     $nameAdj=strtoupper($idDoc[1]);
 											    
-											    // Extensión del archivo 
-
-											    if($rfcAdd == $extractRfc AND $idDoc[1] == $nameAdj){
-											      		unlink($dir_subida.$rfcAdd."_".$nameAdj."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd.".".$extencion);
-											        	break;
-											    }
+											    
 											}
 
 											$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
@@ -1052,7 +1042,7 @@
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($rfcAdd."_".$idDoc[1]."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($curpAdd."_".$idDoc[1]."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
