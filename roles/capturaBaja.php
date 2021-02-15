@@ -205,20 +205,7 @@
 		
 			function eliminarRequier(){
 					$('#comentarioR').removeAttr("required");
-					var miSelect2 = document.getElementById("qnaOption");
-					// console.log(miSelect2);
-					 var x = document.getElementById("qnaOption").selectedIndex;
-					  var y = document.getElementById("qnaOption").options;
-					//   alert("Index: " + y[x].index + " is " + y[x].text);
-				    var aTag = document.createElement('option');
-				    aTag.setAttribute('value', y[x].text);
-				    aTag.innerHTML = y[x].text;
-				const select = document.querySelector("#qnaOption");
-				for (let i = select.options.length; i >= 0; i--) {
-										    	select.remove(i);
-				}
-				select.appendChild(aTag);
-
+			      	$('#bandejaEntrada').hide();
 			}
 
 			function rechazarDoc(){
@@ -769,10 +756,19 @@
 							<div class="form-group col-md-2">
 								<label  class="plantilla-label" for="laQna">*QNA: </label>
 									<select class="form-control border border-dark custom-select" id="qnaOption" name="qnaOption" required>
+											<?php 
+												if(isset($_POST["qnaOption"])){
+											?>
+												<option  value="<?php echo $_POST["qnaOption"]; ?>" selected><?php echo $_POST["qnaOption"]; ?> </option>
+											<?php
+												}else{
+											?>
 											<option  value="<?php echo $newQna ?>" ><?php echo $newQna ?> </option>
 											<option  value="<?php echo $newQna+1 ?>" ><?php echo $newQna+1 ?> </option>
 											<option  value="<?php echo $newQna-1 ?>" ><?php echo $newQna-1 ?> </option>
-										         
+											<?php
+												}
+											?>   
 									</select>
 							</div>
 
@@ -890,15 +886,25 @@
 							<br>			<br>						<br>
 						   <!-- <label  class="plantilla-label" for="arch">Nombre del archivo: </label> -->
 						 
-						<div class="col">
+						
+					</div>	
+					</div>
+				<div class="col-md-8 col-md-offset-8">
+
+					<div class="col">
 						  	<div class="md-form md-0">
 								<input type="submit" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
 							</div>	
 							<br>
-						</div>	
+							<div class="md-form md-0">
+								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;" value="bandeja principal">
+							</div>	
+
+							<div class="form-group col-md-60">
+								<button type="button" name="rechazoInicial" id="rechazoInicial" class="btn btn-danger" data-toggle="modal" data-target="#RechInicial" >Rechazar por captura inicial</button>
+							</div>
 					</div>	
-					</div>
-			
+				</div>	
 				<div class="col-md-8 col-md-offset-8">
 
 					<?php 
@@ -928,9 +934,6 @@
 									$fechaDel = $_POST['del2'];
 									$fechaAl = $_POST['al3'];
 									$leerMov = $_POST['id_env'];
-
-									$laQna = $_POST['qnaActual'];
-
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
@@ -993,7 +996,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$laQna','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$qna_Add','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1015,7 +1018,7 @@
 
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
+									$dir_subida = './Controller/DOCUMENTOS_BAJAS/'.$idDoc[1].'/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
