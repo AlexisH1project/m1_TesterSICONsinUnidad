@@ -502,9 +502,13 @@
 			// -------------- Guardamos archivo en carpeta				
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$optionSelec."_.".$extencion3);
-												rename ($fichero_subido,$concatenarNombreC);
-												
+												if($idDoc[1] == "doc76" || $idDoc[1] == "doc77" || $idDoc[1] == "doc78" || $idDoc[1] == "doc79" || $idDoc[1] == "doc80" || $idDoc[1] == "doc81"){
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$optionSelec."_.".$extencion3);
+													rename ($fichero_subido,$concatenarNombreC);
+												}else{
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$optionSelec."_.".$extencion3);
+													rename ($fichero_subido,$concatenarNombreC);
+												}
 													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
 

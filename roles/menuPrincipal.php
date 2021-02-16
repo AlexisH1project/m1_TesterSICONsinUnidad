@@ -391,9 +391,6 @@
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
-	          </li>
-	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./guardarVistaBajas.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(Bajas)</i></b></center></a>
 	          </li>
 	          <br>
