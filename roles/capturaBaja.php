@@ -10,21 +10,12 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 		<link href='jquery/jquery-ui.min.css' type='text/css' rel='stylesheet'>
 		<link href='jquery/jquery-ui.css' type='text/css' rel='stylesheet'>
-
-		<script type="text/javascript" src="./include/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="./include/jquery.validate.js"></script>
-
-		
-
-		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
+	  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 		<script language="javascript" type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.10.0/jquery.validate.min.js"></script>
    		<script src= "https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 		<script src="js/funciones.js"></script>
-		<script src="js/validar_RFC_CURP.js"></script>
-
 
 		<script src="jquery/jquery-3.4.1.min.js" type="text/javascript"></script>
 		<script src="jquery/jquery-ui.min.js" type="text/javascript"></script>
@@ -165,86 +156,10 @@
 					});
 				});
 			});
-
-			function enviarDatos(){
-				var formulario = document.captura1;
-				formulario.action= './Controller/agregarNewRegistro.php';
-				document.getElementById("botonAccion").value = "Aceptar";
-
-				    var a = $("#unexp_1").val();
-				    var b = $("#rfcL_1").val();
-				    var c = $("#curp").val();
-				    var d = $("#apellido1").val();
-				    var e = $("#apellido2").val();
-				    var f = $("#nombre").val();
-				    var g = $("#fechaIngreso").val();
-				    //var h = $("#TipoEntregaArchivo").val();
-				    var i = $("#del2").val();
-
-				     if (b !== '') {
-					      var tamRFC = b.length;
-					 	if (tamRFC<13){
-					    	alert("RFC no valido");
-					    }
-					 }
-					 if (c !== '') {
-					      var tamCURP = c.length;
-					 	if (tamCURP<18){
-					    	alert("CURP no valido");
-					    }
-
-					 }
-				     var tamCURP = c.length;
-
-				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| i=="" ) {
-				        alert("Falta completar campo");		
-				        return false;
-				      } else 
-				      	formulario.submit();
-		 }
 		
-			function eliminarRequier(){
-					$('#comentarioR').removeAttr("required");
-			      	$('#bandejaEntrada').hide();
-			}
-
-			function rechazarDoc(){
-				var formulario = document.captura1;
-				
-				document.getElementById("botonAccion").value = "Rechazar";
-
-				    var a = $("#unexp_1").val();
-				    var b = $("#rfcL_1").val();
-				    var c = $("#curp").val();
-				    var d = $("#apellido1").val();
-				    var e = $("#apellido2").val();
-				    var f = $("#nombre").val();
-				    var g = $("#fechaIngreso").val();
-				    var h = $("#comentarioR").val();
-				    $('#nameArchivo').removeAttr("required");
-
-				    //var h = $("#TipoEntregaArchivo").val();
-				    
-
-				      if (a=="" || b=="" || c==""|| d==""|| e==""|| f==""|| g=="" || h=="") {
-					        alert("Falta completar campo");		
-					        return false;
-				      } else{
-				      	$('#rechazarT').hide();
-			      		$('#enviarT').hide();
-			      		var btn_2 = document.getElementById('bandejaEntrada');
-			            	btn_2.style.display = 'inline';
-			      		formulario.action= './Controller/agregarNewRegistro.php';
-				      	formulario.submit();}
-			}
-
-			function listaDeDoc(text, listaEnviar){
-				document.getElementById("listaDoc").value = text;
-				document.getElementById("guardarDoc").value = listaEnviar;
-			}
 
 // ****************************************************** form_fomope
-					$(document).ready(function(){
+			$(document).ready(function(){
 				$(document).on('keydown', '.cod2', function(){
 					var id = this.id;
 					var splitid = id.split('_');
@@ -383,25 +298,15 @@
 					});
 				});
 			});
-			
-			
-			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 
+			function eliminarRequier(){
+					$("#MotivoRechazoCap").removeAttr("required");
+			      	$('#rechazoInicial').hide();
 			}
 
-			function eliminarReq(){
-					 $('#MotivoRechazo').removeAttr("required");
-					  $('#idProfesional').removeAttr("required");
-			  		$("#MotivoRechazoCap").removeAttr("required");
-
-
-			}
-			function eliminarReq2(){
-					 $('#MotivoRechazo').removeAttr("required");
-			  		$("#MotivoRechazoCap").removeAttr("required");
-
-
+			function listaDeDoc(text, listaEnviar){
+				document.getElementById("listaDoc").value = text;
+				document.getElementById("guardarDoc").value = listaEnviar;
 			}
 
 			function rechazarPorCapI(){
@@ -411,42 +316,32 @@
 				    $("#codigo").removeAttr("required");
 				     $("#cod2_1").removeAttr("required");
 				     $("#del2").removeAttr("required");
-				    //var g = $("#MotivoRechazo").val();
-			  		$("#MotivoRechazo").removeAttr("required");
-				    //var h = $("#TipoEntregaArchivo").val();
-					 $('#idProfesional').removeAttr("required");
-
-					$('#capturaF').hide();
-			      		$('#rechazo').hide();
-			      		$('#genera').hide();
-			      		$('#rechazoInicial').hide();
-				      	var btn_2 = document.getElementById('bandejaEntrada');
+					 $('#nameArchivo').removeAttr("required");
+					 
+					 // var a = $("#unexp_1").val();
+					 // var b = $("#rfcL_1").val();
+					 // var c = $("#curp").val();
+					 // var d = $("#apellido1").val();
+					 // var e = $("#apellido2").val();
+					 // var f = $("#nombre").val();
+					 // var g = $("#fechaIngreso").val();
+					 // var h = $("#MotivoRechazoCap").val();
+					 $('#nameArchivo').removeAttr("required");
+					 $('#guardarAdj').hide();
+					 var btn_2 = document.getElementById('bandejaEntrada');
 			            	btn_2.style.display = 'inline';
-			}
-
-
-			function verBoton(){
-					var a = $("#ofunid").val();
-				    var b = $("#fechaofi").val();
-				    var c = $("#fechareci").val();
-				    var d = $("#codigo").val();
-				    var e = $("#cod2_1").val();
-				    var f = $("#del2").val();
-				    //$("#MotivoRechazo").val();
-			  
-				    //var h = $("#TipoEntregaArchivo").val();
-					 $('#idProfesional').removeAttr("required");
-				    
-				    if (a=="" || b=="" || c==""|| d==""|| e==""|| f=="") {
-				      		return false;
-				      }else{
-			  			$("#MotivoRechazoCap").removeAttr("required");
-				      	$('#capturaF').hide();
-			      		$('#rechazo').hide();
-			      		$('#genera').hide();
-				      	var btn_2 = document.getElementById('bandejaEntrada');
-			            	btn_2.style.display = 'inline';
-			       	  }
+					 //var h = $("#TipoEntregaArchivo").val();
+					 
+					 
+					//  if (a=="" || b=="" || c==""|| d==""|| e==""|| f==""|| g=="" || h=="") {
+					// 	 alert("Falta completar campo");		
+					// 	return false;
+					// } else{
+					// 	var btn_2 = document.getElementById('bandejaEntrada');
+					// 	btn_2.style.display = 'inline';
+					// 	formulario.action = './Controller/generarRechazo.php';
+				    //   	formulario.submit();
+					// }
 			}
 
 			function nobackbutton(){
@@ -502,7 +397,6 @@
 
 			 if($resQna = mysqli_query($conexion,$sqlQna)){
 			 	$rowQna = mysqli_fetch_row($resQna);
-			 	//echo "OOOOOLLAA";
 			 	$fehaI = date("d-m-Y", strtotime($rowQna[4])); 
 			 	$fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 			 	$newQna = $rowQna[0];
@@ -597,22 +491,6 @@
 
 	        </ul>
 
-	       <!-- <div class="mb-5">
-						<h3 class="h6 mb-3">Subscribe for newsletter</h3>
-						<form action="#" class="subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Enter Email Address">
-	            </div>
-	          </form>
-					</div>-->
-
-	        <!--<div class="footer">
-	        	<p>Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-						  Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.</p>
-	        </div>-->
-
 	      </div>
     	</nav>
     	
@@ -668,10 +546,9 @@
 <div class="col-md-8 col-md-offset-8">
 				<!-- <form name="captura2" action="./Controller/agregarNewRegistro.php" method="POST">  -->
 
-				<form  enctype="multipart/form-data" id="formDatos" name="captura1" action="" method="POST"> 
+<form method="post" name="ffomope" action="./Controller/generarRechazo.php"> 
 				 		<div class="form-row">
 							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
-							<input type="text" class="form-control" id="botonAccion" name="botonAccion" value="<?php if(isset($_POST["botonAccion"])){ echo $_POST["botonAccion"];} ?>" style="display:none">
 							<input type="text" class="form-control" id="qnaActual" name="qnaActual" value="<?php  echo  $newQna?>" style="display:none">
 							<input type="text" class="form-control" id="guardarDoc" name="guardarDoc" value="<?php if(isset($_POST["guardarDoc"])){ echo $_POST["guardarDoc"];} ?>" style="display:none">
 						</div> 
@@ -893,15 +770,17 @@
 
 					<div class="col">
 						  	<div class="md-form md-0">
-								<input type="submit" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
+								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
 							</div>	
 							<br>
 							<div class="md-form md-0">
 								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;" value="bandeja principal">
+								<br>
+							<br>
 							</div>	
-
+							
 							<div class="form-group col-md-60">
-								<button type="button" name="rechazoInicial" id="rechazoInicial" class="btn btn-danger" data-toggle="modal" data-target="#RechInicial" >Rechazar por captura inicial</button>
+								<button type="button" name="rechazoInicial" id="rechazoInicial" class="btn btn-danger" data-toggle="modal" data-target="#RechInicial">Rechazar</button>
 							</div>
 					</div>	
 				</div>	
@@ -929,7 +808,6 @@
 									$apellido2Add = strtoupper($_POST['apellido2']);	
 									$nombreAdd = strtoupper($_POST['nombre']);
 									$fechaIngresoAdd = $_POST['fechaIngreso'];
-									$radioAdd_rechazar = $_POST['botonAccion'];
 									$motivoR = $_POST['comentarioR'];
 									$fechaDel = $_POST['del2'];
 									$fechaAl = $_POST['al3'];
@@ -1151,7 +1029,26 @@
 <!-- ***************************************************************************************** -->	
  				</div>	
 				<br>
-
+				<div class="modal fade" id="RechInicial" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">Rechazo por captura</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+							      <div class="modal-body">
+							         <textarea class="form-control border border-dark" id="MotivoRechazoCap" rows = "4" name="comentarioR" placeholder="Redactar el volante de rechazo" required></textarea>
+							       
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
+									<input type="submit" class="btn btn-primary" id="rechI" onclick="rechazarPorCapI()" name="accionB"  value="Aceptar rechazo por captura">
+							      </div>
+							     
+							    </div>
+							  </div>
+							</div>
 			</form>
 
 		</center>
@@ -1173,6 +1070,7 @@
 			}
 
 		?>
+							
 	<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 
