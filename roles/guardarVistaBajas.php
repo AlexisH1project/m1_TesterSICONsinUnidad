@@ -581,6 +581,27 @@
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
+								$arrayDoc = explode("#", $enviarDoc) ;
+								//actualizamos la base para poder tener el registro de los documentos
+								include "./configuracion.php";
+								$usuarioSeguir = $_GET['usuario_rol'];
+
+								 $hoy = "select CURDATE()";
+
+								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
+								 		$rowHoy = mysqli_fetch_row($resultHoy);
+								 }
+								// echo $arrayDoc[0];
+								for($i=0; $i < count($arrayDoc)-1 ; $i++){
+									$nombreAsignar = $arrayDoc[$i];
+									$sqlAgregar = "UPDATE fomope SET  $nombreAsignar = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
+									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
+
+									}else{
+										echo "<script> alert ('error');</script>";
+									}
+
+								}
 							}
 	}
 					if(isset($_POST['borrar'])){

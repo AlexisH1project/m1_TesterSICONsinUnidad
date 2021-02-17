@@ -592,7 +592,7 @@
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
-								$arrayDoc = explode("_", $enviarDoc) ;
+								$arrayDoc = explode("#", $enviarDoc) ;
 								//actualizamos la base para poder tener el registro de los documentos
 								include "./configuracion.php";
 								$usuarioSeguir = $_GET['usuario_rol'];
@@ -602,9 +602,10 @@
 								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								 		$rowHoy = mysqli_fetch_row($resultHoy);
 								 }
+								// echo $arrayDoc[0];
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
 									$nombreAsignar = $arrayDoc[$i];
-									$sqlAgregar = "UPDATE fomope_qr SET  $arrayDoc[$i] = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
+									$sqlAgregar = "UPDATE fomope_qr SET  $nombreAsignar = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 									}else{
