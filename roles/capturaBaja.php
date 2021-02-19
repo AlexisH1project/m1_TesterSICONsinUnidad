@@ -299,6 +299,13 @@
 				});
 			});
 
+			function irAbandeja() {
+				var formulario = document.captura1;
+				var id_mov = $("#usuarioSeguir").val();
+				formulario.action = './bandejaBajas.php?usuario_rol='+id_mov;
+				formulario.submit();
+			}
+
 			function eliminarRequier(){
 					$("#MotivoRechazoCap").removeAttr("required");
 			      	$('#rechazoInicial').hide();
@@ -310,6 +317,7 @@
 			}
 
 			function rechazarPorCapI(){
+					var formulario = document.captura1;
 					$("#ofunid").removeAttr("required");
 				    $("#fechaofi").removeAttr("required");
 				    $("#fechareci").removeAttr("required");
@@ -339,8 +347,8 @@
 					// } else{
 					// 	var btn_2 = document.getElementById('bandejaEntrada');
 					// 	btn_2.style.display = 'inline';
-					// 	formulario.action = './Controller/generarRechazo.php';
-				    //   	formulario.submit();
+						formulario.action = './Controller/generarRechazo.php';
+				      	formulario.submit();
 					// }
 			}
 
@@ -545,8 +553,8 @@
 			
 <div class="col-md-8 col-md-offset-8">
 				<!-- <form name="captura2" action="./Controller/agregarNewRegistro.php" method="POST">  -->
-
-<form method="post" name="ffomope" action="./Controller/generarRechazo.php"> 
+<!-- <form method="post" name="ffomope" action="">  -->
+<form  enctype="multipart/form-data" id="formDatos" name="captura1" action="" method="POST"> 
 				 		<div class="form-row">
 							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
 							<input type="text" class="form-control" id="qnaActual" name="qnaActual" value="<?php  echo  $newQna?>" style="display:none">
@@ -659,7 +667,7 @@
 							<input type="text" class="form-control" id="id_rol" name="id_rol" value="<?php echo $id_rol?>" style="display:none">
 						</div>
 						<div class="form-row">
-							<input type="text" class="form-control" id="usuarioSeguir" name="usuarioSeguir" value="<?php echo $usuarioSeguir?>" style="display:none">
+							<input type="text" class="form-control" id="usuarioSeguir" name="usuario_rol" value="<?php echo $usuarioSeguir?>" style="display:none">
 						</div>
 						<br>
 					</div>
@@ -774,7 +782,7 @@
 							</div>	
 							<br>
 							<div class="md-form md-0">
-								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;" value="bandeja principal">
+								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" onclick="irAbandeja()" style="display: none;" value="bandeja principal">
 								<br>
 							<br>
 							</div>	
@@ -819,8 +827,6 @@
 									// $noFomope = $_POST['noFomope'];
 									// $usuario_rol = $_POST['id_rol'];
 									// $usuario = $_POST['usuarioSeguir'];
-									$elBoton = $_POST['accionB'];
-
 									$idFomope = $_POST['noFomope'];
 									$elRol = $_POST['id_rol'];
 									
@@ -874,7 +880,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', '$radioAdd_rechazar','$motivoR','$qna_Add','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', 'AMBOS','$motivoR','$qna_Add','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -1043,7 +1049,7 @@
 							       
 							      <div class="modal-footer">
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">REGRESAR</button>
-									<input type="submit" class="btn btn-primary" id="rechI" onclick="rechazarPorCapI()" name="accionB"  value="Aceptar rechazo por captura">
+									<input type="submit" class="btn btn-primary" id="rechI" onclick="rechazarPorCapI()" name="guardarAdj" value="Aceptar rechazo por captura">
 							      </div>
 							     
 							    </div>
@@ -1055,8 +1061,6 @@
         <!-- Page Content  -->
  <?php
 	 }else{	
-	 
-
 			 			echo("
     	
 												<br>

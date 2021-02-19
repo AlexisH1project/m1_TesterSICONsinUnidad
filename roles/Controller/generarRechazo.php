@@ -10,13 +10,12 @@
 		$apellido2Add = strtoupper($_POST['apellido2']);	
 		$nombreAdd = strtoupper($_POST['nombre']);
 		$fechaIngresoAdd = $_POST['fechaIngreso'];
-		$tipoEntregaAdd = strtoupper($_POST['TipoEntregaArchivo']);
-		$radioAdd_rechazar = $_POST['botonAccion'];
+		// $tipoEntregaAdd = strtoupper($_POST['TipoEntregaArchivo']);
 		$motivoR = $_POST['comentarioR'];
 		$fechaDel = $_POST['del2'];
 		$fechaAl = $_POST['al3'];
 		$id_movIdentify = $_POST['id_env']; 
-
+		$laAccion = $_POST['accionB'];
 		$laQna = $_POST['qnaActual'];
 		$documentosList = $_POST['guardarDoc'];
 
@@ -27,14 +26,16 @@
 		$fechaEntregaUnidadAdd = 'Pendiente';// strtoupper($_POST['fechaEntregaUnidad'];
 		$ofEntregaUnidadAdd = 'Pendiente'; //strtoupper($_POST['ofEntregaUnidad'];
 
-		$analista = $_POST['usuar'];
+		// $analista = $_POST['usuar'];
 		
 		$colorAccion = "negroB";
 
 			$hoy = "select CURDATE()";
 		   	$tiempo ="select curTime()";
 
-		   
+	if($laAccion == "bandeja principal"){
+		echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
+	}
 
 	function generarExcel(){
 				require "../librerias/conexion_excel.php";
@@ -89,6 +90,7 @@
 			}
 	}
 
+// if($radioAdd_rechazar == "Aceptar rechazo por captura"){	
 		$sqlRol = "SELECT id_rol FROM usuarios WHERE usuario = '$usuarioEdito'";
 		if($resultSqlRol = mysqli_query($conexion,$sqlRol)){
 			$idRolActual = mysqli_fetch_row($resultSqlRol);
@@ -111,7 +113,7 @@
 										$id_rol = $rowU['id_rol'];
 										$unidadC = 	$rowU['unidadCorrespondiente'];
 			}
-			
+
  //cuando la fecha de autorizacion ya tenga un dato significa que puede pasar 
 			$sql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,fechaAutorizacion,analistaCap,  	fechaCaptura  ) VALUES ('$colorAccion','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','$tipoEntregaAdd','$radioAdd_rechazar','$motivoR','$laQna','','','','','','','','','','$fechaDel','$fechaAl','','','','','','','','','','','','','$fechaArchivoAdd','$fechaRLaboralesAdd','$ofEntregaRLAdd','$archivoScan','$fechaEntregaUnidadAdd','$ofEntregaUnidadAdd','$row[0] - $usuarioEdito', '$analista', '$row[0] - $usuarioEdito' )";
 			
@@ -155,7 +157,7 @@
 				echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 				echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 			}
-
+	// }
 		
 
  ?>

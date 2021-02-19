@@ -726,12 +726,18 @@
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+												if($idDoc[1] == "doc76" || $idDoc[1] == "doc77" || $idDoc[1] == "doc78" || $idDoc[1] == "doc79" || $idDoc[1] == "doc80" || $idDoc[1] == "doc81"){
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$banderaid."_.".$extencion3);
+												}else{
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+												}
+
 												rename ($fichero_subido,$concatenarNombreC);
-												
-													$arrayDoc = explode("_", $nombreCompletoArch);
-												 	$tamanioList = count($arrayDoc);
-													
+												$arrayDoc = explode("_", $nombreCompletoArch);
+											 	$tamanioList = count($arrayDoc);
+
+												$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docI', '$idDoc[1]')";
+												$resultH = mysqli_query($conexion,$queryHistorial);		
 												 
 											echo "
 													<script>
