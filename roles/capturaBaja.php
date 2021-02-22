@@ -318,38 +318,33 @@
 
 			function rechazarPorCapI(){
 					var formulario = document.captura1;
-					$("#ofunid").removeAttr("required");
-				    $("#fechaofi").removeAttr("required");
-				    $("#fechareci").removeAttr("required");
+				    // $("#fechareci").removeAttr("required");
 				    $("#codigo").removeAttr("required");
-				     $("#cod2_1").removeAttr("required");
-				     $("#del2").removeAttr("required");
-					 $('#nameArchivo').removeAttr("required");
-					 
-					 // var a = $("#unexp_1").val();
-					 // var b = $("#rfcL_1").val();
-					 // var c = $("#curp").val();
-					 // var d = $("#apellido1").val();
-					 // var e = $("#apellido2").val();
-					 // var f = $("#nombre").val();
-					 // var g = $("#fechaIngreso").val();
-					 // var h = $("#MotivoRechazoCap").val();
+				    //  $("#cod2_1").removeAttr("required");
+				    //  $("#del2").removeAttr("required");
 					 $('#nameArchivo').removeAttr("required");
 					 $('#guardarAdj').hide();
-					 var btn_2 = document.getElementById('bandejaEntrada');
-			            	btn_2.style.display = 'inline';
-					 //var h = $("#TipoEntregaArchivo").val();
-					 
-					 
-					//  if (a=="" || b=="" || c==""|| d==""|| e==""|| f==""|| g=="" || h=="") {
-					// 	 alert("Falta completar campo");		
-					// 	return false;
-					// } else{
-					// 	var btn_2 = document.getElementById('bandejaEntrada');
-					// 	btn_2.style.display = 'inline';
+
+					var btn_2 = document.getElementById('bandejaEntrada');
+			        btn_2.style.display = 'inline';
+
+				    var a = $("#fechareci").val();
+				    var b = $("#unexp_1").val();
+				    var c = $("nombre").val();
+				    var d = $("#apellido1").val();
+				    var e = $("#apellido2").val();
+				    var f = $("#cod2_1").val();
+					var g =	$("#MotivoRechazoCap").val();
+
+
+					 if (a=="" || b=="" || c==""|| d==""|| e==""|| f=="" || g == "") {
+						 alert("Falta completar algún campo como: *Nombre Completo, *Fecha de recibido, *Código de movimiento, *Motivo de rechazo.");		
+						return false;
+					} else{
+						// $('#guardarAdj').hide();
 						formulario.action = './Controller/generarRechazo.php';
 				      	formulario.submit();
-					// }
+					}
 			}
 
 			function nobackbutton(){
@@ -451,25 +446,19 @@
 	        <ul class="list-unstyled components mb-5">
 	        	<br>
 	        	<center>
-	        	<li class=" estilo-color">
-	            <a href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
-	          </li>
+        	<li class=" estilo-color">
+	          	<a href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
+          </li>
 	      </center>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
-	          </li>
-	           <li class=" estilo-color">
-	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
+	            <a href=  <?php echo ("'./bandejaBajas.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
 	          </li>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./generarReporte.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport.png" alt="x" height="17" width="20"/>Generar Reporte</a>
-	          </li>
-	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/>Consulta</a>
 	          </li>
 	           </li>
-	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
+	           <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaBajas.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(Bajas)</i></b></center></a>
 	          </li>
 	          <br>
 	           
@@ -942,6 +931,9 @@
 													</script >";
 											$arrayNumDoc = explode("_", $enviarDoc);		
 											$numeroDeDocs = count($arrayNumDoc);
+
+											$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docB', '$idDoc[1]')";
+											$resultH = mysqli_query($conexion,$queryHistorial);
 												/*	echo '
 													<br>	<br>		<br>
 													<center>

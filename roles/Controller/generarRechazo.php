@@ -133,7 +133,7 @@
 							$sqlH = "INSERT INTO historial (id_movimiento,usuario,fechaMovimiento,horaMovimiento,accion) VALUES ('$id', '$usuarioEdito','$row[0]','$row2[0]','bajas')";
 							 	mysqli_query($conexion,$sqlH);
 
-							$sqlAgregarRechazo = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo, modulo) VALUES ('$id', '$motivoR', '$usuarioEdito','$row[0]', 'bajas')";  
+							$sqlAgregarRechazo = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo, modulo) VALUES ('$id', '$motivoR', '$usuarioEdito','$row[0]', 'bajas')";
 							if (mysqli_query($conexion,$sqlAgregarRechazo)){
 
 									$sqlUser = "SELECT id_rol FROM usuarios WHERE usuario = '$usuarioEdito'";
