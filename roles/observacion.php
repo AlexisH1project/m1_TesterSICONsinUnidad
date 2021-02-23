@@ -62,15 +62,15 @@
 		$roWsqlRolReal = mysqli_fetch_row($sIsqlRolReal);
 
 		if($roWsqlRolReal[2] == 2){
-		$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaAutorizacion = '$row[0] - $usuario', fechaCaptura = 'En espera de Captura'  WHERE id_movimiento = '$noFomope'";
-
-
+			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaAutorizacion = '$row[0] - $usuario', fechaCaptura = 'En espera de Captura'  WHERE id_movimiento = '$noFomope'";
 		}else if($roWsqlRolReal[2] == 3){
 			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización'  WHERE id_movimiento = '$noFomope'";
 
 		}else if($roWsqlRolReal[2] == 4){
 			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negro1', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización'  WHERE id_movimiento = '$noFomope'";
 
+		}else if($roWsqlRolReal[2] == 7){
+			$sqlUpColor = "UPDATE fomope SET color_estado  = 'negroB', usuario_name = '$usuario', justificacionRechazo = '$observacion', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización'  WHERE id_movimiento = '$noFomope'";
 		}
 	}else{
 		 echo "<script> alert('error en la BD'); ";//'$usuario
@@ -83,17 +83,13 @@
 		// $sql = 'UPDATE fomopesactivos SET estadoFomope  = 0 WHERE id_fomope='.$noFomope;
 		
 		if (mysqli_query($conexion,$sql) AND mysqli_query($conexion,$sqlUpColor)) {
-					if($idRol == 4){
+					if($roWsqlRolReal[2] == 7){
+						echo "<script> alert('el rechazo fue registrado'); window.location.href = './bandejaBajas.php?usuario_rol=$usuario'</script>";//'$usuario
+					}else if($idRol == 4){
 			         	 echo "<script> alert('el rechazo fue registrado'); window.location.href = './dario.php?usuario_rol=$usuario'</script>";//'$usuario
-
-
 					}else if($idRol == 3){
 			          echo "<script> alert('el rechazo fue registrado'); window.location.href = './analista.php?usuario_rol=$usuario'</script>";//'$usuario
-
-
-					}      
-
-
+					}  
 		} else {
 			echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 		}

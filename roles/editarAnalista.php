@@ -776,7 +776,7 @@
 
 						<div class="form-group col-mt-4">
 						<label class="plantilla-label estilo-colorg" for="estad">*Estado:</label>
-						<input onkeypress="return pulsar(event)" type="text" class="form-control cod3 border border-dark" id="cod3_1" name="cod3_1" placeholder="Ej. Ciudad de México" value="<?php echo $estado_en; ?>" maxlength="30"  required>
+						<input onkeypress="return pulsar(event)" type="text" class="form-control cod3 border border-dark" id="cod3_1" name="cod3_1"  value="CIUDAD DE MÉXICO" maxlength="30"  required>
 					</div>
 					<div class="form-group col-md-5">
 						<label class="plantilla-label estilo-colorg" for="consema">*Consecutivo maestro de puestos:</label>

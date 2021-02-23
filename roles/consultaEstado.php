@@ -143,6 +143,7 @@ tbody {
 			<?php
 					}else{
 			?>
+			<br>
 		  			<a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 			<?php
 
@@ -894,6 +895,9 @@ tbody {
 										}elseif($ver[1] == 'guinda'){
 
 											$ver[1] = 'Finalizado';
+										}elseif($ver[1] == 'negroB'){
+
+											$ver[1] = 'DGRHyO Rechazo Baja';
 										}
 						 ?>
 						<tr id="<?php echo $ver[0] ?>">

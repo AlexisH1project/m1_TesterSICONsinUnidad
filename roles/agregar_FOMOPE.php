@@ -170,6 +170,9 @@
 		if($elBoton == "Capturar" || $roWsqlRolReal[2] == 3){
 			$colorAenviar = "cafe";
 			$estadoFecha = "En espera de autorización";
+		}else if($roWsqlRolReal[2] == 7){
+			$estadoFecha = $row[0]." - ".$usuario;
+			$colorAenviar = "guinda";
 		}else{
 			$estadoFecha = $row[0]." - ".$usuario;
 			$colorAenviar = "negro1";
@@ -204,7 +207,9 @@
 							   echo "<script> alert('el fomope fue capturado'); window.location.href = './analista.php?usuario_rol=$usuario'</script>";
 							}elseif ($datoId[0] == 3) {
 								  echo "<script> alert('el fomope fue actualizado'); window.location.href = './capturistaTostado.php?usuario_rol=$usuario'</script>";
-							}
+							}elseif ($datoId[0] == 7) {
+								echo "<script> alert('el fomope fue actualizado'); window.location.href = './bandejaBajas.php?usuario_rol=$usuario'</script>";
+						  	}
 							
 
 					}else {
@@ -312,7 +317,10 @@
 				}elseif ($datoId[0] == 3) {
 								
 				  echo "<script>window.location.href = './capturistaTostado.php?usuario_rol=$usuario'</script>";
-				}
+				}elseif ($datoId[0] == 7) {
+								
+					echo "<script>window.location.href = './bandejaBajas.php?usuario_rol=$usuario'</script>";
+				  }
 	}
 	
 

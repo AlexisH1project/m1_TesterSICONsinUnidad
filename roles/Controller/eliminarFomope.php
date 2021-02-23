@@ -72,7 +72,10 @@
 								
 				  echo "<script>window.location.href = '../lulu.php?usuario_rol=$usuarioSegimiento'</script>";
 				}
-
+				elseif ($id_rol1 == 7) {
+								
+					echo "<script>window.location.href = '../bandejaBajas.php?usuario_rol=$usuarioSegimiento'</script>";
+				}
 				
 			}
 	}else {

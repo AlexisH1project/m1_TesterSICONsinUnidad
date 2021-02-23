@@ -69,6 +69,9 @@
                                             case '4':
                                                 $estadoF = 'DIPSP y DGRHyO '.$estado.' '.$fecha;
                                                 break;  
+                                            case '7':
+                                                $estadoF = 'DGRHyO Baja '.$estado.' '.$fecha;
+                                                break;  
                                             default:
                                                 $estadoF = $idRol;
 
