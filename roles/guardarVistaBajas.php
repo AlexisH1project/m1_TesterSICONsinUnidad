@@ -91,7 +91,7 @@
 								url: 'resultados_curp.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:2,
+									buscarid:buscarid,request:3,
 									
 								},
 								success: function(data){
@@ -142,7 +142,6 @@
 		</script>
 	</head>
 	<body>
-
 	<?php 
 		include "configuracion.php";
 				$usuarioSeguir = $_GET['usuario_rol'];
@@ -176,19 +175,7 @@
 	          </li>
 	      </center>
 	          <li class=" estilo-color">
-	          	<?php
-	          	if($nombreU[1] == 0){
-	          	?>
-	            	<a href=  <?php echo ("'./bandejaEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
-	            <?php
-	            }else if($nombreU[1] == 1){
-	          	?>
-	            	<a href=  <?php echo ("'./LuluEventuales.php?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
-
-				<?php
-	            }
-	          	?>
-
+	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
 	           <li class=" estilo-color">
 	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
@@ -292,11 +279,11 @@
 							<div class="form-group col-md-12">
 								<label class="plantilla-label" for="elRfc">*CURP:</label>
 								
-								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa curp" maxlength="18"  required>
 							</div>
 		
-							<input type="text" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="Apellido Paterno" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" style="display: none;">
-							<input type="text" class="form-control" id="guardarDoc" name="guardarDoc" value="<?php if(isset($_POST["guardarDoc"])){ echo $_POST["guardarDoc"];} ?>" style="display: none;">
+							<input type="text" style="display:none;" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="Apellido Paterno" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" >
+							<input type="text" class="form-control" id="guardarDoc" name="guardarDoc" value="<?php if(isset($_POST["guardarDoc"])){ echo $_POST["guardarDoc"];} ?>" style="display:none">
 
 						<div class="md-form md-0">
 							<div class="box" >
@@ -355,7 +342,7 @@
 									       die("Error cargando el conjunto de caracteres utf8");
 									}
 
-									$consulta = "SELECT * FROM ct_documentos_qr ORDER BY  id_docqr";
+									$consulta = "SELECT * FROM m1ct_documentos ORDER BY  id_doc";
 									$resultado = mysqli_query($conexion , $consulta);
 									$contador=0;
 
@@ -382,12 +369,9 @@
 				</div> -->
 					<div class="form-group col-md-12">
 						<div class="col text-center">
-							
 							<div class="columnaBoton">	
 								 <input type="submit" name="guardarAdj" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Guardar"><br> 
-
 							</div>
-							
 						</div>
 					</div>
 
@@ -432,14 +416,14 @@
 									}
 									//echo "select:  ".$optionSelec;
 									$banderaBoton = 1;
-									if($optionSelec == "x"){
-										
-										echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
-									}else if($optionSelec == "undefined"){
-										echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
-									}else{	
+	if($optionSelec == "x"){
+		
+		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
+	}else if($optionSelec == "undefined"){
+		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
+	}else{	
 	         //------Buscamos los datos para mostrar en el select y mandar a la funcion en JS para poder cargar solo ese dato
-        							$consulta = "SELECT id_movimiento_qr, tipo_movimiento, fini, anio, qna FROM fomope_qr  WHERE id_movimiento_qr ='$optionSelec'";
+        							$consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion FROM fomope WHERE id_movimiento='$optionSelec'";
         							if($resultSelect = mysqli_query($conexion, $consulta)){
         								$rowSelect = mysqli_fetch_row($resultSelect);
         								$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
@@ -454,30 +438,46 @@
 									 $numEliminado = explode("-", $row2[0]);
 									 $numEliminado = $numEliminado[0].$numEliminado[1].$numEliminado[2];
 
-									$nombreCompletoArch = $nombreArch."#".$listaCompleta;
+									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
-									$sqlRolDoc = "SELECT id_docqr, documentos FROM ct_documentos_qr WHERE nombre_documento = '$nombreArch'";
-									$resRol=mysqli_query($conexion, $sqlRolDoc);
-									$idDoc = mysqli_fetch_row($resRol);
-									$enviarDoc = $idDoc[1].'#'.$concatenarNombDoc;
+									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+										$resRol=mysqli_query($conexion, $sqlRolDoc);
+										$idDoc = mysqli_fetch_row($resRol);
+									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$optionSelec' ";
-						            $result=mysqli_query($conexion,$sql);
-						            $rowQr = mysqli_fetch_row($result);
-									//header("Content-type: application/PDF");
-									//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
-									
-									//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-								    if($rowQr[2]=="MODULO DE BAJAS" ){
-										$dir_subida = './Controller/DOCUMENTOS_BAJAS/'.$idDoc[1].'/';
-									}
-																    								
+									$dir_subida = './Controller/DOCUMENTOS_BAJAS/'.$idDoc[1].'/';
 									$dir_subida2 = './Controller/DOCUMENTOS_SUPR/';
 
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
-									
+											/*foreach($files as $file){
+											    // Divides en dos el nombre de tu archivo utilizando el . 
+											    $data = explode("_",$file);
+											    $data2 = explode(".",$file);
+												$indice = count($data2);	
+
+												$extencion = $data2[$indice-1];
+											    // Nombre del archivo
+											    $extractRfc = $data[0];
+											    $nameAdj = $data[1];
+												//echo "<script> alert(''); </script>";
+
+											    // Extensión del archivo 
+											    if($elRfc == $extractRfc AND strtoupper($idDoc[1]) == $nameAdj){
+													//echo "<script> alert('$idDoc[1]'); </script>";
+	
+															$fichero_subido2 = $dir_subida2 . $file;
+															$extencion2 = explode(".",$fichero_subido2);
+															$tamnio = count($extencion2);
+
+															$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
+															$concatenarNombreC = $dir_subida2.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$numEliminado."_.".$extencion3);
+															copy($dir_subida.$file, $concatenarNombreC);
+														unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion);
+											        	break;
+											   	}
+											}*/
 									//guardamos el archivo que se selecciono en la carpeta 
 										$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
 											$extencion2 = explode(".",$fichero_subido);
@@ -497,19 +497,22 @@
 			// -------------- Guardamos archivo en carpeta				
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$rowSelect[4]."_".$fecha.$hora."_".$optionSelec."_.".$extencion3);
-												rename ($fichero_subido,$concatenarNombreC);
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$optionSelec."_.".$extencion3);
+													rename ($fichero_subido,$concatenarNombreC);
 												
-													$arrayDoc = explode("#", $nombreCompletoArch);
+													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
-												
+
+													$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$optionSelec', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up doc', '$idDoc[1]')";
+													$resultH = mysqli_query($conexion,$queryHistorial);	
+
 		//los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
 												echo "
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
 												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
-													$arrayNumDoc = explode("#", $enviarDoc);		
+													$arrayNumDoc = explode("_", $enviarDoc);		
 													$numeroDeDocs = count($arrayNumDoc);											
 										?>
 										<!-- ***************************************************************************************** -->	
@@ -519,12 +522,14 @@
 														include "configuracion.php";
 														$existenD =0;
 							////////////// inicia la busqueda del archivo en carpeta 
+												$dir_subida = './Controller/DOCUMENTOS_BAJAS/';
 												// Arreglo con todos los nombres de los archivos
-												$sqlReg =  "SELECT COUNT(*) id_docqr FROM ct_documentos_qr";
+												
+												$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
 																	$resTotalReg = mysqli_query($conexion,$sqlReg);
 																	$rowTotal = mysqli_fetch_row($resTotalReg);
-												for ($i = 1; $i <= $rowTotal[0] ; $i++){
-													$sqlNombreDoc2 = "SELECT * FROM ct_documentos_qr WHERE id_docqr = '$i'";
+												for ($i = 0; $i < $rowTotal[0] ; $i++){
+													$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
 																	$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 																	$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 														$imprime = 0;
@@ -581,7 +586,9 @@
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
-								$arrayDoc = explode("#", $enviarDoc) ;
+
+
+								$arrayDoc = explode("_", $enviarDoc) ;
 								//actualizamos la base para poder tener el registro de los documentos
 								include "./configuracion.php";
 								$usuarioSeguir = $_GET['usuario_rol'];
@@ -591,10 +598,10 @@
 								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								 		$rowHoy = mysqli_fetch_row($resultHoy);
 								 }
-								// echo $arrayDoc[0];
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
+									//echo "<script> alert ('$arrayDoc[$i]');</script>";
 									$nombreAsignar = $arrayDoc[$i];
-									$sqlAgregar = "UPDATE fomope SET  $nombreAsignar = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
+									$sqlAgregar = "UPDATE fomope SET $arrayDoc[$i] = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 									}else{
@@ -602,13 +609,19 @@
 									}
 
 								}
+
 							}
 	}
+		
+
 					if(isset($_POST['borrar'])){
 						$usuarioSeguir = $_GET['usuario_rol'];
 							//session_destroy();
-		   	  				echo "<script type='text/javascript'>javascript:window.location='./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'</script>";  //=$usuarioE
+		   	  				echo "<script type='text/javascript'>javascript:window.location='./guardarVista.php?usuario_rol=$usuarioSeguir'</script>";  //=$usuarioE
+
 					}
+
+
 						?>	
 
 	</div>

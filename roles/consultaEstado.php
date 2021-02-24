@@ -928,15 +928,23 @@ tbody {
 								?>
 							</td>
 							
-							<td><?php echo "
+							<td><?php 
 
-	
-							<form method='get' action='./verList.php'>
-								<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-								<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
-								<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-							</form> "
-
+							if($ver[45] == "BAJAS"){
+								echo "
+								<form method='get' action='./verListBaja.php'>
+									<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+									<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
+									<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+								</form> ";
+							}else{
+								echo "
+								<form method='get' action='./verList.php'>
+									<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+									<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
+									<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+								</form> ";
+							}
 							?>
 							</td>
 				
