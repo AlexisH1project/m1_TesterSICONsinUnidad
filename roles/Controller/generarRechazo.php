@@ -43,7 +43,7 @@
 				include '../librerias/Classes/PHPExcel/IOFactory.php';
 
 				$fileType = 'Excel5';
-				$fileName = '../generarVolanteRechazo/rechazoL.xls';
+				$fileName = '../generarVolanteRechazo/rechazoBajas.xls';
 
 				// Read the file
 				$objReader = PHPExcel_IOFactory::createReader($fileType);
@@ -67,12 +67,12 @@
 				
 				if($resUni = mysqli_query($conexion, $sqlUnidad)){
 					$rowUni = mysqli_fetch_row($resUni);
-					$objPHPExcel->getActiveSheet()->setCellValue('H11',$fecha_recibido); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D13', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D15', $_POST['cod2_1']); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D19', $_POST['unexp_1']); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('D23', $motivoR); 
-			        $objPHPExcel->getActiveSheet()->setCellValue('B32', $rowUser[4]); 
+					$objPHPExcel->getActiveSheet()->setCellValue('H10',$fecha_recibido); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D12', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D14', $_POST['cod2_1']); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D18', $_POST['unexp_1']); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('D22', $motivoR); 
+			        $objPHPExcel->getActiveSheet()->setCellValue('B31', $rowUser[4]); 
 				// Write the file
 			        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, $fileType);
 				        //$objWriter->save("fomopeDESCARGA.xlsx");

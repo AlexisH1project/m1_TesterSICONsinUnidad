@@ -112,6 +112,9 @@
 												break;
 											case 'guinda':
 												$estadoF = 'Finalizado';
+												break;	
+											case 'negroB':
+												$estadoF = 'Baja, Rechazo';
 												break;		
 											default:
 												

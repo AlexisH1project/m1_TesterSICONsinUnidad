@@ -309,6 +309,7 @@
 			function eliminarRequier(){
 					$("#MotivoRechazoCap").removeAttr("required");
 			      	$('#rechazoInicial').hide();
+				
 			}
 
 			function listaDeDoc(text, listaEnviar){
@@ -769,16 +770,28 @@
 						  	<div class="md-form md-0">
 								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
 							</div>	
-							<br>
 							<div class="md-form md-0">
 								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" onclick="irAbandeja()" style="display: none;" value="bandeja principal">
 								<br>
 							<br>
 							</div>	
-							
-							<div class="form-group col-md-60">
+						<?php 
+						if(isset($_POST["unexp_1"])){
+						?>
+						<!-- no imprimimos el boton de Rechazo	 -->
+						<div class="md-form md-0">
+							<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" onclick="irAbandeja()" value="bandeja principal">
+							<br><br>
+						</div>	
+						<?php 
+						}else{
+						?>
+						<div class="form-group col-md-60">
 								<button type="button" name="rechazoInicial" id="rechazoInicial" class="btn btn-danger" data-toggle="modal" data-target="#RechInicial">Rechazar</button>
-							</div>
+						</div>
+						<?php 
+						}
+						?>
 					</div>	
 				</div>	
 				<div class="col-md-8 col-md-offset-8">
@@ -880,8 +893,25 @@
 		                                   	}	
                                    		}		
                                    	}else{
-                                   		$sql1 = "UPDATE fomope SET usuario_name='$usuario',color_estado='$colorAenviar',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = '$estadoFecha' WHERE id_movimiento = '$noFomope' " ;
+                                   		$sql1 = "UPDATE fomope SET unidad = '$unidadAdd' , rfc = '$rfcAdd',curp = '$curpAdd',apellido_1 = '$apellido1Add',apellido_2 = '$apellido2Add',nombre = '$nombreAdd', oficioUnidad='$of_unidad',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$fechaDel',vigenciaAl='$fechaAl',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones', fechaCaptura = '$row[0] - $usuario' WHERE id_movimiento = '$idFomope' " ;
                                    	}
+						
+		//******************************************* */    agregamos los datos personales del empleado si no existe registro de el 
+										$sql3 = "SELECT rfc FROM ct_empleados WHERE rfc = '$rfcAdd'";
+										if ($resulta = mysqli_query($conexion,$sql3)) {
+
+											if($ves=mysqli_fetch_row($resulta)){
+										
+											}else {
+												$sql4 = "INSERT INTO ct_empleados (rfc, curp, apellido_1, apellido_2, nombre) VALUES ('$rfcAdd', '$curpAdd', '$apellido1Add', '$apellido2Add', '$nombreAdd')";
+												if (mysqli_query($conexion,$sql4)) {
+
+												}
+											}
+
+										}
+
+
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
 									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
@@ -918,7 +948,7 @@
 
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper($curpAdd."_".$idDoc[1]."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper($curpAdd."_".$idDoc[1]."_".$apellido1Add."_".$apellido2Add."_".$nombreAdd."_X_".$banderaid."_.".$extencion3);
 												rename ($fichero_subido,$concatenarNombreC);
 												
 													$arrayDoc = explode("_", $nombreCompletoArch);
