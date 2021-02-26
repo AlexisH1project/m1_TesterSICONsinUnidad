@@ -962,7 +962,7 @@
 											$arrayNumDoc = explode("_", $enviarDoc);		
 											$numeroDeDocs = count($arrayNumDoc);
 
-											$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docB', '$idDoc[1]')";
+											$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docBI', '$idDoc[1]')";
 											$resultH = mysqli_query($conexion,$queryHistorial);
 												/*	echo '
 													<br>	<br>		<br>

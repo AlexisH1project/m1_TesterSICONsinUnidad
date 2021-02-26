@@ -650,6 +650,13 @@
 
 									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
 
+									$sqlVRechazo = "SELECT * FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC"
+									if($resRechazo = mysqli_query($conexion, $sqlVRechazo)){
+										$rechazoActual = mysqli_fetch_row($resRechazo);
+										if($rechazoActual[0][0] == "negro"){
+											$bandera = 1;
+										}
+									}
 
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
                                    		$extid =mysqli_fetch_row($datasub2);

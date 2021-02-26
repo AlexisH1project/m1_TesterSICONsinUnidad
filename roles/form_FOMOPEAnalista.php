@@ -302,9 +302,17 @@
 					$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 
 					////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/DOCUMENTOS/';
-					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
-					$rutaEnviar = './DOCUMENTOS_MOV/';
+					if($ver[45] == "BAJAS"){
+						$dir_subida = './Controller/DOCUMENTOS/';
+						$dir_subidaMov = './Controller/DOCUMENTOS_BAJAS/';
+						$rutaEnviar = './DOCUMENTOS_BAJAS/';
+						$catalogoDocs = "m1ct_documentos";
+					}else{
+						$dir_subida = './Controller/DOCUMENTOS/';
+						$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
+						$rutaEnviar = './DOCUMENTOS_MOV/';
+						$catalogoDocs = "m1ct_documentos";
+					}
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -346,7 +354,7 @@
 										    // Nombre del archivo
 										    $extractRfc = $data[0];
 										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $data[6] == $noFomope){
+									 		if($ver[4] == $extractRfc && $data[6] == $noFomope || $ver[5] == $extractRfc && $data[6] == $noFomope){
 									 			$banderaMov = 1;
 													$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
 														$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
@@ -387,12 +395,13 @@
 					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-										if($conId == 7){
+										if($conId == 7){ // || $conId == 8
 									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
 									 			}else{
 									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 									 			}
-										$documentosPC = $documentosPC."_".$data[1];
+							 			$nombreAdescargar = $rutaEnviar.$extractDoc."/".$nombreAdescargar;
+										//$documentosPC = $documentosPC."_".$data[1];
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>
