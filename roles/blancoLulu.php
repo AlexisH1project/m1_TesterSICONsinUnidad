@@ -647,17 +647,24 @@
 									$iniciolab = $_POST['del2'];
 									$finalizalab = $_POST['al3'];
 									$leerMov = $_POST['id_env'];
-
+									$bandera = 0;
 									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
 
-									$sqlVRechazo = "SELECT * FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC"
+									$sqlVRechazo = "SELECT color_estado FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC";
 									if($resRechazo = mysqli_query($conexion, $sqlVRechazo)){
 										$rechazoActual = mysqli_fetch_row($resRechazo);
-										if($rechazoActual[0][0] == "negro"){
+										if($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1"){
+											if($rechazoActual[0] == "negro"){
+												$direccion= "DDSCH";
+											}else {
+												$direccion= "DSPO";
+											}
 											$bandera = 1;
 										}
 									}
-
+		if($bandera == 1){
+			echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
+		}else{
 									if($datasub2 = mysqli_query($conexion,$datosDobles)){
                                    		$extid =mysqli_fetch_row($datasub2);
 								    	$res1Check = mysqli_num_rows($datasub2);
@@ -667,9 +674,8 @@
 								    		$res1Check = 1;
 								    		$banderaid = $extid[0];
 								    	}                                 		
-                                   		//	echo $banderaid;
-                                   	}	
-
+                                   	}
+									
                                    	if ($leerMov == "x") { //$res1Check<1
                                    		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
 
@@ -776,6 +782,7 @@
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
 											}
 							}
+	}
 						?>	
 <input type="text" style="display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
 <!-- ***************************************************************************************** -->	
@@ -964,7 +971,6 @@
 										</div>");
 				 }
 			}
-
 		?>
 	<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>

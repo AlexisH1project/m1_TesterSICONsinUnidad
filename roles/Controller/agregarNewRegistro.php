@@ -34,8 +34,22 @@
 			$hoy = "select CURDATE()";
 		   	$tiempo ="select curTime()";
 
-		   
-
+			   $sqlVRechazo = "SELECT color_estado FROM fomope WHERE rfc = '$rfcAdd' ORDER BY id_movimiento DESC";
+			   if($resRechazo = mysqli_query($conexion, $sqlVRechazo)){
+				   $rechazoActual = mysqli_fetch_row($resRechazo);
+				   if($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1"){
+					   if($rechazoActual[0] == "negro"){
+						   $direccion= "DDSCH";
+					   }else {
+						   $direccion= "DSPO";
+					   }
+					   $bandera = 1;
+				   }
+			   }
+if($bandera == 1){
+		echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
+		echo "<script>window.location.href = '../blancoLulu.php?usuario_rol=$usuarioEdito'</script>";
+}else{
 	function generarExcel(){
 				require "../librerias/conexion_excel.php";
 				include "configuracion.php";
@@ -319,6 +333,6 @@ if($id_rol == 0 && $unidadC == ''){
 				echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 			}
 
-		
+		}
 
  ?>
