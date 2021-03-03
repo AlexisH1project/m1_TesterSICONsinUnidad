@@ -86,17 +86,16 @@
 				});
 			});
 
-			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
-			}
-
 			function guardarDatosEliminar(nombre,laExtencion,direccionRuta){
 				document.getElementById("nombreDoc").value =nombre ;
 				document.getElementById("extencionDoc").value = laExtencion ;
 				document.getElementById("ruta").value = direccionRuta ;
 			}
 
-
+			function enviarRutaDoc(nombre){
+				console.log(nombre);
+				$('#idframePDF').attr('src',nombre);
+			}
 
 		</script>
 
@@ -140,14 +139,9 @@
 		    </div>
 		  </nav>		
 		  <br>
-
-		
-
-		
 		<center>			
 
 		<center>	
-
 				
 			<h3 class="estilo-color plantilla-subtitulospr">Sistema de Control de Registro de Formato de Movimiento de Personal (SICON).</h3>
 				<br>
@@ -263,11 +257,11 @@
 													<td>$nameFIleP[$i][0]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+									 			$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -342,13 +336,13 @@
 													<td>$rowNombreDoc2[1]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+									 			$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
-													
+												
 												<?php
 											
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
@@ -366,8 +360,6 @@
 												}
 												}
 										  }
-
-								
 
 								if($banderaMov == 0){
 
@@ -394,14 +386,14 @@
 															";
 											 			}
 											 			if($conId == 7){
-											 				$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+											 				$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
 											 			}else{
 											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
 														$banderaSI = 1;
 								?>
 														<td>
-														<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 														</td>
 															
 														<?php
@@ -438,6 +430,15 @@
 								
 						
 </table>
+		
+	<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<embed id="idframePDF" type="application/pdf" width="100%" height="600px" />
+		</div>
+	</div>
+	</div>
+
 		<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

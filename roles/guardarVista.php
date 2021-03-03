@@ -118,6 +118,27 @@
 									    aTag.setAttribute('value',infEmpleado[i].id);
 									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
 									    miSelect2.appendChild(aTag);
+										
+										const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+										// Recorrer todos los productos
+											// Crear un <tr>
+											const $tr = document.createElement("tr");
+											// Creamos el <td> de nombre y lo adjuntamos a tr
+											let $tdNombre = document.createElement("td");
+											$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+											$tr.appendChild($tdNombre);
+											// El td de precio
+											let $tdPrecio = document.createElement("td");
+											$tdPrecio.textContent = infEmpleado[i].fecha;
+											$tr.appendChild($tdPrecio);
+											// El td del código
+											let $tdCodigo = document.createElement("td");
+											$tdCodigo.textContent = infEmpleado[i].qna;
+											$tr.appendChild($tdCodigo);
+											// Finalmente agregamos el <tr> al cuerpo de la tabla
+											$cuerpoTabla.appendChild($tr);
+							
+
 										}else{
 											// $('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
 											for (let i = select.options.length; i >= 0; i--) {
@@ -294,7 +315,19 @@
 								<select class="form-control border border-dark" id="movFecha" name="movFecha">
 									
 								</select>
-							
+
+								<table>
+									<thead>
+										<tr>
+											<th>Nombre</th>
+											<th>Precio</th>
+											<th>Código</th>
+										</tr>
+									</thead>
+									<tbody id="cuerpoTabla">
+
+									</tbody>
+								</table>
 								
 							</div>
 
