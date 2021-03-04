@@ -86,8 +86,9 @@
 				});
 			});
 
-			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+			function enviarRutaDoc(nombre){
+				console.log(nombre);
+				$('#idframePDF').attr('src',nombre);
 			}
 
 			function guardarDatosEliminar(nombre,laExtencion,direccionRuta){
@@ -95,7 +96,6 @@
 				document.getElementById("extencionDoc").value = laExtencion ;
 				document.getElementById("ruta").value = direccionRuta ;
 			}
-
 
 
 		</script>
@@ -108,19 +108,7 @@
 				include "configuracion.php";
 					$noFomope =  $_GET['idMov'];
 					$usuarioSeguir =  $_GET['usuario_rol'];
-					
-				/*if(isset($_GET["idMov"])){
-					$noFomope =  $_GET['idMov'];
-				}else{
-					$noFomope =  $_POST['idMov'];
-
-				}
-				if(isset($_GET["usuario_rol"])){ 
-					$usuarioSeguir =  $_GET['usuario_rol'];
-				}else{
-					$usuarioSeguir =  $_POST['usuario_rol'];
-
-				}*/
+				
 			?>
 
 			<br>
@@ -185,7 +173,6 @@
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/DOCUMENTOS/';
 					$dir_subidaMov = './Controller/DOCUMENTOS_BAJAS/';
-					$asiganarRutaDoc = './DOCUMENTOS_BAJAS/';
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -263,11 +250,11 @@
 													<td>$nameFIleP[$i][0]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+									 			$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -342,11 +329,11 @@
 													<td>$rowNombreDoc2[1]</td>
 													";
 									 			}
-									 			$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
+									 			$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_".$data[6]."_."."$extencion";
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -394,14 +381,14 @@
 															";
 											 			}
 											 			if($conId == 7){
-											 				$nombreAdescargar = $asiganarRutaDoc.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+											 				$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
 											 			}else{
 											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
 														$banderaSI = 1;
 								?>
 														<td>
-														<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 														</td>
 															
 														<?php
@@ -438,6 +425,16 @@
 								
 						
 </table>
+
+<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<embed id="idframePDF" type="application/pdf" width="100%" height="600px" />
+		</div>
+	</div>
+	</div>
+
+
 		<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

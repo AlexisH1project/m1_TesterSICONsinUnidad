@@ -85,8 +85,9 @@
 				});
 			});
 
-			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+			function enviarRutaDoc(nombre){
+				console.log(nombre);
+				$('#idframePDF').attr('src',nombre);
 			}
 		</script>
 
@@ -193,10 +194,8 @@ function asignarIDfecha(){
 ////////////// inicia la busqueda del archivo en carpeta 
 					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 		                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
-		                     $asiganarRutaDoc = './DOCUMENTOS_PDC/';
 	                     }else{
 		                 	$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
-		                     $asiganarRutaDoc = './DOCUMENTOS_RES/';
 		                 }
 					$ruta = $dir_subidaMov;
 					$index=0;
@@ -320,7 +319,7 @@ function asignarIDfecha(){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
-										 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."_".$idMovDoc."_."."$extencion";
+										 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."_".$idMovDoc."_."."$extencion";
 														$banderaSI = 1;
 													}else{
 									 		    		$duplicado = 0 ;	
@@ -341,17 +340,17 @@ function asignarIDfecha(){
 													// ";
 									 			}
 									 			if($conId==2 || $conId==3){
-										 			$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
 									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
 													$banderaSI = 1;
 									 		    } 
 								if($banderaSI == 1){
 
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -460,7 +459,7 @@ function asignarIDfecha(){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
-										 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."_".$idMovDoc."_."."$extencion";
+										 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."_".$idMovDoc."_."."$extencion";
 														$banderaSI = 1;
 													}else{
 									 		    		$duplicado = 0 ;	
@@ -474,17 +473,17 @@ function asignarIDfecha(){
 													";
 									 			}
 									 			if($conId==2 || $conId==3){
-										 			$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
+										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
 									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $asiganarRutaDoc.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
 													$banderaSI = 1;
 									 		    } 
 								if($banderaSI == 1){
 
 						?>	
 												<td>
-												<button onclick="verDoc('<?php echo $nombreAdescargar ?>','<?php echo $extencion ?>')" type="button" class="btn btn-outline-secondary" > Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -515,6 +514,13 @@ function asignarIDfecha(){
 								
 						
 </table>
+	<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<embed id="idframePDF" type="application/pdf" width="100%" height="600px" />
+			</div>
+		</div>
+	</div>
 	</body>
 
 </html>

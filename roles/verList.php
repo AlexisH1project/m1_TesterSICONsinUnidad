@@ -20,6 +20,7 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="css/estilossicon.css">
+
 			<style type="text/css">
 
 		  <style>
@@ -92,9 +93,30 @@
 				document.getElementById("ruta").value = direccionRuta ;
 			}
 
+			function verDoc(nombre,laExtencion){
+				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+			}
+
 			function enviarRutaDoc(nombre){
-				console.log(nombre);
-				$('#idframePDF').attr('src',nombre);
+				var ruta = nombre;
+				let extencion = ruta.split('.');
+				ext =  extencion[2];
+
+				console.log(ext != "PDF");
+
+				
+				if(ext == "PDF" || ext == "pdf"){
+					$(document).ready(function(){
+						$('#modalPDF').modal('toggle');
+						// $("#modalPDF").modal();
+						$('#modalPDF').modal('show');
+						$('#modalPDF').modal('hide');
+					});
+					$('#idframePDF').attr('src',nombre);
+				}else{
+					verDoc(nombre,ext);
+				}
+			
 			}
 
 		</script>
@@ -108,18 +130,6 @@
 					$noFomope =  $_GET['idMov'];
 					$usuarioSeguir =  $_GET['usuario_rol'];
 					
-				/*if(isset($_GET["idMov"])){
-					$noFomope =  $_GET['idMov'];
-				}else{
-					$noFomope =  $_POST['idMov'];
-
-				}
-				if(isset($_GET["usuario_rol"])){ 
-					$usuarioSeguir =  $_GET['usuario_rol'];
-				}else{
-					$usuarioSeguir =  $_POST['usuario_rol'];
-
-				}*/
 			?>
 
 			<br>
@@ -179,7 +189,6 @@
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/DOCUMENTOS/';
 					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
-					$asiganarRutaDoc = './DOCUMENTOS_MOV/';
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -261,7 +270,7 @@
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary"   data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -270,7 +279,7 @@
 													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -340,7 +349,7 @@
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary"   data-whatever="@getbootstrap"> Ver</button>
 												</td>
 												
 												<?php
@@ -349,7 +358,7 @@
 													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -388,12 +397,12 @@
 											 			if($conId == 7){
 											 				$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
 											 			}else{
-											 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
+											 				$nombreAdescargar = $dir_subida.$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
 														$banderaSI = 1;
 								?>
 														<td>
-														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary"   data-whatever="@getbootstrap"> Ver</button>
 														</td>
 															
 														<?php
@@ -402,7 +411,7 @@
 															$laRuta = "DOCUMENTOS";
 														?>
 															<td>
-																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
+																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
 															</td>
 																
 								<?php
