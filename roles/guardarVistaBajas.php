@@ -208,22 +208,6 @@
 
 	        </ul>
 
-	       <!-- <div class="mb-5">
-						<h3 class="h6 mb-3">Subscribe for newsletter</h3>
-						<form action="#" class="subscribe-form">
-	            <div class="form-group d-flex">
-	            	<div class="icon"><span class="icon-paper-plane"></span></div>
-	              <input type="text" class="form-control" placeholder="Enter Email Address">
-	            </div>
-	          </form>
-					</div>-->
-
-	        <!--<div class="footer">
-	        	<p>Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.
-						  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-						  Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0.</p>
-	        </div>-->
-
 	      </div>
     	</nav>
 
@@ -451,33 +435,6 @@
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
-											/*foreach($files as $file){
-											    // Divides en dos el nombre de tu archivo utilizando el . 
-											    $data = explode("_",$file);
-											    $data2 = explode(".",$file);
-												$indice = count($data2);	
-
-												$extencion = $data2[$indice-1];
-											    // Nombre del archivo
-											    $extractRfc = $data[0];
-											    $nameAdj = $data[1];
-												//echo "<script> alert(''); </script>";
-
-											    // Extensión del archivo 
-											    if($elRfc == $extractRfc AND strtoupper($idDoc[1]) == $nameAdj){
-													//echo "<script> alert('$idDoc[1]'); </script>";
-	
-															$fichero_subido2 = $dir_subida2 . $file;
-															$extencion2 = explode(".",$fichero_subido2);
-															$tamnio = count($extencion2);
-
-															$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
-															$concatenarNombreC = $dir_subida2.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$numEliminado."_.".$extencion3);
-															copy($dir_subida.$file, $concatenarNombreC);
-														unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion);
-											        	break;
-											   	}
-											}*/
 									//guardamos el archivo que se selecciono en la carpeta 
 										$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
 											$extencion2 = explode(".",$fichero_subido);

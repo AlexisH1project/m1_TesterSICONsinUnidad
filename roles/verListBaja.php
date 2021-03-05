@@ -3,11 +3,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Consulta</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<link href='css/jquery-ui.min.css' type='text/css' rel='stylesheet'>
@@ -20,6 +18,9 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="css/estilossicon.css">
+
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
 			<style type="text/css">
 
 		  <style>
@@ -87,8 +88,17 @@
 			});
 
 			function enviarRutaDoc(nombre){
-				console.log(nombre);
-				$('#idframePDF').attr('src',nombre);
+				var ruta = nombre;
+				let extencion = ruta.split('.');
+				ext =  extencion[2];
+				if(ext == "PDF" || ext == "pdf"){
+					$('#modalPDF').modal('show');
+					$('#idframePDF').attr('src',nombre);
+				}else{
+					$('#modalPDF').modal('hide');
+					verDoc(nombre,ext);
+				}
+			
 			}
 
 			function guardarDatosEliminar(nombre,laExtencion,direccionRuta){
@@ -160,16 +170,7 @@
 							$resultRols = mysqli_query($conexion, $queyRols);
 							$columnasUsuario = mysqli_fetch_assoc($resultRols);
 
-							// 	for($i=47; $i<=117; $i++){
-							// 		if($ver[$i] == ""){
-										
-							// 		}else{
-							// 			$existenD ++;
-							// 			$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$ver[$i]'";
-							// 			$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
-							// 			$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
-							// 			$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
-
+							
 ////////////// inicia la busqueda del archivo en carpeta 
 					$dir_subida = './Controller/DOCUMENTOS/';
 					$dir_subidaMov = './Controller/DOCUMENTOS_BAJAS/';
@@ -254,7 +255,7 @@
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -319,7 +320,7 @@
 										    // Nombre del archivo
 										    $extractRfc = $data[0];
 										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope){
+									 		if($ver[5] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
@@ -333,7 +334,7 @@
 												$banderaSI = 1;
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -371,7 +372,7 @@
 												    // Nombre del archivo
 												    $extractRfc = $data[0];
 												    $extractDoc = $data[1];
-											 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc)){
+											 		if($ver[5] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc)){
 											 			$duplicado++;
 											 			if($duplicado > 1){
 								
@@ -388,7 +389,7 @@
 														$banderaSI = 1;
 								?>
 														<td>
-														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+														<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-whatever="@getbootstrap"> Ver</button>
 														</td>
 															
 														<?php
@@ -429,7 +430,13 @@
 <div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
-			<embed id="idframePDF" type="application/pdf" width="100%" height="600px" />
+			<iframe id="idframePDF"
+				title="Archivo PDF"
+				frameborder="0"
+				width="100%"
+				height="600px"
+				>
+			</iframe>
 		</div>
 	</div>
 	</div>

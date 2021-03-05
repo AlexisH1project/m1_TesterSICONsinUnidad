@@ -36,20 +36,7 @@
 				color:  #6f7271 ;
 				font-weight: bold;
 			}
-
-			tbody {
-		      display:block;
-		      max-height:500px;
-		      overflow-y:auto;
-		  }
-		  thead, tbody tr {
-		      display:table;
-		      width:180%;
-		      table-layout:fixed;
-		  }
-		  thead {
-		      width: calc( 100% - 1em )
-		  } 
+		
 		  </style>
 		<script type="text/javascript">
 
@@ -60,6 +47,44 @@
 				    aTag.setAttribute('value',datos);
 				    aTag.innerHTML = opcion2;
 				    miSelect2.appendChild(aTag);
+			}
+
+			function movTable(radioCheck, opcion2){
+					var datos = radioCheck;
+					var miSelect2 = document.getElementById("movFecha");
+				    var aTag = document.createElement('option');
+				    aTag.setAttribute('value',datos);
+				    aTag.innerHTML = opcion2;
+				    miSelect2.appendChild(aTag);
+
+
+					const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+					const $tr = document.createElement("tr");
+					let $tdNombre = document.createElement("td");
+					$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+					$tr.appendChild($tdNombre);
+					let $tdPrecio = document.createElement("td");
+					$tdPrecio.textContent = infEmpleado[i].fecha;
+					$tr.appendChild($tdPrecio);
+					// El td del código
+					let $tdCodigo = document.createElement("td");
+					$tdCodigo.textContent = infEmpleado[i].qna;
+					$tr.appendChild($tdCodigo);
+					// El td del año
+					let $tdAnio = document.createElement("td");
+					$tdAnio.textContent = infEmpleado[i].anio;
+					$tr.appendChild($tdAnio);
+					// El select
+					let $tdSelect = document.createElement("td");
+					var checkbox = document.createElement('input');
+					checkbox.type = "radio";
+					checkbox.name = "radioMov";
+					checkbox.value = infEmpleado[i].id;
+					checkbox.id = "idRadioMov";
+					$tr.appendChild(document.body.appendChild(checkbox));
+					
+					// Finalmente agregamos el <tr> al cuerpo de la tabla
+					$cuerpoTabla.appendChild($tr);
 			}
 
 			$(document).ready(function(){
@@ -135,6 +160,20 @@
 											let $tdCodigo = document.createElement("td");
 											$tdCodigo.textContent = infEmpleado[i].qna;
 											$tr.appendChild($tdCodigo);
+											// El td del año
+											let $tdAnio = document.createElement("td");
+											$tdAnio.textContent = infEmpleado[i].anio;
+											$tr.appendChild($tdAnio);
+											// El select
+											let $tdSelect = document.createElement("td");
+											var checkbox = document.createElement('input');
+											checkbox.type = "radio";
+											checkbox.name = "radioMov";
+											checkbox.value = infEmpleado[i].id;
+											checkbox.id = "idRadioMov";
+											// $tdSelect.textContent =checkbox ;
+											$tr.appendChild(document.body.appendChild(checkbox));
+											
 											// Finalmente agregamos el <tr> al cuerpo de la tabla
 											$cuerpoTabla.appendChild($tr);
 							
@@ -316,16 +355,18 @@
 									
 								</select>
 
-								<table>
+								<table class="table table-striped">
 									<thead>
 										<tr>
-											<th>Nombre</th>
-											<th>Precio</th>
-											<th>Código</th>
+											<th>Cod. Mov </th>
+											<th>Fecha</th>
+											<th>Qna</th>
+											<th>Año</th>
+											<th>*</th>
 										</tr>
 									</thead>
 									<tbody id="cuerpoTabla">
-
+									
 									</tbody>
 								</table>
 								
@@ -447,8 +488,8 @@
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
-									if(isset($_POST['movFecha'])){
-										$optionSelec = $_POST['movFecha'];
+									if(isset($_POST['radioMov'])){
+										$optionSelec = $_POST['radioMov'];
 									}else{
 										$optionSelec = "x";
 									}
@@ -555,6 +596,7 @@
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
 												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
+												echo "<script> movTable('$optionSelec', '$opcionCompleta'); </script>";
 
 											
 													$arrayNumDoc = explode("_", $enviarDoc);		

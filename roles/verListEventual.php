@@ -2,11 +2,9 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Consulta</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 		<link href='css/jquery-ui.min.css' type='text/css' rel='stylesheet'>
@@ -19,6 +17,9 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="css/estilossicon.css">
+
+		<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"/>
 			<style type="text/css">
 
 		  <style>
@@ -86,8 +87,17 @@
 			});
 
 			function enviarRutaDoc(nombre){
-				console.log(nombre);
-				$('#idframePDF').attr('src',nombre);
+				var ruta = nombre;
+				let extencion = ruta.split('.');
+				ext =  extencion[2];
+				if(ext == "PDF" || ext == "pdf"){
+					$('#modalPDF').modal('show');
+					$('#idframePDF').attr('src',nombre);
+				}else{
+					$('#modalPDF').modal('hide');
+					verDoc(nombre,ext);
+				}
+			
 			}
 		</script>
 
@@ -350,7 +360,7 @@ function asignarIDfecha(){
 
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -483,7 +493,7 @@ function asignarIDfecha(){
 
 						?>	
 												<td>
-												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#modalPDF" data-whatever="@getbootstrap"> Ver</button>
+												<button  onclick="enviarRutaDoc('<?php echo $nombreAdescargar ?>')"  type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-whatever="@getbootstrap"> Ver</button>
 												</td>
 													
 												<?php
@@ -517,7 +527,13 @@ function asignarIDfecha(){
 	<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
-				<embed id="idframePDF" type="application/pdf" width="100%" height="600px" />
+			<iframe id="idframePDF"
+				title="Archivo PDF"
+				frameborder="0"
+				width="100%"
+				height="600px"
+				>
+			</iframe>
 			</div>
 		</div>
 	</div>
