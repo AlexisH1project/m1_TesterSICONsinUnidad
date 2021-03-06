@@ -36,55 +36,63 @@
 				color:  #6f7271 ;
 				font-weight: bold;
 			}
+
+			.tbody {
+		      display:block;
+		      max-height:500px;
+		      overflow-y:auto;
+		  }
+		  .thead, .tbody .tr {
+		      display:table;
+		      width:180%;
+		      table-layout:fixed;
+		  }
+		  .thead2 {
+		      width: calc( 100% - 1em )
+		  } 
 		
 		  </style>
 		<script type="text/javascript">
 
-			function datosSelect(opcionSelect, opcion2){
-					var datos = opcionSelect;
-					var miSelect2 = document.getElementById("movFecha");
-				    var aTag = document.createElement('option');
-				    aTag.setAttribute('value',datos);
-				    aTag.innerHTML = opcion2;
-				    miSelect2.appendChild(aTag);
-			}
+			// function datosSelect(opcionSelect, opcion2){
+			// 		var datos = opcionSelect;
+			// 		var miSelect2 = document.getElementById("movFecha");
+			// 	    var aTag = document.createElement('option');
+			// 	    aTag.setAttribute('value',datos);
+			// 	    aTag.innerHTML = opcion2;
+			// 	    miSelect2.appendChild(aTag);
+			// }
 
-			function movTable(radioCheck, opcion2){
-					var datos = radioCheck;
-					var miSelect2 = document.getElementById("movFecha");
-				    var aTag = document.createElement('option');
-				    aTag.setAttribute('value',datos);
-				    aTag.innerHTML = opcion2;
-				    miSelect2.appendChild(aTag);
-
-
+			function movTable(radioCheck,codigo, fecha, Qna, anio){
+				console.log(codigo);
+				
 					const $cuerpoTabla = document.querySelector("#cuerpoTabla");
 					const $tr = document.createElement("tr");
 					let $tdNombre = document.createElement("td");
-					$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+					$tdNombre.textContent = codigo; // el textContent del td es el nombre
 					$tr.appendChild($tdNombre);
 					let $tdPrecio = document.createElement("td");
-					$tdPrecio.textContent = infEmpleado[i].fecha;
+					$tdPrecio.textContent = fecha;
 					$tr.appendChild($tdPrecio);
 					// El td del código
 					let $tdCodigo = document.createElement("td");
-					$tdCodigo.textContent = infEmpleado[i].qna;
+					$tdCodigo.textContent = Qna;
 					$tr.appendChild($tdCodigo);
 					// El td del año
 					let $tdAnio = document.createElement("td");
-					$tdAnio.textContent = infEmpleado[i].anio;
+					$tdAnio.textContent = anio;
 					$tr.appendChild($tdAnio);
 					// El select
 					let $tdSelect = document.createElement("td");
 					var checkbox = document.createElement('input');
 					checkbox.type = "radio";
 					checkbox.name = "radioMov";
-					checkbox.value = infEmpleado[i].id;
+					checkbox.value = radioCheck;
 					checkbox.id = "idRadioMov";
 					$tr.appendChild(document.body.appendChild(checkbox));
-					
 					// Finalmente agregamos el <tr> al cuerpo de la tabla
 					$cuerpoTabla.appendChild($tr);
+					$("#idRadioMov").prop("checked", true);
 			}
 
 			$(document).ready(function(){
@@ -120,10 +128,13 @@
 									
 								},
 								success: function(data){
-										const select = document.querySelector("#movFecha");
-										for (let i = select.options.length; i >= 0; i--) {
-										    	select.remove(i);
-											}
+										// const select = document.querySelector("#movFecha");
+										// for (let i = select.options.length; i >= 0; i--) {
+										//     	select.remove(i);
+										// 	}
+									
+									$('#cuerpoTabla').children( 'tr' ).remove();
+
 									var infEmpleado = eval(data);
 									console.log(data);
 									console.log(infEmpleado[0].apellido1);
@@ -138,11 +149,11 @@
 								        console.log(infEmpleado[i]);
 									    if(infEmpleado[i].id != null){
 
-								        var miSelect2 = document.getElementById("movFecha");
-									    var aTag = document.createElement('option');
-									    aTag.setAttribute('value',infEmpleado[i].id);
-									    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
-									    miSelect2.appendChild(aTag);
+								        // var miSelect2 = document.getElementById("movFecha");
+									    // var aTag = document.createElement('option');
+									    // aTag.setAttribute('value',infEmpleado[i].id);
+									    // aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
+									    // miSelect2.appendChild(aTag);
 										
 										const $cuerpoTabla = document.querySelector("#cuerpoTabla");
 										// Recorrer todos los productos
@@ -179,10 +190,11 @@
 							
 
 										}else{
-											// $('#movFecha').empty().append('<option selected="selected" value= "x"></option>');
-											for (let i = select.options.length; i >= 0; i--) {
-										    	select.remove(i);
-											}
+											// for (let i = select.options.length; i >= 0; i--) {
+										    // 	select.remove(i);
+											// }
+											$('#cuerpoTabla').children( 'tr' ).remove();
+											
 										}
 									}
 
@@ -351,9 +363,9 @@
 							<div class="box" >
 								<label  class="plantilla-label" for="arch">Movimientos: </label>
 								
-								<select class="form-control border border-dark" id="movFecha" name="movFecha">
+								<!-- <select class="form-control border border-dark" id="movFecha" name="movFecha">
 									
-								</select>
+								</select> -->
 
 								<table class="table table-striped">
 									<thead>
@@ -595,8 +607,8 @@
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
-												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
-												echo "<script> movTable('$optionSelec', '$opcionCompleta'); </script>";
+												// echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
+												echo "<script> movTable('$optionSelec','$rowSelect[1] ','$rowSelect[2]','$rowSelect[4]','$rowSelect[3]'); </script>";
 
 											
 													$arrayNumDoc = explode("_", $enviarDoc);		
@@ -604,7 +616,8 @@
 										?>
 										<!-- ***************************************************************************************** -->	
 
-								<table class="table table-striped table-bordered" style="margin-bottom: 0">
+								<table class="table table-striped table-bordered tbody thead2 tr" style="margin-bottom: 0">
+
 													<?php 
 														include "configuracion.php";
 														$existenD =0;

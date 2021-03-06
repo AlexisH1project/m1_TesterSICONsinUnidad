@@ -37,29 +37,52 @@
 				font-weight: bold;
 			}
 
-			tbody {
+			.tbody {
 		      display:block;
 		      max-height:500px;
 		      overflow-y:auto;
 		  }
-		  thead, tbody tr {
+		  .thead, .tbody .tr {
 		      display:table;
 		      width:180%;
 		      table-layout:fixed;
 		  }
-		  thead {
+		  .thead2 {
 		      width: calc( 100% - 1em )
 		  } 
 		  </style>
 		<script type="text/javascript">
 
-			function datosSelect(opcionSelect, opcion2){
-					var datos = opcionSelect;
-					var miSelect2 = document.getElementById("movFecha");
-				    var aTag = document.createElement('option');
-				    aTag.setAttribute('value',datos);
-				    aTag.innerHTML = opcion2;
-				    miSelect2.appendChild(aTag);
+			function movTable(radioCheck,codigo, fecha, Qna, anio){
+				console.log(codigo);
+				
+					const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+					const $tr = document.createElement("tr");
+					let $tdNombre = document.createElement("td");
+					$tdNombre.textContent = codigo; // el textContent del td es el nombre
+					$tr.appendChild($tdNombre);
+					let $tdPrecio = document.createElement("td");
+					$tdPrecio.textContent = fecha;
+					$tr.appendChild($tdPrecio);
+					// El td del código
+					let $tdCodigo = document.createElement("td");
+					$tdCodigo.textContent = Qna;
+					$tr.appendChild($tdCodigo);
+					// El td del año
+					let $tdAnio = document.createElement("td");
+					$tdAnio.textContent = anio;
+					$tr.appendChild($tdAnio);
+					// El select
+					let $tdSelect = document.createElement("td");
+					var checkbox = document.createElement('input');
+					checkbox.type = "radio";
+					checkbox.name = "radioMov";
+					checkbox.value = radioCheck;
+					checkbox.id = "idRadioMov";
+					$tr.appendChild(document.body.appendChild(checkbox));
+					// Finalmente agregamos el <tr> al cuerpo de la tabla
+					$cuerpoTabla.appendChild($tr);
+					$("#idRadioMov").prop("checked", true);
 			}
 
 			
@@ -96,10 +119,8 @@
 									
 								},
 								success: function(data){
-									const select = document.querySelector("#movFecha");
-									for (let i = select.options.length; i >= 0; i--) {
-										    	select.remove(i);
-											}
+									
+									$('#cuerpoTabla').children( 'tr' ).remove();
 									console.log(data);
 									var infEmpleado = eval(data);
 									console.log(data);
@@ -114,16 +135,40 @@
 								  for(var i=1; i < infEmpleado.length; i++){ 
 								        console.log(infEmpleado[i]);
 									    if(infEmpleado[i].id != null){
-									        var miSelect2 = document.getElementById("movFecha");
-										    var aTag = document.createElement('option');
-										    aTag.setAttribute('value',infEmpleado[i].id);
-										    aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
-										    miSelect2.appendChild(aTag);
-										    console.log(select.options.length);
+											const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+										// Recorrer todos los productos
+											// Crear un <tr>
+											const $tr = document.createElement("tr");
+											// Creamos el <td> de nombre y lo adjuntamos a tr
+											let $tdNombre = document.createElement("td");
+											$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+											$tr.appendChild($tdNombre);
+											// El td de precio
+											let $tdPrecio = document.createElement("td");
+											$tdPrecio.textContent = infEmpleado[i].fecha;
+											$tr.appendChild($tdPrecio);
+											// El td del código
+											let $tdCodigo = document.createElement("td");
+											$tdCodigo.textContent = infEmpleado[i].qna;
+											$tr.appendChild($tdCodigo);
+											// El td del año
+											let $tdAnio = document.createElement("td");
+											$tdAnio.textContent = infEmpleado[i].anio;
+											$tr.appendChild($tdAnio);
+											// El select
+											let $tdSelect = document.createElement("td");
+											var checkbox = document.createElement('input');
+											checkbox.type = "radio";
+											checkbox.name = "radioMov";
+											checkbox.value = infEmpleado[i].id;
+											checkbox.id = "idRadioMov";
+											// $tdSelect.textContent =checkbox ;
+											$tr.appendChild(document.body.appendChild(checkbox));
+											
+											// Finalmente agregamos el <tr> al cuerpo de la tabla
+											$cuerpoTabla.appendChild($tr);
 										}else{
-											for (let i = select.options.length; i >= 0; i--) {
-										    	select.remove(i);
-											}
+											$('#cuerpoTabla').children( 'tr' ).remove();
 										}
 									}
 
@@ -294,7 +339,7 @@
 							<div class="form-group col-md-12">
 								<label class="plantilla-label" for="elRfc">*CURP:</label>
 								
-								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="18"  required>
 							</div>
 		
 							<input type="text" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="Apellido Paterno" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" style="display: none;">
@@ -304,9 +349,20 @@
 							<div class="box" >
 								<label  class="plantilla-label" for="arch">Movimientos: </label>
 								
-								<select class="form-control border border-dark" id="movFecha" name="movFecha">
+								<table class="table table-striped">
+									<thead>
+										<tr>
+											<th>Cod. Mov </th>
+											<th>Fecha</th>
+											<th>Qna</th>
+											<th>Año</th>
+											<th>*</th>
+										</tr>
+									</thead>
+									<tbody id="cuerpoTabla">
 									
-								</select>
+									</tbody>
+								</table>
 							
 								
 							</div>
@@ -427,8 +483,8 @@
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
-									if(isset($_POST['movFecha'])){
-										$optionSelec = $_POST['movFecha'];
+									if(isset($_POST['radioMov'])){
+										$optionSelec = $_POST['radioMov'];
 									}else{
 										$optionSelec = "x";
 									}
@@ -444,7 +500,6 @@
         							$consulta = "SELECT id_movimiento_qr, tipo_movimiento, fini, anio, qna FROM fomope_qr  WHERE id_movimiento_qr ='$optionSelec'";
         							if($resultSelect = mysqli_query($conexion, $consulta)){
         								$rowSelect = mysqli_fetch_row($resultSelect);
-        								$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
         								//echo $opcionCompleta;
         							}else{ echo "errror";}
 
@@ -516,15 +571,15 @@
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
-												echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
-
+													echo "<script> movTable('$optionSelec','$rowSelect[1] ','$rowSelect[2]','$rowSelect[4]','$rowSelect[3]'); </script>";
 											
 													$arrayNumDoc = explode("#", $enviarDoc);		
 													$numeroDeDocs = count($arrayNumDoc);											
 										?>
 										<!-- ***************************************************************************************** -->	
 
-								<table class="table table-striped table-bordered" style="margin-bottom: 0">
+								<table class="table table-striped table-bordered tbody thead2 tr" style="margin-bottom: 0">
+
 													<?php 
 														include "configuracion.php";
 														$existenD =0;
