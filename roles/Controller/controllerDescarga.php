@@ -4,7 +4,7 @@ $nombreDeArchivoDescarga = $_GET['nombreDecarga'];
 $tipoArchivo = $_GET['extencion'];
 $ruta =	explode("/", $nombreDeArchivoDescarga); 
 
-	if($tipoArchivo == "zip" || $tipoArchivo == "ZIP" || $tipoArchivo == "7z" || $tipoArchivo == "7Z" || $tipoArchivo == "RAR" || $tipoArchivo == "rar"){
+	if($tipoArchivo == "zip" || $tipoArchivo == "ZIP" || $tipoArchivo == "7z" || $tipoArchivo == "7Z" || $tipoArchivo == "RAR" || $tipoArchivo == "rar" || $tipoArchivo == "gz"|| $tipoArchivo == "GZ"){
 		header("Content-type: application/zip");
         header("Content-Transfer-Encoding: binary");
 		readfile("./DOCUMENTOS/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
