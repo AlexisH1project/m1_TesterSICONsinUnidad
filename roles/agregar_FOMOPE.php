@@ -180,7 +180,12 @@
 
 		if($fecha_recibido <= $row[0] AND $fecha_oficio <= $row[0] AND $fecha_recibido_spc <= $row[0] AND $fecha_envio_spc <= $row[0] AND $fecha_recibo_dspo <= $row[0] ){
 
-			$sql1 = "UPDATE fomope SET usuario_name='$usuario',color_estado='$colorAenviar',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = '$estadoFecha' WHERE id_movimiento = '$noFomope' " ;
+			if($elBoton == "aceptar y modificar"){
+				//puede ser de un rechazo que se realizo desde DISPCH , SE ACTUALIZA FECHAS Y LA QNA QUE VIENE DESDE LULU
+				$sql1 = "UPDATE fomope SET usuario_name='$usuario',color_estado='$colorAenviar',quincenaAplicada='$qna_Add',qnaDeAfectacion='$qna_Add',fechaIngreso='$fecha_recibido',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = '$estadoFecha' WHERE id_movimiento = '$noFomope' " ;
+			}else{
+				$sql1 = "UPDATE fomope SET usuario_name='$usuario',color_estado='$colorAenviar',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = '$estadoFecha' WHERE id_movimiento = '$noFomope' " ;
+			}
 
 				$hoy = "select CURDATE()";
 				$tiempo ="select curTime()";

@@ -32,6 +32,7 @@
 			 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 			 		$row = mysqli_fetch_row($resultHoy);
 			 		$row2 = mysqli_fetch_row($resultTime);
+					$anioActual = explode("-", $row[0]);
 			 }
 
 		if($fechaIngresoUp <= $row[0] ){
@@ -43,14 +44,14 @@
 					        		$unidadC = 	$rowU['unidadCorrespondiente'];
 
 						if($id_rol == '0' ){
-							$sqlL = "UPDATE fomope SET color_estado='$colorAccion',usuario_name='$rolSegimiento', unidad='$unidadUp',rfc='$rfcUp',curp='$curpUp',apellido_1='$apellido1Up',apellido_2='$apellido2Up',nombre='$nombreUp',fechaIngreso='$fechaIngresoUp',tipoEntrega='$tipoEntregaUp',tipoDeAccion='$radioUpRechazar',justificacionRechazo='$motivoRUp', fechaAutorizacion = '$row[0] - $rolSegimiento', analistaCap='$analista', vigenciaDel = '$fechaDel', vigenciaAl = '$fechaAl', quincenaAplicada = '$laQna' WHERE id_movimiento = '$id_Fom'";
+							$sqlL = "UPDATE fomope SET color_estado='$colorAccion',usuario_name='$rolSegimiento', unidad='$unidadUp',rfc='$rfcUp',curp='$curpUp',apellido_1='$apellido1Up',apellido_2='$apellido2Up',nombre='$nombreUp',fechaIngreso='$fechaIngresoUp',tipoEntrega='$tipoEntregaUp',tipoDeAccion='$radioUpRechazar',justificacionRechazo='$motivoRUp', fechaAutorizacion = '$row[0] - $rolSegimiento', analistaCap='$analista', vigenciaDel = '$fechaDel', vigenciaAl = '$fechaAl', quincenaAplicada = '$laQna', anio = '$anioActual[0]' WHERE id_movimiento = '$id_Fom'";
 								mysqli_query($conexion,$sqlL);
 
 		               			echo "<script> alert('Fomope Actualizado'); window.location.href = '../luluConsulta.php?usuario_rol=$rolSegimiento'</script>";
 
 
 						}else if($id_rol == '1'){
-							$sqlCL = "UPDATE fomope SET color_estado='amarillo',usuario_name='$rolSegimiento', unidad='$unidadUp',rfc='$rfcUp',curp='$curpUp',apellido_1='$apellido1Up',apellido_2='$apellido2Up',nombre='$nombreUp',fechaIngreso='$fechaIngresoUp',tipoEntrega='$tipoEntregaUp',tipoDeAccion='$radioUpRechazar',justificacionRechazo='$motivoRUp', analistaCap='$analista', fechaCaptura = '$row[0] - $rolSegimiento' , vigenciaDel = '$fechaDel', vigenciaAl = '$fechaAl', quincenaAplicada = '$laQna' WHERE id_movimiento = '$id_Fom'";
+							$sqlCL = "UPDATE fomope SET color_estado='amarillo',usuario_name='$rolSegimiento', unidad='$unidadUp',rfc='$rfcUp',curp='$curpUp',apellido_1='$apellido1Up',apellido_2='$apellido2Up',nombre='$nombreUp',fechaIngreso='$fechaIngresoUp',tipoEntrega='$tipoEntregaUp',tipoDeAccion='$radioUpRechazar',justificacionRechazo='$motivoRUp', analistaCap='$analista', fechaCaptura = '$row[0] - $rolSegimiento' , vigenciaDel = '$fechaDel', vigenciaAl = '$fechaAl', quincenaAplicada = '$laQna', anio = '$anioActual[0]' WHERE id_movimiento = '$id_Fom'";
 								mysqli_query($conexion,$sqlCL);
 		               			echo "<script> alert('Fomope Actualizado'); window.location.href = '../lulu.php?usuario_rol=$rolSegimiento'</script>";
 
