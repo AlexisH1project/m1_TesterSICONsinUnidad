@@ -341,9 +341,11 @@
 	          			$namePHP = "LuluEventuales.php";
 	          		}else if($id_rol1 == 4){
 	          			$namePHP = "bandejaEventuales_D.php";
-	          		}else{
+	          		}else if($id_rol1 == 3){
+						  $namePHP = "capturistaTostado.php";
+					}else{
 	          			$namePHP = "bandejaEventuales.php";
-	          		}
+					}
 	          	?>
 	            <a href=  <?php echo ("'./".$namePHP."?usuario_rol=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
@@ -610,8 +612,15 @@
 							<label  class="plantilla-label" for="tip registro">Tipo de registro: </label>
 									 <input type="text" class="form-control border border-dark" id="tipoRegistro" name="tipoRegistro" value="<?php echo $ver['tipoRegistro']?>" readonly > 
 					</div>
-
-
+					
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="qna">Quincena: </label>
+									 <input type="text" class="form-control border border-dark" id="qna" name="qna" value="<?php echo $ver['qna']?>" readonly > 
+					</div>
+					<div class="form-group col-md-2">
+							<label  class="plantilla-label" for="anio">Año: </label>
+									 <input type="text" class="form-control border border-dark" id="anio" name="anio" value="<?php echo $ver['anio']?>" readonly > 
+					</div>
 					<div class="form-group col-md-2">
 							<label  class="plantilla-label" for="llave">Llave: </label>
 									 <input type="text" class="form-control border border-dark" id="llave" name="llave" value="<?php echo $ver['llave']?>" readonly > 
