@@ -284,7 +284,7 @@
 
 			include "configuracion.php";
 			$noFomope = $_GET['noFomope'];
-			//echo $noFomope;
+			echo $noFomope;
 			$id_rol = $_GET['id_rol'];
 			//echo $id_rol;
 			$usuarioSeguir = $_GET['usuario'];

@@ -104,7 +104,9 @@
 	          <li class=" estilo-color">
 	              <a  href= <?php echo ("'./correosUR.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/1_ic.png" alt="x" height="17" width="17"/> Correos</a>
 	          </li>
-	           
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
@@ -509,6 +511,9 @@
 	          </li>
 	         <li class=" estilo-color">
 	            <a href=  <?php echo ("'./generarReportePC.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport.png" alt="x" height="17" width="20"/>Reporte Profesional</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
 	          <br>
 	          <br>

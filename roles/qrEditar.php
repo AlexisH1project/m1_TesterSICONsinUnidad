@@ -343,6 +343,8 @@
 	          			$namePHP = "bandejaEventuales_D.php";
 	          		}else if($id_rol1 == 3){
 						  $namePHP = "capturistaTostado.php";
+					}else if($id_rol1 == 2){
+						$namePHP = "analista.php";
 					}else{
 	          			$namePHP = "bandejaEventuales.php";
 					}

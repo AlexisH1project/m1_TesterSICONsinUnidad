@@ -227,7 +227,7 @@
 					         }
 					     }
 					     if(contador > 0){
-							window.location.href = './Controller/autorizarQr.php?noFomope='+elementosSelectR+'&usuario='+cap+'&idAsignado='+userRol;
+							window.location.href = './Controller/autorizarTodoQr.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol+'&idAsignado='+cap;
 
 					     }
 					     //return false;

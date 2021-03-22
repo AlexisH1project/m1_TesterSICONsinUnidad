@@ -188,7 +188,7 @@
 					         }
 					     }
 					     if(contador > 0){
-							window.location.href = './Controller/autorizarQr.php?noFomope='+elementosSelectR+'&usuario='+cap+'&idAsignado='+userRol;
+							window.location.href = './Controller/autorizarTodoQr.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol+'&idAsignado='+cap;
 
 					     }
 					     //return false;
@@ -518,7 +518,7 @@
 						include "configuracion.php";
 
 						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-								from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo0' AND personaAsignada = '$usuarioSeguir'  ORDER BY id_movimiento_qr DESC";
+								from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo' AND personaAsignada = '$usuarioSeguir'  ORDER BY id_movimiento_qr DESC";
 						$result=mysqli_query($conexion,$sql);
 
 						while($ver=mysqli_fetch_row($result)){ 
@@ -605,7 +605,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 4";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 

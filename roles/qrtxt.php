@@ -518,6 +518,12 @@
 					$contNormales = $contNormales + 1;
 					$estatus = "Revisión";
 				}
+				echo "LA LLAVE::   &".$qrTexto2[$i]."&\n";
+				
+				//$qrTexto2[$i]
+				if(empty($llave)){
+					$llave = "0" ;// renglos con salto de linea
+				}
 					switch ($llave) {
 							case '4008':
 								if($qrTexto[22] == "M04001" || $qrTexto[22] == "M04002" || $qrTexto[22] == "M04003" || $qrTexto[22] == "M04004" || $qrTexto[22] == "M04005" || $qrTexto[22] == "M04011"){
@@ -567,6 +573,8 @@
 									$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, anio, usuario_modifico, fechaAutorizacion, personaAsignada, color_estado) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$anio', '$usuarioSeguir', '$rowF[0]', '$newTurnado', '$colorFomopeQr')";					 		
 
 								}			 		
+							break;
+							case '0':
 							break;
 							default:
 								$tipoRegistro = 'ESTRUCTURA';
