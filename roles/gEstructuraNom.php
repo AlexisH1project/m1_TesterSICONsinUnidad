@@ -42,21 +42,21 @@
 							});
 						},
 						select: function (event, ui){
-							$(this).val(ui.item.label);
+							$(this).val(ui.item.value);
 							var buscarid = ui.item.value;
 							$.ajax({
 								url: 'resultados_ur.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:3
+									buscarid:buscarid,request:2
 								},
 								dataType: 'json',
 								success:function(response){
 									var len = response.length;
 									if(len > 0){
-										var idx2 = response[0]['idx2'];
+										var idx2 = response[0]['idx'];
 										var unexp = response[0]['unexp'];
-										document.getElementById('unexp_'+indice).value = unexp;
+										document.getElementById('unexp_3').value = idx2;
 									}
 								}
 							});
@@ -69,7 +69,7 @@
 		
 
 			<style type="text/css">
-			
+			.derecha   { float: right; }
 			p.one {
 			  border-style: solid;
 			  border-color: hsl(0, 100%, 50%); /* red */
@@ -335,6 +335,31 @@
 									</select>
 							</div>
 						</div>		
+
+						<div class="col">
+							 <div class="form-group col-md-8 ">
+									<label  class="plantilla-label" for="laUsuario">Analista: </label><br>
+										 
+										<select class="rounded border border-dark" id="usuarioOption" name="usuarioOption" onchange="guardarTurnado();">
+											<?php
+											if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+											       die("Error cargando el conjunto de caracteres utf8");
+											}
+
+											$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+											$resultado = mysqli_query($conexion , $consulta);
+											$contador=0;
+											?>
+												<option  data-subtext=""></option>
+											<?php
+
+											while($turnado = mysqli_fetch_assoc($resultado)){ $contador++;?>
+												<option  data-subtext="<?php echo $turnado["id_turnado"]; ?>"><?php echo $turnado["usuario"]; ?></option>
+											<?php }?>          
+											</select>
+							</div>
+						</div>
+
 					</div>
 			
 				<div class="col-sm-12">
@@ -357,19 +382,26 @@
 	</div>
 
 		<br>
+		<form method='get' action='./verListEventual.php'>
+			<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+			<input type='text' style='display: none;' name='idMov' value='$ver2[0]'>
+			<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+			<button type="button" class="derecha btn btn-outline-success" >Generar Reporte</button>
+		</form>
 		<br>
-
+		<br>
 		<table class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
 							<td>ID Fomope</td> -->
-						      <th scope="titulo">Estado Fomope</th>
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha de Ingreso</th>
-						      <th scope="titulo">Codigo Mov.</th>
+							<th scope="titulo">Autorizar</th>
+						    <th scope="titulo">Estado Fomope</th>
+							<th scope="titulo">Unidad</th>
+							<th scope="titulo">RFC</th>
+							<th scope="titulo">QNA</th>
+							<th scope="titulo">Fecha de Ingreso</th>
+							<th scope="titulo">Codigo Mov.</th>
 						      
 						   </tr>
 					 	 </thead>
@@ -381,63 +413,61 @@
 							$qnaBuscar = $_POST['qnaOption'];
 							$rfcBuscar = $_POST['unexp_3'];
 							$anioBuscar = $_POST['anio'];
+							$analistaBuscar = $_POST['usuarioOption'];
 
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
-					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
-
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
-
+							if (($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "")){
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (color_estado ='guinda' AND enNomina = 0 AND personaAsignada='$analistaBuscar') ORDER BY id_movimiento_qr DESC";
+							}elseif($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
+		
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+		
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (unidad='$rfcBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (  qna='$qnaBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto FROM fomope_qr WHERE (anio='$anioBuscar')";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
 								
 							}
 
 
-							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
+			if ($result = mysqli_query($conexion,$sql)) {
 
-
-							if ($result = mysqli_query($conexion,$sql)) {
-
-								$totalFilas    =    mysqli_num_rows($result);  
-								if($totalFilas == 0){
-										
-										echo('
-											<br>
-											<br>
-											<div class="col-sm-12 ">
-											<div class="plantilla-inputv text-dark ">
-											    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
-										</div>
-										</div>');
-								}else{
-
-
+				$totalFilas    =    mysqli_num_rows($result);  
+				if($totalFilas == 0){
+						
+						echo('
+							<br>
+							<br>
+							<div class="col-sm-12 ">
+							<div class="plantilla-inputv text-dark ">
+								<div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+						</div>
+						</div>');
+				}else{
 					while($ver=mysqli_fetch_row($result)){ 
 						switch ($ver[1]) {
 											case 'negro1':
@@ -483,140 +513,6 @@
 
 						 ?>
 						<tr>
-							
-							<td><?php echo $estadoF ?></td>
-							<td><?php echo $ver[2] ?></td>
-							<td><?php echo $ver[3] ?></td>
-							<td><?php echo $ver[4] ?></td>
-							<td><?php echo $ver[5] ?></td>
-							<td><?php echo $ver[6] ?></td>
-
-							<td>
-								
-								<?php
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-										if($totalColor != 0){
-											if($ver[1] == "negro" ){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||1";
-
-										
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php	
-											}else if($ver[1] == "verde2"){
-													$datosCaptura = $ver[0]."||".$usuarioSeguir."||4";
-
-
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-								<?php
-											}else if($ver[1] == "verde"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Capturar</button>
-								<?php
-							}				else if($ver[1] == "gris"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||2";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
-								<?php
-											}else if($ver[1] == "amarillo0"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||3";
-
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Ver</button>
-
-											
-											
-								<?php
-											}
-										}
-									}
-								
-								?>	
-															
-							</td>
-						</tr>
-						<?php 
-										}
-									}
-							}else{
-								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
-								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
-							}
-						}
-						 ?>
-		</table>
-		
-
-			<div class="col-sm-12">
-				
-					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Autorizar</h2></div>
-					</div>
-			<form name="radioALL" id="radioALL" action="" method="POST"> 
-					<table class="table table-hover table-white">
-						<thead>
-						    <tr>
-							<!-- <td>Observacion</td>
-							<td>ID Fomope</td> -->
-						      <th scope="titulo">Autorizar</th>
-						      <th scope="titulo">Estado Fomope</th>
-						      <th scope="titulo">Unidad</th>
-						      <th scope="titulo">RFC</th>
-						      <th scope="titulo">QNA</th>
-						      <th scope="titulo">Fecha Ingreso</th>
-						      <th scope="titulo">Codigo Mov.</th>
-			           		
-						   </tr>
-					 	 </thead>
-
-						<?php 
-							include "configuracion.php";
-
-							$sql="SELECT id_movimiento_qr,color_estado,unidad, rfc,qna,fini, codigo_puesto from fomope_qr WHERE color_estado = 'verde2' OR color_estado = 'amarillo0'";
-							$result=mysqli_query($conexion,$sql);
-
-							while($ver=mysqli_fetch_row($result)){ 
-
-							
-								$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
-
-						        if($resultado2 = mysqli_query($conexion,$consulta2)){
-					        		$row = mysqli_fetch_assoc($resultado2);
-					        		$id_mov = $row['id_movimiento_qr'];
-					        	}
-					        	switch ($ver[1]) {
-											
-											case 'amarillo0':
-												$estadoF = 'DDSCH Autorización';
-												break;
-											
-											case 'verde2':
-												$estadoF = 'DDSCH Autorización Loteo';
-												break;	
-												
-											default:
-												
-												break;
-										}
-
-
-						 ?>
-
-						<tr>
-							
 							<td>
 								<div class="custom-control custom-radio">
 								  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios"></label>
@@ -630,103 +526,20 @@
 							<td><?php echo $ver[6] ?></td>
 
 							<td>
-								<?php
-									$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
-
-									if ($resultColor = mysqli_query($conexion,$sqlColor)) {
-										$verColor=mysqli_fetch_row($resultColor);
-										$totalColor = mysqli_num_rows($resultColor);  
-
-										$colores2 = explode(",",$verColor[0]);
-										//echo $verColor[0] . "  >>>>>>>";
-										//echo $colores2[1] . "  >>>>>>>";
-										$datosCaptura = $ver[0]."||".$usuarioSeguir."||0";
-
-
-										if($totalColor != 0){
-											if($ver[1] == "amarillo0" ){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||3";
-
-										
-								?>
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="ver" >Ver</button>
-								<?php	
-											}else if($ver[1] == "verde2"){
-												$datosCaptura = $ver[0]."||".$usuarioSeguir."||4";
-								?>	
-												<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="ver2" >Ver</button>
-
-								<?php	
-
-											}
-										}
-									}
-								
-								?>	
-									
-
+								<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
 							</td>
 						</tr>
 						<?php 
-						
-						 
+						}
 					}
-						 ?>
-
-					</table>
-						
-				</form>
-				
-				<button type="button" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" data-toggle="modal" data-target="#exampleModal">
-											 Autorizar
-				</button>
-							  			<br>
-							  			<br>
-							  			<br>
-
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de autorizar esta información?
-											      </div>
-											      <div class="modal-footer">
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-											       	<button type="submit" id="autorizarTodo" onclick="obtenerRadioSeleccionado('radioALL','radios', '<?php echo $usuarioSeguir ?>' )" class="btn btn-primary">Aceptar</button>
-											      </div>
-											    </div>
-											  </div>
-											</div>
-
-			</div>
-			
-			<?php 
-						 		include "configuracion.php";
-							$sql="SELECT id_movimiento_qr,color_estado,unidad, rfc,qna,fini
-									from fomope_qr WHERE color_estado = 'Verde'";
-							$result=mysqli_query($conexion,$sql);
-
-							$totalFilas    =    mysqli_num_rows($result);  
-							if($totalFilas == 0){
-									
-									echo('
-										<div class="col-sm-12 ">
-										<div class="plantilla-inputv text-dark">
-										    <div class="card-body"><h2>No existen fomopes por lotear</h2></div>
-									</div>
-									</div>');
+							}else{
+								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
+								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 							}
-
-
-						  ?>
-			  
+						}
+						 ?>
+		</table>
+		
 	</center>
 	</body>
 
