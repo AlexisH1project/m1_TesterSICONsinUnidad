@@ -59,6 +59,7 @@
 			));
 
             $nombreUser = $_POST['usuario_rol'];
+            $botonAccion = $_POST['accionBoton'];
 			$arr = unserialize(stripslashes($_POST['array']));
 			$arr2 = unserialize(stripslashes($_POST['array2']));
 
@@ -109,18 +110,27 @@
 												break;	
 											case 'gris':
 												$estadoF = 'DDSCH Edición';
+												
 												break;
 											case 'guinda':
 												$estadoF = 'Finalizado';
 												break;	
 											case 'negroB':
 												$estadoF = 'Baja, Rechazo';
-												break;		
-											default:
 												
+												break;	
+											case 'rojo':
+												$estadoF = 'Eliminado';
+												break;	
+											default:
+												// $estadoF = '';
 												break;
 										}
-										$objPHPExcel->setActiveSheetIndexByName('Estructura');
+
+						if($botonAccion == 'Reporte Fomopes Operados' && ( $estadoF == 'DDSCH Rechazo' || $estadoF == 'Unidad Edición' || $estadoF == 'DDSCH Autorización' || $estadoF == 'DDSCH Edición' || $estadoF == 'Eliminado')){
+							continue;
+						}
+						$objPHPExcel->setActiveSheetIndexByName('Estructura');
 						$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $imprimirRow[0]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $estadoF); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $imprimirRow[2]); 

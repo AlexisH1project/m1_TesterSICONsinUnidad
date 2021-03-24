@@ -382,11 +382,11 @@
 	</div>
 
 		<br>
-		<form method='get' action='./verListEventual.php'>
+		<form method='get' action='./Controller/generaReporteNomina.php'>
 			<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-			<input type='text' style='display: none;' name='idMov' value='$ver2[0]'>
-			<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-			<button type="button" class="derecha btn btn-outline-success" >Generar Reporte</button>
+			<input type='text' style='display: none;' name='idMov' value='$ver[0]'> 
+			<!-- <input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'> -->
+			<button type="submit" class="derecha btn btn-outline-success" >Generar Reporte</button>
 		</form>
 		<br>
 		<br>

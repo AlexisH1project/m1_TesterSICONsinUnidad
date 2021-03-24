@@ -29,8 +29,9 @@
 
 
 		<link rel="stylesheet" href="css/estilossicon.css">
-			<style type="text/css">
-
+	<style type="text/css">
+			.derecha   { float: right; }
+			.izquierda   { float: left; }
 		  <style>
 
 
@@ -143,7 +144,6 @@ tbody {
 			<?php
 					}else{
 			?>
-			<br>
 		  			<a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 			<?php
 
@@ -895,9 +895,6 @@ tbody {
 										}elseif($ver[1] == 'guinda'){
 
 											$ver[1] = 'Finalizado';
-										}elseif($ver[1] == 'negroB'){
-
-											$ver[1] = 'DGRHyO Rechazo Baja';
 										}
 						 ?>
 						<tr id="<?php echo $ver[0] ?>">
@@ -928,23 +925,15 @@ tbody {
 								?>
 							</td>
 							
-							<td><?php 
+							<td><?php echo "
 
-							if($ver[45] == "BAJAS"){
-								echo "
-								<form method='get' action='./verListBaja.php'>
-									<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-									<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
-									<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-								</form> ";
-							}else{
-								echo "
-								<form method='get' action='./verList.php'>
-									<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-									<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
-									<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-								</form> ";
-							}
+	
+							<form method='get' action='./verList.php'>
+								<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+								<input type='text' style='display: none;' name='idMov' value='$ver[0]'>
+								<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+							</form> "
+
 							?>
 							</td>
 				
@@ -982,8 +971,11 @@ tbody {
 							<input type='hidden' name='array' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matriz); ?>'>
 							<input type='hidden' name='array2' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matrizEventuales); ?>'>
 							<input type='hidden' name='usuario_rol' class='btn btn btn-success text-white bord' value='<?php  echo $usuarioSeguir; ?>'>
-							<input type='submit' name='lista' class='btn btn btn-success text-white bord' value="Generar Excel">
-							
+							<input type='submit' name='accionBoton' class='izquierda btn btn btn-success text-white bord' value="Reporte Completo">
+							<input type='submit' name='accionBoton' class='derecha btn btn btn-success text-white bord' value="Reporte Fomopes Operados">
+							<br>
+							<br>
+							<br>
 
 					</form>
 
