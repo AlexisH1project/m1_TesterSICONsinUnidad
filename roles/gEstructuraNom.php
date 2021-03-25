@@ -251,6 +251,7 @@
 				<script type="text/javascript">
 
 					function obtenerRadioSeleccionado(formulario, nombre, userRol){
+						console.log("siii");
 						var contador = 0;
 					     elementosSelectR = [];
 					     elementos = document.getElementById(formulario).elements;
@@ -263,8 +264,7 @@
 					         }
 					     }
 					     if(contador > 0){
-							window.location.href = './Controller/autorizarTodoLulu.php?id_fomope='+elementosSelectR+'&idSeguir='+userRol;
-
+							window.location.href = './Controller/generarReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
 					     }
 					     //return false;
 					} 
@@ -282,7 +282,8 @@
 			</div>
 			<br>
 
-			<form method="post" action=""> 
+			<form action="" method="POST"> 
+
 				<div class="plantilla-inputv text-center">
 					<div class="form-row">
 						<div class="col">
@@ -375,19 +376,14 @@
 
 					</div>
 				</div>
+				
 			</form>
 
 		</div>
 	
 	</div>
+	<form name="radioALL" id="radioALL" action="" method="POST"> 
 
-		<br>
-		<form method='get' action='./Controller/generaReporteNomina.php'>
-			<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-			<input type='text' style='display: none;' name='idMov' value='$ver[0]'> 
-			<!-- <input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'> -->
-			<button type="submit" class="derecha btn btn-outline-success" >Generar Reporte</button>
-		</form>
 		<br>
 		<br>
 		<table class="table table-hover table-white">
@@ -418,38 +414,38 @@
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 							if (($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "")){
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (color_estado ='guinda' AND enNomina = 0 AND personaAsignada='$analistaBuscar') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (color_estado ='guinda' AND enNomina = 0 AND personaAsignada='$analistaBuscar' AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 							}elseif($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 		
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 		
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0) ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
 								
 							}
 
@@ -539,7 +535,11 @@
 						}
 						 ?>
 		</table>
-		
+		<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+				<input type='text' style='display: none;' name='idMov' value='$ver[0]'> 
+				<!-- <input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'> -->
+				<button type="submit" class="derecha btn btn-outline-success" onclick="obtenerRadioSeleccionado('radioALL','radios', 'usuario_rol' )" >Generar Reporte</button>	
+		</form>
 	</center>
 	</body>
 
