@@ -296,7 +296,7 @@ tbody {
 						<br>
 						<br>
 											<div class="card bg-secondary text-white">
-						    <div class="card-body"><h2>Consulta Eventuales</h2></div>
+						    <div class="card-body"><h2>Consulta QR</h2></div>
 					</div>
 						<div class="table-responsive">
 		<table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
@@ -861,7 +861,7 @@ tbody {
 
 										if($ver[1] == 'negro1'){
 
-											$ver[1] = 'DDSCH Rechazo';
+											$ver[1] = 'DSPO Rechazo';
 										}elseif($ver[1] == 'negro'){
 
 											$ver[1] = 'Unidad Edición';

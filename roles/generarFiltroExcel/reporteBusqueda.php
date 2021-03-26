@@ -79,7 +79,7 @@
 						$imprimirRow = mysqli_fetch_row($resImp);
 						switch ($imprimirRow[1]) {
 											case 'negro1':
-												$estadoF = 'DDSCH Rechazo';
+												$estadoF = 'DSPO Rechazo';
 												break;
 											case 'negro':
 												$estadoF = 'Unidad Edición';
@@ -127,7 +127,7 @@
 												break;
 										}
 
-						if($botonAccion == 'Reporte Fomopes Operados' && ( $estadoF == 'DDSCH Rechazo' || $estadoF == 'Unidad Edición' || $estadoF == 'DDSCH Autorización' || $estadoF == 'DDSCH Edición' || $estadoF == 'Eliminado')){
+						if($botonAccion == 'Reporte Fomopes Operados' && ( $estadoF == 'DSPO Rechazo' || $estadoF == 'Unidad Edición' || $estadoF == 'DDSCH Autorización' || $estadoF == 'DDSCH Edición' || $estadoF == 'Eliminado')){
 							continue;
 						}
 						$objPHPExcel->setActiveSheetIndexByName('Estructura');

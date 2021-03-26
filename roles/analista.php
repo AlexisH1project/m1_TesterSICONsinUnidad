@@ -416,7 +416,7 @@
 					while($ver=mysqli_fetch_row($result)){ 
 						switch ($ver[1]) {
 											case 'negro1':
-												$estadoF = 'DDSCH Rechazo';
+												$estadoF = 'DSPO Rechazo';
 												break;
 											case 'negro':
 												$estadoF = 'Unidad Edición';
@@ -935,7 +935,7 @@
 								$usuarioSeguir."||5";
 								switch ($ver[1]) {
 											case 'negro1':
-												$estadoF = 'DDSCH Rechazo';
+												$estadoF = 'DSPO Rechazo';
 												break;
 										
 											default:

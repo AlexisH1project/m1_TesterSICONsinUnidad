@@ -167,7 +167,7 @@
 			 		$row2 = mysqli_fetch_row($resultTime);
 			 }
 
-		if($elBoton == "Capturar" || $roWsqlRolReal[2] == 3){
+		if($elBoton == "Capturar" || $roWsqlRolReal[2] == 3 || $elBoton == "aceptar y modificar"){
 			$colorAenviar = "cafe";
 			$estadoFecha = "En espera de autorización";
 		}else if($roWsqlRolReal[2] == 7){
