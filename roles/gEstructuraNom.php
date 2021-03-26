@@ -210,24 +210,14 @@
 			<?php
 				include "configuracion.php";
 				$usuarioSeguir =  $_GET['usuario_rol'];
+				
 			?>
 
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
 		        <ul class="navbar-nav ml-auto">
-		        	<li class="nav-item">
-		            	<a class="nav-link" href='./LuluEventuales.php?usuario_rol=<?php echo $usuarioSeguir ?>'>Eventuales</a>
-		          	</li>          
-		         <li class="nav-item dropdown">
-		            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		              Acciones
-		            </a>
-		            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-		              <a class="dropdown-item" href="./FiltroDescargar.php?usuario_rol=<?php echo $usuarioSeguir ?>">Descarga de documentos</a>
-		              <a class="dropdown-item" href="./generarReporte.php?usuario_rol=<?php echo $usuarioSeguir ?>">Generar reportes</a>
-		            </div>
-		          </li>
+		  
 		          <li class="nav-item">
 		            <a class="nav-link" href='../LoginMenu/vista/cerrarsesion.php'>CERRAR SESIÓN</a>
 		          </li>
@@ -264,7 +254,7 @@
 					         }
 					     }
 					     if(contador > 0){
-							window.location.href = './Controller/generarReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
+							window.location.href = './Controller/generaReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
 					     }
 					     //return false;
 					} 
@@ -281,7 +271,25 @@
 				</div>
 			</div>
 			<br>
-
+			<?php 
+			// if (headers_sent()) {
+			// 	// las cabeceras ya se han enviado, no intentar añadir una nueva
+			// }
+			// else {
+				// if(isset($_GET['nombreDocDow'])){
+				// 	$nameDoc = $_GET['nombreDocDow'];
+				// 	header('Content-Description: File Transfer');
+				// 	header("Content-Disposition: attachment; filename= $nameDoc");
+				// 	header('Expires: 0');
+				// 	header('Cache-Control: must-revalidate');
+				// 	header('Pragma: public');
+				// 	header('Content-Length: ' . filesize("./Controller/txt/" . $nameDoc));
+				// 	header("Content-Type: text/plain");
+				// 	readfile('./Controller/txt/' . $nameDoc);
+			// 	}
+			// 	// es posible añadir nuevas cabeceras HTTP
+			// }
+			?>
 			<form action="" method="POST"> 
 
 				<div class="plantilla-inputv text-center">
@@ -535,11 +543,9 @@
 						}
 						 ?>
 		</table>
-		<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-				<input type='text' style='display: none;' name='idMov' value='$ver[0]'> 
-				<!-- <input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'> -->
-				<button type="submit" class="derecha btn btn-outline-success" onclick="obtenerRadioSeleccionado('radioALL','radios', 'usuario_rol' )" >Generar Reporte</button>	
 		</form>
+				<button type="submit" class="derecha btn btn-outline-success" name="gReport" onclick="obtenerRadioSeleccionado('radioALL','radios',  '<?php echo $usuarioSeguir ?>' )" >Generar Reporte</button>	
+		
 	</center>
 	</body>
 

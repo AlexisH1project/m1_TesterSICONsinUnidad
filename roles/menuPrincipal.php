@@ -107,6 +107,9 @@
 			  <li class=" estilo-color">
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./gEstructuraNom.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>

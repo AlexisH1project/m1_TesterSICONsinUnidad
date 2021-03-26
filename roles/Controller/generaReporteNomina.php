@@ -1,17 +1,15 @@
 <?php 
-
 		include "configuracion.php";
 		$Array_IDFomope = $_GET['idMov'];
 		$usuarioSeguir = $_GET['usuario_rol'];
-
-		// $porAutorizar = explode(",", $Array_IDFomope);
+		$porAutorizar = explode(",", $Array_IDFomope);
 
 		$hoy = "select CURDATE()";
 		$tiempo ="select curTime()";
 		
 
-			for ($i = 0; $i < 2; $i++) {
-				$sql = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$Array_IDFomope[$i]'";
+			for ($i = 0; $i < count($porAutorizar); $i++) {
+				$sql = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$porAutorizar[$i]'";
 				
 				if($result = mysqli_query($conexion, $sql)){
 					$registros = mysqli_fetch_assoc($result);
@@ -22,16 +20,15 @@
 						
 						$hora = str_replace ( ":", '',$row2[0] ); 
 						$fecha = str_replace ( "-", '',$row[0] ); 
-						$sqlUpdate = "UPDATE fomope_qr SET enNomina = 1, fechaAutorizacion = '$row[0] - $usuarioSeguir' WHERE id_movimiento_qr = '$Array_IDFomope[$i]'";
-						$nameDoc = "registroQR_ ".$fecha.$hora.".txt";	
+						$sqlUpdate = "UPDATE fomope_qr SET enNomina = 1, fechaAutorizacion = '$row[0] - $usuarioSeguir' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
+						$nameDoc = "registroQR_".$fecha.$hora.".txt";	
 						}
 						$creaArchivo = fopen("txt/".$nameDoc, "a");
 						$file = fopen("txt/".$nameDoc, "w");
-						echo $Array_IDFomope[$i] .$i. "\n";
 						fwrite($file, $registros['tex_con']. PHP_EOL);
 						//actulizamos la hora de autorizacion nomina 
 							if(mysqli_query($conexion, $sqlUpdate)){
-									$sqlH = "INSERT INTO historial_qr (id_movimiento_qr,usuario,fechaMovimiento,horaMovimiento) VALUES ('$Array_IDFomope[$i]','$usuarioSeguir','$row[0]','$row2[0]')";
+									$sqlH = "INSERT INTO historial_qr (id_movimiento_qr,usuario,fechaMovimiento,horaMovimiento) VALUES ('$porAutorizar[$i]','$usuarioSeguir','$row[0]','$row2[0]')";
 									$resultH = mysqli_query($conexion,$sqlH);					
 							}else{
 									echo '<script type="text/javascript">alert("Error en la conexion");</script>';
@@ -43,9 +40,14 @@
 				}
 		}
 		fclose($file);
-		// header("Content-type: application/txt");
-        // header("Content-Transfer-Encoding: binary");
-		// readfile("./txt/".$nameDoc);
-
-		// echo "<script> alert('Autorizacion Correcta'); window.location.href = '../gEstructuraNomina.php?usuario_rol=$usuarioSeguir'</script>";
+			// header('Content-Description: File Transfer');
+			// header("Content-Disposition: attachment; filename= $nameDoc");
+			// header('Expires: 0');
+			// header('Cache-Control: must-revalidate');
+			// header('Pragma: public');
+			// header('Content-Length: ' . filesize("./txt/" . $nameDoc));
+			// header("Content-Type: text/plain");
+			// readfile('./txt/' . $nameDoc);
+		exit;
+		echo "<script> alert('Autorizacion Correcta'); window.location.href = '../gEstructuraNom.php?usuario_rol=$usuarioSeguir&nombreDocDow=$nameDoc'</script>";
  ?>
