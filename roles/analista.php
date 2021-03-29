@@ -550,8 +550,7 @@
 					<?php 
 						include "configuracion.php";
 
-						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-								from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'cafe' ORDER BY id_movimiento_qr DESC";
+						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'cafe' ORDER BY id_movimiento_qr DESC";
 						$result=mysqli_query($conexion,$sql);
 
 						while($ver=mysqli_fetch_row($result)){ 
@@ -730,7 +729,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 4 OR id_rol = 3";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 

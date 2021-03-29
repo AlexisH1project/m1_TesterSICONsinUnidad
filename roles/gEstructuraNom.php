@@ -22,6 +22,7 @@
 
 
 		<script type="text/javascript">
+			
 			$(document).ready(function(){
 				$(document).on('keydown', '.unexp', function(){
 					var id = this.id;
@@ -239,9 +240,11 @@
 				<h5  class=" plantilla-subtitulop" > DEPARTAMENTO DE DICTAMINACIÓN SALARIAL Y CONTRATOS POR HONORARIOS - DDSCH</h5>
 
 				<script type="text/javascript">
-
 					function obtenerRadioSeleccionado(formulario, nombre, userRol){
 						console.log("siii");
+						var count = 3;
+					
+
 						var contador = 0;
 					     elementosSelectR = [];
 					     elementos = document.getElementById(formulario).elements;
@@ -254,8 +257,15 @@
 					         }
 					     }
 					     if(contador > 0){
+							setInterval(function(){
+								count--;
+								if (count == 0) {
+									alert("Información actualizada");
+									window.location.href = './gEstructuraNom.php?usuario_rol='+userRol;
+								}
+							},1000);
 							window.location.href = './Controller/generaReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
-					     }
+						}
 					     //return false;
 					} 
 
@@ -271,27 +281,8 @@
 				</div>
 			</div>
 			<br>
-			<?php 
-			// if (headers_sent()) {
-			// 	// las cabeceras ya se han enviado, no intentar añadir una nueva
-			// }
-			// else {
-				// if(isset($_GET['nombreDocDow'])){
-				// 	$nameDoc = $_GET['nombreDocDow'];
-				// 	header('Content-Description: File Transfer');
-				// 	header("Content-Disposition: attachment; filename= $nameDoc");
-				// 	header('Expires: 0');
-				// 	header('Cache-Control: must-revalidate');
-				// 	header('Pragma: public');
-				// 	header('Content-Length: ' . filesize("./Controller/txt/" . $nameDoc));
-				// 	header("Content-Type: text/plain");
-				// 	readfile('./Controller/txt/' . $nameDoc);
-			// 	}
-			// 	// es posible añadir nuevas cabeceras HTTP
-			// }
-			?>
+			
 			<form action="" method="POST"> 
-
 				<div class="plantilla-inputv text-center">
 					<div class="form-row">
 						<div class="col">
@@ -376,7 +367,7 @@
 
 					<div class="form-group col-md-12">
 						<div class="col text-center">
-							<input type="submit" name="buscar" onclick="'<?php $_GET['usuario_rol']; ?>'" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Buscar"><br>
+							<input type="submit" id = "b_greporte" name="buscar" onclick="'<?php $_GET['usuario_rol']; ?>'" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Buscar"><br>
 
 							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
 						</div>
@@ -530,7 +521,7 @@
 							<td><?php echo $ver[6] ?></td>
 
 							<td>
-								<button type="button" class="btn btn-outline-secondary" onclick="accionesRolL('<?php echo $datosCaptura ?>')" id="" >Editar</button>
+								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
 							</td>
 						</tr>
 						<?php 
@@ -544,7 +535,7 @@
 						 ?>
 		</table>
 		</form>
-				<button type="submit" class="derecha btn btn-outline-success" name="gReport" onclick="obtenerRadioSeleccionado('radioALL','radios',  '<?php echo $usuarioSeguir ?>' )" >Generar Reporte</button>	
+				<button type="submit"  class="derecha btn btn-outline-success" name="gReport" onclick="obtenerRadioSeleccionado('radioALL','radios',  '<?php echo $usuarioSeguir ?>' )" >Generar Reporte</button>	
 		
 	</center>
 	</body>

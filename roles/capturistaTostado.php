@@ -517,8 +517,7 @@
 					<?php 
 						include "configuracion.php";
 
-						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento
-								from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo' AND personaAsignada = '$usuarioSeguir'  ORDER BY id_movimiento_qr DESC";
+						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'amarillo' AND personaAsignada = '$usuarioSeguir'  ORDER BY id_movimiento_qr DESC";
 						$result=mysqli_query($conexion,$sql);
 
 						while($ver=mysqli_fetch_row($result)){ 
