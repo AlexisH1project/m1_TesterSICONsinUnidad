@@ -35,7 +35,7 @@
 					}
 
 			
-
+//prueba de si se edito en casa 
 			}else {
 				echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 				echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
