@@ -36,7 +36,7 @@
 						}
 					}
 									 //actulizamos la hora de autorizacion
-							$sql2 = "UPDATE fomope_qr SET color_estado = '$colorEstatus', fechaAutorizacion = '$fechaH[0] - $userSeguir' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
+							$sql2 = "UPDATE fomope_qr SET color_estado = '$colorEstatus', fechaAutorizacion = '$fechaH[0] - $userSeguir', personaAsignada = '$idUserAsignado' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
 
 							if(mysqli_query($conexion, $sql2)){
 								 
