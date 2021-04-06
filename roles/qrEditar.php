@@ -821,11 +821,12 @@
 					</div>
 				<!-- datos que se reciben para dar seguimiento  -->
 
-					<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
-					<input type="text" style="display: none;" name="noFomope" value="<?php echo $noFomope; ?>" > 
+					
 				<?php
 		}
 				?>
+				<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
+					<input type="text" style="display: none;" name="noFomope" value="<?php echo $noFomope; ?>" > 
 					<div class="form-group col-md-9">
 						<label  class="plantilla-label" for="rechazo">Motivo de rechazo: </label>
 						 <textarea class="form-control border border-dark" id="verMotivoR" rows = "4" name="verMotivoR" readonly><?php echo $ver['motivo_rechazo']?></textarea>
@@ -879,14 +880,14 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 1 OR id_rol = 0 OR id_rol = 7";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 7";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
 													while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
 													<option value="<?php echo $misdatos["usuario"]; ?>"><?php echo $misdatos["nombrePersonal"]; ?></option>
 													<?php }?>   
-													<option value="autorizado">AUTORIZAR</option>
+													<option value="aceptar">Aceptar</option>
 													</select>
 										</div>
 										 <br>  
