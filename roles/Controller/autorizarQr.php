@@ -49,9 +49,15 @@
 					}elseif($rowRol[0] == 3){
 						echo "<script> alert('Autorizacion Correcta'); window.location.href = '../capturistaTostado.php?usuario_rol=$usuarioEdito'</script>";
 					}
+<<<<<<< HEAD
 					// else{
               		// 	echo "<script> alert('Fomope Enviado'); window.location.href = '../bandejaEventuales.php?usuario_rol=$usuarioEdito'</script>";
 					// }
+=======
+
+			
+//prueba de si se edito en casa 
+>>>>>>> eecf0ad3969c679b57ca9026704b87f281fd5079
 			}else {
 				echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 				echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';

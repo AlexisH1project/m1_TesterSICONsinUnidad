@@ -7,11 +7,10 @@ function generarExcel(){
 				$noFomope = $_GET['noFomope'];
 				$motivoR = $_GET['comentarioR'];
 
-				
-			    
-
-				
-
+				$hoy = "select CURDATE()";
+				if ($resultHoy = mysqli_query($conexion,$hoy)) {
+								$rowFecha = mysqli_fetch_row($resultHoy);
+				}
 
 				if($rowUser[2]==0 OR $rowUser[2]==1 OR $rowUser[2]==7){
 
@@ -47,7 +46,7 @@ function generarExcel(){
 					$fecha_recibido = $rowQr['fini'];
                
 					
-					$objPHPExcel->getActiveSheet()->setCellValue('H11',$fecha_recibido); 
+					$objPHPExcel->getActiveSheet()->setCellValue('H11',$rowFecha[0]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D13', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D15', $rowMovimientos[4]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D19', $rowUnidad[1]); 
@@ -124,10 +123,7 @@ function generarExcel(){
 				$rowUser = mysqli_fetch_row($resName);
 				if($rowUser[2] == 0 OR $rowUser[2] == 1){
 					$sql = "UPDATE fomope_qr SET color_estado = 'negro_1', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
-				}else if($rowUser[2] == 2){
-					$sql = "UPDATE fomope_qr SET color_estado = 'negro_3', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
-					
-				}else if($rowUser[2] == 3){
+				}else if($rowUser[2] == 2 || $rowUser[2] == 3){
 					$sql = "UPDATE fomope_qr SET color_estado = 'negro_2', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
 				}else if($rowUser[2] == 7){
 					$sql = "UPDATE fomope_qr SET color_estado= 'negro_1', usuario_modifico = '$usuarioEdito', motivo_rechazo = '$motivoR' WHERE id_movimiento_qr = '$noFomope'" ;
