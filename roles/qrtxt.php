@@ -478,6 +478,9 @@
 			$contNormales = 0;
 			$contReg = 0;
 			for($i = 0; $i < $tamqr-1; $i++){
+				if($qrTexto2[$i] == "\n"){
+					continue;
+				}
 				$qrTexto = explode("|", $qrTexto2[$i]);
 				$llave = substr($qrTexto[0], 0, 5);
 				$tipoRegistro = '';

@@ -576,7 +576,7 @@
 											
 											break;
 									}*/
-					if($row['tipoRegistro']=="ESTRUCTURA"){
+					if($row['tipoRegistro']=="ESTRUCTURA" || $row['tipoRegistro'] == "PERSONAL DE CONFIANZA (ALTA)" || $row['tipoRegistro'] == "PERSONAL DE CONFIANZA (REINGRESO)"){
 
 					 ?>
 

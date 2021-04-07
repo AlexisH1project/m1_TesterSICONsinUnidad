@@ -6,6 +6,10 @@
 		$idFomope = $_POST['noFomope'];
 		$idUserAsignado = $_POST['user'];
 
+		$consecutivoMP = $_POST['consema'];
+		$fechaEnvSPC = $_POST['fechenvvb'];
+		$fechaReciDSPO = $_POST['fecharecdspo'];
+		$folio = $_POST['foliospc'];
 
 			$sqlRolAsign = "SELECT id_rol FROM usuarios WHERE usuario = '$idUserAsignado'";
 		    $hoy = "select CURDATE()";
@@ -33,7 +37,7 @@
 			// $idUserAsignado = 
 		}
 			 
-			$sql = "UPDATE fomope_qr SET color_estado='$colorEstatus', usuario_modifico = '$usuarioEdito', fechaAutorizacion = '$row[0] - $usuarioEdito', personaAsignada = '$idUserAsignado' WHERE id_movimiento_qr = '$idFomope'" ;
+			$sql = "UPDATE fomope_qr SET color_estado='$colorEstatus', usuario_modifico = '$usuarioEdito', fechaAutorizacion = '$row[0] - $usuarioEdito', personaAsignada = '$idUserAsignado', consecutivoMaestroPuestos = '$consecutivoMP', fechaEnvioSpc = '$fechaEnvSPC', fechaReciboDspo = '$fechaReciDSPO', folioSpc = '$folio' WHERE id_movimiento_qr = '$idFomope'" ;
 
 			$sql2 = "INSERT historial_qr (id_movimiento_qr,usuario,fechaMovimiento,horaMovimiento) VALUES ('$idFomope','$usuarioEdito','$row[0]','$row2[0]')";
 
@@ -49,15 +53,10 @@
 					}elseif($rowRol[0] == 3){
 						echo "<script> alert('Autorizacion Correcta'); window.location.href = '../capturistaTostado.php?usuario_rol=$usuarioEdito'</script>";
 					}
-<<<<<<< HEAD
 					// else{
               		// 	echo "<script> alert('Fomope Enviado'); window.location.href = '../bandejaEventuales.php?usuario_rol=$usuarioEdito'</script>";
 					// }
-=======
 
-			
-//prueba de si se edito en casa 
->>>>>>> eecf0ad3969c679b57ca9026704b87f281fd5079
 			}else {
 				echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 				echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';

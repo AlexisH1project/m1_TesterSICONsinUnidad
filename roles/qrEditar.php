@@ -788,6 +788,26 @@
 							<label  class="plantilla-label" for="entidad_nac">Entidad Nac.: </label>
 									 <input type="text" class="form-control border border-dark" id="entidad_nac" name="entidad_nac" value="<?php echo $ver['entidad_nac']?>" readonly > 
 					</div>
+					<div class="form-group col-mt-8">
+						<label class="plantilla-label" for="consema">*Consecutivo maestro de puestos:</label>
+						<input onkeypress="return pulsar(event)" type="text" class="form-control colon border border-dark" id="consema" name="consema" placeholder="Ej. 170" value="" maxlength="5" onkeyup="javascript:this.value=this.value.toUpperCase();" >
+					</div>
+					<div class="form-group col-md-6">
+						<label class="plantilla-label" for="fechenvvb">*Fecha de envio a VoBo SPC:</label>
+						<input type="date" class="form-control border border-dark" id="fechenvvb" name="fechenvvb" placeholder="Fecha de envio a VoBo SPC"  >
+						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
+				        </small>  
+					</div>
+					<div class="form-group col-md-6">
+						<label class="plantilla-label" for="fecharecdspo">*Fecha de recibo DSPO:</label>
+						<input  type="date" class="form-control border border-dark" id="fecharecdspo" name="fecharecdspo" placeholder="Fecha de envio a VoBo SPC" >
+						<small name= "alertFechaIngreso" id= "alertFechaIngreso" class="text-danger">
+				        </small>  
+					</div>
+					<div class="form-group col-md-6">
+						<label class="plantilla-label" for="foliospc">*Folio SPC:</label>
+						<input  type="text" class="form-control colon border border-dark" id="foliospc" name="foliospc" placeholder="Ej. 2020" value="" maxlength="5"  >
+					</div>
 			<?php
 			if($rowUser['id_rol'] == 1 OR $rowUser['id_rol'] == 0){
 				?>
@@ -880,11 +900,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-<<<<<<< HEAD
 													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 7";
-=======
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 2 OR id_rol = 3 OR id_rol = 7";
->>>>>>> eecf0ad3969c679b57ca9026704b87f281fd5079
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
