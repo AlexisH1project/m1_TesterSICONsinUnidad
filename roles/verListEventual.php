@@ -122,8 +122,8 @@
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		
 		//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	    $from = './Controller/DOCUMENTOS_PDC/';	
+	    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
+	    $from = './Controller/DOCUMENTOS_MOV_QR/';	
 	    }else{
 		$from = './Controller/DOCUMENTOS_RES/';
 	    }
@@ -206,7 +206,7 @@ function asignarIDfecha(){
 
 ////////////// inicia la busqueda del archivo en carpeta 
 					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-		                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
+		                     $dir_subidaMov = './Controller/DOCUMENTOS_MOV_QR/';
 	                     }else{
 		                 	$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
 		                 }
@@ -370,7 +370,7 @@ function asignarIDfecha(){
 								}
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
 													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	                                                      $laRuta = "DOCUMENTOS_PDC";
+	                                                      $laRuta = "DOCUMENTOS_MOV_QR";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
 	                                                      }
@@ -410,7 +410,7 @@ function asignarIDfecha(){
 						if($imprime == 0){
 								echo "
 												<tr>
-												<td>$rowNombreDoc2[1] <b><i> $anio </i></td>
+												<td>$rowNombreDoc2[1]</td>
 												";
 					    		//$contDoc++;
 
@@ -503,7 +503,7 @@ function asignarIDfecha(){
 								}
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
 													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	                                                      $laRuta = "DOCUMENTOS_PDC";
+	                                                      $laRuta = "DOCUMENTOS_MOV_QR";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
 	                                                      }

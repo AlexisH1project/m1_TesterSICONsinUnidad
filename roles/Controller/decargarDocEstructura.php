@@ -77,14 +77,13 @@ function showFiles($from, $curp){
 													"a: ". fileatime($from.$fileinfo->getFilename())."</br>".	
 													"m: ". filemtime($from.$fileinfo->getFilename())."</br>"
 												;  
+												$extencionFile = explode(".",$from.$fileinfo->getFilename());
+												$generarID = asignarIDfecha();
+
 			 									echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
-												copy($from.$fileinfo->getFilename(), $to.$fileinfo->getFilename());
-												touch($to.$fileinfo->getFilename(), $bktimea); // establecemos la fecha/hora original...
-												echo "c: ". filectime($to.$fileinfo->getFilename())."</br>".
-													"a: ". fileatime($to.$fileinfo->getFilename())."</br>".	
-													"m: ". filemtime($to.$fileinfo->getFilename())."</br>"
-												;  
-			 									// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
+												copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1]);
+												touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+		 									// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
 			 									// echo "DESPUES info". $bktimea2 ."</br>";
 											 }
 		}// --->> IF si se encuentra en la misma capeta

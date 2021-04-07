@@ -105,6 +105,9 @@
 	              <a  href= <?php echo ("'./correosUR.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/1_ic.png" alt="x" height="17" width="17"/> Correos</a>
 	          </li>
 			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(QR)</i></b></center></a>
+	          </li>
+			  <li class=" estilo-color">
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
 			  <li class=" estilo-color">
@@ -267,7 +270,7 @@
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(Eventuales)</i></b></center></a>
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(QR)</i></b></center></a>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./actualizarFecha.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/calendarioMP.png" alt="x"height="25" width="25"/> Actualizar Fechas</a>
@@ -478,7 +481,7 @@
 
 	<?php
 
-		}else{
+		}else{ // ROL == 2 
 		 ?>
 
 	 <br>
@@ -518,7 +521,9 @@
 			  <li class=" estilo-color">
 	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
 	          </li>
-	          <br>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(QR)</i></b></center></a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
