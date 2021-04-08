@@ -216,9 +216,9 @@
 				<div class="col text-center">
 
 					<td>
-									<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
-
-							</td>
+						<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
+						<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="conteoQr('<?php echo $usuarioSeguir ?>')" id="qr" >Conteo QR +</button>
+					</td>
 				</div>
 			</div>
 			<br>

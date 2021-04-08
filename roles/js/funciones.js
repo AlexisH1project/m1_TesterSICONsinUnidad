@@ -157,6 +157,14 @@ function agregaf(datos){
 
 	  window.location.href = 'blancoLulu.php?usuario_rol='+d;
 }
+
+function conteoQr(datos){
+	var d=datos;
+	
+
+	  window.location.href = 'conteoQr.php?usuario_rol='+d;
+}
+
 function agregafo(datos){
 
 	var d=datos;
