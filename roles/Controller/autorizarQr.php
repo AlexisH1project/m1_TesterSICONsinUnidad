@@ -31,10 +31,10 @@
 				$colorEstatus = "amarillo";
 			}elseif($rowRolA[0] == 4){
 				$colorEstatus = "guinda";
-			}
-		}elseif($idUserAsignado == "aceptar" || $idUserAsignado == "autorizar"){
-			$colorEstatus = "guinda";
-			// $idUserAsignado = 
+			}elseif($idUserAsignado == "aceptar" || $idUserAsignado == "autorizar"){
+					$colorEstatus = "guinda";
+					// $idUserAsignado = 
+				}
 		}
 			 
 			$sql = "UPDATE fomope_qr SET color_estado='$colorEstatus', usuario_modifico = '$usuarioEdito', fechaAutorizacion = '$row[0] - $usuarioEdito', personaAsignada = '$idUserAsignado', consecutivoMaestroPuestos = '$consecutivoMP', fechaEnvioSpc = '$fechaEnvSPC', fechaReciboDspo = '$fechaReciDSPO', folioSpc = '$folio' WHERE id_movimiento_qr = '$idFomope'" ;

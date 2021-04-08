@@ -262,7 +262,7 @@
 			
 			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
 		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-			$to = './Controller/DOCUMENTOS_PDC/';	
+			$to = './Controller/DOCUMENTOS_MOV_QR/';	
 			$rutaEnviar = './DOCUMENTOS_PDC/';
 		    }else{
 			$to = './Controller/DOCUMENTOS_RES/';

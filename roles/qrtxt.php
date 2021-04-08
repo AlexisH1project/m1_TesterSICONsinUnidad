@@ -262,8 +262,6 @@
 			
 				<h3>Sistema para guardar archivos .txt generados en la aplicación QR</h3>
 				<br>
-				<h5>DDSCH</h5>
-
 				<?php
 					if(isset($_POST["listaDoc"])){ 
 						$listaMostrar = $_POST["listaDoc"];
@@ -437,7 +435,9 @@
 
 				if($id_rol_res[0] == "" OR $id_rol_res[0] == 0){
 					$colorFomopeQr="amarillo0";
-				}else if($id_rol_res[0] == 3 OR $id_rol_res[0] == 7){
+				}else if($id_rol_res[0] == 2 OR $id_rol_res[0] == 7){
+                    $colorFomopeQr="cafe";
+				}else if($id_rol_res[0] == 3 ){
                     $colorFomopeQr="amarillo";
 				}
 			//guardamos el archivo que se selecciono en la carpeta 
@@ -539,7 +539,8 @@
 									$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, anio, usuario_modifico, fechaAutorizacion, personaAsignada, color_estado) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$anio', '$usuarioSeguir', '$rowF[0]', '$newTurnado', '$colorFomopeQr')";
 								}
 								$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
-								showFiles($from, $qrTexto[7]); //enviamos la direccion y el curp
+								$generarID = asignarIDfecha();
+								showFiles($from, $qrTexto[7],$generarID); //enviamos la direccion y el curp
 							break;
 							case '4508':
 								if($qrTexto[22] == "M04001" || $qrTexto[22] == "M04002" || $qrTexto[22] == "M04003" || $qrTexto[22] == "M04004" || $qrTexto[22] == "M04005" || $qrTexto[22] == "M04011"){
@@ -564,7 +565,8 @@
 									$tipoRegistro = 'EVENTUALES';	
 									$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, anio, usuario_modifico, fechaAutorizacion, personaAsignada, color_estado) VALUES ('$estatus', '$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','','','$qrTexto2[$i]', '$anio', '$usuarioSeguir', '$rowF[0]', '$newTurnado', '$colorFomopeQr')";	
 								}
-								showFiles($from, $qrTexto[7]); //enviamos la direccion y el curp
+								$generarID = asignarIDfecha();
+								showFiles($from, $qrTexto[7], $generarID); //enviamos la direccion y el curp
 
 							break;
 							case '4505':
@@ -584,7 +586,8 @@
 									$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, anio, usuario_modifico, fechaAutorizacion, personaAsignada, color_estado, enNomina) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$anio', '$usuarioSeguir', '$rowF[0]', '$newTurnado', '$colorFomopeQr', '0')";					 		
 
 								}			 		
-								showFiles($from, $qrTexto[7]); //enviamos la direccion y el curp
+								$generarID = asignarIDfecha();
+								showFiles($from, $qrTexto[7], $generarID); //enviamos la direccion y el curp
 							break;
 							case '0':
 							break;
@@ -596,7 +599,8 @@
 								}else if(count($qrTexto) == 40){
 									$sqlAgregar = "INSERT INTO fomope_qr (estatus, tipoRegistro,qna, llave, tipo_movimiento, lote, rfc,apellido_p, apellido_m,nombre, estado_civil, sar, curp, num_acta_banco, clabe, tipo, banco, calle, num_exterior, num_interior, colonia, codigo_post, estado_municipio, cr, ap, unidad, partida, codigo_puesto, edo_ai, gf, funcion, subfuncion, num_puesto, Tipo_trabajo, fing_gf, fing_ssa, num_horas, rango, quin, fini, fter, con_36, genero, entidad_nac, tex_con, anio, usuario_modifico, fechaAutorizacion, personaAsignada, color_estado, enNomina) VALUES ('$estatus','$tipoRegistro' ,'$newQna','$qrTexto[0]','$qrTexto[1]','$qrTexto[2]','$qrTexto[3]','$apeP[0]','$apeM[0]','$nombreCom','$qrTexto[5]','$qrTexto[6]','$qrTexto[7]','$qrTexto[8]','$qrTexto[9]', '$qrTexto[10]','$qrTexto[11]','$qrTexto[12]','$qrTexto[13]','$qrTexto[14]','$qrTexto[15]','$qrTexto[16]','$qrTexto[17]','$qrTexto[18]','$qrTexto[19]','$qrTexto[20]', '$qrTexto[21]','$qrTexto[22]','$qrTexto[23]','$qrTexto[24]','$qrTexto[25]','$qrTexto[26]','$qrTexto[27]','$qrTexto[28]','$qrTexto[29]', '$qrTexto[30]','$qrTexto[31]','$qrTexto[32]','$qrTexto[33]','$qrTexto[34]','$qrTexto[35]','$qrTexto[36]','$qrTexto[37]','$qrTexto[38]','$qrTexto2[$i]', '$anio', '$usuarioSeguir', '$rowF[0]', '$newTurnado', '$colorFomopeQr','0')";					 		
 								}
-								showFiles($from, $qrTexto[7]); //enviamos la direccion y el curp
+								$generarID = asignarIDfecha();
+								showFiles($from, $qrTexto[7],$generarID); //enviamos la direccion y el curp
 							break;
 					}
 					unset($qrTexto);
@@ -642,7 +646,7 @@ function asignarIDfecha(){
 }
 
 //---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
-function showFiles($from, $curp){
+function showFiles($from, $curp, $generarID){
 	set_time_limit(3600);
 	include "configuracion.php";
 	//$to = '../roles/Controller/DOCUMENTOS_RES/';
@@ -658,7 +662,7 @@ function showFiles($from, $curp){
     while ($current = readdir($dir)){
         if( $current != "." && $current != "..") {
             if(is_dir($from.$current)) {
-                showFiles($from.$current.'/', $curp);
+                showFiles($from.$current.'/', $curp, $generarID);
             }
             else {
                 $files[] = $current;
@@ -696,9 +700,7 @@ function showFiles($from, $curp){
 												   "m: ". filemtime($from.$fileinfo->getFilename())."</br>"
 											   ;  
 											   $extencionFile = explode(".",$fileinfo);
-											   $generarID = asignarIDfecha();
-
-												echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
+											  	echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
 											   copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1]);
 											   touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
 			 									// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix

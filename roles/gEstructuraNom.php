@@ -270,16 +270,6 @@
 					} 
 
 				</script>
-			
-		<div class="row">
-				<div class="col text-center">
-
-					<td>
-									<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
-
-							</td>
-				</div>
-			</div>
 			<br>
 			
 			<form action="" method="POST"> 
@@ -336,30 +326,6 @@
 							</div>
 						</div>		
 
-						<div class="col">
-							 <div class="form-group col-md-8 ">
-									<label  class="plantilla-label" for="laUsuario">Analista: </label><br>
-										 
-										<select class="rounded border border-dark" id="usuarioOption" name="usuarioOption" onchange="guardarTurnado();">
-											<?php
-											if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
-											       die("Error cargando el conjunto de caracteres utf8");
-											}
-
-											$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
-											$resultado = mysqli_query($conexion , $consulta);
-											$contador=0;
-											?>
-												<option  data-subtext=""></option>
-											<?php
-
-											while($turnado = mysqli_fetch_assoc($resultado)){ $contador++;?>
-												<option  data-subtext="<?php echo $turnado["id_turnado"]; ?>"><?php echo $turnado["usuario"]; ?></option>
-											<?php }?>          
-											</select>
-							</div>
-						</div>
-
 					</div>
 			
 				<div class="col-sm-12">
@@ -408,43 +374,40 @@
 							$qnaBuscar = $_POST['qnaOption'];
 							$rfcBuscar = $_POST['unexp_3'];
 							$anioBuscar = $_POST['anio'];
-							$analistaBuscar = $_POST['usuarioOption'];
 
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
-							if (($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "" && $analistaBuscar != "") || ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "") || ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "" && $analistaBuscar != "")){
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (color_estado ='guinda' AND enNomina = 0 AND personaAsignada='$analistaBuscar' AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
-							}elseif($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
+							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 		
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 		
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro = 'ESTRUCTURA') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}
 
