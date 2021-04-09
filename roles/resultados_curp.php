@@ -38,7 +38,8 @@
                 "apellido1"=>$row[3],
                 "apellido2"=>$row[4],
                 "nombre"=>$row[5],
-                "curp"=>$row[2]
+                "curp"=>$row[2],
+                "rfc"=>$row[1]
             );
         $value[1]= 0;
         $i = 1;

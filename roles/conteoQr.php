@@ -199,51 +199,8 @@
 								      console.log(infEmpleado.length);
 
 									//document.getElementById("rfc").value = infEmpleado[1] ;
-									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
-									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
-									document.getElementById("nombre").value = infEmpleado[0].nombre ;
 									
-								  for(var i=1; i < infEmpleado.length; i++){ 
-								        console.log(infEmpleado[i]);
-									    if(infEmpleado[i].id != null){
-											const $cuerpoTabla = document.querySelector("#cuerpoTabla");
-										// Recorrer todos los productos
-											// Crear un <tr>
-											const $tr = document.createElement("tr");
-											// Creamos el <td> de nombre y lo adjuntamos a tr
-											let $tdNombre = document.createElement("td");
-											$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
-											$tr.appendChild($tdNombre);
-											// El td de precio
-											let $tdPrecio = document.createElement("td");
-											$tdPrecio.textContent = infEmpleado[i].fecha;
-											$tr.appendChild($tdPrecio);
-											// El td del código
-											let $tdCodigo = document.createElement("td");
-											$tdCodigo.textContent = infEmpleado[i].qna;
-											$tr.appendChild($tdCodigo);
-											// El td del año
-											let $tdAnio = document.createElement("td");
-											$tdAnio.textContent = infEmpleado[i].anio;
-											$tr.appendChild($tdAnio);
-											// El select
-											let $tdSelect = document.createElement("td");
-											var checkbox = document.createElement('input');
-											checkbox.type = "radio";
-											checkbox.name = "radioMov";
-											checkbox.value = infEmpleado[i].id;
-											checkbox.id = "idRadioMov";
-											// $tdSelect.textContent =checkbox ;
-											$tr.appendChild(document.body.appendChild(checkbox));
-											
-											// Finalmente agregamos el <tr> al cuerpo de la tabla
-											$cuerpoTabla.appendChild($tr);
-										}else{
-											$('#cuerpoTabla').children( 'tr' ).remove();
-										}
-									}
-
-
+									document.getElementById("rfc").value = infEmpleado[0].rfc ;
 								}
 							});
 							return false;
@@ -312,17 +269,49 @@
 			<br>
 
 			<form method="post" action=""> 
-				<div class="plantilla-inputv text-center">
+			
+			<div class="rounded border border-dark plantilla-inputv text-center">
 					<div class="form-row">
 						<div class="col">
 						<center>
-						<div class="form-group col-md-6">
+							<div class="form-group col-md-12">
 								<label class="plantilla-label" for="elRfc">*CURP:</label>
 								
-								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="18"  required>
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa curp" maxlength="18"  required>
 							</div>
-						</center>
 						</div>
+						<div class="col">
+
+							<div class="form-group col-md-12">
+								<label class="plantilla-label" for="elRfc">*RFC:</label>
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfc" name="rfc" placeholder="RFC" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
+							</div>
+						</div>
+						<div class="col">
+							 <div class="form-group col-md-6 ">
+									<label  class="plantilla-label" for="laUsuario">*ASIGNAR A: </label>
+										 
+										<select class="rounded border border-dark" id="usuarioOption" name="usuarioOption" onchange="guardarTurnado();">
+											<?php
+											if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+											       die("Error cargando el conjunto de caracteres utf8");
+											}
+
+											$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2 OR id_rol = 7 OR id_rol = 0";
+											$resultado = mysqli_query($conexion , $consulta);
+											$contador=0;
+											?>
+												<option  data-subtext=""></option>
+											<?php
+
+											while($turnado = mysqli_fetch_assoc($resultado)){ $contador++;?>
+												<option  data-subtext="<?php echo $turnado["id_turnado"]; ?>"><?php echo $turnado["usuario"]; ?></option>
+											<?php }?>          
+											</select>
+							</div>
+						</div>
+						</center>
+					</div>
 
 					
 			
@@ -353,7 +342,13 @@
 
 						if(isset($_POST['buscar'])){
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
+							$from2 = '\\\\PWIDGRHOSISFO01\\pdf2\\';
+							$to = './Controller/DOCUMENTOS_MOV_QR/FMP/';
+
 							$elCurp = $_POST['rfcL_1'];
+							$asignadoA = $_POST['usuarioOption'];
+							$elRfc = $_POST['rfc'];
+
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
 							if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
@@ -369,8 +364,11 @@
 								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 								$newQna = $rowQna[0];
 							}
-							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]') ";
+							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA') ";
 							if(mysqli_query($conexion,$sql)){
+								$generarID = asignarIDfecha();
+								copy(from2.$elRfc."pdf" , $to.$elCurp."_X_".$generarID.".PDF");
+								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
 								$generarID = asignarIDfecha();
 								showFiles($from,$elCurp,$generarID); //enviamos la direccion y el curp
 								echo("

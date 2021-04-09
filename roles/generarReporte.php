@@ -274,7 +274,6 @@
 					<div class="form-group col-md-12">
 						<div class="col text-center">
 							<input type="submit" name="impReporte" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Generar Reporte"><br>
-
 						</div>
 					</div>
 
@@ -283,6 +282,76 @@
 		</div>
 	
 			</form>
+</center>	
+
+
+        <!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+
+
+<center>
+<form method="post" action="generarReporteAnalista/generarFomopeQr.php"> 
+  <br>
+<br>
+<br>
+
+<div class="plantilla-inputv text-center">
+
+  <div class="form-row">
+	  <div class="col">
+		  <div class="form-group col-md-12">
+			  <label  class="plantilla-label estilo-colorg" for="analista">Analista: </label>
+				   
+				  <select class="form-control unexp border border-dark custom-select" name="analista">
+					  <?php
+					  if (!$conexion->set_charset("utf8")) {//asignamos la codificación comprobando que no falle
+							 die("Error cargando el conjunto de caracteres utf8");
+					  }
+
+					  $consulta = "SELECT usuario FROM usuarios WHERE id_rol = 3 ";
+					  $resultado = mysqli_query($conexion , $consulta);
+					  $contador=0;
+
+					  while($misdatos = mysqli_fetch_assoc($resultado)){ $contador++;?>
+					  <option  data-subtext="<?php echo $misdatos['usuario']; ?>"><?php echo $misdatos['usuario']; ?></option>
+					  <?php }?>          
+					  </select>
+		  </div>
+	  </div>
+
+	  <div class="col">
+
+		  <div class="form-group col-md-12">
+			  <label class="plantilla-label estilo-colorg" for="fechaImp1">Fecha a Imprimir:</label>
+			  <input type="date" class="form-control border-dark" id="fechaImp1" name="fechaImp1" required>
+		  </div>
+	  </div>
+
+			  <input type="input" class="form-control border-dark" id="nombreUsuario" name="nombreUsuario" value="<?php echo "$usuarioSeguir" ?>" style="display:none">
+
+	  <div class="col">
+		  <div class="form-group col-md-12">
+			  <label class="plantilla-label estilo-colorg" for="fechaImp2">Rango de Fecha:</label>
+			  <input type="date" class="form-control border-dark" id="fechaImp2" name="fechaImp2">
+		  </div>
+	  </div>		
+  </div>
+
+<div class="col-sm-12">
+  <div class="form-row">
+
+  <div class="form-group col-md-12">
+	  <div class="col text-center">
+		  <input type="submit" name="impReporte" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Generar Reporte QR"><br>
+
+	  </div>
+  </div>
+
+  </div>
+</div>
+</div>
+
+</form>
 </center>	
 			<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
