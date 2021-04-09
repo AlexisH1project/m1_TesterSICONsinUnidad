@@ -128,7 +128,7 @@
 		$from = './Controller/DOCUMENTOS_RES/';
 	    }
 
-		$from = './Controller/OTRO/';
+		// $from = './Controller/OTRO/';
 
 //---> funcion para poder asiganar un id diferente y no se duplique el documento
 function asignarIDfecha(){

@@ -353,6 +353,7 @@
 							$tiempo ="select curTime()";
 							if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 								$row = mysqli_fetch_row($resultHoy);
+								$fecha = str_replace ( "-", '',$row[0] ); 
 								$row2 = mysqli_fetch_row($resultTime);
 								$elanio = explode("-",$row[0]);
 							}
@@ -367,7 +368,7 @@
 							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA') ";
 							if(mysqli_query($conexion,$sql)){
 								$generarID = asignarIDfecha();
-								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$generarID.".PDF");
+								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
 								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
 								$generarID = asignarIDfecha();
 								showFiles($from,$elCurp,$generarID); //enviamos la direccion y el curp

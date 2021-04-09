@@ -1053,12 +1053,16 @@ tbody {
 							<td><?php echo $ver3[1] ?></td>
 							<td><?php echo $ver3[5] ?></td>
 							
-							<td><?php echo "
+							<td><?php
+							$fecha = str_replace ( "-", '',$ver3[2] ); 
+							$nombreCompleto = "./DOCUMENTOS_MOV_QR/FMP/". $ver3[1]."_FMP_".$ver3[5]."_".$fecha.".pdf";
+
+							echo "
 
 	
-							<form method='get' action='./verListEventual.php'>
-								<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
-								<input type='text' style='display: none;' name='idMov' value='$ver3[0]'>
+							<form method='get' action='Controller/controllerDescargaPagina2.php'>
+								<input type='text' style='display: none;' name='extencion' value='pdf'>
+								<input type='text' style='display: none;' name='nombreDecarga' value='$nombreCompleto'>
 								<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
 							</form> "
 
