@@ -515,7 +515,7 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%')";
-
+								$sql3="SELECT * FROM conteo_qr  WHERE(rfc LIKE '%$rfcBuscar%') ORDER BY id_cont DESC";
 							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar')";
@@ -1008,6 +1008,85 @@ tbody {
 
 		$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
 	?>
+	<!-- ******************************************************tabla de resultado sobre el QR pre cargado -->
+<div class="table-responsive">
+		<table id="tabQr" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >
+			
+						<thead>
+						    <tr>
+							<!-- <td>Observacion</td>
+							<td>ID Fomope</td> -->
+							
+							<th scope="titulo" style="display: none;" class="sticky"></th>
+							 <th scope="titulo" style="text-align: center" style="width: 400px" class="sticky">RFC</th>
+						      <th scope="titulo" style="text-align: center"   style="text-align: center" class="sticky">CURP</th>
+						      <th scope="titulo"  style="text-align: center" class="sticky">QNA</th>
+						   </tr>
+						</thead>
+				 <tbody>
+				          <?php
+							$imprimirNoExiste = 0;
+							if ($result3 = mysqli_query($conexion,$sql3)) {
+
+								$totalFilas    =    mysqli_num_rows($result3);  
+								if($totalFilas == 0){
+										$imprimirNoExiste ++;
+										$matriz[0][0] = 0;
+										echo('
+															<br>
+															<br>
+															<div class="col-sm-12 ">
+															<div class="plantilla-inputv text-dark">
+															    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+														</div>
+														</div>');
+									//	$matrizEventuales = queryEventual($sql2,$imprimirNoExiste);
+								}else{
+
+
+									while($ver3=mysqli_fetch_row($result3)){ 
+
+						 ?>
+						<tr id="<?php echo $ver3[0] ?>">
+							<td style="display: none;"><?php echo $ver3[0] ?></td>
+							<td><?php echo $ver3[7] ?></td>
+							<td><?php echo $ver3[1] ?></td>
+							<td><?php echo $ver3[5] ?></td>
+							
+							<td><?php echo "
+
+	
+							<form method='get' action='./verListEventual.php'>
+								<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+								<input type='text' style='display: none;' name='idMov' value='$ver3[0]'>
+								<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
+							</form> "
+
+							?>
+							</td>
+				
+						</tr>
+						<?php 
+						
+							}
+						}
+						//$imprimirNoExiste++;
+
+						
+						
+						}else{
+							echo '<script type="text/javascript">alert("Error en la conexion");</script>';
+							echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+						}
+		
+
+?>
+		 </tbody>
+		</table>
+	</div>
+	</div>	
+
+
 <?php
 		}
 						?>
