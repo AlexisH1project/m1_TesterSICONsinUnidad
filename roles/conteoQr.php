@@ -342,7 +342,7 @@
 
 						if(isset($_POST['buscar'])){
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
-							$from2 = '\\\\PWIDGRHOSISFO01\\pdf2\\';
+							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 							$to = './Controller/DOCUMENTOS_MOV_QR/FMP/';
 
 							$elCurp = $_POST['rfcL_1'];
@@ -367,7 +367,7 @@
 							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA') ";
 							if(mysqli_query($conexion,$sql)){
 								$generarID = asignarIDfecha();
-								copy(from2.$elRfc."pdf" , $to.$elCurp."_X_".$generarID.".PDF");
+								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$generarID.".PDF");
 								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
 								$generarID = asignarIDfecha();
 								showFiles($from,$elCurp,$generarID); //enviamos la direccion y el curp
