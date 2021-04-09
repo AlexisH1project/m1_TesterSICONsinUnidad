@@ -156,7 +156,8 @@
 
 		</style>
 	<script>
-	$(document).ready(function(){
+			
+			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
 					var id = this.id;
 					var splitid = id.split('_');
@@ -164,7 +165,7 @@
 					$('#'+id).autocomplete({
 						source: function(request, response){
 							$.ajax({
-								url: "resultados_rfc.php",
+								url: "resultados_curp.php",
 								type: 'post',
 								dataType: "json",
 								data: {
@@ -176,27 +177,73 @@
 									
 								}
 							});
-						},
-						select: function (event, ui){
+						},select: function (event, ui){
 							$(this).val(ui.item.label);
 							var buscarid = ui.item.value;
 							console.log(buscarid);
 							//alert(buscarid);
 							$.ajax({
-								url: 'resultados_rfc.php',
+								url: 'resultados_curp.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:2
-
+									buscarid:buscarid,request:2,
+									
 								},
 								success: function(data){
+									
+									$('#cuerpoTabla').children( 'tr' ).remove();
 									console.log(data);
 									var infEmpleado = eval(data);
+									console.log(data);
+									console.log(infEmpleado[0].apellido1);
+								      console.log(infEmpleado.length);
+
 									//document.getElementById("rfc").value = infEmpleado[1] ;
-									document.getElementById("curp").value = infEmpleado[0].curp ;
 									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
 									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
 									document.getElementById("nombre").value = infEmpleado[0].nombre ;
+									
+								  for(var i=1; i < infEmpleado.length; i++){ 
+								        console.log(infEmpleado[i]);
+									    if(infEmpleado[i].id != null){
+											const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+										// Recorrer todos los productos
+											// Crear un <tr>
+											const $tr = document.createElement("tr");
+											// Creamos el <td> de nombre y lo adjuntamos a tr
+											let $tdNombre = document.createElement("td");
+											$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+											$tr.appendChild($tdNombre);
+											// El td de precio
+											let $tdPrecio = document.createElement("td");
+											$tdPrecio.textContent = infEmpleado[i].fecha;
+											$tr.appendChild($tdPrecio);
+											// El td del código
+											let $tdCodigo = document.createElement("td");
+											$tdCodigo.textContent = infEmpleado[i].qna;
+											$tr.appendChild($tdCodigo);
+											// El td del año
+											let $tdAnio = document.createElement("td");
+											$tdAnio.textContent = infEmpleado[i].anio;
+											$tr.appendChild($tdAnio);
+											// El select
+											let $tdSelect = document.createElement("td");
+											var checkbox = document.createElement('input');
+											checkbox.type = "radio";
+											checkbox.name = "radioMov";
+											checkbox.value = infEmpleado[i].id;
+											checkbox.id = "idRadioMov";
+											// $tdSelect.textContent =checkbox ;
+											$tr.appendChild(document.body.appendChild(checkbox));
+											
+											// Finalmente agregamos el <tr> al cuerpo de la tabla
+											$cuerpoTabla.appendChild($tr);
+										}else{
+											$('#cuerpoTabla').children( 'tr' ).remove();
+										}
+									}
+
+
 								}
 							});
 							return false;
@@ -204,7 +251,8 @@
 					});
 				});
 			});
-		</script>
+
+	</script>
 	</head>
 	<body>
 			<?php
@@ -268,9 +316,10 @@
 					<div class="form-row">
 						<div class="col">
 						<center>
-							<div class="form-group col-md-6">
-								<label class="plantilla-label" for="elRfc">*RFC:</label>
-								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="RFC" value="<?php if(isset($_POST["rfcL_1"])){ echo $_POST["rfcL_1"];} ?>"  onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
+						<div class="form-group col-md-6">
+								<label class="plantilla-label" for="elRfc">*CURP:</label>
+								
+								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="CURP" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="18"  required>
 							</div>
 						</center>
 						</div>
@@ -303,7 +352,8 @@
 						include "configuracion.php";
 
 						if(isset($_POST['buscar'])){
-							$elRfc = $_POST['rfcL_1'];
+							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
+							$elCurp = $_POST['rfcL_1'];
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
 							if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
@@ -319,9 +369,18 @@
 								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 								$newQna = $rowQna[0];
 							}
-							$sql = "INSERT INTO conteo_qr (rfc, fecha, hora, usuarioAgrego, qna, anio) VALUES ('$elRfc', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]') ";
+							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]') ";
 							if(mysqli_query($conexion,$sql)){
-								echo "GUARDADO CORRECTAMENTE: ".$elRfc;
+								$generarID = asignarIDfecha();
+								showFiles($from,$elCurp,$generarID); //enviamos la direccion y el curp
+								echo("
+								<br>
+								<br>
+								<div class='col-sm-12'>
+								<div class='plantilla-inputv text-dark ''>
+								<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
+								</div>
+								</div>");
 							}
 							
 						}
@@ -329,6 +388,92 @@
 
 					
 
+<?php
+
+		//---> funcion para poder asiganar un id diferente y no se duplique el documento
+		function asignarIDfecha(){
+			//----------------Sacamos la Hora 
+			include "configuracion.php";
+
+			$hoy = "select CURDATE()";
+			$tiempo ="select curTime()";
+
+				if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+						$row = mysqli_fetch_row($resultHoy);
+						$row2 = mysqli_fetch_row($resultTime);
+				}
+				$hora = str_replace ( ":", '',$row2[0] ); 
+				$fecha = str_replace ( "-", '',$row[0] ); 
+			//----------------Sacamos la Hora 
+			return $fecha.$hora;
+		}
+
+		//---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
+		function showFiles($from, $curp, $generarID){
+			set_time_limit(3600);
+			include "configuracion.php";
+			//$to = '../roles/Controller/DOCUMENTOS_RES/';
+			//$to = './SICON/'.$nameCarpetaOTRO[1];
+			//$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
+			$nameCarpetaOTRO= explode("\\Archivos2\\", $from);
+			$to = './Controller/DOCUMENTOS_MOV_QR/'.$nameCarpetaOTRO[1];
+			$nameCarpetaSICON= explode("./Controller/DOCUMENTOS_MOV_QR/", $to);
+
+
+			$dir = opendir($from);
+			$files = array();
+			while ($current = readdir($dir)){
+				if( $current != "." && $current != "..") {
+					if(is_dir($from.$current)) {
+						showFiles($from.$current.'/', $curp, $generarID);
+					}
+					else {
+						$files[] = $current;
+						
+					}
+				}
+			}
+		
+			$iterator = new DirectoryIterator($from);
+			// $iterator2 = new DirectoryIterator($to);
+			foreach ($iterator as $fileinfo) { //----------> iniciamos a recorrer los docuementos de la carpeta del servidor donde se van a extraer
+				$docModificado = 0 ;
+				$contadorExistenDoc = 0; 
+				$existeRFC = 0;
+				if ($fileinfo->isFile()) {
+					// Arreglo con todos los nombres de los archivos
+					$nombreDocServ = explode(".",$fileinfo);
+					$curpInterator = explode("_",$nombreDocServ[0]);
+					//echo("nombre:: ". $nombreDocServ[0]);
+													//$files = array_diff(scandir($to), array('.', '..')); 
+					$totalDoc = count(glob($to.'{*.pdf,*.PDF}',GLOB_BRACE));  //---> total de documentos en la carpeta a la cual se van a pasar 
+					/*echo '<h2> COMÁRANDO: '.$nameCarpetaSICON[1].'</h2>';
+					echo '<h2> COMÁRANDO: '.$nameCarpetaOTRO[1].'</h2>';*/
+					if($nameCarpetaSICON[1] == $nameCarpetaOTRO[1]){												
+													// foreach($iterator2 as $file){
+												
+								//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si 
+										// -----> Esta comparacion es para saber si existen los documentos con las mismas caracteristicas 
+													if($curp == $curpInterator[0]) {
+														// echo "creeeeeea el docccc". "\n";
+														$bktimea = filectime($from.$fileinfo->getFilename()); // obtener tiempo unix
+														$fromV =$from.$fileinfo->getCTime(); // ----> antes de copiar , se obtiene su id de creacion 
+													// 	echo "c: ". filectime($from.$fileinfo->getFilename())."</br>".
+													// 	"a: ". fileatime($from.$fileinfo->getFilename())."</br>".	
+													// 	"m: ". filemtime($from.$fileinfo->getFilename())."</br>"
+													// ;  
+													$extencionFile = explode(".",$fileinfo);
+														// echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
+													copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1]);
+													touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+														// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
+														// echo "DESPUES info". $bktimea2 ."</br>";
+													}
+				}// --->> IF si se encuentra en la misma capeta
+						}
+					}
+				}
+?>
 
 		
 	</center>

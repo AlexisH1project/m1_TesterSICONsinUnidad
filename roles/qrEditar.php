@@ -213,7 +213,7 @@
 			
 			
 			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+				window.location.href = 'Controller/controllerDescargaPagina2.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 
 			}
 
@@ -263,7 +263,7 @@
 			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
 		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
 			$to = './Controller/DOCUMENTOS_MOV_QR/';	
-			$rutaEnviar = './DOCUMENTOS_PDC/';
+			$rutaEnviar = './DOCUMENTOS_MOV_QR/';
 		    }else{
 			$to = './Controller/DOCUMENTOS_RES/';
 			$rutaEnviar = './DOCUMENTOS_RES/';
@@ -453,12 +453,10 @@
 								$colorRechazo = "negro_".strval($rowUser['id_rol']);
 							}
 
-						 if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	                     $dir_subidaMov = './Controller/DOCUMENTOS_PDC/';
-	                     }else{
+					if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
+	                     $dir_subidaMov = './Controller/DOCUMENTOS_MOV_QR/';
+	                }else{
 		                 $dir_subidaMov = './Controller/DOCUMENTOS_RES/';
-            
-	                     
 	                    }
 					$ruta = $dir_subidaMov;
 					$index=0;
@@ -577,7 +575,7 @@
 											
 												//if($row['id_rol'] == 1 OR $row['id_rol'] == 2){
 													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
-	                                                      $laRuta = "DOCUMENTOS_PDC";
+	                                                      $laRuta = "DOCUMENTOS_MOV_QR";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
 	                                                      }

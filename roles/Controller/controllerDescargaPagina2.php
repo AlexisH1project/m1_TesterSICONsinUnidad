@@ -27,6 +27,8 @@ $ruta =	explode("/", $nombreDeArchivoDescarga);
 		}
 		if($ruta == "DOCUMENTOS_BAJAS"){
 			readfile($nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
+		}if($ruta == "DOCUMENTOS_MOV_QR"){
+			readfile($nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		}else{
 			readfile("./DOCUMENTOS/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 			readfile($nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
