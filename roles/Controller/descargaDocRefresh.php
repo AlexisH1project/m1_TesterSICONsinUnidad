@@ -5,8 +5,8 @@
 							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 							$to = './DOCUMENTOS_MOV_QR/FMP/';
 
-							$elCurp = $_POST['curp'];
-							$usuarioSeguir = $_POST['usuario'];
+							$elCurp = $_GET['curp'];
+							$usuarioSeguir = $_GET['usuario'];
 
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";

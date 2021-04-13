@@ -11,6 +11,10 @@ function generarExcel(){
 				if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								$rowFecha = mysqli_fetch_row($resultHoy);
 				}
+				$sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuario'";
+				if($resName = mysqli_query($conexion, $sqlNombre)){
+					$rowUser = mysqli_fetch_row($resName);
+				}
 
 				if($rowUser[2]==0 OR $rowUser[2]==1 OR $rowUser[2]==7){
 
@@ -23,27 +27,23 @@ function generarExcel(){
 
 				$queryID = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$noFomope'" ;
 				if($resultSelect = mysqli_query($conexion, $queryID)){
-					$rowQr = mysqli_fetch_assoc($resultSelect);
-					$apellido1Add = $rowQr['apellido_p'] ;	
-					$apellido2Add = $rowQr['apellido_m'];
+					$rowQr = mysqli_fetch_row($resultSelect);
+					$apellido1Add = $rowQr[8] ;	
+					$apellido2Add = $rowQr[9];
+              
 
-                    $sqlNombre = "SELECT * from usuarios WHERE usuario = '$usuario'";
-				    if($resName = mysqli_query($conexion, $sqlNombre)){
-					$rowUser = mysqli_fetch_row($resName);
-				    }
-
-				    $movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov =".$rowQr['tipo_movimiento'];
+				    $movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov = '$rowQr[5]'";
 				    if($resMovimientos = mysqli_query($conexion, $movQuery)){
 					$rowMovimientos = mysqli_fetch_row($resMovimientos);
 				    }
 
-				    $unidadQuery = "SELECT * FROM ct_unidades WHERE UR =".$rowQr['unidad'];
+				    $unidadQuery = "SELECT * FROM ct_unidades WHERE UR = '$rowQr[26]'";
 				    if($resUnidad = mysqli_query($conexion, $unidadQuery)){
 					$rowUnidad = mysqli_fetch_row($resUnidad);
 				}
 
-					$nombreAdd = $rowQr['nombre'] ;
-					$fecha_recibido = $rowQr['fini'];
+					$nombreAdd = $rowQr[10] ;
+					$fecha_recibido = $rowQr[40];
                
 					
 					$objPHPExcel->getActiveSheet()->setCellValue('H11',$rowFecha[0]); 
@@ -73,13 +73,21 @@ function generarExcel(){
 
 				$queryID = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$noFomope'" ;
 				if($resultSelect = mysqli_query($conexion, $queryID)){
-					$rowQr = mysqli_fetch_assoc($resultSelect);
-					$apellido1Add = $rowQr['apellido_p'] ;	
-					$apellido2Add = $rowQr['apellido_m'];	
-					$nombreAdd = $rowQr['nombre'] ;
-					$fecha_recibido = $rowQr['fini'];
-               
-					
+
+					$rowQr = mysqli_fetch_row($resultSelect);
+					$apellido1Add = $rowQr[8] ;	
+					$apellido2Add = $rowQr[9];	
+					$nombreAdd = $rowQr[10] ;
+					$fecha_recibido = $rowQr[40];
+					$movQuery = "SELECT * FROM ct_movimientosrh WHERE cod_mov = '$rowQr[5]'";
+					if($resMovimientos = mysqli_query($conexion, $movQuery)){
+					$rowMovimientos = mysqli_fetch_row($resMovimientos);
+					}
+
+					$unidadQuery = "SELECT * FROM ct_unidades WHERE UR = '$rowQr[26]'";
+					if($resUnidad = mysqli_query($conexion, $unidadQuery)){
+					$rowUnidad = mysqli_fetch_row($resUnidad);
+					}
 					$objPHPExcel->getActiveSheet()->setCellValue('H10',$fecha_recibido); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D12', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D14', $rowMovimientos[4]); 

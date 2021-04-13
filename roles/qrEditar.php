@@ -54,6 +54,23 @@
 		        width:500px;
 		        background-color:lightgray;
 		    }
+
+			.btn-flotante {
+				font-size: 16px; /* Cambiar el tamaño de la tipografia */
+				text-transform: uppercase; /* Texto en mayusculas */
+				font-weight: bold; /* Fuente en negrita o bold */
+				color: #ffffff; /* Color del texto */
+				border-radius: 5px; /* Borde del boton */
+				letter-spacing: 2px; /* Espacio entre letras */
+				background-color: #E91E63; /* Color de fondo */
+				padding: 18px 30px; /* Relleno del boton */
+				position: absolute;
+				/* bottom: 600px; */
+				right: 10px;
+				/* transition: all 300ms ease 0ms;
+				box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+				z-index: 99; */
+			}
 		  </style>
 
 				
@@ -65,7 +82,7 @@
 			} 
 
 			
-
+			
 		</script>
 
 		
@@ -211,7 +228,10 @@
 				});
 			});
 			
-			
+			function refreshDocs(nombre,curp){
+				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp;
+			}
+
 			function verDoc(nombre,laExtencion){
 				window.location.href = 'Controller/controllerDescargaPagina2.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 
@@ -422,7 +442,9 @@
 		  </nav>
 
         <!-- Page Content  -->
+		
       <div id="content" class="p-4 p-md-5 pt-5">
+		
 		<div class="formulario_qr">
 
 			<div class="form-group col-md-6">
@@ -579,12 +601,8 @@
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
 	                                                      }
-												
 											//	}
 												}
-
-
-
 										  }//cierra foreach
 										   if($banderaSI == 0){
 										   	?>
@@ -593,27 +611,14 @@
 														</td>
 								<?php
 													}
-
 								}
 							}	
 					?>
-
-					
-
 					</table>
 				</div>
 			</center>
-
-
-			<br>
-			<form method="post" name="docs" action="./Controller/descargaDocRefresh.php"> 
-				<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
-				<input type="text" style="display: none;" class="form-control border border-dark" id="curp" name="curp" value="<?php echo $ver['curp']?>"> 
-				<button type="submit" id="descDoc" class="btn btn-primary">
-					ACTUALIZAR DOCUMENTOS
-				</button>
-				<br><br>
-			</from>
+		
+			<br><br><br><br>
 			<form method="post" name="qrs" action="./Controller/autorizarQr.php"> 
 				<div class="form-row">
 					<div class="form-group col-md-2">
@@ -935,7 +940,7 @@
 							<br>
 
 			</form>
-
+		
 		</div>
 						
 								<div class="modal fade" id="exampleModalRT" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -958,8 +963,8 @@
 							    </div>
 							  </div>
 							</div>
-
-				</div>
+			</div>
+			
 			<?php
 				if(($ver['estatus'] == "Rechazado duplicado" OR $ver['color_estado'] == $colorRechazo) AND ($id_rol1 == 1 OR $id_rol1 == 2 OR $id_rol1 == 7)){
 			?>
@@ -1012,15 +1017,24 @@
 			}
 			?>
 
+			<form method="post" name="bde" action="">
+				<div class="form-group col-md-60">
 
-		<form method="post" name="bde" action="">
-		    <div id="content" class="p-4 p-md-5 pt-5">
-				<div class="formulario_qr">
-						<input type="button" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>', '<?php echo $rowUser['id_rol'] ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+					<div class="formulario_qr">
+							<input type="button" onclick="enviarBandejaPrincipal('<?php echo $usuarioSeguir ?>', '<?php echo $rowUser['id_rol'] ?>')" class="btn btn-primary" id="bandejaEntrada" name="accionB" style="display: none;"  value="bandeja principal">
+					</div>
 				</div>
+			</form>
+		
+		<form method="GET" name="docs" action=""> 
+			<div style="text-align: center">
+				<input type="button" class = "btn-flotante" onclick="refreshDocs('<?php echo $usuarioSeguir ?>', '<?php echo $ver['curp'] ?>')" id="refresh" name="refresh" value="ACTUALIZAR DOCUMENTOS">
 			</div>
-		</form>
-		<script src="js/bootstrap.min.js"></script>
+			<br><br>
+		</from>	
+
+
+	<script src="js/bootstrap.min.js"></script>
    	<script src="js/main.js"></script>
 
 		

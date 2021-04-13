@@ -22,8 +22,10 @@
 
 		if ($resRA = mysqli_query($conexion,$sqlRolAsign) ){
 				$rowRolA = mysqli_fetch_row($resRA);
-				
-			if($rowRolA[0] == 1 || $rowRolA[0] == 0){
+			if($idUserAsignado == "aceptar" || $idUserAsignado == "autorizar"){
+				$colorEstatus = "guinda";
+				// $idUserAsignado = 
+			}elseif($rowRolA[0] == 1 || $rowRolA[0] == 0){
 				$colorEstatus = "amarillo0";
 			}elseif($rowRolA[0] == 2){
 				$colorEstatus = "cafe";
@@ -31,10 +33,7 @@
 				$colorEstatus = "amarillo";
 			}elseif($rowRolA[0] == 4){
 				$colorEstatus = "guinda";
-			}elseif($idUserAsignado == "aceptar" || $idUserAsignado == "autorizar"){
-					$colorEstatus = "guinda";
-					// $idUserAsignado = 
-				}
+			}
 		}
 			 
 			$sql = "UPDATE fomope_qr SET color_estado='$colorEstatus', usuario_modifico = '$usuarioEdito', fechaAutorizacion = '$row[0] - $usuarioEdito', personaAsignada = '$idUserAsignado', consecutivoMaestroPuestos = '$consecutivoMP', fechaEnvioSpc = '$fechaEnvSPC', fechaReciboDspo = '$fechaReciDSPO', folioSpc = '$folio' WHERE id_movimiento_qr = '$idFomope'" ;
