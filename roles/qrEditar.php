@@ -606,6 +606,14 @@
 
 
 			<br>
+			<form method="post" name="docs" action="./Controller/descargaDocRefresh.php"> 
+				<input type="text" style="display: none;" name="usuario" value="<?php echo $usuarioSeguir; ?>" > 
+				<input type="text" style="display: none;" class="form-control border border-dark" id="curp" name="curp" value="<?php echo $ver['curp']?>"> 
+				<button type="submit" id="descDoc" class="btn btn-primary">
+					ACTUALIZAR DOCUMENTOS
+				</button>
+				<br><br>
+			</from>
 			<form method="post" name="qrs" action="./Controller/autorizarQr.php"> 
 				<div class="form-row">
 					<div class="form-group col-md-2">

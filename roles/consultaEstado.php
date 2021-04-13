@@ -482,17 +482,19 @@ tbody {
 							$unidadBuscar = $_POST['unidadBus'];
 							$qnaBuscar = $_POST['qnaOption'];
 							$anioBuscar = $_POST['anioBus'];
-						
+							$banderaFomope = 0;
                            if($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "" && $anioBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE anio = '$anioBuscar'";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE anio = '$anioBuscar'";
- 							
+								$sql3="SELECT * FROM conteo_qr  WHERE (anio = '$anioBuscar' AND qna='$qnaBuscar'";
+								$banderaFomope =  1;
  							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" && $anioBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE (anio = '$anioBuscar' AND quincenaAplicada='$qnaBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE (anio = '$anioBuscar' AND qna='$qnaBuscar')";
- 							
+								$sql3="SELECT * FROM conteo_qr  WHERE (anio = '$anioBuscar' AND qna='$qnaBuscar'";
+								$banderaFomope = 1;
  							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar != "" && $anioBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE (anio = '$anioBuscar' AND quincenaAplicada='$qnaBuscar' AND unidad='$unidadBuscar' )";
@@ -516,6 +518,7 @@ tbody {
 								$sql = "SELECT * FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%')";
 								$sql3="SELECT * FROM conteo_qr  WHERE(rfc LIKE '%$rfcBuscar%') ORDER BY id_cont DESC";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar != "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE (rfc='$rfcBuscar' AND apellido_1='$apellidoBuscar')";
@@ -814,7 +817,8 @@ tbody {
 
 								$sql = "SELECT * FROM fomope WHERE ( quincenaAplicada='$qnaBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE ( qna='$qnaBuscar')";
-
+								$sql3="SELECT * FROM conteo_qr  WHERE (anio = '$anioBuscar' AND qna='$qnaBuscar'";
+								$banderaFomope = 1;
  							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE (nombre = '$nombreBuscar' AND quincenaAplicada='$qnaBuscar')";
@@ -831,7 +835,10 @@ tbody {
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE (rfc='$rfcBuscar' AND nombre='$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar' AND unidad='$unidadBuscar')";
  							
  							}
-
+							
+							if($banderaFomope == 0){
+								$sql3="SELECT * FROM conteo_qr  WHERE rfc = '--'";
+							}
 
 
 
