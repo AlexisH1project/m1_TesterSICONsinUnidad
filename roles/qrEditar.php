@@ -281,7 +281,7 @@
 			//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 			
 			//$from = '\\\\PWIDGRHOSISFO01\\pdfs\\';
-		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+		    if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA" ){
 			$to = './Controller/DOCUMENTOS_MOV_QR/';	
 			$rutaEnviar = './DOCUMENTOS_MOV_QR/';
 		    }else{

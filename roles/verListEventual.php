@@ -205,7 +205,7 @@ function asignarIDfecha(){
 							// 			$nombreAdescargar = $ver[5]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
 
 ////////////// inicia la busqueda del archivo en carpeta 
-					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+					     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
 		                     $dir_subidaMov = './Controller/DOCUMENTOS_MOV_QR/';
 	                     }else{
 		                 	$dir_subidaMov = './Controller/DOCUMENTOS_RES/';
@@ -369,7 +369,7 @@ function asignarIDfecha(){
 												<?php
 								}
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
 	                                                      $laRuta = "DOCUMENTOS_MOV_QR";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
@@ -502,7 +502,7 @@ function asignarIDfecha(){
 												<?php
 								}
 												if($columnasUsuario['id_rol'] == 1 OR $columnasUsuario['id_rol'] == 2){
-													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)"){
+													     if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
 	                                                      $laRuta = "DOCUMENTOS_MOV_QR";
 	                                                      }else{
 		                                                  $laRuta = "DOCUMENTOS_RES";
