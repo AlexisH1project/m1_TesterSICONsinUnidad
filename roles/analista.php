@@ -524,7 +524,7 @@
 						}
 						 ?>
 		</table>
-			<!-- ****************************************************INICIO: TABLA: AUTORIZAR CARAVANAS  -->
+			<!-- ****************************************************INICIO: TABLA: AUTORIZAR qr  -->
 			<div class="col-sm-12">
 				
 				<div class="card bg-secondary text-white">
@@ -614,6 +614,80 @@
 <br><br>		
 
 
+		<!-- ****************************************************INICIO: TABLA: rechazos QR  -->
+		<div class="col-sm-12">
+				
+				<div class="card bg-secondary text-white">
+						<div class="card-body plantilla-inputg"><h2>Rechazos QR</h2></div>
+				</div>
+				<table class="table table-hover table-white">
+					<thead>
+						<tr>
+						<!-- <td>Observacion</td>
+						<td>ID Fomope</td> -->
+						  <th scope="titulo">Unidad</th>
+						  <th scope="titulo">RFC</th>
+						  <th scope="titulo">QNA</th>
+						  <th scope="titulo">Fecha Ingreso</th>
+						  <th scope="titulo">Codigo Mov.</th>
+						  <th scope="titulo">Tipo de ingreso</th>
+
+					   </tr>
+					  </thead>
+
+					<?php 
+						include "configuracion.php";
+
+						$sql="SELECT id_movimiento_qr, unidad, rfc , curp , fini, tipo_movimiento from fomope_qr WHERE estatus = 'Revisión' AND color_estado = 'negro_2'  ORDER BY id_movimiento_qr DESC";
+						$result=mysqli_query($conexion,$sql);
+
+						while($ver=mysqli_fetch_row($result)){ 
+
+						
+							$consulta2 = " SELECT * FROM fomope_qr WHERE id_movimiento_qr = ".$ver[0];
+
+							if($resultado2 = mysqli_query($conexion,$consulta2)){
+								$row = mysqli_fetch_assoc($resultado2);
+								$id_mov = $row['id_movimiento_qr'];
+							}
+					 /*   	switch ($ver[1]) {
+										
+										case 'amarillo0':
+											$estadoF = 'DDSCH Autorización';
+											break;
+										
+										case 'verde2':
+											$estadoF = 'DDSCH Autorización Loteo';
+											break;	
+											
+										default:
+											
+											break;
+									}*/
+					if($row['tipoRegistro']=="ESTRUCTURA" || $row['tipoRegistro'] == "PERSONAL DE CONFIANZA (ALTA)" || $row['tipoRegistro'] == "PERSONAL DE CONFIANZA (REINGRESO)"){
+
+					 ?>
+
+					<tr>
+						<td><?php echo $row['unidad'] ?></td>
+						<td><?php echo $row['rfc'] ?></td>
+						<td><?php echo $row['qna'] ?></td>
+						<td><?php echo $row['fini'] ?></td>
+						<td><?php echo $row['tipo_movimiento'] ?></td>
+						<td><?php echo $row['tipoRegistro'] ?></td>
+
+						<td>
+							<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $row['id_movimiento_qr'] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+						</td>
+					</tr>
+					<?php 
+					
+					 }
+				}
+					 ?>
+
+				</table>
+<!-- *****************************************************fin de la tabla rechazos qr -->
 
 			<div class="col-sm-12">
 				
