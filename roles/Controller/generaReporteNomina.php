@@ -81,21 +81,26 @@
 		header("Content-disposition: attachment; filename=$nombreAmigable");
 		// Leer el contenido binario del zip y enviarlo
 		readfile($nombreArchivoZip);	
+		exit;
 		// unlink($nombreArchivoZip);
 		unlink($rutaAbsoluta1);
 		unlink($rutaAbsoluta2);
 		
 	}else{
-			header('Content-Description: File Transfer');
-			header("Content-Disposition: attachment; filename= $nameDescargar");
-			header('Expires: 0');
-			header('Cache-Control: must-revalidate');
-			header('Pragma: public');
-			header('Content-Length: ' . filesize("./txt/" . $nameDescargar));
-			header("Content-Type: text/plain");
-			readfile('./txt/' . $nameDescargar);
-			unlink('./txt/' . $nameDoc2);
-			unlink('./txt/' . $nameDoc);
-	}	
+		header('Content-Description: File Transfer');
+		header("Content-Disposition: attachment; filename= $nameDescargar");
+		header('Expires: 0');
+		header('Cache-Control: must-revalidate');
+		header('Pragma: public');
+		header('Content-Length: ' . filesize("./txt/" . $nameDescargar));
+		header("Content-Type: text/plain");
+		readfile('./txt/' . $nameDescargar);
 		exit;
+			if($banderaDoc2 == 2){
+					unlink('./txt/' . $nameDoc);
+			}elseif($banderaDoc == 1){
+				unlink('./txt/' . $nameDoc2);
+			}
+	}
+
  ?>
