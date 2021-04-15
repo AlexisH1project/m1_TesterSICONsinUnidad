@@ -88,7 +88,7 @@ function generarExcel(){
 					if($resUnidad = mysqli_query($conexion, $unidadQuery)){
 					$rowUnidad = mysqli_fetch_row($resUnidad);
 					}
-					$objPHPExcel->getActiveSheet()->setCellValue('H10',$fecha_recibido); 
+					$objPHPExcel->getActiveSheet()->setCellValue('H10',$rowFecha[0]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D12', $apellido1Add." ".$apellido2Add." ".$nombreAdd); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D14', $rowMovimientos[4]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D18', $rowUnidad[1]); 
