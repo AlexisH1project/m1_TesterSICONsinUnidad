@@ -156,7 +156,50 @@
 
 		</style>
 	<script>
-			
+			$(document).ready(function(){
+				$(document).on('keydown', '.unexp', function(){
+					var id = this.id;
+					var splitid = id.split('_');
+					var indice = splitid[1];
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_ur.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_ur.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var idx2 = response[0]['idx'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
 			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
 					var id = this.id;
@@ -288,6 +331,13 @@
 							</div>
 						</div>
 						<div class="col">
+							<div class="form-group col-md-10" >
+								<label class="plantilla-label estilo-colorg" for="unexp_1">Unidad:</label>
+								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 513" value="<?php if(isset($_POST["unexp_1"])){ echo $_POST["unexp_1"];} ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+							</div>
+						</div>
+					
+						<div class="col">
 							 <div class="form-group col-md-6 ">
 									<label  class="plantilla-label" for="laUsuario">*ASIGNAR A: </label>
 										 
@@ -310,6 +360,8 @@
 											</select>
 							</div>
 						</div>
+
+					
 						</center>
 					</div>
 
@@ -348,6 +400,7 @@
 							$elCurp = $_POST['rfcL_1'];
 							$asignadoA = $_POST['usuarioOption'];
 							$elRfc = $_POST['rfc'];
+							$laUnidad = $_POST['unexp_1'];
 
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
@@ -365,7 +418,7 @@
 								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 								$newQna = $rowQna[0];
 							}
-							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA') ";
+							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad') ";
 							if(mysqli_query($conexion,$sql)){
 								$generarID = asignarIDfecha();
 								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
