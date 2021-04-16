@@ -85,11 +85,12 @@
 	                                $objPHPExcel->getActiveSheet()->setCellValue('D'.$fila, $rows['analistaAsignada']); 
 	                                $objPHPExcel->getActiveSheet()->setCellValue('E'.$fila, $rows['usuarioAgrego']); 
 	                                $objPHPExcel->getActiveSheet()->setCellValue('F'.$fila, $rows['fecha']);
+	                                $objPHPExcel->getActiveSheet()->setCellValue('G'.$fila, $rows['unidad']);
 	                                $fila++;
 	                            	}
 	                                $fila--;
-	                            	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:F".$fila);
-									$objPHPExcel->getActiveSheet()->getStyle("A8:F".$fila)->applyFromArray($estiloTituloColumnas);
+	                            	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:G".$fila);
+									$objPHPExcel->getActiveSheet()->getStyle("A8:G".$fila)->applyFromArray($estiloTituloColumnas);
 
                         //  $objPHPExcel->getActiveSheet()->setCellValue('A77', $id_movimiento."- ".$descripcionCortaM."\n".$justificacion); 
 
