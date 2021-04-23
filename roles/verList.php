@@ -272,7 +272,7 @@
 													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -351,7 +351,7 @@
 													$laRuta = "DOCUMENTOS_MOV/".strtolower($data[1]);
 												?>
 													<td>
-														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
+														<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal" > Eliminar</button>
 													</td>
 														
 						<?php
@@ -404,7 +404,7 @@
 															$laRuta = "DOCUMENTOS";
 														?>
 															<td>
-																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary"  data-target="#exampleModal" > Eliminar</button>
+																<button id="eliminaD" onclick="guardarDatosEliminar('<?php echo $file ?>','<?php echo $extencion ?>','<?php echo $laRuta ?>')" type="button" class="btn btn-outline-secondary" data-toggle="modal"  data-target="#exampleModal" > Eliminar</button>
 															</td>
 																
 								<?php

@@ -273,7 +273,7 @@
 		}
     if($arr2[1][0] != NULL){
     	$fila = 8;
-		$objPHPExcel->setActiveSheetIndexByName('Eventuales');
+		$objPHPExcel->setActiveSheetIndexByName('QR');
 		$tamanio2 = count($arr2);
 				for($i=0; $i<$tamanio2; $i++){
 					$sqlImp2  = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$arr2[$i]'";
@@ -346,6 +346,7 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BK'.$fila, $imprimirRow[63]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BL'.$fila, $imprimirRow[64]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BM'.$fila, $imprimirRow[65]);     
+		                $objPHPExcel->getActiveSheet()->setCellValue('BN'.$fila, $imprimirRow[66]);     
 
 		                $fila++;
 					}else{
@@ -354,8 +355,8 @@
 				}    
    
                         $fila--;
-                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BM".$fila);
-						$objPHPExcel->getActiveSheet()->getStyle("A8:BM".$fila)->applyFromArray($estiloTituloColumnas);
+                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BN".$fila);
+						$objPHPExcel->getActiveSheet()->getStyle("A8:BN".$fila)->applyFromArray($estiloTituloColumnas);
 				}	
 
 
