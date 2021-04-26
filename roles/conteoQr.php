@@ -453,6 +453,7 @@
 								<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
 								</div>
 								</div>");
+								echo '<script> eliminarLoad(); </script>';
 							}
 							
 						}

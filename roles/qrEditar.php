@@ -231,7 +231,7 @@
 			function refreshDocs(nombre,curp){
 				$('#content').html('<div class="loading"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div>');
 				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp;
-				return false;
+				return true;
 			}
 
 			function verDoc(nombre,laExtencion){
