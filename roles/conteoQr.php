@@ -251,7 +251,28 @@
 					});
 				});
 			});
+		
+		function eliminarLoad(){
+			var d = document.getElementById("imgLoad");
+			var d_nested = document.getElementById("laImg");
+			var throwawayNode = d.removeChild(d_nested);
+		}
 
+		$(function() {
+			var buttonpressed;
+			$('.myFormButton').click(function() {
+				buttonpressed = $(this).attr('name')
+			})
+			$('#formConteo').on('submit', function(e) {
+				console.log("si activa");
+				$('#content').html('<div id="imgLoad" class="loading"> <div id="laImg"> <center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div></div>');
+				return true;
+			})
+		})
+
+		function activarLoad(){
+			
+		}
 	</script>
 	</head>
 	<body>
@@ -311,9 +332,8 @@
 	
 			<br>
 
-			<form method="post" action=""> 
-			
-			<div class="rounded border border-dark plantilla-inputv text-center">
+			<form id="formConteo" method="post" action=""> 
+			<div  id="content" class="rounded border border-dark plantilla-inputv text-center">
 					<div class="form-row">
 						<div class="col">
 						<center>
