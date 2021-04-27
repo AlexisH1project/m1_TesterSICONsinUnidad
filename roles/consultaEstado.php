@@ -247,7 +247,7 @@ tbody {
     <div class="container">
         <form enctype="multipart/form-data" action="buscarRegistro.php" method="get">
             <div class="row">
-            	<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
+            	<input type='text'  style='display: none;' name='usuario_rol' value= '<?php echo $usuarioSeguir ;?>' >
                 <div class="col-lg-12">
                     <div class="row">
                     	<div class="container-4">

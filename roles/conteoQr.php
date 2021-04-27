@@ -252,12 +252,6 @@
 				});
 			});
 
-			function eliminarLoad(){
-				var d = document.getElementById("loading");
-				var d_nested = document.getElementById("imgLoad");
-				var throwawayNode = d.removeChild(d_nested);
-			}
-
 	</script>
 	</head>
 	<body>
@@ -439,7 +433,6 @@
 								<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
 								</div>
 								</div>");
-								echo '<script> eliminarLoad(); </script>';
 							}
 						}
 						?>
