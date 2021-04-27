@@ -251,28 +251,13 @@
 					});
 				});
 			});
-		
-		function eliminarLoad(){
-			var d = document.getElementById("imgLoad");
-			var d_nested = document.getElementById("laImg");
-			var throwawayNode = d.removeChild(d_nested);
-		}
 
-		$(function() {
-			var buttonpressed;
-			$('.myFormButton').click(function() {
-				buttonpressed = $(this).attr('name')
-			})
-			$('#formConteo').on('submit', function(e) {
-				console.log("si activa");
-				$('#content').html('<div id="imgLoad" class="loading"> <div id="laImg"> <center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div></div>');
-				return true;
-			})
-		})
+			function eliminarLoad(){
+				var d = document.getElementById("loading");
+				var d_nested = document.getElementById("imgLoad");
+				var throwawayNode = d.removeChild(d_nested);
+			}
 
-		function activarLoad(){
-			
-		}
 	</script>
 	</head>
 	<body>
@@ -413,6 +398,7 @@
 						include "configuracion.php";
 
 						if(isset($_POST['buscar'])){
+							echo '<div id ="loading" class="loading"><div id="imgLoad"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div></div>';
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
 							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 							$to = './Controller/DOCUMENTOS_MOV_QR/FMP/';
@@ -455,7 +441,6 @@
 								</div>");
 								echo '<script> eliminarLoad(); </script>';
 							}
-							
 						}
 						?>
 
