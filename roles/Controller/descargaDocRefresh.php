@@ -104,7 +104,7 @@
 												
 								//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si 
 										// -----> Esta comparacion es para saber si existen los documentos con las mismas caracteristicas 
-													if($curp == $curpInterator[0]) {
+													if($curp == $curpInterator[0] AND (filectime($from.$fileinfo->getFilename()) != filemtime($to.$file->getFilename()) AND filectime($from.$fileinfo->getFilename()) != fileatime($to.$file->getFilename()) )) {
 														// echo "creeeeeea el docccc". "\n";
 														$bktimea = filectime($from.$fileinfo->getFilename()); // obtener tiempo unix
 														$fromV =$from.$fileinfo->getCTime(); // ----> antes de copiar , se obtiene su id de creacion 
