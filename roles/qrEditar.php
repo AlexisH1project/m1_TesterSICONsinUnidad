@@ -228,9 +228,9 @@
 				});
 			});
 			
-			function refreshDocs(nombre,curp){
+			function refreshDocs(nombre,curp,rfc){
 				$('#content').html('<div class="loading"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div>');
-				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp;
+				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp+'&rfc='+rfc;
 				return true;
 			}
 
@@ -1030,7 +1030,7 @@
 		
 		<form method="GET" name="docs" action=""> 
 			<div style="text-align: center">
-				<input type="button" class = "btn-flotante" onclick="refreshDocs('<?php echo $usuarioSeguir ?>', '<?php echo $ver['curp'] ?>')" id="refresh" name="refresh" value="ACTUALIZAR DOCUMENTOS">
+				<input type="button" class = "btn-flotante" onclick="refreshDocs('<?php echo $usuarioSeguir ?>', '<?php echo $ver['curp'] ?>', '<?php echo $ver['rfc'] ?>')" id="refresh" name="refresh" value="ACTUALIZAR DOCUMENTOS">
 			</div>
 			<br><br>
 		</from>	

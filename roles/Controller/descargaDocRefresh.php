@@ -6,6 +6,7 @@
 							$to = './DOCUMENTOS_MOV_QR/FMP/';
 
 							$elCurp = $_GET['curp'];
+							$elRfc = $_GET['rfc'];
 							$usuarioSeguir = $_GET['usuario'];
 
 							$hoy = "select CURDATE()";
