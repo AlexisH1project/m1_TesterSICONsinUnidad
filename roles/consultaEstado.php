@@ -595,7 +595,15 @@ tbody {
 																$idMatriz++;
 																}
 															}
+															?>
+															<td>
+																<h2>TOTAL:</h2>
+															</td>
+															<td>
+																<h3>	<?php echo $idMatriz; ?>	</h3>
+															</td>
 															
+															<?php
 															}else{
 
 															?><input type="hidden" name="_charset_"><?php
@@ -626,7 +634,7 @@ tbody {
 
 								$sql = "SELECT * FROM fomope WHERE anio = '$anioBuscar'";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus FROM fomope_qr WHERE anio = '$anioBuscar'";
-								$sql3="SELECT * FROM conteo_qr  WHERE (anio = '$anioBuscar' AND qna='$qnaBuscar')";
+								$sql3="SELECT * FROM conteo_qr  WHERE (anio = '$anioBuscar')";
 								$banderaFomope =  1;
  							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != "" && $anioBuscar != ""){
 
@@ -1127,7 +1135,6 @@ tbody {
 
 							?>
 							</td>
-				
 						</tr>
 						<?php 
 							//$matriz = array($idMatriz => $ver[0] );
@@ -1135,10 +1142,17 @@ tbody {
 							$idMatriz++;
 							}
 						}
-						//$imprimirNoExiste++;
-
-						
-						
+						?>
+						<td>
+							<h2>TOTAL:</h2>
+						</td>
+						<td>
+							<h2>TOTAL:</h2>
+						</td>
+						<td>
+							<h3>	<?php echo $idMatriz; ?>	</h3>
+						</td>
+						<?php
 						}else{
 							echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 							echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
@@ -1171,13 +1185,13 @@ tbody {
 						</thead>
 				 <tbody>
 				          <?php
-							$imprimirNoExiste = 0;
+							$imprimirNoExisteQr = 0;
 							if ($result3 = mysqli_query($conexion,$sql3)) {
 
 								$totalFilas    =    mysqli_num_rows($result3);  
 								if($totalFilas == 0){
-										$imprimirNoExiste ++;
-										$matriz[0][0] = 0;
+										$imprimirNoExisteQr ++;
+										$matrizConteo[0][0] = 0;
 										echo('
 															<br>
 															<br>
@@ -1210,20 +1224,35 @@ tbody {
 								<input type='text' style='display: none;' name='extencion' value='pdf'>
 								<input type='text' style='display: none;' name='nombreDecarga' value='$nombreCompleto'>
 								<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-							</form> "
+							</form> ";
 
 							?>
 							</td>
 				
 						</tr>
 						<?php 
-						
+							$matrizConteo[$imprimirNoExisteQr]= $ver3[0];							
+							$imprimirNoExisteQr++;
 							}
+						?>
+							<td>
+							<h2>TOTAL:</h2>
+							</td>
+							<td>
+							<h3>	<?php echo $imprimirNoExisteQr; ?>	</h3>
+							</td>
+							<form method="post" action="./generarFiltroExcel/reporteConteoQr.php">
+								<input type='hidden' name='array' class='btn btn btn-success text-white bord' value='<?php  echo serialize($matrizConteo); ?>'>
+								<input type='hidden' name='usuario_rol' class='btn btn btn-success text-white bord' value='<?php  echo $usuarioSeguir; ?>'>
+								<input type='submit' name='accionBoton' class='izquierda btn btn-secondary bord' value="Reporte Conteo QR">
+								<br>
+								<br>
+								<br>
+							</form>
+					<?php 
+							
 						}
 						//$imprimirNoExiste++;
-
-						
-						
 						}else{
 							echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 							echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
