@@ -422,7 +422,7 @@
 							if(mysqli_query($conexion,$sql)){
 								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
 								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
-								showFiles($from,$elCurp,$fecha); //enviamos la direccion y el curp
+								showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
 								echo("
 								<br>
 								<br>
@@ -440,7 +440,7 @@
 <?php
 
 		//---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
-		function showFiles($from, $curp, $generarID){
+		function showFiles($from, $curp, $generarID, $laQna){
 			set_time_limit(3600);
 			include "configuracion.php";
 			//$to = '../roles/Controller/DOCUMENTOS_RES/';
@@ -456,7 +456,7 @@
 			while ($current = readdir($dir)){
 				if( $current != "." && $current != "..") {
 					if(is_dir($from.$current)) {
-						showFiles($from.$current.'/', $curp, $generarID);
+						showFiles($from.$current.'/', $curp, $generarID, $laQna);
 					}
 					else {
 						$files[] = $current;
@@ -495,8 +495,8 @@
 													// ;  
 													$extencionFile = explode(".",$fileinfo);
 														// echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
-													copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1]);
-													touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+													copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1]);
+													touch($to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1], $bktimea); 
 														// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
 														// echo "DESPUES info". $bktimea2 ."</br>";
 													}

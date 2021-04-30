@@ -9,6 +9,7 @@
 							$elRfc = $_GET['rfc'];
 							$usuarioSeguir = $_GET['usuario'];
 
+// **************** vamos a seleccionar la qna y la fecha para asignar los mismos datos los documentos que detectemos y si son iguales solo remplazarlos y si no guardar el doc
 							
 							$queryMax = "SELECT * FROM conteo_qr WHERE curp = '$elCurp' ORDER BY id_cont DESC";
 							if($resqueryMax = mysqli_query($conexion,$queryMax)){
@@ -17,9 +18,9 @@
 									$laQna = $rowqueryMax[5];
 								}
 							}
-
+// *****************************terminamos
 								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$laQna."_".$fecha.".PDF");
-								showFiles($from,$elCurp,$fecha); //enviamos la direccion y el curp
+								showFiles($from,$elCurp,$fecha, $laQna); //enviamos la direccion y el curp
 
 								$sqlRol = "SELECT id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 								if ($resR = mysqli_query($conexion,$sqlRol) ){
@@ -35,7 +36,7 @@
 								}
 
 		//---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
-		function showFiles($from, $curp, $generarID){
+		function showFiles($from, $curp, $generarID, $laQna){
 			set_time_limit(3600);
 			include "configuracion.php";
 			//$to = '../roles/Controller/DOCUMENTOS_RES/';
@@ -44,22 +45,13 @@
 			$nameCarpetaOTRO= explode("\\Archivos2\\", $from);
 			$to = './DOCUMENTOS_MOV_QR/'.$nameCarpetaOTRO[1];
 			$nameCarpetaSICON= explode("./DOCUMENTOS_MOV_QR/", $to);
-// **************** vamos a seleccionar la qna y la fecha para asignar los mismos datos los documentos que detectemos y si son iguales solo remplazarlos y si no guardar el doc
-			$queryMax = "SELECT * FROM conteo_qr WHERE curp = '$curp' ORDER BY id_cont DESC";
-			if($resqueryMax = mysqli_query($conexion,$queryMax)){
-				if($rowqueryMax = mysqli_fetch_row($resqueryMax)){
-					$fecha = str_replace ( "-", '',$rowqueryMax[2]);
-					$laQna = $rowqueryMax[5];
-				}
-			}
-// ******terminamos
-
+			
 			$dir = opendir($from);
 			$files = array();
 			while ($current = readdir($dir)){
 				if( $current != "." && $current != "..") {
 					if(is_dir($from.$current)) {
-						showFiles($from.$current.'/', $curp, $generarID);
+						showFiles($from.$current.'/', $curp, $generarID, $laQna);
 					}
 					else {
 						$files[] = $current;
