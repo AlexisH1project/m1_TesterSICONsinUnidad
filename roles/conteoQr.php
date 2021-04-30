@@ -392,7 +392,6 @@
 						include "configuracion.php";
 
 						if(isset($_POST['buscar'])){
-							echo '<div id ="loading" class="loading"><div id="imgLoad"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div></div>';
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
 							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 							$to = './Controller/DOCUMENTOS_MOV_QR/FMP/';
