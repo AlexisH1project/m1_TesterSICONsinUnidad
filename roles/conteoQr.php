@@ -420,11 +420,9 @@
 							}
 							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad') ";
 							if(mysqli_query($conexion,$sql)){
-								$generarID = asignarIDfecha();
 								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
 								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
-								$generarID = asignarIDfecha();
-								showFiles($from,$elCurp,$generarID); //enviamos la direccion y el curp
+								showFiles($from,$elCurp,$fecha); //enviamos la direccion y el curp
 								echo("
 								<br>
 								<br>
@@ -440,24 +438,6 @@
 					
 
 <?php
-
-		//---> funcion para poder asiganar un id diferente y no se duplique el documento
-		function asignarIDfecha(){
-			//----------------Sacamos la Hora 
-			include "configuracion.php";
-
-			$hoy = "select CURDATE()";
-			$tiempo ="select curTime()";
-
-				if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
-						$row = mysqli_fetch_row($resultHoy);
-						$row2 = mysqli_fetch_row($resultTime);
-				}
-				$hora = str_replace ( ":", '',$row2[0] ); 
-				$fecha = str_replace ( "-", '',$row[0] ); 
-			//----------------Sacamos la Hora 
-			return $fecha.$hora;
-		}
 
 		//---> Funcion recurciba la cual nos ayuda a extraer los documentos de varias carpetas contenidas de una direccion inicial. Esta funcion solo se activa una vez al final del codigo
 		function showFiles($from, $curp, $generarID){
