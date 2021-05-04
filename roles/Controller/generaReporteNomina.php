@@ -31,7 +31,8 @@
 					$sqlUpdate = "UPDATE fomope_qr SET enNomina = 1, fechaAutorizacion = '$row[0] - $usuarioSeguir' WHERE id_movimiento_qr = '$porAutorizar[$i]'";
 					if(intval($registros['tipo_movimiento']) >= 4300 AND intval($registros['tipo_movimiento']) <= 5000){
 						 //reingreso 
-						$cadenaQr = ltrim($registros['tex_con']);
+						$cadenaQr = trim($registros['tex_con']); // quitamos espacios al principio y al final de la cadena 
+						$cadenaQr = $cadenaQr."\n";
 						fwrite($file,$cadenaQr);
 						// echo $registros['tex_con'];
 						// fclose($file);
@@ -39,7 +40,8 @@
 						$nameDescargar = $nameDoc2;
 					}else{
 						// 	$file = fopen("txt/".$nameDoc, "w");
-						$cadenaQr = ltrim($registros['tex_con']);
+						$cadenaQr = trim($registros['tex_con']); // quitamos espacios al principio y al final de la cadena 
+						$cadenaQr = $cadenaQr."\n"; 
 						fwrite($file2, $cadenaQr);
 						$banderaDoc = 1;
 						$nameDescargar = $nameDoc;

@@ -523,9 +523,7 @@
 					$contNormales = $contNormales + 1;
 					$estatus = "Revisión";
 				}
-				echo "LA LLAVE::   &".$qrTexto2[$i]."&\n";
-				
-				//$qrTexto2[$i]
+// **********************detectamos con empty() si la cadena es vacia "false " si no NO guardamos nada en el switch 
 				if(empty($llave)){
 					$llave = "0" ;// renglos con salto de linea
 				}
