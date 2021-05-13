@@ -332,7 +332,7 @@
 						<div class="col">
 							<div class="form-group col-md-10" >
 								<label class="plantilla-label estilo-colorg" for="unexp_1">Unidad:</label>
-								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 513" value="<?php if(isset($_POST["unexp_1"])){ echo $_POST["unexp_1"];} ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 513" required>
 							</div>
 						</div>
 					
@@ -372,7 +372,7 @@
 					<div class="form-group col-md-12">
 						<div class="col text-center">
 							<!-- <input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br> -->
-							<button id="enviarT" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+							<button id="enviarT" type="submit" name="busca" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
 											 Guardar
 							</button>
 							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
@@ -386,39 +386,53 @@
 		</div>
 	
 	</div>
-												
-											<!-- Modal -->
-											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-											  <div class="modal-dialog" role="document">
-											    <div class="modal-content">
-											      <div class="modal-header">
-											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
-											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											          <span aria-hidden="true">&times;</span>
-											        </button>
-											      </div>
-											      <div class="modal-body">
-											        ¿Estas seguro de enviar esta información?
-											      </div>
-									<center>
-						      <div class="form-group col-md-8">
-									<div class="box" >
+		<!-- Modal -->
+		<div class="modal fade" id="staticBackdrop" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			<center>
+					<?php
+						if(isset($_POST['busca'])){
+							$elCurp = $_POST['rfcL_1'];
+							$asignadoA = $_POST['usuarioOption'];
+							$elRfc = $_POST['rfc'];
+							$laUnidad = $_POST['unexp_1'];
 
-										<label  class="plantilla-label estilo-colorg" for="laQna"><?php if(isset($_POST['rfc'])){echo $_POST['rfc']; } ?></label>
-												
-										</div>
-										 <br>  
+							$sqlQna = "SELECT * FROM m1ct_fechasnomina WHERE estadoActual = 'abierta'";
 
-								</div>
-										</center>
-											      <div class="modal-footer">
+							if($resQna = mysqli_query($conexion,$sqlQna)){
+								$rowQna = mysqli_fetch_row($resQna);
+								// $fehaI = date("d-m-Y", strtotime($rowQna[4])); 
+								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
+								$newQna = $rowQna[0];
+							}
 
-											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
-							        				<input type="button" onclick="enviarDatos();" class="btn btn-primary" value="Aceptar" name="botonAccion">
-											      </div>
-											    </div>
-											  </div>
-											</div>
+							$querySelect2 = "SELECT curp, qna, anio, rfc FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
+							if($resultQry2 = mysqli_query($conexion, $querySelect2)){
+								$rowQry2 = mysqli_fetch_row($resultQry2);
+								// echo "<script> alert('$rowQry'); </script>";
+								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna){
+									echo "<script> var mensaje = confirm('¿Te gusta Desarrollo Geek?'); </script>";
+								}
+							}
+						}
+					?>
+			</center>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Understood</button>
+			</div>
+			</div>
+		</div>
+		</div>
 
 		<br>
 		<br>
