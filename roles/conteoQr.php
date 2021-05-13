@@ -371,8 +371,10 @@
 
 					<div class="form-group col-md-12">
 						<div class="col text-center">
-							<input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br>
-
+							<!-- <input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br> -->
+							<button id="enviarT" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+											 Guardar
+							</button>
 							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
 						</div>
 					</div>
@@ -384,6 +386,39 @@
 		</div>
 	
 	</div>
+												
+											<!-- Modal -->
+											<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											  <div class="modal-dialog" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="exampleModalLabel">Confirmar</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+											      <div class="modal-body">
+											        ¿Estas seguro de enviar esta información?
+											      </div>
+									<center>
+						      <div class="form-group col-md-8">
+									<div class="box" >
+
+										<label  class="plantilla-label estilo-colorg" for="laQna"><?php if(isset($_POST['rfc'])){echo $_POST['rfc']; } ?></label>
+												
+										</div>
+										 <br>  
+
+								</div>
+										</center>
+											      <div class="modal-footer">
+
+											        <button type="button" class="btn btn-secondary" data-dismiss="modal">Regresar</button>
+							        				<input type="button" onclick="enviarDatos();" class="btn btn-primary" value="Aceptar" name="botonAccion">
+											      </div>
+											    </div>
+											  </div>
+											</div>
 
 		<br>
 		<br>

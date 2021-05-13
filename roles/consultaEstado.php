@@ -579,9 +579,6 @@ tbody {
 																	<input type='text' style='display: none;' name='usuario_rol' value='$usuarioSeguir'>
 																	<input type='text' style='display: none;' name='idMov' value='$ver2[0]'>
 																	<input type='submit' name='verList' class='btn-secondary' value='Ver lista de Doc.'>
-
-
-															
 																</form> "
 
 																?>
