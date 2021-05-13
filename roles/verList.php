@@ -248,8 +248,11 @@
 											$extencion = $data2[$indice-1];
 										    // Nombre del archivo
 										    $extractRfc = $data[0];
-										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $nameFIleP[$i][1] == strtolower($extractDoc) && $data[6] == $noFomope){
+											// preguntamos si al separar el nombre existe docs guardados con nombres malos, el arreglo puede estar underfine y mandar error en la interfaz
+											if(isset($data[1])){
+												$extractDoc = $data[1];
+											}
+									 		if($ver[4] == $extractRfc && $nameFIleP[$i][1] == strtolower($extractDoc) && $data[6] == $noFomope && isset($data[1]) ){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
@@ -327,8 +330,11 @@
 											$extencion = $data2[$indice-1];
 										    // Nombre del archivo
 										    $extractRfc = $data[0];
-										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope){
+											// preguntamos si al separar el nombre existe docs guardados con nombres malos, el arreglo puede estar underfine y mandar error en la interfaz
+											if(isset($data[1])){
+												$extractDoc = $data[1];
+											}
+									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope && isset($data[1])){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
@@ -377,8 +383,11 @@
 													$extencion = $data2[$indice-1];
 												    // Nombre del archivo
 												    $extractRfc = $data[0];
-												    $extractDoc = $data[1];
-											 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc)){
+											// preguntamos si al separar el nombre existe docs guardados con nombres malos, el arreglo puede estar underfine y mandar error en la interfaz
+													if(isset($data[1])){
+														$extractDoc = $data[1];
+													}
+											 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && isset($data[1])){
 											 			$duplicado++;
 											 			if($duplicado > 1){
 								
