@@ -753,7 +753,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 4";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
@@ -906,7 +906,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 4";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
@@ -1050,7 +1050,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM usuarios WHERE id_rol = 3 OR id_rol = 2";
+													$consulta = "SELECT * FROM usuarios WHERE id_rol = 4";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 

@@ -275,7 +275,9 @@
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./actualizarFecha.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/calendarioMP.png" alt="x"height="25" width="25"/> Actualizar Fechas</a>
 	          </li>
-
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./gEstructuraNomEv.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>

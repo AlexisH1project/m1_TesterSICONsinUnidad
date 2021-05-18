@@ -261,7 +261,7 @@
 								count--;
 								if (count == 0) {
 									alert("Información actualizada");
-									window.location.href = './gEstructuraNom.php?usuario_rol='+userRol;
+									window.location.href = './gEstructuraNomEv.php?usuario_rol='+userRol;
 								}
 							},1000);
 							window.location.href = './Controller/generaReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
@@ -379,35 +379,35 @@
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 		
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 		
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND anio='$anioBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND qna='$qnaBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (unidad='$rfcBuscar' AND anio='$anioBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (  qna='$qnaBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='guinda' AND enNomina = 0 AND tipoRegistro != 'EVENTUALES') ORDER BY id_movimiento_qr DESC";
+								$sql="SELECT id_movimiento_qr,color_estado,unidad,rfc,qna,fini,codigo_puesto, tex_con FROM fomope_qr WHERE (anio='$anioBuscar' AND color_estado ='azul' AND enNomina = 0 ) ORDER BY id_movimiento_qr DESC";
 								
 							}
 
