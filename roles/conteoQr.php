@@ -414,12 +414,14 @@
 								$newQna = $rowQna[0];
 							}
 
-							$querySelect2 = "SELECT curp, qna, anio, rfc FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
+							$querySelect2 = "SELECT curp, qna, anio, rfc, analistaAsignada FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
 							if($resultQry2 = mysqli_query($conexion, $querySelect2)){
 								$rowQry2 = mysqli_fetch_row($resultQry2);
 								// echo "<script> alert('$rowQry'); </script>";
-								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna){
-									echo "<script> var mensaje = confirm('¿Te gusta Desarrollo Geek?'); </script>";
+								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna && $rowQry2[4] == $asignadoA){
+									echo "<script> var mensaje = confirm('Ya existe un registro con los mismos datos, ¿Deseas subir y duplicar el mismo registro?');
+
+									</script>";
 								}
 							}
 						}
@@ -440,7 +442,8 @@
 					<?php 
 						include "configuracion.php";
 
-						if(isset($_POST['buscar'])){
+				echo "<script> if (mensaje) {	</script>";
+
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
 							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 							$to = './Controller/DOCUMENTOS_MOV_QR/FMP/';
@@ -480,7 +483,11 @@
 								</div>
 								</div>");
 							}
-						}
+
+					echo "<script>}else {
+									alert('¡Haz denegado el registro!');
+								}
+							</script>";
 						?>
 
 					
