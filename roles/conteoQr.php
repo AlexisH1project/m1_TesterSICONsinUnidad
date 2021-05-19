@@ -252,6 +252,11 @@
 				});
 			});
 
+			function detectarDatos() {
+				var getcurp = document.getElementById("rfcL_1");
+				console.log("CURP:: "+getcurp.value);
+			}
+
 	</script>
 	</head>
 	<body>
@@ -274,8 +279,6 @@
 		      </div>
 		    </div>
 		  </nav>
-
-
 			<br>
 		  <a  href= <?php echo ("'./menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 		
@@ -372,7 +375,7 @@
 					<div class="form-group col-md-12">
 						<div class="col text-center">
 							<!-- <input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br> -->
-							<button id="enviarT" type="submit" name="busca" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+							<button id="enviarT" type="button" name="busca" onclick = "detectarDatos()" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
 											 Guardar
 							</button>
 							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
@@ -399,33 +402,37 @@
 			<div class="modal-body">
 			<center>
 					<?php
-						if(isset($_POST['busca'])){
-							$elCurp = $_POST['rfcL_1'];
-							$asignadoA = $_POST['usuarioOption'];
-							$elRfc = $_POST['rfc'];
-							$laUnidad = $_POST['unexp_1'];
+						$var_PHP = '<script> document.writeln(getcurp); </script>'; // igualar el valor de la variable JavaScript a PHP 
 
-							$sqlQna = "SELECT * FROM m1ct_fechasnomina WHERE estadoActual = 'abierta'";
+						echo $var_PHP;    // muestra el resultado 
+						
+						// if(isset($_POST['busca'])){
+						// 	$elCurp = $_POST['rfcL_1'];
+						// 	$asignadoA = $_POST['usuarioOption'];
+						// 	$elRfc = $_POST['rfc'];
+						// 	$laUnidad = $_POST['unexp_1'];
 
-							if($resQna = mysqli_query($conexion,$sqlQna)){
-								$rowQna = mysqli_fetch_row($resQna);
-								// $fehaI = date("d-m-Y", strtotime($rowQna[4])); 
-								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
-								$newQna = $rowQna[0];
-							}
+						// 	$sqlQna = "SELECT * FROM m1ct_fechasnomina WHERE estadoActual = 'abierta'";
 
-							$querySelect2 = "SELECT curp, qna, anio, rfc, analistaAsignada FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
-							if($resultQry2 = mysqli_query($conexion, $querySelect2)){
-								$rowQry2 = mysqli_fetch_row($resultQry2);
-								// echo "<script> alert('$rowQry'); </script>";
-								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna && $rowQry2[4] == $asignadoA){
-									echo "<script> var mensaje = confirm('Ya existe un registro con los mismos datos, ¿Deseas subir y duplicar el mismo registro?');
+						// 	if($resQna = mysqli_query($conexion,$sqlQna)){
+						// 		$rowQna = mysqli_fetch_row($resQna);
+						// 		// $fehaI = date("d-m-Y", strtotime($rowQna[4])); 
+						// 		// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
+						// 		$newQna = $rowQna[0];
+						// 	}
 
-									</script>";
-								}
-							}
-						}
+						// 	$querySelect2 = "SELECT curp, qna, anio, rfc, analistaAsignada FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
+						// 	if($resultQry2 = mysqli_query($conexion, $querySelect2)){
+						// 		$rowQry2 = mysqli_fetch_row($resultQry2);
+						// 		// echo "<script> alert('$rowQry'); </script>";
+						// 		if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna && $rowQry2[4] == $asignadoA){
+						// 			echo "SII hay registro";
+						// 		}
+						// 	}
+						// }
 					?>
+						<input type="text" id="qnaSeleccionada2" name="qnaSeleccionada2" value = "<?php echo "<script> document.writeln(getcurp); </script>" ?>">
+
 			</center>
 			</div>
 			<div class="modal-footer">
@@ -442,7 +449,7 @@
 					<?php 
 						include "configuracion.php";
 
-				echo "<script> if (mensaje) {	</script>";
+			if(isset($_POST['buscar'])){	
 
 							$from = '\\\\PWIDGRHOSISFO01\\Archivos2\\';
 							$from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
@@ -483,11 +490,7 @@
 								</div>
 								</div>");
 							}
-
-					echo "<script>}else {
-									alert('¡Haz denegado el registro!');
-								}
-							</script>";
+						}
 						?>
 
 					

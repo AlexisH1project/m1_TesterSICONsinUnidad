@@ -95,7 +95,7 @@
 			}
 
 			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+				window.location.href = './Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 			}
 
 			function enviarRutaDoc(nombre){
