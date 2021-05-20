@@ -737,7 +737,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM m1ct_documentos";
+													$consulta = "SELECT * FROM ct_documentos_bajas";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
@@ -828,10 +828,16 @@
 									$apellido2Add = strtoupper($_POST['apellido2']);	
 									$nombreAdd = strtoupper($_POST['nombre']);
 									$fechaIngresoAdd = $_POST['fechaIngreso'];
-									$motivoR = $_POST['comentarioR'];
+									if(isset($_POST['comentarioR'])){
+										$motivoR = $_POST['comentarioR'];
+									}
 									$fechaDel = $_POST['del2'];
 									$fechaAl = $_POST['al3'];
-									$leerMov = $_POST['id_env'];
+									if(isset($_POST['id_env'])){
+										$leerMov = $_POST['id_env'];
+									}else{
+										$leerMov = "-"; // mandamos este dato ya que la consulta es si existe "X"
+									}
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
@@ -993,6 +999,7 @@
 													</div>	
 													</center>
 												';*/
+												
 																									   	
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";

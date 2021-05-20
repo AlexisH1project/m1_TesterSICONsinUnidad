@@ -374,11 +374,10 @@
 
 					<div class="form-group col-md-12">
 						<div class="col text-center">
-							<!-- <input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br> -->
-							<button id="enviarT" type="button" name="busca" onclick = "detectarDatos()" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
+							<input type="submit" name="buscar" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="GUARDAR"><br>
+							<!-- <button id="enviarT" type="button" name="busca" onclick = "detectarDatos()" class="btn btn-primary" data-toggle="modal" data-target="#staticBackdrop">
 											 Guardar
-							</button>
-							<!-- <button type="submit" name="buscar" class="btn btn-outline-info tamanio-button">Buscar</button> -->
+							</button> -->
 						</div>
 					</div>
 
@@ -476,19 +475,30 @@
 								// $fehaF = date("d-m-Y", strtotime($rowQna[5])); 
 								$newQna = $rowQna[0];
 							}
-							$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad') ";
-							if(mysqli_query($conexion,$sql)){
-								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
-								// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
-								showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
-								echo("
-								<br>
-								<br>
-								<div class='col-sm-12'>
-								<div class='plantilla-inputv text-dark ''>
-								<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
-								</div>
-								</div>");
+
+							$querySelect2 = "SELECT curp, qna, anio, rfc, analistaAsignada, unidad FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
+							if($resultQry2 = mysqli_query($conexion, $querySelect2)){
+								$rowQry2 = mysqli_fetch_row($resultQry2);
+								// echo "<script> alert('$rowQry'); </script>";
+								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna && $rowQry2[4] == $asignadoA && $rowQry2[5] == $laUnidad){
+									echo "<script>alert('Ya existe registro con estos datos, verificar.'); </script>";
+									
+								}else {
+									$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad') ";
+									if(mysqli_query($conexion,$sql)){
+										copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
+										// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+										showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
+										echo("
+										<br>
+										<br>
+										<div class='col-sm-12'>
+										<div class='plantilla-inputv text-dark ''>
+										<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
+										</div>
+										</div>");
+									}
+								}
 							}
 						}
 						?>

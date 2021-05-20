@@ -571,7 +571,7 @@
                                               
                                             }
 
-									 		if($ver['curp'] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
+									 		if(isset($extractCurp) && $ver['curp'] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
@@ -588,7 +588,7 @@
 									 		    }
 
 
-											$banderaSI = 1;
+												$banderaSI = 1;
 
 						?>	
 												<td>

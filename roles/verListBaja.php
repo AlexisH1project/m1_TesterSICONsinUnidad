@@ -206,7 +206,7 @@
 					//$files2 = array_diff(scandir($dir_subidaMov), array('.', '..')); 
 
 					// Arreglo con todos los nombres de los archivos
-					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+					$sqlReg =  "SELECT COUNT(*) id_doc FROM ct_documentos_bajas";
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
 
@@ -292,11 +292,11 @@
 					
 								
 // ----- promer ciclo en la carpeta documentosMov
-					for ($i = 0; $i < $rowTotal[0] ; $i++){
+					for ($i = 1; $i < $rowTotal[0] ; $i++){
 						$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 						$banderaSI = 0;
 						$duplicado = 0;
-						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_bajas WHERE id_doc = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 							$imprime = 0;
