@@ -12,7 +12,7 @@ $from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 		if($ruta[1] == "DOCUMENTOS_MOV"){
 			readfile("./DOCUMENTOS_MOV/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		}
-		if($ruta[1] == "DOCUMENTOS_MOV"){
+		if($ruta[1] == "DOCUMENTOS_BAJAS"){
 			readfile("./DOCUMENTOS_BAJAS/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		}
         readfile("./DOCUMENTOS_MOV/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
@@ -43,6 +43,7 @@ $from2 = '\\\\PWIDGRHOSISFO01\\pdfs2\\';
 			// copy($from2.$row[7].".pdf" , $nombreDeArchivoDescarga);
 			readfile($nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		}else{
+			readfile("./documentos/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 			// readfile("./DOCUMENTOS/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 			// readfile($nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 			// readfile("./DOCUMENTOS_RES/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
