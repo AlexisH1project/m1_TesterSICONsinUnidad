@@ -164,7 +164,14 @@
 							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
-
+							echo("
+							<br>
+							<br>
+							<div class='col-sm-4 '>
+							<div class='plantilla-inputv text-dark '>
+								<div class='card-body'><h2 align=''></h2><i><b>$ver[8] $ver[6] $ver[7]</b></i></div>
+							</div>
+							</div>");
 							$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
 							$resultRols = mysqli_query($conexion, $queyRols);
 							$columnasUsuario = mysqli_fetch_assoc($resultRols);

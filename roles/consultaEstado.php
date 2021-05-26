@@ -1095,7 +1095,7 @@ tbody {
 						 ?>
 						<tr id="<?php echo $ver[0] ?>">
 							<td style="display: none;"><?php echo $ver[0] ?></td>
-							<td><?php echo $ver[4] ?></td>
+							<td><b><h6><?php echo $ver[4] ?></b></h6><br><?php echo $ver[8]." ".$ver[6]." ".$ver[7] ?> </td>
 							<td>
 				<!-- activamos funcion de .ajax para poder mostrar el histirial del proceso del fomope  -->
 							<button type="button"  onclick="guardarId(<?php echo $ver[0]; ?>)"  id="verHistorial" name="verHistorial" class='btn-secondary' data-toggle="modal" data-target="#exampleModal1" data-whatever="@getbootstrap"><?php echo $ver[1] ?></button>

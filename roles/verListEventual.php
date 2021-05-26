@@ -116,7 +116,7 @@
 	            $sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
 	            $result=mysqli_query($conexion,$sql);
 	            $rowQr = mysqli_fetch_row($result);
-
+				
 
 		//header("Content-type: application/PDF");
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
@@ -193,7 +193,14 @@ function asignarIDfecha(){
 							$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
 							$resultRols = mysqli_query($conexion, $queyRols);
 							$columnasUsuario = mysqli_fetch_assoc($resultRols);
-
+							echo("
+							<br>
+							<br>
+							<div class='col-sm-4 '>
+							<div class='plantilla-inputv text-dark '>
+								<div class='card-body'><h2 align=''></h2><i><b>$ver[10] $ver[8] $ver[9]</b></i></div>
+							</div>
+							</div>");
 							// 	for($i=47; $i<=117; $i++){
 							// 		if($ver[$i] == ""){
 										
