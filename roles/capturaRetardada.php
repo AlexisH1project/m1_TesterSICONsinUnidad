@@ -453,7 +453,17 @@
           </li>
 	      </center>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./bandejaBajas.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
+			<?php 
+				if($id_rol1 == 1){
+			?>
+					<a href=  <?php echo ("'./lulu.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
+			<?php		
+				}elseif($id_rol1 == 0){
+			?>
+					<a href=  <?php echo ("'./luluConsulta.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>Bandeja</a>
+			<?php		
+				}
+		  	?>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/>Consulta</a>
