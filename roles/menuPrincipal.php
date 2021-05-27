@@ -278,7 +278,9 @@
 			  <li class=" estilo-color">
 	              <a href= <?php echo ("'./gEstructuraNomEv.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
 	          </li>
-	          <br>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./capturaRetardada.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/crearRpasados2.png" alt="x" height="20" width="25"/> Capturas Faltantes</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
