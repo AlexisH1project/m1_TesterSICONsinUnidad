@@ -50,7 +50,7 @@
 		  .thead2 {
 		      width: calc( 100% - 1em )
 		  } 
-		
+		  .button5 {border-radius: 50%;}
 		  </style>
 		<script type="text/javascript">
 
@@ -212,6 +212,93 @@
 				document.getElementById("guardarDoc").value = listaEnviar;
 			}
 
+			function elimRequeridos() {
+				$('#rfcL_1').removeAttr("required");
+				$('#nameArchivo').removeAttr("required");
+
+				$('#cuerpoTabla').children( 'tr' ).remove();
+				
+				var elNombre = $('#nombre').val();
+				var elApellido1 = $('#apellido1').val();
+				var elApellido2 = $('#apellido2').val();
+
+				var nombreComp = {
+					"nombre" : elNombre,
+					"apellido1" : elApellido1,
+					"apellido2" : elApellido2
+				};
+
+				$.ajax({
+					data:  nombreComp, //datos que se envian a traves de ajax
+					url:   'resultado_movName.php', //archivo que recibe la peticion
+					type:  'post', //método de envio
+					success:  function (data) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+							var infEmpleado = eval(data);
+							console.log(data);
+							console.log(infEmpleado[0].apellido1);
+							console.log(infEmpleado.length);
+
+								for(var i=1; i < infEmpleado.length; i++){ 
+										console.log(infEmpleado[i]);
+										if(infEmpleado[i].id != null){
+
+										// var miSelect2 = document.getElementById("movFecha");
+										// var aTag = document.createElement('option');
+										// aTag.setAttribute('value',infEmpleado[i].id);
+										// aTag.innerHTML = "( Codigo: "+infEmpleado[i].codigo+" ) ( Fecha: "+infEmpleado[i].fecha+" ) (Qna: "+infEmpleado[i].qna+") (Año: "+infEmpleado[i].anio+" )";
+										// miSelect2.appendChild(aTag);
+										
+										const $cuerpoTabla = document.querySelector("#cuerpoTabla");
+										// Recorrer todos los productos
+											// Crear un <tr>
+											const $tr = document.createElement("tr");
+											// Creamos el <td> de nombre y lo adjuntamos a tr
+											let $tdNombre = document.createElement("td");
+											$tdNombre.textContent = infEmpleado[i].codigo; // el textContent del td es el nombre
+											$tr.appendChild($tdNombre);
+											// El td de precio
+											let $tdPrecio = document.createElement("td");
+											$tdPrecio.textContent = infEmpleado[i].fecha;
+											$tr.appendChild($tdPrecio);
+											// El td del código
+											let $tdCodigo = document.createElement("td");
+											$tdCodigo.textContent = infEmpleado[i].qna;
+											$tr.appendChild($tdCodigo);
+											// El td del año
+											let $tdAnio = document.createElement("td");
+											$tdAnio.textContent = infEmpleado[i].anio;
+											$tr.appendChild($tdAnio);
+											// El select
+											let $tdSelect = document.createElement("td");
+											var checkbox = document.createElement('input');
+											checkbox.type = "radio";
+											checkbox.name = "radioMov";
+											checkbox.value = infEmpleado[i].id;
+											checkbox.id = "idRadioMov";
+											// $tdSelect.textContent =checkbox ;
+											$tr.appendChild(document.body.appendChild(checkbox));
+											
+											// Finalmente agregamos el <tr> al cuerpo de la tabla
+											$cuerpoTabla.appendChild($tr);
+
+
+										}else{
+											// for (let i = select.options.length; i >= 0; i--) {
+											// 	select.remove(i);
+											// }
+											$('#cuerpoTabla').children( 'tr' ).remove();
+											
+										}
+									}
+							document.getElementById("rfcL_1").value = infEmpleado[0].rfc;
+					}
+      			});
+
+				// var infEmpleado = eval(data);
+				// console.log(data);
+				// console.log(infEmpleado[0].apellido1);
+				// console.log(infEmpleado.length);
+					}
 		</script>
 	</head>
 	<body>
@@ -408,6 +495,7 @@
 						        <input type="text" class="form-control border border-dark" id="nombre" name="nombre" placeholder="Nombre" maxlength="40" value="<?php if(isset($_POST["nombre"])){ echo $_POST["nombre"];} ?>" required>
 						      </div>
 						    </div>
+							<input type="button" name="buscar_sinRfc" onclick= "elimRequeridos();" class="btn btn-outline-light button5" value="buscar por nombre"><br> 
 
 						    	<div class="form-group">
 						    <label  class="plantilla-label" for="archivo_1">Adjuntar un archivo</label>
@@ -718,9 +806,7 @@
 						$usuarioSeguir = $_GET['usuario_rol'];
 							//session_destroy();
 		   	  				echo "<script type='text/javascript'>javascript:window.location='./guardarVista.php?usuario_rol=$usuarioSeguir'</script>";  //=$usuarioE
-
 					}
-
 
 						?>	
 
