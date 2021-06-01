@@ -510,7 +510,7 @@
 						<?php 
 							include "configuracion.php";
 
-							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'guinda' AND analistaCap = 'BAJAS'";
+							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'guinda' AND analistaCap = 'BAJAS' ORDER BY id_movimiento DESC";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -633,7 +633,7 @@
 							include "configuracion.php";
 							//ver consulta
 							//$sql="SELECT Geography.region_name REGION, SUM(Store_Information.Sales) SALES";
-							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'negroB'";
+							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'negroB' ORDER BY id_movimiento DESC";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 

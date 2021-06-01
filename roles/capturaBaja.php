@@ -312,15 +312,6 @@
 			      	$('#enviarReg').hide();
 			}
 
-			function eliminarRequier2(){
-					$("#MotivoRechazoCap").removeAttr("required");
-					$("#nameArchivo").removeAttr("required");
-					$('#rechazoInicial').hide();
-			      	$('#guardarAdj').hide();
-					var btn_2 = document.getElementById('bandejaEntrada');
-			        btn_2.style.display = 'inline';
-			}
-
 			function listaDeDoc(text, listaEnviar){
 				document.getElementById("listaDoc").value = text;
 				document.getElementById("guardarDoc").value = listaEnviar;
@@ -553,6 +544,10 @@
 <div class="col-md-8 col-md-offset-8">
 				<!-- <form name="captura2" action="./Controller/agregarNewRegistro.php" method="POST">  -->
 <!-- <form method="post" name="ffomope" action="">  -->
+			<div class="col-sm-12 ">
+					<h3><output type="text" id="qnaSeleccionada" name="qnaSeleccionada"></output> </h3>
+			</div>
+	
 <form  enctype="multipart/form-data" id="formDatos" name="captura1" action="" method="POST"> 
 				 		<div class="form-row">
 							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
@@ -777,7 +772,7 @@
 
 					<div class="col">
 						  	<div class="md-form md-0">
-								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
+								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento o Enviar Registro"><br>
 							</div>	
 							<div class="md-form md-0">
 								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" onclick="irAbandeja()" style="display: none;" value="bandeja principal">
@@ -859,10 +854,9 @@
 									//$codigo_movimiento =$_POST['cod2_1'];
 									//$concepto =$_POST['concept'];//descripción del movimiento		 
 									$movimientoYcodigo = $_POST['cod2_1'];
-									$nombreCompletoMov = explode("_", $_POST['cod2_1']);
+									$nombreCompletoMov = explode("_", $movimientoYcodigo);
 									$codigo_movimiento = $nombreCompletoMov[0];
 									$concepto = $nombreCompletoMov[1];
-								
 									$estado_en =$_POST['cod3_1'];
 									$consecutivo_maestro_impuestos =$_POST['consema'];
 									$observaciones =$_POST['observ'];
@@ -930,7 +924,7 @@
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
-									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+									$sqlRolDoc = "SELECT id_doc, documentos FROM ct_documentos_bajas WHERE nombre_documento = '$nombreArch'";
 									$resRol=mysqli_query($conexion, $sqlRolDoc);
 									$idDoc = mysqli_fetch_row($resRol);
 									$banderaBoton=1;
@@ -1013,14 +1007,14 @@
 							include "configuracion.php";
 							$existenD =0;
 ////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/documentos/';
+					$dir_subida = './Controller/DOCUMENTOS_BAJAS/';
 					// Arreglo con todos los nombres de los archivos
 					
-					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+					$sqlReg =  "SELECT COUNT(*) id_doc FROM ct_documentos_bajas";
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
-					for ($i = 0; $i < $rowTotal[0] ; $i++){
-						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+					for ($i = 1; $i <= $rowTotal[0] ; $i++){
+						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_bajas WHERE id_doc = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 							$imprime = 0;

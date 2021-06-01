@@ -53,7 +53,6 @@
 				include './librerias/Classes/PHPExcel/IOFactory.php';
 
 				$fileType = 'Excel5';
-				$fileName = './generarVolanteRechazo/rechazoT.xls';
 
 					$hoy = "select CURDATE()";
 
@@ -63,7 +62,6 @@
 
 				// Read the file
 				$objReader = PHPExcel_IOFactory::createReader($fileType);
-				$objPHPExcel = $objReader->load($fileName);
 				$fecha_recibido =  $row[0]   ; 
 				$motivoR = $elMotivo;
 				$idfom = $_POST['noFomope'];
@@ -72,13 +70,20 @@
 
 				if($resName = mysqli_query($conexion, $sqlNombre)){
 					$rowUser = mysqli_fetch_row($resName);
-
 				}
 				//header ('Content-type: text/html; charset=utf-8');
 
-				$sqlUnidad = "SELECT unidad , rfc , apellido_1, apellido_2, nombre FROM fomope WHERE id_movimiento = '$idfom' ";
+				$sqlUnidad = "SELECT unidad , rfc , apellido_1, apellido_2, nombre, analistaCap FROM fomope WHERE id_movimiento = '$idfom' ";
 				if($resUni = mysqli_query($conexion, $sqlUnidad)){
 					$rowUni = mysqli_fetch_row($resUni);
+
+					if($rowUni[5] == "BAJAS"){
+						$fileName = './generarVolanteRechazo/rechazoBajas.xls';
+					}else{
+						$fileName = './generarVolanteRechazo/rechazoT.xls';
+					}
+					$objPHPExcel = $objReader->load($fileName);
+
 					$objPHPExcel->getActiveSheet()->setCellValue('H10',$fecha_recibido); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D12', $rowUni[2]." ".$rowUni[3]." ".$rowUni[4]); 
 			        $objPHPExcel->getActiveSheet()->setCellValue('D14', $_POST['cod2_1']); 

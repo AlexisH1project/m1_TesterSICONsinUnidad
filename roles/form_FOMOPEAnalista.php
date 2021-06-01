@@ -280,7 +280,7 @@
 									if($ver[$i] == ""){
 										
 									}else{
-										$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$ver[$i]'";
+										$sqlNombreDoc = "SELECT nombre_documento FROM $catalogoDocs WHERE documentos = '$ver[$i]'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
 										$nombreAdescargar = $ver[4]."_".$ver[$i]."_".$ver[6]."_".$ver[7]."_".$ver[8]."_.PDF";
@@ -306,7 +306,7 @@
 						$dir_subida = './Controller/DOCUMENTOS/';
 						$dir_subidaMov = './Controller/DOCUMENTOS_BAJAS/';
 						$rutaEnviar = './DOCUMENTOS_BAJAS/';
-						$catalogoDocs = "m1ct_documentos";
+						$catalogoDocs = "ct_documentos_bajas";
 					}else{
 						$dir_subida = './Controller/DOCUMENTOS/';
 						$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
@@ -356,7 +356,7 @@
 										    $extractDoc = $data[1];
 									 		if($ver[4] == $extractRfc && $data[6] == $noFomope || $ver[5] == $extractRfc && $data[6] == $noFomope){
 									 			$banderaMov = 1;
-													$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+													$sqlNombreDoc2 = "SELECT nombre_documento FROM $catalogoDocs WHERE documentos = '$extractDoc'";
 														$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 														$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 										 					echo "
@@ -392,7 +392,7 @@
 					    if($ver[4] == $extractRfc){
 					    	$existenD++;
 					    		//$losDocEnCarpeta[$contDoc] = $data[1];
-					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+					    		$sqlNombreDoc = "SELECT nombre_documento FROM $catalogoDocs WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
 										if($conId == 7){ // || $conId == 8
