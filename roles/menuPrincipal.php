@@ -167,24 +167,36 @@
 				<div class="p-4 ">
 
 		  		<img class="img-responsive" src="img/ss1.png" height="50" width="190">
-	        <ul class="list-unstyled components mb-5">
+	       <ul class="list-unstyled components mb-5">
 	        	<br>
 	        	<center>
-	        	<li class=" estilo-color">
-	            <a ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
+	        		<li class=" estilo-color">
+	            <a  ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></a>
 	          </li>
-	      </center>
+	        	</center>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	            <a href= <?php  echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir'");?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
-	           <li class=" estilo-color">
-	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
+	          <li class=" estilo-color">
+	              <a  href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	          <li class=" estilo-color">
 	            <a href=  <?php echo ("'./generarReporte.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport.png" alt="x" height="17" width="20"/>Generar Reporte</a>
 	          </li>
+	           <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
+	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	              <a  href= <?php echo ("'./correosUR.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/1_ic.png" alt="x" height="17" width="17"/> Correos</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(QR)</i></b></center></a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./gEstructuraNom.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
 	          </li>
 	          <br>
 	          <br>
@@ -195,7 +207,6 @@
 	          <li class=" estilo-color">
 	              <a class="nav-link" href=  "../LoginMenu/vista/cerrarsesion.php" ><img src="./img/iclogout.png" alt="x" height="17" width="17"/> Cerrar Sesión</a>
 	          </li>
-	          
 	          </li>
 	          <li class=" estilo-color">
              
