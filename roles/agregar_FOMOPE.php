@@ -172,10 +172,10 @@
 			 		$row2 = mysqli_fetch_row($resultTime);
 			 }
 
-		if($elBoton == "Capturar" || $roWsqlRolReal[2] == 3 || $elBoton == "aceptar y modificar"){
+		if($elBoton == "Capturar" && $roWsqlRolReal[2] == 3 || $elBoton == "aceptar y modificar" && $roWsqlRolReal[2] == 3){
 			$colorAenviar = "cafe";
 			$estadoFecha = "En espera de autorización";
-		}else if($roWsqlRolReal[2] == 7){
+		}else if($elBoton == "Capturar" && $roWsqlRolReal[2] == 7 || $elBoton == "aceptar y modificar" && $roWsqlRolReal[2] == 7){
 			$estadoFecha = $row[0]." - ".$usuario;
 			$colorAenviar = "guinda";
 		}else{
@@ -230,8 +230,6 @@
 					 echo "<script> alert('Se detecto incosistencia en las fechas');window.location.href='./form_FOMOPE.php?usuario=$usuario&id_rol=$usuario_rol&noFomope=$noFomope'</script>";
 		}
 	}else if($elBoton == "descargar" || $elBoton == "Aceptar rechazo por captura"){
-		
-//sdsd
 
 		 $hoy = "select CURDATE()";
 		   	$tiempo ="select curTime()";
@@ -264,7 +262,7 @@
 
 		 		$sql3 = "INSERT INTO rechazos (id_movimiento,justificacionRechazo,usuario,fechaRechazo) VALUES ($idFomope,'$motivoR','$usuarioEdito','$row[0]')";
 
-				$sql1 = "UPDATE fomope SET justificacionRechazo = '$motivoR', usuario_name='$usuario',color_estado='negro1',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización' WHERE id_movimiento = '$noFomope' " ;
+				$sql1 = "UPDATE fomope SET justificacionRechazo = '$motivoR', usuario_name='$usuario',color_estado='negroB',qnaDeAfectacion='$qna_Add',anio='$anio_Add',oficioUnidad='$of_unidad',fechaOficio='$fecha_oficio',fechaRecibido='$fecha_recibido',codigo='$codigo',n_puesto='$no_puesto',clavePresupuestaria='$clave_presupuestaria',codigoMovimiento='$codigo_movimiento',descripcionMovimiento='$concepto',vigenciaDel='$del_1',vigenciaAl='$al_1',entidad='$estado_en',consecutivoMaestroPuestos='$consecutivo_maestro_impuestos',observaciones='$observaciones',fechaRecepcionSpc='$fecha_recibido_spc',fechaEnvioSpc='$fecha_envio_spc',fechaReciboDspo='$fecha_recibo_dspo',folioSpc='$folio_spc', fechaCaptura = '$row[0] - $usuario', fechaAutorizacion = 'En espera de autorización' WHERE id_movimiento = '$noFomope' " ;
 
 			}
 

@@ -417,6 +417,9 @@
 											case 'negroB':
 												$estadoF = 'Baja, Rechazo';
 												break;
+											case 'cafeB':
+												$estadoF = 'Baja, Capturada';
+												break;
 											default:
 												break;
 										}
@@ -450,8 +453,8 @@
 								?>
 												<button type="button" class="btn btn-outline-secondary" onclick="agregaform('<?php echo $datos ?>')" id="" >Editar</button>
 								<?php	
-											}else if($ver[1] == "guinda" AND $ver[9] == "BAJAS"){
-												$datos=$ver[0]."||".$usuarioSeguir."||3";
+											}else if($ver[1] == "cafeB" AND $ver[9] == "BAJAS"){
+												$datos=$ver[0]."||".$usuarioSeguir."||7";
 								?>	
 												<button type="button" class="btn btn-outline-secondary" onclick="agregaform('<?php echo $datos ?>')" id="" >Autorizar</button>
 
@@ -510,7 +513,7 @@
 						<?php 
 							include "configuracion.php";
 
-							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'guinda' AND analistaCap = 'BAJAS' ORDER BY id_movimiento DESC";
+							$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura from fomope WHERE color_estado = 'cafeB' AND analistaCap = 'BAJAS' ORDER BY id_movimiento DESC";
 							$result=mysqli_query($conexion,$sql);
 
 							while($ver=mysqli_fetch_row($result)){ 
@@ -523,7 +526,7 @@
 					        		$id_mov = $row['id_movimiento'];
 					        	}
 					        $datos=$ver[0]."||".
-								$usuarioSeguir."||3";
+								$usuarioSeguir."||7";
 								switch ($ver[1]) {
 											
 											case 'guinda':
@@ -531,6 +534,9 @@
 												break;	
 											case 'negroB':
 												$estadoF = 'Baja, Rechazo';
+												break;	
+											case 'cafeB':
+												$estadoF = 'Baja, Capturada';
 												break;	
 											default:
 												

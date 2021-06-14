@@ -542,6 +542,9 @@ tbody {
 												}elseif($ver2[17] == 'guinda'){
 
 													$ver2[17] = 'Finalizado';
+												}elseif($ver2[17] == 'cafeB'){
+
+													$ver2[17] = 'Baja, Capturada';
 												}
 												?>
 
@@ -1097,6 +1100,9 @@ tbody {
 										}elseif($ver[1] == 'guinda'){
 
 											$ver[1] = 'Finalizado';
+										}elseif($ver[1] == 'cafeB'){
+
+											$ver[1] = 'Baja, Capturada';
 										}
 						 ?>
 						<tr id="<?php echo $ver[0] ?>">

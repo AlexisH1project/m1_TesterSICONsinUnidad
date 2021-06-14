@@ -22,8 +22,8 @@
 								 $row2 = mysqli_fetch_row($resultTime);
 		}
 
-		if($idRol == 3 && $rowRol[2] == 7){  //BAJA; comparamos que venga el id 3 de la estructura de from_FOMOPEAnalista, y el ID real del user 7 de BAJA
-			$sql = "UPDATE fomope SET color_estado  = 'naranja', usuario_name = '$usuario', fechaEnviadaRubricaDspo = '$row[0]', fechaAutorizacion = '$row[0] - $usuario'  WHERE id_movimiento= '$noFomope'";
+		if($rowRol[2] == 7){  //BAJA; comparamos que venga el id 3 de la estructura de from_FOMOPEAnalista, y el ID real del user 7 de BAJA
+			$sql = "UPDATE fomope SET color_estado  = 'guinda', usuario_name = '$usuario', fechaEnviadaRubricaDspo = '$row[0]', fechaAutorizacion = '$row[0] - $usuario'  WHERE id_movimiento= '$noFomope'";
 			$sql2 = "INSERT INTO historial (id_movimiento,usuario,fechaMovimiento,horaMovimiento, accion) VALUES ('$noFomope','$usuario','$row[0]','$row2[0]', 'bajas')";
 							if (mysqli_query($conexion,$sql2)) {
 								} else {

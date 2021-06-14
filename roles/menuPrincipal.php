@@ -341,7 +341,7 @@
 	              <a href= <?php echo ("'../m2_plantilla/vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Extraer Excel</a>
+	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar Excel</a>
 	          </li>
 	          <br>
 	          <br>
