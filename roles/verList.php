@@ -405,7 +405,9 @@
 											 			}
 											 			if($conId == 7){
 											 				$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
-											 			}else{
+											 			}elseif($conId == 8){
+															$nombreAdescargar = $dir_subida.$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+														}else{
 											 				$nombreAdescargar = $dir_subida.$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
 														$banderaSI = 1;
