@@ -469,7 +469,7 @@
 											<th>Fecha</th>
 											<th>Qna</th>
 											<th>Año</th>
-											<th>Unida</th>
+											<th>Unidad</th>
 											<th>*</th>
 										</tr>
 									</thead>
