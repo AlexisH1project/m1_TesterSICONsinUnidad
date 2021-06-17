@@ -63,7 +63,7 @@
 			// 	    miSelect2.appendChild(aTag);
 			// }
 
-			function movTable(radioCheck,codigo, fecha, Qna, anio){
+			function movTable(radioCheck,codigo, fecha, Qna, anio, unidad){
 				console.log(codigo);
 				
 					const $cuerpoTabla = document.querySelector("#cuerpoTabla");
@@ -82,6 +82,10 @@
 					let $tdAnio = document.createElement("td");
 					$tdAnio.textContent = anio;
 					$tr.appendChild($tdAnio);
+					// El td de unidad
+					let $tdUnidad = document.createElement("td");
+					$tdUnidad.textContent = unidad;
+					$tr.appendChild($tdUnidad);
 					// El select
 					let $tdSelect = document.createElement("td");
 					var checkbox = document.createElement('input');
@@ -175,6 +179,10 @@
 											let $tdAnio = document.createElement("td");
 											$tdAnio.textContent = infEmpleado[i].anio;
 											$tr.appendChild($tdAnio);
+											// El td del año
+											let $tdUnidad = document.createElement("td");
+											$tdUnidad.textContent = infEmpleado[i].unidad;
+											$tr.appendChild($tdUnidad);
 											// El select
 											let $tdSelect = document.createElement("td");
 											var checkbox = document.createElement('input');
@@ -461,6 +469,7 @@
 											<th>Fecha</th>
 											<th>Qna</th>
 											<th>Año</th>
+											<th>Unida</th>
 											<th>*</th>
 										</tr>
 									</thead>
@@ -602,7 +611,7 @@
 		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
 	}else{	
 	         //------Buscamos los datos para mostrar en el select y mandar a la funcion en JS para poder cargar solo ese dato
-        							$consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion FROM fomope WHERE id_movimiento='$optionSelec'";
+        							$consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad FROM fomope WHERE id_movimiento='$optionSelec'";
         							if($resultSelect = mysqli_query($conexion, $consulta)){
         								$rowSelect = mysqli_fetch_row($resultSelect);
         								$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
@@ -696,7 +705,7 @@
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
 												// echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
-												echo "<script> movTable('$optionSelec','$rowSelect[1] ','$rowSelect[2]','$rowSelect[4]','$rowSelect[3]'); </script>";
+												echo "<script> movTable('$optionSelec','$rowSelect[1] ','$rowSelect[2]','$rowSelect[4]','$rowSelect[3]', '$rowSelect[5]'); </script>";
 
 											
 													$arrayNumDoc = explode("_", $enviarDoc);		

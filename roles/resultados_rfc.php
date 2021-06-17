@@ -23,7 +23,7 @@
         $resultado2 = mysqli_query($conexion,$consulta2);
         $row = mysqli_fetch_row($resultado2); 
 
-        $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion FROM fomope WHERE rfc='$row[1]'";
+        $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad FROM fomope WHERE rfc='$row[1]'";
         $resultado3 = mysqli_query($conexion,$consulta3);
        // $row2 = mysqli_fetch_row($resultado3); 
        // $rowCombinado = array_merge($row,$row2);
@@ -48,7 +48,8 @@
                 "codigo"=>$ver[1],
                 "fecha"=>$ver[2],
                 "anio"=>$ver[3],
-                "qna"=>$ver[4]
+                "qna"=>$ver[4],
+                "unidad"=>$ver[5]
             );
             $i++;
         }
