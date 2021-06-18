@@ -797,8 +797,8 @@
 								 }
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
 									//echo "<script> alert ('$arrayDoc[$i]');</script>";
-									$nombreAsignar = $arrayDoc[$i];
-									$sqlAgregar = "UPDATE fomope SET $arrayDoc[$i] = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
+									$nombreAsignar = strtolower($arrayDoc[$i]);
+									$sqlAgregar = "UPDATE fomope SET $nombreAsignar = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 									}else{
