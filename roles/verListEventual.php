@@ -478,7 +478,7 @@ function asignarIDfecha(){
                                             }
 											$banderaAcuses = 0 ;
 
-											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP"){
+											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP" || $rowNombreDoc2[2] == "OF_SOLM"){
 												$queryConsultaId = "SELECT * FROM doc_conjunto_qr WHERE id_movimiento_qr = '$noFomope' AND id_fechaHora = '$extractCurp'";
 												if($resQyConsultaId = mysqli_query($conexion, $queryConsultaId)){
 													$totalFilas    =    mysqli_num_rows($resQyConsultaId); 
