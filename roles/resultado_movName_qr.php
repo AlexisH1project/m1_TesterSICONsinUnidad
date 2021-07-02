@@ -10,14 +10,14 @@
         $resultado2 = mysqli_query($conexion,$consulta2);
         $row = mysqli_fetch_row($resultado2); 
 
-        $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad FROM fomope WHERE rfc='$row[1]'";
+        $consulta3 = "SELECT id_movimiento_qr, tipo_movimiento, fini, anio, qna, unidad FROM fomope_qr WHERE curp='$row[2]'";
         $resultado3 = mysqli_query($conexion,$consulta3);
       
         $value[0] = array( 
                 "apellido1"=>$row[3],
                 "apellido2"=>$row[4],
                 "nombre"=>$row[5],
-                "rfc"=>$row[1]
+                "curp"=>$row[2]
             );
         $value[1]= 0;
         $i = 1;

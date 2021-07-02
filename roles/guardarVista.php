@@ -51,6 +51,8 @@
 		      width: calc( 100% - 1em )
 		  } 
 		  .button5 {border-radius: 50%;}
+
+		  .derecha   { float: right; }
 		  </style>
 		<script type="text/javascript">
 
@@ -98,7 +100,7 @@
 					$cuerpoTabla.appendChild($tr);
 					$("#idRadioMov").prop("checked", true);
 			}
-
+// *********************************************autocompletamos los valores del RFC 
 			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
 					var id = this.id;
@@ -195,7 +197,8 @@
 											
 											// Finalmente agregamos el <tr> al cuerpo de la tabla
 											$cuerpoTabla.appendChild($tr);
-							
+											// $("#idRadioMov").prop("checked", false);
+											
 
 										}else{
 											// for (let i = select.options.length; i >= 0; i--) {
@@ -214,7 +217,139 @@
 					});
 				});
 			});
-			
+// ******************************************************Autocompletar el apellido1 
+			$(document).ready(function(){
+				$(document).on('keydown', '.apellido1', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_apellido1.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_apellido1.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+// ******************************************************Autocompletar el apellido2
+$(document).ready(function(){
+				$(document).on('keydown', '.apellido2', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_apellido2.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_apellido2.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
+	// ******************************************************Autocompletar el NOMBRE 
+	$(document).ready(function(){
+				$(document).on('keydown', '.nombre', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_nombre.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							console.log(buscarid);
+							$.ajax({
+								url: 'resultados_nombre.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
+
 			function listaDeDoc(text, listaEnviar){
 				document.getElementById("listaDoc").value = text;
 				document.getElementById("guardarDoc").value = listaEnviar;
@@ -276,6 +411,10 @@
 											let $tdAnio = document.createElement("td");
 											$tdAnio.textContent = infEmpleado[i].anio;
 											$tr.appendChild($tdAnio);
+											// El td del unidad
+											let $tdUr = document.createElement("td");
+											$tdUr.textContent = infEmpleado[i].ur;
+											$tr.appendChild($tdUr);
 											// El select
 											let $tdSelect = document.createElement("td");
 											var checkbox = document.createElement('input');
@@ -306,7 +445,89 @@
 				// console.log(data);
 				// console.log(infEmpleado[0].apellido1);
 				// console.log(infEmpleado.length);
+			}
+		// }		
+			var newList = [];
+				
+			function insertDoc() {
+				$('#rfcL_1').removeAttr("required");
+				var inputDoc=document.getElementById ("nameArchivo");
+			
+				var elRfc = $('#rfcL_1').val();
+				var nombreArchivo = $('#nameArchivo').val();
+				let radio = $('input[name="radioMov"]:checked').val();
+				var usuarioCap = $('#usuario_rol').val();
+				var id_fechaHora = $('#id_fechaHora').val();
+		        let docSelect = $('select[name=documentoSelct]').val();
+				var conteo = $('#id_conteo').val();
+
+				console.log(docSelect);	
+
+				if(elRfc == ""){
+					console.log( radio );
+					alert("RFC sin capturar");
+				}else if(inputDoc.value == ""){
+					alert("No se pude efectuar función ya que no existe documento adjuntado, 'BORRAR' y volver a intentar");
+				}else if(radio){
+					if(conteo == ""){
+						conteo = 1;
+						// var formData = new FormData(document.getElementById("formDoc"));
+						newList = [[elRfc, radio, docSelect, usuarioCap, id_fechaHora]] ;
+						// ********* ocultamos boton guardar
+						$('#guardarAdj').hide();
+						// ******** agregamos boton agregar
+						var btn_2 = document.getElementById('aceptar');
+			            btn_2.style.display = 'inline';
+						
+
+						var foo = newList.map(function(bar){
+						return '<li>'+bar[0]+' </li>'
+						});
+						document.getElementById("resultList").innerHTML = foo;
+						
+					}else{
+						conteo = parseInt (conteo) + 1 ;
+						newList.push([elRfc, radio, docSelect, usuarioCap, id_fechaHora]);
+						var foo = newList.map(function(bar){
+						return '<li>'+bar[0]+' </li>'
+						});
+						document.getElementById("resultList").innerHTML = foo;
 					}
+
+					document.getElementById("id_conteo").value = conteo;
+					console.log(conteo);
+					console.log(newList);
+				}else{
+					alert("Movimiento no seleccionado");
+				}
+
+			}
+
+			function  enviarList() {
+					var formData = new FormData(document.getElementById("formDoc"));
+					formData.append('array',  JSON.stringify(newList));
+					$.ajax({
+							// data:  {'array': JSON.stringify(newList)}, //datos que se envian a traves de ajax
+							url:   'Controller/insertListDoc.php', //archivo que recibe la peticion
+							type:  'post', //método de envio
+							data: formData,
+							cache: false,
+							contentType: false,
+							processData: false,
+							success:  function (data) { //una vez que el archivo recibe el request lo procesa y lo devuelve
+									// var infEmpleado = eval(data);
+									console.log(data);
+									if(data == 1){
+										alert("Se ha guardado correctamente.");
+										window.location.href = './guardarVista.php?usuario_rol='+newList[0][3];
+									}else{
+										alert("Salir de esta página, surgió un error");
+									}
+									
+							}
+						});
+
+			}
 		</script>
 	</head>
 	<body>
@@ -318,6 +539,18 @@
 			$sqlNombre = "SELECT nombrePersonal, id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 			$result = mysqli_query($conexion,$sqlNombre);
 			$nombreU = mysqli_fetch_row($result);
+
+			//----------------Sacamos la Hora / esto para que lo mandemos por ajax en un input para la carga de documentos con lista 
+			$hoy = "select CURDATE()"; 
+			$tiempo ="select curTime()";
+
+				 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
+						 $row = mysqli_fetch_row($resultHoy);
+						 $row2 = mysqli_fetch_row($resultTime);
+				 }
+				 $hora = str_replace ( ":", '',$row2[0] ); 
+				 $fecha = str_replace ( "-", '',$row[0] ); 
+				 $id_fechaHora = $fecha.$hora;
 		 ?>
  <br>
  <br>
@@ -441,7 +674,7 @@
 
 				?>
 			
-			<form enctype="multipart/form-data" method="post" action=""> 
+			<form enctype="multipart/form-data" method="post" id="formDoc" action=""> 
 				<div class="rounded border border-dark plantilla-inputv text-center">
 					<div class="form-row">
 						<div class="col">
@@ -485,23 +718,27 @@
 						</div>
 						
 						<div class="col">
+							<input type="text" class="form-control border border-dark" id="usuario_rol" name="usuario_rol" style="display:none" value="<?php  echo $usuarioSeguir; ?>" >
+							<input type="text" class="form-control border border-dark" id="id_fechaHora" name="id_fechaHora" style="display:none" value="<?php  echo $id_fechaHora; ?>" >
+							<input type="text" class="form-control border border-dark" id="id_conteo" name="id_conteo" style="display:none" value="" >
+
 				  			<div class="col">
 				  			<label  class="plantilla-label" for="nombreT">NOMBRE COMPLETO: </label>
 
 						   <div class="form-group col-md-12">
-						        <input type="text" class="form-control border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" value="<?php if(isset($_POST["apellido1"])){ echo $_POST["apellido1"];} ?>" maxlength="30"required>
+						        <input type="text" class="form-control apellido1 border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" value="<?php if(isset($_POST["apellido1"])){ echo $_POST["apellido1"];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						     <div class="form-group col-md-12">
-						        <input type="text" class="form-control border border-dark" id="apellido2" name="apellido2" placeholder="Apellido Materno" value="<?php if(isset($_POST["apellido2"])){ echo $_POST["apellido2"];} ?>" maxlength="30"required>
+						        <input type="text" class="form-control apellido2 border border-dark" id="apellido2" name="apellido2" placeholder="Apellido Materno" value="<?php if(isset($_POST["apellido2"])){ echo $_POST["apellido2"];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						     <div class="form-group col-md-12">
-						        <input type="text" class="form-control border border-dark" id="nombre" name="nombre" placeholder="Nombre" maxlength="40" value="<?php if(isset($_POST["nombre"])){ echo $_POST["nombre"];} ?>" required>
+						        <input type="text" class="form-control nombre border border-dark" id="nombre" name="nombre" placeholder="Nombre" maxlength="40" value="<?php if(isset($_POST["nombre"])){ echo $_POST["nombre"];} ?>" required>
 						      </div>
 						    </div>
 							<input type="button" name="buscar_sinRfc" onclick= "elimRequeridos();" class="btn btn-outline-light button5" value="buscar por nombre"><br> 
@@ -511,6 +748,7 @@
 						    <!--  <input type="hidden" name="MAX_FILE_SIZE" value="30000" /> -->
 						    <input type="file" id="nameArchivo" name="nameArchivo" required>
 						   <!--  <p class="help-block">Ejemplo de texto de ayuda.</p> -->
+
 						  </div>
 						</div>
 
@@ -519,7 +757,6 @@
 							<div class="box" >
 								<label  class="plantilla-label" for="arch">Nombre del archivo: </label>
 								<select class="form-control border border-dark custom-select" name="documentoSelct">
-									
 									<?php
 									include "./controller/configuracion.php";
 
@@ -534,9 +771,15 @@
 									while($listDoc = mysqli_fetch_assoc($resultado)){ $contador++;?>
 									<option value="<?php echo $listDoc["nombre_documento"]; ?>"><?php echo $listDoc["nombre_documento"]; ?></option>
 									<?php }?>          
-									</select>
+								</select>
 							</div>
-
+							<br><br><br>
+							<div id="resultList"class="modal-body">
+							       
+							</div>
+							<br><br><br><br>
+							<input type="button" name="agregarMovList" onclick= "insertDoc();" class="btn btn btn-secondary button5" value="+"><br> 
+							
 						</div>
 					</div>		
 				</div>
@@ -556,8 +799,8 @@
 						<div class="col text-center">
 							
 							<div class="columnaBoton">	
-								 <input type="submit" name="guardarAdj" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Guardar"><br> 
-
+								 <input type="submit" id= "guardarAdj" name="guardarAdj" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Guardar"><br> 
+								 <input type="button" id= "aceptar" name="aceptar" style="display:none" onclick="enviarList();" class="btn btn btn-danger tamanio-button plantilla-input text-white bord" value="Aceptar">
 							</div>
 							
 						</div>
@@ -573,8 +816,7 @@
 							</div>
 						</div>
 					</div>
-		</form>
-
+			</form>
 		</div>
 		<?php
 							$arrayView = explode("_", $listaMostrar);

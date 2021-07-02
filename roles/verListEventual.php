@@ -258,7 +258,7 @@ function asignarIDfecha(){
 									array("Fomope Loteado y firmado","FO"),
 									array("Oficio Sellado","OS")
 								);
-                    // ----- hacemos el ciclo en donde recorremos las dos pocisiones del areglo bidimencional anterior
+                    // ----- hacemos el ciclo en donde recorremos las dos posicion del areglo bidimencional anterior
 					for ($i = 0; $i < 2 ; $i++){
 							$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 						$banderaSI = 0;
@@ -335,7 +335,8 @@ function asignarIDfecha(){
                                             	$anio = substr($extractDate, 0, -10);
 
                                             }
-									 		if($ver[13] == $extractCurp && $nameFIleP[$i][1] == $extractDoc){
+											
+									 		if($ver[13] == $extractCurp && $nameFIleP[$i][1] == $extractDoc ){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
@@ -475,7 +476,22 @@ function asignarIDfecha(){
                                             	$idMovDoc = $data[5];
                                             	$anio = substr($extractDate, 0, -10);
                                             }
-									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
+											$banderaAcuses = 0 ;
+
+											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP"){
+												$queryConsultaId = "SELECT * FROM doc_conjunto_qr WHERE id_movimiento_qr = '$noFomope' AND id_fechaHora = '$extractCurp'";
+												if($resQyConsultaId = mysqli_query($conexion, $queryConsultaId)){
+													$totalFilas    =    mysqli_num_rows($resQyConsultaId); 
+													if($totalFilas > 0){
+														$rowConsultaIdoc = mysqli_fetch_assoc($resQyConsultaId);
+														if($rowConsultaIdoc['id_fechaHora'] == $extractCurp ){
+															$banderaAcuses = 1;
+														}
+													}
+												}
+											}
+
+									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc || $banderaAcuses == 1 ){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
