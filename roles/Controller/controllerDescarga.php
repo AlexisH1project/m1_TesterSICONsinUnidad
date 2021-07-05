@@ -20,6 +20,14 @@ $ruta =	explode("/", $nombreDeArchivoDescarga);
 			</div>
 			</center>"';
 		}
+		if($ruta[2] == "DOCUMENTOS_RES"){
+			// readfile("./DOCUMENTOS_MOV/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
+			echo '<center>
+			<div class="box" >
+				<embed src="$nombreDeArchivoDescarga" type="application/pdf" width="65%" height="600px" />
+			</div>
+			</center>"';
+		}
 		if($ruta[2] == "DOCUMENTOS_BAJAS"){
 			readfile("./DOCUMENTOS_BAJAS/".$nombreDeArchivoDescarga); //C:/xampp2/htdocs/SICON_w/roles/Controller/
 		}

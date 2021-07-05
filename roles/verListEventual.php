@@ -290,7 +290,7 @@ function asignarIDfecha(){
 										    $data2 = explode(".",$file);
 											$indice = count($data2);										
 											$extencion = $data2[$indice-1];
-
+											$banderaDocSINqna = 0;
 
                                             if($conId==2){
                                             	$extractCurp = $data[0];
@@ -304,8 +304,13 @@ function asignarIDfecha(){
 
                                             }else if($conId==4){
                                             	$extractCurp = $data[0];
-                                            	$extractDoc = $data[1];
-                                            	$extractQna = $data[2];
+												if(is_numeric($data[2]) || $data[2] == ""){
+													$extractDoc = $data[1];
+													$extractQna = $data[2]; 
+												}else{
+													$extractDoc = $data[1]."_".$data[2];
+													$banderaDocSINqna = 1;
+												}
                                             	$QuitarExtencion = explode(".", $data[3]);
                                             	$extractDate = $QuitarExtencion[0];
                                             	$anio = substr($extractDate, 0, -10);
@@ -363,10 +368,18 @@ function asignarIDfecha(){
 									 			if($conId==2 || $conId==3){
 										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
-									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }else if ($conId==4 ){
+													if($banderaDocSINqna == 1){
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractDate."."."$extencion";
+													}else{
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													}
 													$banderaSI = 1;
-									 		    } 
+									 		    }elseif($conId==5){
+													$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													$banderaSI = 1;
+												 }
+												 
 								if($banderaSI == 1){
 
 						?>	
@@ -434,7 +447,7 @@ function asignarIDfecha(){
 										    $data2 = explode(".",$file);
 											$indice = count($data2);										
 											$extencion = $data2[$indice-1];
-
+											$banderaDocSINqna = 0;
 
                                             if($conId==2){
                                             	$extractCurp = $data[0];
@@ -448,8 +461,13 @@ function asignarIDfecha(){
 
                                             }else if($conId==4){
                                             	$extractCurp = $data[0];
-                                            	$extractDoc = $data[1];
-                                            	$extractQna = $data[2];
+												if(is_numeric($data[2]) || $data[2] == ""){
+													$extractDoc = $data[1];
+													$extractQna = $data[2];
+												}else{
+													$banderaDocSINqna = 1;
+													$extractDoc = $data[1]."_".$data[2];
+												}
                                             	$QuitarExtencion = explode(".", $data[3]);
                                             	$extractDate = $QuitarExtencion[0];
                                               	
@@ -478,8 +496,8 @@ function asignarIDfecha(){
                                             }
 											$banderaAcuses = 0 ;
 
-											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP" || $rowNombreDoc2[2] == "OF_SOLM"){
-												$queryConsultaId = "SELECT * FROM doc_conjunto_qr WHERE id_movimiento_qr = '$noFomope' AND id_fechaHora = '$extractCurp'";
+											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP" || $rowNombreDoc2[2] == "ACU_UR"){
+												$queryConsultaId = "SELECT * FROM doc_conjunto_qr WHERE id_movimiento_qr = '$noFomope' AND id_fechaHora = '$extractCurp' AND documento = '$rowNombreDoc2[2]'";
 												if($resQyConsultaId = mysqli_query($conexion, $queryConsultaId)){
 													$totalFilas    =    mysqli_num_rows($resQyConsultaId); 
 													if($totalFilas > 0){
@@ -511,10 +529,17 @@ function asignarIDfecha(){
 									 			if($conId==2 || $conId==3){
 										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
-									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }else if ($conId==4 ){
+													if($banderaDocSINqna == 1){
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractDate."."."$extencion";
+													}else{
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													}
 													$banderaSI = 1;
-									 		    } 
+									 		    }elseif($conId==5){
+													$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													$banderaSI = 1;
+												 }
 								if($banderaSI == 1){
 
 						?>	

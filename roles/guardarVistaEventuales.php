@@ -494,6 +494,13 @@ $(document).ready(function(){
 				document.getElementById("guardarDoc").value = listaEnviar;
 			}
 
+			function borrarNombre() {
+				document.getElementById("rfcL_1").value = "";
+				document.getElementById("apellido1").value = "";
+				document.getElementById("apellido2").value = "";
+				document.getElementById("nombre").value = "" ;
+			}
+
 		</script>
 	</head>
 	<body>
@@ -752,8 +759,11 @@ $(document).ready(function(){
 							       
 							</div>
 							
-							<br><br><br><br>
+							<br><br><br><br>	
 							<input type="button" name="agregarMovList" onclick= "insertDoc();" class="btn btn btn-secondary button5" value="+"><br> 
+							<br><br><br><br>	
+							<input type="button" name="borrarName" onclick= "borrarNombre();" class="btn btn btn-secondary" value="Borrar Nombre"><br> 
+
 						</div>
 					</div>		
 				</div>

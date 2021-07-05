@@ -38,7 +38,7 @@
 	$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
 	
 	if (move_uploaded_file( $_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
-			$concatenarNombreC = $dir_subida.strtoupper($data[0][4]."_".$idDoc[1]."_X_X_X_X_".$data[0][4]."_.".$extencion3);
+			$concatenarNombreC = $dir_subida.strtoupper($data[0][4]."_".$idDoc[1]."_".$data[0][4]."_.".$extencion3);
 			rename ($fichero_subido,$concatenarNombreC);
 	}else {
 		echo "ERROR AL CARGAR DOC";
