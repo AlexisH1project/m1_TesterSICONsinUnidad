@@ -616,7 +616,7 @@
 
 				  		<div class="form-group col-md-8" >
 					  		<label class="plantilla-label estilo-colorg" for="fechaIngreso"> FECHA DE RECIBIDO: </label>
-						    <input type="date" class="form-control border border-dark" id="fechaIngreso" name="fechaIngreso" placeholder="Ingresa Fecha del ingreso" value="<?php if(isset($_POST["fechaIngreso"])){ echo $_POST["fechaIngreso"];} ?>" required>
+						    <input type="date" class="form-control border border-dark" id="fechaIngreso" name="fechaIngreso" placeholder="Ingresa Fecha del ingreso" value="<?php if(isset($_POST["fechaIngreso"])){ echo $_POST["fechaIngreso"];} ?>">
 						    
 				  		</div>
 				  	<div class="form-row">
@@ -642,7 +642,7 @@
 							
 							<div class="form-group col-md-2">
 								<label  class="plantilla-label" for="laQna">*QNA: </label>
-									<select class="form-control border border-dark custom-select" id="qnaOption" name="qnaOption" required>
+									<select class="form-control border border-dark custom-select" id="qnaOption" name="qnaOption">
 										<?php
 										$consulta = "SELECT * FROM ct_quincena";
 										$resultado = mysqli_query($conexion , $consulta);
