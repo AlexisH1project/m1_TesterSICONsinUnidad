@@ -279,8 +279,16 @@
 					$sqlImp2  = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$arr2[$i]'";
 					if($resImp2 = mysqli_query($conexion, $sqlImp2)){
 						$imprimirRow = mysqli_fetch_row($resImp2);
-                        
-										
+                        $estatusQr = $imprimirRow[1];
+						$colorQr = $imprimirRow[51];
+
+						if($botonAccion == 'Reporte Fomopes Operados' ){
+							if($estatusQr == 'rojo' || $estatusQr == 'Rechazado duplicado'){
+								continue;
+							}elseif($colorQr == "negro_2" || $colorQr == "negro_1" || $colorQr == "amarillo" || $colorQr == "amarillo0" || $colorQr == "azul"){
+								continue;
+							}
+						}				
 						$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $imprimirRow[0]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $imprimirRow[1]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $imprimirRow[2]); 
