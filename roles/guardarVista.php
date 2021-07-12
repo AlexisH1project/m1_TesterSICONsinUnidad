@@ -100,6 +100,13 @@
 					$cuerpoTabla.appendChild($tr);
 					$("#idRadioMov").prop("checked", true);
 			}
+// **********************************************funcion de boton para ver documentos de los movimientos encontrados
+			$( document ).ready(function(){
+				$(document).on('click', '.buttonDocs', function(){
+					var usuario= $("#usuario_rol").val();
+					window.open ('./verList.php?idMov='+this.name+'&usuario_rol='+usuario ,  '_blank'); //this.name es porque ahí guardamos el id_mov del resultado de los mov. en el botton que activa esta funcion
+				});
+			});
 // *********************************************autocompletamos los valores del RFC 
 			$(document).ready(function(){
 				$(document).on('keydown', '.rfcL', function(){
@@ -192,14 +199,24 @@
 											checkbox.name = "radioMov";
 											checkbox.value = infEmpleado[i].id;
 											checkbox.id = "idRadioMov";
-											// $tdSelect.textContent =checkbox ;
 											$tr.appendChild(document.body.appendChild(checkbox));
+											//creamos el botton para ver los docs
+											let $tdButton = document.createElement("td");
 											
+											//creamos el botton para ver los docs
+											const button = document.createElement('input');
+											button.type = 'button'; 
+											button.innerText = 'Ver Doc.'; 
+											button.name = infEmpleado[i].id;
+											button.value = 'Ver Doc.';
+											button.id = 'buttonDocs';
+											button.className = 'buttonDocs'; 
+											$tdButton.appendChild(button);
+											$tr.appendChild(document.body.appendChild($tdButton));
 											// Finalmente agregamos el <tr> al cuerpo de la tabla
 											$cuerpoTabla.appendChild($tr);
 											// $("#idRadioMov").prop("checked", false);
 											
-
 										}else{
 											// for (let i = select.options.length; i >= 0; i--) {
 										    // 	select.remove(i);
@@ -424,7 +441,18 @@ $(document).ready(function(){
 											checkbox.id = "idRadioMov";
 											// $tdSelect.textContent =checkbox ;
 											$tr.appendChild(document.body.appendChild(checkbox));
-											
+											//creamos el botton para ver los docs
+											let $tdButton = document.createElement("td");
+											//creamos el botton para ver los docs
+											const button = document.createElement('input');
+											button.type = 'button'; 
+											button.innerText = 'Ver Doc.'; 
+											button.name = infEmpleado[i].id;
+											button.value = 'Ver Doc.';
+											button.id = 'buttonDocs';
+											button.className = 'buttonDocs'; 
+											$tdButton.appendChild(button);
+											$tr.appendChild(document.body.appendChild($tdButton));
 											// Finalmente agregamos el <tr> al cuerpo de la tabla
 											$cuerpoTabla.appendChild($tr);
 
@@ -711,6 +739,9 @@ $(document).ready(function(){
 											<th>Año</th>
 											<th>Unidad</th>
 											<th>*</th>
+											<th>
+											
+											</th>
 										</tr>
 									</thead>
 									<tbody id="cuerpoTabla">
