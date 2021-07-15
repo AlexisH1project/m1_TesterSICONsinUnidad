@@ -23,7 +23,7 @@
         $resultado2 = mysqli_query($conexion,$consulta2);
         $row = mysqli_fetch_row($resultado2); 
 
-        $consulta3 = "SELECT id_movimiento_qr, tipo_movimiento, fini, anio, qna FROM fomope_qr WHERE curp='$row[2]'";
+        $consulta3 = "SELECT id_movimiento_qr, tipo_movimiento, fini, anio, qna FROM fomope_qr WHERE curp='$row[2]' AND estatus = 'Revisión'";
         $resultado3 = mysqli_query($conexion,$consulta3);
        // $row2 = mysqli_fetch_row($resultado3); 
        // $rowCombinado = array_merge($row,$row2);
