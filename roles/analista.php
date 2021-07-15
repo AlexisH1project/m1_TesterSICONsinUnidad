@@ -359,44 +359,51 @@
 
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
-					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
+							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (  qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
 							}
 
 
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
 
-
+// ************************************** vamos a desplegar los resultados obtenidos por la busqueda tradicional 
 							if ($result = mysqli_query($conexion,$sql)) {
 
 								$totalFilas    =    mysqli_num_rows($result);  
@@ -407,7 +414,7 @@
 											<br>
 											<div class="col-sm-12 ">
 											<div class="plantilla-inputv text-dark ">
-											    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+											    <div class="card-body"><h2 align="center">No existe resultado de movimientos tradicionales en la busqueda, vuelve intentar.</h2></div>
 										</div>
 										</div>');
 								}else{
@@ -521,6 +528,98 @@
 								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 							}
+// ************* finaliza la busquesa de la bandeja 
+
+// ******************************************************se comienza la busqueda para los movs de QR 
+	if ($result = mysqli_query($conexion,$sql2)) {
+
+		$totalFilas    =    mysqli_num_rows($result);  
+		if($totalFilas == 0){
+			
+			echo('
+				<br>
+				<br>
+				<div class="col-sm-12 ">
+				<div class="plantilla-inputv text-dark ">
+					<div class="card-body"><h2 align="center">No existe resultados de movimientos QR en la busqueda, vuelve intentar.</h2></div>
+			</div>
+			</div>');
+		}else{
+
+
+		while($ver=mysqli_fetch_row($result)){ 
+		switch ($ver[51]) {
+				case 'negro_2':
+					$estadoF = 'DSPO Rechazo';
+					break;
+				case 'negro':
+					$estadoF = 'Unidad Edición';
+					break;
+				case 'amarillo':
+					$estadoF = 'DSPO captura';
+					break;		
+				case 'amarillo0':
+					$estadoF = 'DDSCH Autorización';
+					break;
+				case 'cafe':
+					$estadoF = 'DSPO Autorización';
+					break;	
+				case 'negro_1':
+					$estadoF = 'DDSCH Rechazo por Duplicado';
+					break;
+				case 'azul':
+					$estadoF= 'DGRHO Autorización';
+					break;
+				case 'rosa':
+					$estadoF = 'DSPO nomina';
+					break;		
+				case 'verde':
+					$estadoF = 'DDSCH loteo';
+					break;
+				case 'verde2':
+					$estadoF = 'DDSCH Autorización Loteo';
+					break;	
+				case 'gris':
+					$estadoF = 'DDSCH Edición';
+					break;
+				case 'guinda':
+					$estadoF = 'Finalizado';
+					break;		
+				default:
+					
+					break;
+			}
+
+?>
+<tr>
+
+	<td><?php echo $estadoF ?></td>
+	<td><?php echo $ver[26] ?></td>
+	<td><?php echo $ver[7] ?></td>
+	<td><?php echo $ver[3] ?></td>
+	<td><?php echo $ver[40] ?></td>
+	<td><?php echo $ver[5] ?></td>
+	<td><?php echo $ver[48] ?></td>
+	<td><?php echo $ver[53] ?></td>	
+
+<?php
+		if($ver[2]=="ESTRUCTURA" || $ver[2] == "PERSONAL DE CONFIANZA (ALTA)" || $ver[2] == "PERSONAL DE CONFIANZA (REINGRESO)"){
+?>
+<td>
+			<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+</td>
+</tr>
+<?php 
+		}
+	}
+}
+}else{
+	echo '<script type="text/javascript">alert("Error en la conexion");</script>';
+	echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+}
+
+// *************finaliza la busqueda QR
+
 						}
 						 ?>
 		</table>
@@ -1121,15 +1220,8 @@
 							<td><?php echo $ver[6] ?></td>
 							<td><?php echo $ver[7] ?></td>
 							<td><?php echo $ver[8] ?></td>
-
-
 							<td>
-									
-
-						
 										<input type="button" id="autNomina" class="btn btn-outline-secondary" data-toggle="modal"  data-target="#exampleModalN" onclick="autNomina('<?php echo $datos ?>')" value="Nomina" >
-																 
-
 							</td>
 						</tr>
 						<?php 

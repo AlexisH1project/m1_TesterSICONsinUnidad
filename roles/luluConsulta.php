@@ -318,37 +318,37 @@
 
 							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-
-							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
-								
-							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (anio='$anioBuscar')";
-								
-							}
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+	
+								}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar')";
+									
+								}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (anio='$anioBuscar')";
+									
+								}
 
 
 
