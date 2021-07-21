@@ -26,15 +26,20 @@
 		$archivoScan = 'Pendiente';// strtoupper($_POST['ejemplo_archivo_1'];
 		$fechaEntregaUnidadAdd = 'Pendiente';// strtoupper($_POST['fechaEntregaUnidad'];
 		$ofEntregaUnidadAdd = 'Pendiente'; //strtoupper($_POST['ofEntregaUnidad'];
-
+		$bandera = 0;
 		$analista = $_POST['usuar'];
 		
 		$colorAccion = "";
 
 			$hoy = "select CURDATE()";
 		   	$tiempo ="select curTime()";
+// **************************************	sacamos el año
+			if ($resultHoy = mysqli_query($conexion,$hoy)) {
+				$row = mysqli_fetch_row($resultHoy);
+				$anioActual = explode("-", $row[0]);
+			}
 
-			   $sqlVRechazo = "SELECT color_estado, doc77 FROM fomope WHERE rfc = '$rfcAdd' ORDER BY id_movimiento DESC";
+			   $sqlVRechazo = "SELECT color_estado, doc77, quincenaAplicada, anio FROM fomope WHERE rfc = '$rfcAdd' ORDER BY id_movimiento DESC";
 			   if($resRechazo = mysqli_query($conexion, $sqlVRechazo)){
 				   $rechazoActual = mysqli_fetch_row($resRechazo);
 				   if($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1"){
@@ -46,7 +51,7 @@
 					   $bandera = 1;
 				   }
 			   }
-if($bandera == 1 AND $rechazoActual[1] == ""){
+if($bandera == 1 AND $rechazoActual[1] == "" AND $laQna == $rechazoActual[2] AND $anioActual[0] == $rechazoActual[3]){
 		echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
 		echo "<script>window.location.href = '../blancoLulu.php?usuario_rol=$usuarioEdito'</script>";
 }else{
@@ -219,28 +224,14 @@ if($id_rol == 0 && $unidadC == ''){
 										$rowRol = mysqli_fetch_row($resultU);
 										if($rowRol[0] == 0){
 													generarExcel();
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../luluConsulta.php?usuario_rol=$usuarioEdito'</script>";
+													echo "<script> alert('Fomope enviado a revision'); window.location.href = '../luluConsulta.php?usuario_rol=$usuarioEdito'</script>";
 
 										}else if ($rowRol[0] == 1){
 													
 														generarExcel();
-											
-										 	echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
+										 				echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
 
 										}
-
-										/*if($rowRol[0] == 0 && $unidadC == ''){
-
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../luluConsulta.php?usuario_rol=$usuarioEdito'</script>";
-
-										}else if ($rowRol[0] == 1){
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
-
-										}
-										else if ($rowRol[0] == 0 && $unidadC != ''){
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../unidadCaptura.php?usuario_rol=$usuarioEdito'</script>";
-
-										}*/
 									}
 
 									
@@ -310,20 +301,6 @@ if($id_rol == 0 && $unidadC == ''){
 										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
 
 										}
-										
-										/*
-										if($id_rol == 0 && $unidadC == ''){
-
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../luluConsulta.php?usuario_rol=$usuarioEdito'</script>";
-
-										}else if ($id_rol == 1){
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../lulu.php?usuario_rol=$usuarioEdito'</script>";
-
-										}
-										else if ($id_rol == 0 && $unidadC != ''){
-										 echo "<script> alert('Fomope enviado a revision'); window.location.href = '../unidadCaptura.php?usuario_rol=$usuarioEdito'</script>";
-
-										}*/
 								
 				}
 				
