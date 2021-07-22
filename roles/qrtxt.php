@@ -486,6 +486,7 @@
 				if(count($qrTexto) < 3){  // son los espacios que hay en el txt , renglones sin informacion, enters
 					continue;
 				}
+				$qrTexto[2] = strtoupper($qrTexto[2]); // hacemos mayusculas el LOTE
 				$llave = substr($qrTexto[0], 0, 5);
 				$tipoRegistro = '';
 				///ingresaar empleado ct_empleados
@@ -520,7 +521,7 @@
 				}elseif($textoC == $qrTexto2[$i]){
 					$estatus = "Rechazado duplicado";
 					$contDuplicados = $contDuplicados + 1;
-						 	
+					continue;
 				}elseif($textoC != $qrTexto2[$i]){
 					$contNormales = $contNormales + 1;
 					$estatus = "Revisión";
