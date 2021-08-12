@@ -37,6 +37,23 @@
 			  width:50%;
 			  float:left;
 		}
+
+		.btn-flotante {
+				font-size: 16px; /* Cambiar el tamaño de la tipografia */
+				text-transform: uppercase; /* Texto en mayusculas */
+				font-weight: bold; /* Fuente en negrita o bold */
+				color: #ffffff; /* Color del texto */
+				border-radius: 5px; /* Borde del boton */
+				letter-spacing: 2px; /* Espacio entre letras */
+				background-color: #E91E63; /* Color de fondo */
+				padding: 18px 30px; /* Relleno del boton */
+				position: absolute;
+				/* bottom: 600px; */
+				right: 10px;
+				/* transition: all 300ms ease 0ms;
+				box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+				z-index: 99; */
+		}
 		  
 		  </style>
 		  <script type="text/javascript">
@@ -101,6 +118,12 @@
 					verDoc(nombre,ext);
 				}
 			
+			}
+
+			function refreshDocs(nombre,curp,rfc){
+				$('#content').html('<div class="loading"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div>');
+				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp+'&rfc='+rfc+'&destino=1';
+				return true;
 			}
 		</script>
 
@@ -177,7 +200,29 @@ function asignarIDfecha(){
 				<br>
 				<h3>Consulta de Estado FOMOPE</h3>
 				<br>
-				
+
+	<!-- ponemos el botton para actualizar los documentos    -->
+			<?php
+				$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
+				$resultRols = mysqli_query($conexion, $queyRols);
+				$columnasUsuario = mysqli_fetch_assoc($resultRols);
+
+				if(($columnasUsuario['id_rol'] == "2" || $columnasUsuario['id_rol'] == "3") && ($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA") ){
+			?>
+				<div id="content" class="p-4 p-md-5 pt-5">
+				</div>
+				<form method="GET" name="docs" action=""> 
+						<div style="text-align: center">
+							<input type="button" class = "btn-flotante" onclick="refreshDocs('<?php echo $usuarioSeguir ?>', '<?php echo $rowQr[13] ?>', '<?php echo $rowQr[7] ?>')" id="refresh" name="refresh" value="ACTUALIZAR DOCUMENTOS">
+						</div>
+						<br><br>
+				</from>	
+			
+			<?php
+				}
+			?>
+	<!-- terminamos la consulta del rol para saber a quien mostrar el noton -->
+
 					<table class="table table-striped table-bordered">
 
 						<?php 
@@ -575,6 +620,8 @@ function asignarIDfecha(){
 								
 						
 </table>
+
+					
 	<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">

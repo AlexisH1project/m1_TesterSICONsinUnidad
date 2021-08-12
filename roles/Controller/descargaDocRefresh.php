@@ -8,7 +8,10 @@
 							$elCurp = $_GET['curp'];
 							$elRfc = $_GET['rfc'];
 							$usuarioSeguir = $_GET['usuario'];
-
+							$checkDestino = 0;
+							if(isset($_GET['destino'])){  // no siempre se envia este dato, es por eso que se pone isset 
+							 	$checkDestino = $_GET['destino'];
+							}
 // **************** vamos a seleccionar la qna y la fecha para asignar los mismos datos los documentos que detectemos y si son iguales solo remplazarlos y si no guardar el doc
 							
 							$queryMax = "SELECT * FROM conteo_qr WHERE curp = '$elCurp' ORDER BY id_cont DESC";
@@ -25,7 +28,9 @@
 								$sqlRol = "SELECT id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 								if ($resR = mysqli_query($conexion,$sqlRol) ){
 									$rowRol = mysqli_fetch_row($resR);
-										if($rowRol[0] == 1){
+											if($checkDestino == 1){ // si se envia de una pagina en especial la lista de documentos
+												echo "<script> alert('Volver a consultar el movimiento para verificar si ya existen los documentos correspondientes'); window.location.href = '../consultaEstado.php?usuario_rol=$usuarioSeguir'</script>";
+											}elseif($rowRol[0] == 1){
 												echo "<script> alert('Volver a consultar el movimiento para verificar si ya existen los documentos correspondientes'); window.location.href = '../LuluEventuales.php?usuario_rol=$usuarioSeguir'</script>";
 											}elseif($rowRol[0] == 2){
 												echo "<script> alert('Volver a consultar el movimiento para verificar si ya existen los documentos correspondientes'); window.location.href = '../analista.php?usuario_rol=$usuarioSeguir'</script>";
