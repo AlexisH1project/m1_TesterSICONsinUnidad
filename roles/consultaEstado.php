@@ -630,7 +630,14 @@ tbody {
 							$nombreBuscar = $_POST['nombreBus'];
 							$apellidoBuscar = $_POST['apellidoBus'];
 							$apellidomBuscar = $_POST['apellidoMb'];
-							$unidadBuscar = $_POST['unidadBus'];
+							$unidadCompleta = $_POST['unidadBus'];
+							$arrayUnidad = explode(" ", $unidadCompleta);
+							if(count($arrayUnidad) > 1){
+								$unidadBuscar = $arrayUnidad[0];
+								 
+							}else{
+								$unidadBuscar = $unidadCompleta;
+							}
 							$qnaBuscar = $_POST['qnaOption'];
 							$anioBuscar = $_POST['anioBus'];
 							$banderaFomope = 0;
