@@ -153,6 +153,16 @@
 				font-weight: bold;
 				font-size: 13px;
 			}
+			.ex2 img:hover {
+				height: 56px;
+				width: 65px;
+				margin-left: -50px;
+				/*** aquí va la sombra ***/
+				-webkit-box-shadow: 0 0 5px #999;
+				-moz-box-shadow: 0 0 5px #999;
+				-ms-box-shadow: 0 0 5px #999;
+				box-shadow: 0 0 5px #999;
+			}
 
 		</style>
 
@@ -228,7 +238,9 @@
 					<td>
 									<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
 									<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="conteoQr('<?php echo $usuarioSeguir ?>')" id="qr" >Conteo QR +</button>
-
+									<div id="ex4">
+										<a href=  <?php echo ("'./conteoQr_masivo.php?usuario_rol=$usuarioSeguir''"); ?> class = "ex2"><img src="./img/qr_conteo2.png" alt="x" height="46" width="55"/><span></span></a>
+									</div>
 							</td>
 				</div>
 			</div>

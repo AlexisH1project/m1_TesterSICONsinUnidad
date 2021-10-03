@@ -22,9 +22,11 @@
 								}
 							}
 // *****************************terminamos
-								copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$laQna."_".$fecha.".PDF");
-								showFiles($from,$elCurp,$fecha, $laQna); //enviamos la direccion y el curp
 
+							if(file_exists($from2.$elRfc.".pdf")){
+									copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$laQna."_".$fecha.".PDF");
+									showFiles($from,$elCurp,$fecha, $laQna); //enviamos la direccion y el curp
+							}
 								$sqlRol = "SELECT id_rol FROM usuarios WHERE usuario = '$usuarioSeguir'";
 								if ($resR = mysqli_query($conexion,$sqlRol) ){
 									$rowRol = mysqli_fetch_row($resR);
@@ -48,60 +50,15 @@
 			//$to = './SICON/'.$nameCarpetaOTRO[1];
 			//$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
 			$nameCarpetaOTRO= explode("\\Archivos2\\", $from);
-			$to = './DOCUMENTOS_MOV_QR/'.$nameCarpetaOTRO[1];
-			$nameCarpetaSICON= explode("./DOCUMENTOS_MOV_QR/", $to);
-			
-			$dir = opendir($from);
-			$files = array();
-			while ($current = readdir($dir)){
-				if( $current != "." && $current != "..") {
-					if(is_dir($from.$current)) {
-						showFiles($from.$current.'/', $curp, $generarID, $laQna);
-					}
-					else {
-						$files[] = $current;
-						
-					}
+			$to = './DOCUMENTOS_MOV_QR/';
+
+			$sqlCarpDocs = "SELECT * FROM ct_documentos_qr";
+			$conectar = mysqli_query($conexion, $sqlCarpDocs);
+			while($rowCarpDocs=mysqli_fetch_row($conectar)){ 
+				if(file_exists($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF")){
+					copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+					// echo "doccsssssssss::::  ".$rowCarpDocs[2];
 				}
-			}
-		
-			$iterator = new DirectoryIterator($from);
-			// $iterator2 = new DirectoryIterator($to);
-			foreach ($iterator as $fileinfo) { //----------> iniciamos a recorrer los docuementos de la carpeta del servidor donde se van a extraer
-				$docModificado = 0 ;
-				$contadorExistenDoc = 0; 
-				$existeRFC = 0;
-				if ($fileinfo->isFile()) {
-					// Arreglo con todos los nombres de los archivos
-					$nombreDocServ = explode(".",$fileinfo);
-					$curpInterator = explode("_",$nombreDocServ[0]);
-					//echo("nombre:: ". $nombreDocServ[0]);
-													//$files = array_diff(scandir($to), array('.', '..')); 
-					$totalDoc = count(glob($to.'{*.pdf,*.PDF}',GLOB_BRACE));  //---> total de documentos en la carpeta a la cual se van a pasar 
-					/*echo '<h2> COMÁRANDO: '.$nameCarpetaSICON[1].'</h2>';
-					echo '<h2> COMÁRANDO: '.$nameCarpetaOTRO[1].'</h2>';*/
-					if($nameCarpetaSICON[1] == $nameCarpetaOTRO[1]){												
-													// foreach($iterator2 as $file){
-												
-								//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si 
-										// -----> Esta comparacion es para saber si existen los documentos con las mismas caracteristicas 
-												if($curp == $curpInterator[0]) {
-														// echo "creeeeeea el docccc". "\n";
-														$bktimea = filectime($from.$fileinfo->getFilename()); // obtener tiempo unix
-														$fromV =$from.$fileinfo->getCTime(); // ----> antes de copiar , se obtiene su id de creacion 
-													// 	echo "c: ". filectime($from.$fileinfo->getFilename())."</br>".
-													// 	"a: ". fileatime($from.$fileinfo->getFilename())."</br>".	
-													// 	"m: ". filemtime($from.$fileinfo->getFilename())."</br>"
-													// ;  
-													$extencionFile = explode(".",$fileinfo);
-														// echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
-													copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1]);
-													touch($to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1], $bktimea); 
-														// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
-														// echo "DESPUES info". $bktimea2 ."</br>";
-													}
-				}// --->> IF si se encuentra en la misma capeta
-						}
-					}
-				}
+			}	
+		}
 ?>

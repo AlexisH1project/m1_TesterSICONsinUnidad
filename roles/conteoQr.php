@@ -244,6 +244,140 @@
 									//document.getElementById("rfc").value = infEmpleado[1] ;
 									
 									document.getElementById("rfc").value = infEmpleado[0].rfc ;
+									document.getElementById("nombreUser").value = infEmpleado[0].nombre ;
+									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
+									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+			// ******************************************************Autocompletar el apellido1 
+			$(document).ready(function(){
+				$(document).on('keydown', '.apellido1', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_apellido1.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_apellido1.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+// ******************************************************Autocompletar el apellido2
+$(document).ready(function(){
+				$(document).on('keydown', '.apellido2', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_apellido2.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							$.ajax({
+								url: 'resultados_apellido2.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
+								}
+							});
+							return false;
+						}
+					});
+				});
+			});
+
+	// ******************************************************Autocompletar el NOMBRE 
+	$(document).ready(function(){
+				$(document).on('keydown', '.nombre', function(){
+					var id = this.id;
+					var indice = 1;
+					$('#'+id).autocomplete({
+						source: function(request, response){
+							$.ajax({
+								url: "resultados_nombre.php",
+								type: 'post',
+								dataType: "json",
+								data: {
+									busqueda: request.term,request:1
+								},
+								success: function(data){
+									response(data);
+								}
+							});
+						},
+						select: function (event, ui){
+							$(this).val(ui.item.value);
+							var buscarid = ui.item.value;
+							console.log(buscarid);
+							$.ajax({
+								url: 'resultados_nombre.php',
+								type: 'post',
+								data: {
+									buscarid:buscarid,request:2
+								},
+								dataType: 'json',
+								success:function(response){
+									var len = response.length;
+									if(len > 0){
+										// var  = response[0]['name_p1'];
+										// var unexp = response[0]['unexp'];
+										// document.getElementById('unexp_'+indice).value = "ss";
+									}
 								}
 							});
 							return false;
@@ -330,6 +464,11 @@
 							<div class="form-group col-md-12">
 								<label class="plantilla-label" for="elRfc">*RFC:</label>
 								<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfc" name="rfc" placeholder="RFC" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13"  required>
+								<br>
+								<label class="plantilla-label" for="NAME">*NOMBRE COMPLETO:</label>
+								<input type="text"  type="text" class="form-control nombre border border-dark" placeholder="NOMBRE" name="nombreUser" id="nombreUser" required>
+								<input type="text"  type="text" class="form-control apellido1 border border-dark" placeholder="APELLIDO PATERNO" name="apellido1" id="apellido1" required>
+								<input type="text"  type="text" class="form-control apellido2 border border-dark" placeholder="APELLIDO MATERNO" name="apellido2"  id="apellido2" required>
 							</div>
 						</div>
 						<div class="col">
@@ -458,6 +597,9 @@
 							$asignadoA = $_POST['usuarioOption'];
 							$elRfc = $_POST['rfc'];
 							$laUnidad = $_POST['unexp_1'];
+							$elNombre = strtoupper($_POST['nombreUser']);
+							$elAp1 = strtoupper($_POST['apellido1']);
+							$elAp2 = strtoupper($_POST['apellido2']);
 
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
@@ -478,27 +620,68 @@
 
 							$querySelect2 = "SELECT curp, qna, anio, rfc, analistaAsignada, unidad FROM conteo_qr WHERE rfc = '$elRfc' ORDER BY id_cont DESC";
 							if($resultQry2 = mysqli_query($conexion, $querySelect2)){
-								$rowQry2 = mysqli_fetch_row($resultQry2);
+								if($rowQry2 = mysqli_fetch_row($resultQry2)){
 								// echo "<script> alert('$rowQry'); </script>";
+								
 								if($rowQry2[0] == $elCurp && $rowQry2[1] == $newQna && $rowQry2[4] == $asignadoA && $rowQry2[5] == $laUnidad){
 									echo "<script>alert('Ya existe registro con estos datos, verificar.'); </script>";
 									
 								}else {
-									$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad') ";
+									$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre') ";
 									if(mysqli_query($conexion,$sql)){
-										copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
-										// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
-										showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
-										echo("
-										<br>
-										<br>
-										<div class='col-sm-12'>
-										<div class='plantilla-inputv text-dark ''>
-										<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
-										</div>
-										</div>");
+										if(file_exists($from2.$elRfc.".pdf")){
+											copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
+											// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+											showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
+											echo("
+											<br>
+											<br>
+											<div class='col-sm-12'>
+											<div class='plantilla-inputv text-dark ''>
+											<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
+											</div>
+											</div>");
+										}else{
+											echo("
+											<br>
+											<br>
+											<div class='col-sm-12'>
+											<div class='plantilla-inputv text-dark ''>
+											<div class='card-body'><h2 align='center'>NO EXISTEN DOCUMENTOS</h2> <i>Se guardo el registro Correctamente.</i> </div>
+											</div>
+											</div>");	
+										}
 									}
 								}
+							  }else {
+								$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre') ";
+									if(mysqli_query($conexion,$sql)){
+										if(file_exists($from2.$elRfc.".pdf")){
+											copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
+											// touch($to.$extencionFile[0]."_X_".$generarID.".".$extencionFile[1], $bktimea); 
+											showFiles($from,$elCurp,$fecha,$newQna); //enviamos la direccion y el curp
+											echo("
+											<br>
+											<br>
+											<div class='col-sm-12'>
+											<div class='plantilla-inputv text-dark ''>
+											<div class='card-body'><h2 align='center'>GUARDADO CORRECTAMENTE: </h2> <i>$elCurp</i></div>
+											</div>
+											</div>");
+										}else{
+											echo("
+											<br>
+											<br>
+											<div class='col-sm-12'>
+											<div class='plantilla-inputv text-dark ''>
+											<div class='card-body'><h2 align='center'>NO EXISTEN DOCUMENTOS</h2> <i>Se guardo el registro Correctamente.</i> </div>
+											</div>
+											</div>");	
+										}
+									}
+							  }
+							}else{
+								echo "se pudo ";
 							}
 						}
 						?>
@@ -515,63 +698,17 @@
 			//$to = './SICON/'.$nameCarpetaOTRO[1];
 			//$to = './Controller/DOCUMENTOS_RES/'.$nameCarpetaOTRO[1];
 			$nameCarpetaOTRO= explode("\\Archivos2\\", $from);
-			$to = './Controller/DOCUMENTOS_MOV_QR/'.$nameCarpetaOTRO[1];
-			$nameCarpetaSICON= explode("./Controller/DOCUMENTOS_MOV_QR/", $to);
+			$to = './Controller/DOCUMENTOS_MOV_QR/';
 
-
-			$dir = opendir($from);
-			$files = array();
-			while ($current = readdir($dir)){
-				if( $current != "." && $current != "..") {
-					if(is_dir($from.$current)) {
-						showFiles($from.$current.'/', $curp, $generarID, $laQna);
-					}
-					else {
-						$files[] = $current;
-						
-					}
+			$sqlCarpDocs = "SELECT * FROM ct_documentos_qr";
+			$conectar = mysqli_query($conexion, $sqlCarpDocs);
+			while($rowCarpDocs=mysqli_fetch_row($conectar)){ 
+				if(file_exists($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF")){
+					copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+					// echo "doccsssssssss::::  ".$rowCarpDocs[2];
 				}
 			}
-		
-			$iterator = new DirectoryIterator($from);
-			// $iterator2 = new DirectoryIterator($to);
-			foreach ($iterator as $fileinfo) { //----------> iniciamos a recorrer los docuementos de la carpeta del servidor donde se van a extraer
-				$docModificado = 0 ;
-				$contadorExistenDoc = 0; 
-				$existeRFC = 0;
-				if ($fileinfo->isFile()) {
-					// Arreglo con todos los nombres de los archivos
-					$nombreDocServ = explode(".",$fileinfo);
-					$curpInterator = explode("_",$nombreDocServ[0]);
-					//echo("nombre:: ". $nombreDocServ[0]);
-													//$files = array_diff(scandir($to), array('.', '..')); 
-					$totalDoc = count(glob($to.'{*.pdf,*.PDF}',GLOB_BRACE));  //---> total de documentos en la carpeta a la cual se van a pasar 
-					/*echo '<h2> COMÁRANDO: '.$nameCarpetaSICON[1].'</h2>';
-					echo '<h2> COMÁRANDO: '.$nameCarpetaOTRO[1].'</h2>';*/
-					if($nameCarpetaSICON[1] == $nameCarpetaOTRO[1]){												
-													// foreach($iterator2 as $file){
-												
-								//--->  iniciamos a detectar como se encuentra la estrucutra del nombre del documento para poder saber si 
-										// -----> Esta comparacion es para saber si existen los documentos con las mismas caracteristicas 
-													if($curp == $curpInterator[0]) {
-														// echo "creeeeeea el docccc". "\n";
-														$bktimea = filectime($from.$fileinfo->getFilename()); // obtener tiempo unix
-														$fromV =$from.$fileinfo->getCTime(); // ----> antes de copiar , se obtiene su id de creacion 
-													// 	echo "c: ". filectime($from.$fileinfo->getFilename())."</br>".
-													// 	"a: ". fileatime($from.$fileinfo->getFilename())."</br>".	
-													// 	"m: ". filemtime($from.$fileinfo->getFilename())."</br>"
-													// ;  
-													$extencionFile = explode(".",$fileinfo);
-														// echo "ANTES OBTENEMOS info". $bktimea ." ". $fromV . $to.$fileinfo->getFilename()."</br>";
-													copy($from.$fileinfo->getFilename() , $to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1]);
-													touch($to.$extencionFile[0]."_".$laQna."_".$generarID.".".$extencionFile[1], $bktimea); 
-														// $bktimea2 = filectime($to.$file->getFilename()); // obtener tiempo unix
-														// echo "DESPUES info". $bktimea2 ."</br>";
-													}
-				}// --->> IF si se encuentra en la misma capeta
-						}
-					}
-				}
+		}
 ?>
 
 		

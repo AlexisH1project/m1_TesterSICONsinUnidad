@@ -100,8 +100,8 @@
 
 			function enviarRutaDoc(nombre){
 				var ruta = nombre;
-				let extencion = ruta.split('.');
-				ext =  extencion[2];
+				let extencion = ruta.split('_.');
+				ext =  extencion[1];
 				if(ext == "PDF" || ext == "pdf"){
 					$('#modalPDF').modal('show');
 					$('#idframePDF').attr('src',nombre);
