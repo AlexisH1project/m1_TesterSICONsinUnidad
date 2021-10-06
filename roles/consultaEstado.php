@@ -836,16 +836,20 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE (nombre LIKE '%$nombreBuscar%')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (nombre LIKE '%$nombreBuscar%')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE (nombre LIKE '%$nombreBuscar%')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE (nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar')";
 								$sql2 = "SELECT * FROM fomope_qr WHERE rfc = '--'";
+								$sql3="SELECT * FROM conteo_qr  WHERE ( nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE ( nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
 
 								$sql = "SELECT * FROM fomope WHERE (nombre='$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad LIKE '%$unidadBuscar%')";
@@ -854,12 +858,14 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE (apellido_1 LIKE '%$apellidoBuscar%')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (apellido_p LIKE '%$apellidoBuscar%')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE (apellido_p LIKE '%$apellidoBuscar%')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								$sql2 = "SELECT * FROM fomope_qr WHERE rfc = '--'";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE (apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
 
 								$sql = "SELECT * FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar' AND unidad LIKE '%$unidadBuscar%')";
@@ -884,7 +890,8 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE (apellido_2 LIKE '%$apellidomBuscar%')";
 								$sql2 = "SELECT * FROM fomope_qr WHERE rfc = '--'";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE (apellido_m LIKE '%$apellidomBuscar%')";
+								$banderaFomope = 1;
 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar != ""  &&  $qnaBuscar == ""){
 
 								$sql = "SELECT * FROM fomope WHERE (apellido_2='$apellidomBuscar' AND unidad LIKE '%$unidadBuscar%')";
@@ -899,7 +906,8 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE ( nombre = '$nombreBuscar' AND apellido_m='$apellidomBuscar')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE ( nombre = '$nombreBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar == "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar != "") {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_2='$apellidomBuscar' AND quincenaAplicada='$qnaBuscar')";
@@ -924,12 +932,14 @@ tbody {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE ( nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE ( nombre = '$nombreBuscar' AND apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar == "" && $unidadBuscar != ""  &&  $qnaBuscar == "") {
 								
 								$sql = "SELECT * FROM fomope WHERE ( nombre = '$nombreBuscar' AND apellido_1='$apellidoBuscar' AND unidad LIKE '%$unidadBuscar%')";
@@ -967,10 +977,10 @@ tbody {
 
 	 						}elseif ($rfcBuscar == "" && $nombreBuscar != "" && $apellidoBuscar != "" && $apellidomBuscar != "" && $unidadBuscar == ""  &&  $qnaBuscar == "") {
 								
-								$sql = "SELECT * FROM fomope WHERE ( 
-								apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
+								$sql = "SELECT * FROM fomope WHERE (apellido_1='$apellidoBuscar' AND apellido_2='$apellidomBuscar')";
 								$sql2="SELECT id_movimiento_qr,tipoRegistro,unidad,rfc,usuario_modifico,qna,fini,tipo_movimiento, fechaAutorizacion,llave,Frecepcion, Fen_firma, Ffirmado, Fentrega_ur,envio_personal,archivo,FO ,color_estado, estatus, nombre, apellido_p, apellido_m, anio FROM fomope_qr WHERE (apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
-								
+								$sql3="SELECT * FROM conteo_qr  WHERE (apellido_p='$apellidoBuscar' AND apellido_m='$apellidomBuscar')";
+								$banderaFomope = 1;
 							}elseif($rfcBuscar == "" && $nombreBuscar == "" && $apellidoBuscar == "" && $apellidomBuscar == "" && $unidadBuscar == ""  &&  $qnaBuscar != ""){
 
 								$sql = "SELECT * FROM fomope WHERE ( quincenaAplicada='$qnaBuscar')";
@@ -1207,9 +1217,10 @@ tbody {
 							<td>ID Fomope</td> -->
 							
 							<th scope="titulo" style="display: none;" class="sticky"></th>
-							 <th scope="titulo" style="text-align: center" style="width: 400px" class="sticky">RFC</th>
-						      <th scope="titulo" style="text-align: center"   style="text-align: center" class="sticky">CURP</th>
-						      <th scope="titulo"  style="text-align: center" class="sticky">QNA</th>
+							<th scope="titulo" style="text-align: center" style="width: 400px" class="sticky">RFC</th>
+						    <th scope="titulo" style="text-align: center"   style="text-align: center" class="sticky">CURP</th>
+						    <th scope="titulo"  style="text-align: center" class="sticky">QNA</th>
+						    <th scope="titulo"  style="text-align: center" class="sticky">NOMBRE</th>
 						   </tr>
 						</thead>
 				 <tbody>
@@ -1241,6 +1252,7 @@ tbody {
 							<td><?php echo $ver3[7] ?></td>
 							<td><?php echo $ver3[1] ?></td>
 							<td><?php echo $ver3[5] ?></td>
+							<td><?php echo $ver3[12]." ".$ver3[10]." ".$ver3[11] ?></td>
 							
 							<td><?php
 							$fecha = str_replace ( "-", '',$ver3[2] ); 
