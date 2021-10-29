@@ -207,7 +207,7 @@ function asignarIDfecha(){
 				$resultRols = mysqli_query($conexion, $queyRols);
 				$columnasUsuario = mysqli_fetch_assoc($resultRols);
 
-				if(($columnasUsuario['id_rol'] == "2" || $columnasUsuario['id_rol'] == "3") && ($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA") ){
+				if(($columnasUsuario['id_rol'] == "2" || $columnasUsuario['id_rol'] == "3" || $columnasUsuario['id_rol'] == "4") && ($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA") ){
 			?>
 				<div id="content" class="p-4 p-md-5 pt-5">
 				</div>
