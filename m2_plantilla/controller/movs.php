@@ -332,12 +332,10 @@ tbody {
 						      <th scope="titulo" class="sticky">Unidad</th>
 						      <th scope="titulo" class="sticky">RFC</th>
 						      <th scope="titulo" class="sticky">QNA</th>
-						      <th scope="titulo" class="sticky">Fecha de Inicio</th>
+						      <th scope="titulo" class="sticky">Fecha de Captura</th>
 						      <th scope="titulo" class="sticky">Estatus</th>
 						      <th scope="titulo" class="sticky">Mov</th>
-						      <th scope="titulo" class="sticky">Codigo Puesto</th>
-						      <th scope="titulo" class="sticky">Codigo Federal</th>
-						      <th scope="titulo" class="sticky">Fecha de Captura</th>
+						      <th scope="titulo" class="sticky">Usuario</th>
 
 						   </tr>
 					 	 </thead>
@@ -347,22 +345,21 @@ tbody {
                 <?php
               
 
-                $sqlReg="SELECT * FROM plazas_ctrlp_m2 ORDER BY id_plaza DESC LIMIT 0, 50";
+                $sqlReg="SELECT * FROM movimientos_m2 ORDER BY id_mov_plaza DESC LIMIT 0, 50";
                 if ($result2 = mysqli_query($conexion,$sqlReg)){ 
                 	while($ver2=mysqli_fetch_row($result2)){ 
 ?>
                 		<tr>
 							
-							<td><?php echo $ver2[1] ?></td>
+							<td><?php echo $ver2[5] ?></td>
+							<td><?php echo $ver2[6] ?></td>
+							<td><?php echo $ver2[19] ?></td>
+							<td><?php echo $ver2[26] ?></td>
+							<td><?php echo $ver2[25] ?></td>
 							<td><?php echo $ver2[2] ?></td>
-							<td><?php echo $ver2[23] ?></td>
-							<td><?php echo $ver2[32] ?></td>
-							<td><?php echo $ver2[7] ?></td>
-							<td><?php echo $ver2[28] ?></td>
-							<td><?php echo $ver2[29] ?></td>
-							<td><?php echo $ver2[9] ?></td>
-							<td><?php echo $ver2[7] ?></td>
-							<td><?php echo $ver2[31] ?></td>
+							<td><?php echo $ver2[1] ?></td>
+							<td><?php echo $ver2[4] ?></td>
+							<td><?php echo $ver2[14] ?></td>
 
 							<td>
 								<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver2[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>

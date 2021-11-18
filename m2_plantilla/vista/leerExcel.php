@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<title>Consulta</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -106,228 +106,69 @@ tbody {
 				});
 			});
 
-
-
 		</script>
-
-
-
 	</head>
 	<body onload="nobackbutton();" >
 		<?php
-
-
-
-		        require_once "../controller/librerias/conexion_excel.php";
+       
 				include "../controller/librerias/configuracion.php";
-				include_once "../controller/librerias/Classes/PHPExcel/IOFactory.php";
-
-
+				set_time_limit(1500);		
 				$usuarioSeguir =  $_GET['usuario_rol'];
 
-
-
-				function leerPlantillaBD(){
-
-							$fileType = 'Excel5';
-							$archivo = '../controller/documentos/ARCHIVO_PLANTILLA.xls';
-
-							// Read the file
-							$inputFileType = PHPExcel_IOFactory::identify($archivo);
-							$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-
-						   $fila = 8;
-						   $estiloTituloColumnas = array(
-					    	'font' => array(
-								'name'  => 'Calibri',
-								'size' =>8,
-								'color' => array(
-									'rgb' => '000000'
-								)
-					    	),
-					    	'borders' => array(
-								'allborders' => array(
-									'style' => PHPExcel_Style_Border::BORDER_THIN
-								)
-					    	),
-					    	'alignment' =>  array(
-								'horizontal'=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-								'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
-					    	)
-						);
-							$estiloInformacion = new PHPExcel_Style();
-
-								$estiloInformacion->applyFromArray( array(
-							    	'font' => array(
-										'name'  => 'Calibri',
-										'size' =>11,
-										'color' => array(
-											'rgb' => '000000'
-										)
-							    	),
-							    	'fill' => array(
-										'type'  => PHPExcel_Style_Fill::FILL_SOLID
-									),
-							    	'borders' => array(
-										'allborders' => array(
-											'style' => PHPExcel_Style_Border::BORDER_THIN
-										)
-							    	),
-									'alignment' =>  array(
-										'horizontal'=> PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
-										'vertical'  => PHPExcel_Style_Alignment::VERTICAL_CENTER
-							    	)
-								));
-
-								$objPHPExcel = $objReader->load($archivo);
-								$sheet = $objPHPExcel->getSheet(0); 
-								$highestRow = $sheet->getHighestRow(); 
-								$highestColumn = $sheet->getHighestColumn();
-
-								//echo $highestRow . "\n";
-								//echo $highestColumn . "\n";
-
-
-								for ($row = 2; $row <= $highestRow; $row++){ 
-
-										if($sheet->getCell("A".$row)->getValue() == ""){
-											if($row == $highestRow){
-												break;
-											}
-											$row++;
-										}
-
-										$elRamo = $sheet->getCell("A".$row)->getValue();
-										$laUr = $sheet->getCell("B".$row)->getValue();
-										$elGP = $sheet->getCell("C".$row)->getValue();
-										$elGR = $sheet->getCell("D".$row)->getValue();
-										$laZE = $sheet->getCell("E".$row)->getValue();
-										$elNivel = $sheet->getCell("F".$row)->getValue();
-										$elCPuesto = $sheet->getCell("G".$row)->getValue();
-										$elRS = $sheet->getCell("H".$row)->getValue();
-										$elCFP = $sheet->getCell("I".$row)->getValue(); //**************
-										$elRSS = $sheet->getCell("J".$row)->getValue();
-										$laCS = $sheet->getCell("K".$row)->getValue();
-										$elTPlaza = $sheet->getCell("L".$row)->getValue();
-										$elTPersonal = $sheet->getCell("M".$row)->getValue();
-										$elTN = $sheet->getCell("N".$row)->getValue();
-										$elGJP = $sheet->getCell("O".$row)->getValue();
-										$elAP = $sheet->getCell("P".$row)->getValue();
-										$laFIV = $sheet->getCell("Q".$row)->getValue();
-										$laFFV = $sheet->getCell("R".$row)->getValue();
-										$elNPlazas = $sheet->getCell("S".$row)->getValue();
-										$elNHoras = $sheet->getCell("T".$row)->getValue();
-										$elITabulador = $sheet->getCell("U".$row)->getValue();
-										$elSTabulador = $sheet->getCell("V".$row)->getValue();
-										$elRFC = $sheet->getCell("W".$row)->getValue();
-										$nombreComp = $sheet->getCell("X".$row)->getValue();
-										$laObservacion = $sheet->getCell("Y".$row)->getValue();
-										$elEstatus = $sheet->getCell("Z".$row)->getValue();
-
-										echo "\n";
-
-
-								}
-						}
-
 			    function cargarPlantillaBD(){
+
+
 			    	include "../controller/librerias/configuracion.php";
 
 			    	$usuarioSeguir =  $_GET['usuario_rol'];
-			    	$fileType = 'Excel5';
-					$nombreArchivo = '../controller/documentos/ARCHIVO_PLANTILLA.xls';
+					$nombreArchivo = '../controller/documentos/ARCHIVO_PLANTILLA.csv';
                     $dupdata;
-			    	$objPHPExcel2 = PHPExcel_IOFactory::load($nombreArchivo);
                     $dupdata[0]=0;
-			    	$objPHPExcel2->setActiveSheetIndex(0);
 
-			    	$numRows = $objPHPExcel2->setActiveSheetIndex(0)->getHighestRow();
+					$docMov = fopen ($nombreArchivo , "r" );//leo el archivo que contiene los datos del producto
+					while (($datos =fgetcsv($docMov,1000,",")) !== FALSE )//Leo linea por linea del archivo hasta un maximo de 1000 caracteres por linea leida usando coma(,) como delimitador
+					{
+					 $linea[]=array( //Arreglo Bidimensional para guardar los datos de cada linea leida del archivo
+						'ramo' => $datos[0],
+						'unidadResponsable' => $datos[1],
+						'grupoPersonal' => $datos[2],
+						'gfuncionalResposabilidad' => $datos[3],
+						'zonaEconomica' => $datos[4],
+						'nivel' => $datos[5],
+						'codigoPuesto' => $datos[6],
+						'rangoSalarial' => $datos[7],
+						'codigoFederalPuestos' => $datos[8],
+						'regimenDeSeguridadSocial' => $datos[9],
+						'curvaSalarial' => $datos[10],
+						'tipoPlaza' => $datos[11],
+						'tipoPersonal' => $datos[12],
+						'tipoNombramiento' => $datos[13],
+						'grupoJerarquicoDePersonal' => $datos[14],
+						'argumentoDePuestos' => $datos[15],
+						'fechaInicioVigencia' => $datos[16],
+						'fechaFinalVigencia' => $datos[17],
+						'numDePlazas' => $datos[18],
+						'numDeHoras' => $datos[19],
+						'indiceTabulador' => $datos[20],
+						'subIndiceTabulador' => $datos[21],
+						'rfc' => $datos[22],
+						'nombreC' => $datos[23],
+						'clavePresupuestal' => $datos[24],
+						'observacionesExtras' => $datos[25],
+						'cfpAsignado' => $datos[26],
+						'comprobanteExistencia_cfp' => $datos[27],
+						'estatus' => $datos[28],
+						'tipoMovimiento' => $datos[29]);
+					}
 
-			    	?>
-<center>
-                     <div class="table-responsive">
-		             <table id="<?php if($rowUser['id_rol'] == 1){echo "data_table";} ?>" class="table table-striped table-bordered" style="margin-bottom: 0;  font-size:70%;" >	
-						<thead>
-						    <tr>
-						       <th scope="titulo" style="text-align: center" class="sticky">Unidad</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Nivel</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Código de Puesto</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Código Federal de Puesto</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Estatus</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Quincena Aplicada</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Ramo</th>
-						       <th scope="titulo" style="text-align: center" class="sticky">Rango Salarial</th>
-						   </tr>
-						</thead>
-				 <tbody>
+					fclose ($docMov);//Cierra el archivo
+					 
+						$ingresado=0;//Variable que almacenara los insert exitosos
+						$error=0;//Variable que almacenara los errores en almacenamiento
+						$duplicado=0;//Variable que almacenara los registros duplicados
 
 
-
-
-			    	<?php
-
-			    	//echo '<table border=1>';
-
-			    	for ($i=2; $i<= $numRows; $i++){
-
-			    		$ramoT= $objPHPExcel2->getActiveSheet()->getCell('A'.$i)->getCalculatedValue();
-			    		$urT= $objPHPExcel2->getActiveSheet()->getCell('B'.$i)->getCalculatedValue();
-			    		$gpT= $objPHPExcel2->getActiveSheet()->getCell('C'.$i)->getCalculatedValue();
-			    		$gfrT= $objPHPExcel2->getActiveSheet()->getCell('D'.$i)->getCalculatedValue();
-			    		$zeT= $objPHPExcel2->getActiveSheet()->getCell('E'.$i)->getCalculatedValue();
-			    		$nivelT= $objPHPExcel2->getActiveSheet()->getCell('F'.$i)->getCalculatedValue();
-			    		$codigoT= $objPHPExcel2->getActiveSheet()->getCell('G'.$i)->getCalculatedValue();
-			    		$rsT= $objPHPExcel2->getActiveSheet()->getCell('H'.$i)->getCalculatedValue();
-			    		$codFedPueT= $objPHPExcel2->getActiveSheet()->getCell('I'.$i)->getCalculatedValue();
-			    		$rssT= $objPHPExcel2->getActiveSheet()->getCell('J'.$i)->getCalculatedValue();
-			    		$csT= $objPHPExcel2->getActiveSheet()->getCell('K'.$i)->getCalculatedValue();
-			    		$tpzsT= $objPHPExcel2->getActiveSheet()->getCell('L'.$i)->getCalculatedValue();
-			    		$tpT= $objPHPExcel2->getActiveSheet()->getCell('M'.$i)->getCalculatedValue();
-			    		$tnT= $objPHPExcel2->getActiveSheet()->getCell('N'.$i)->getCalculatedValue();
-			    		$gjpT= $objPHPExcel2->getActiveSheet()->getCell('O'.$i)->getCalculatedValue();
-			    		$apT= $objPHPExcel2->getActiveSheet()->getCell('P'.$i)->getCalculatedValue();
-			    		$fivT= $objPHPExcel2->getActiveSheet()->getCell('Q'.$i)->getCalculatedValue();
-			    		$ffvT= $objPHPExcel2->getActiveSheet()->getCell('R'.$i)->getCalculatedValue();
-			    		$pzsT= $objPHPExcel2->getActiveSheet()->getCell('S'.$i)->getCalculatedValue();
-			    		$nhT= $objPHPExcel2->getActiveSheet()->getCell('T'.$i)->getCalculatedValue();
-			    		$itT= $objPHPExcel2->getActiveSheet()->getCell('U'.$i)->getCalculatedValue();
-			    		$stT= $objPHPExcel2->getActiveSheet()->getCell('V'.$i)->getCalculatedValue();
-			    		$rfcT= $objPHPExcel2->getActiveSheet()->getCell('W'.$i)->getCalculatedValue();
-			    		$nombreT= $objPHPExcel2->getActiveSheet()->getCell('X'.$i)->getCalculatedValue();
-			    		$observacionesT= $objPHPExcel2->getActiveSheet()->getCell('Y'.$i)->getCalculatedValue();
-			    		$estatusT= $objPHPExcel2->getActiveSheet()->getCell('Z'.$i)->getCalculatedValue();
-                      /*
-				    	echo '<tr>';
-				    	echo '<td>'.$ramoT.'</td>';
-				    	echo '<td>'.$urT.'</td>';
-				    	echo '<td>'.$gpT.'</td>';
-				    	echo '<td>'.$gfrT.'</td>';
-				    	echo '<td>'.$zeT.'</td>';
-				    	echo '<td>'.$nivelT.'</td>';
-				    	echo '<td>'.$codigoT.'</td>';
-				    	echo '<td>'.$rsT.'</td>';
-				    	echo '<td>'.$codFedPueT.'</td>';
-				    	echo '<td>'.$rssT.'</td>';
-				    	echo '<td>'.$csT.'</td>';
-				    	echo '<td>'.$tpzsT.'</td>';
-				    	echo '<td>'.$tpT.'</td>';
-				    	echo '<td>'.$tnT.'</td>';
-				        echo '<td>'.$gjpT.'</td>';
-				        echo '<td>'.$apT.'</td>';
-				        echo '<td>'.$fivT.'</td>';
-				        echo '<td>'.$ffvT.'</td>';
-				        echo '<td>'.$pzsT.'</td>';
-				        echo '<td>'.$nhT.'</td>';
-				        echo '<td>'.$itT.'</td>';
-				        echo '<td>'.$stT.'</td>';
-				        echo '<td>'.$rfcT.'</td>';
-				        echo '<td>'.$nombreT.'</td>';
-				        echo '<td>'.$observacionesT.'</td>';
-				        echo '<td>'.$estatusT.'</td>';
-				    	echo '</tr>';
-                        */
-
-                   //----------------Sacamos la Fecha 
+					    //----------------Sacamos la Fecha 
 						$hoy = "select CURDATE()";
 						$tiempo ="select curTime()";
 						if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
@@ -348,111 +189,89 @@ tbody {
 								
 							}
 						}
+                  
 
+						foreach($linea as $indice=>$value) //Iteracion el array para extraer cada uno de los valores almacenados en cada items
+						{
+							$ramo = $value["ramo"];
+							$unidadResponsable = $value["unidadResponsable"];
+							$grupoPersonal = $value["grupoPersonal"];
+							$gfuncionalResposabilidad = $value["gfuncionalResposabilidad"];
+							$zonaEconomica = $value["zonaEconomica"];
+							$nivel = $value["nivel"];
+							$codigoPuesto = $value["codigoPuesto"];
+							$rangoSalarial = $value["rangoSalarial"];
+							$codigoFederalPuestos = $value["codigoFederalPuestos"];
+							$regimenDeSeguridadSocial = $value["regimenDeSeguridadSocial"];
+							$curvaSalarial = $value["curvaSalarial"];
+							$tipoPlaza = $value["tipoPlaza"];
+							$tipoPersonal = $value["tipoPersonal"];
+							$tipoNombramiento = $value["tipoNombramiento"];
+							$grupoJerarquicoDePersonal = $value["grupoJerarquicoDePersonal"];
+							$argumentoDePuestos = $value["argumentoDePuestos"];
+							$fechaInicioVigencia = $value["fechaInicioVigencia"];
+							$fechaFinalVigencia = $value["fechaFinalVigencia"];
+							$numDePlazas = $value["numDePlazas"];
+							$numDeHoras = $value["numDeHoras"];
+							$indiceTabulador = $value["indiceTabulador"];
+							$subIndiceTabulador = $value["subIndiceTabulador"];
+							$rfcT = $value["rfc"];
+							$nombreT = $value["nombreC"];
+							$clavePresupuestal = $value["clavePresupuestal"];
+							$observacionesExtras = $value["observacionesExtras"];
+							$cfpAsignado = $value["cfpAsignado"];
+							$comprobanteExistencia_cfp = $value["comprobanteExistencia_cfp"];
+							$estatus = $value["estatus"];
+							$tipoMovimiento = $value["tipoMovimiento"];
 
-                  //-----Tomamos el nombre que se extrae completo y lo partimos en apellidos y nombres
-                        $posdiag = strpos($nombreT,"/");
-                        $poscoma = strpos($nombreT,",");
-                        $nombreTam = strlen($nombreT);
-
-                        $apelli_1 = substr($nombreT, 0, $poscoma);
-                        $apelli_2 = substr($nombreT, $poscoma+1, -($nombreTam-$posdiag));
-                        $nombreS = substr($nombreT, $posdiag+1, $nombreTam);
-                        //-----------------------------------
-
-                  //----Si el RFC no existe en la tabla ct_empleados creamos un registro nuevo
-
-                        $sqlDup = "SELECT rfc FROM ct_empleados WHERE rfc = '$rfcT'";
-				    	$empDup = mysqli_query($conexion, $sqlDup);
-				    	$valDup = mysqli_fetch_row($empDup);
-				    	$empleadoReg = $valDup[0];
-
-				    	if($empleadoReg != $rfcT) {
-
-				    	  $sqlEmpleado = "INSERT INTO ct_empleados (rfc, apellido_1, apellido_2, nombre) VALUE ('$rfcT','$apelli_1','$apelli_2','$nombreS')";
-
-				    	$sqlInsertarEmpleado = mysqli_query($conexion, $sqlEmpleado);
-
-
-				    	}
-
-				  //--Se extrae el RFC de la base de datos 
-				    	$queryDup = "SELECT rfc FROM plazas_ctrlp_m2 WHERE rfc = '$rfcT' AND ramo = '$ramoT' AND unidadResponsable = '$urT' AND grupoPersonal = '$gpT' AND zonaEconomica = '$zeT' AND nivel= '$nivelT' AND codigoPuesto = '$codigoT' AND rangoSalarial = '$rsT' AND codigoFederalPuestos = '$codFedPueT' AND regimenDeSeguridadSocial = '$rssT' AND curvaSalarial = '$csT' AND tipoPlaza = '$tpzsT' AND tipoPersonal = '$tpT' AND tipoNombramiento = '$tnT' AND grupoJerarquicoDePersonal = '$gjpT' AND argumentoDePuestos = '$apT' AND numDePlazas = '$pzsT' AND numDeHoras = '$nhT' AND indiceTabulador = '$itT' AND subIndiceTabulador = '$stT' AND usuarioEdicion = '$usuarioSeguir'";
-				    	$rfcDup = mysqli_query($conexion, $queryDup);
-				    	$resDup = mysqli_fetch_row($rfcDup);
-				    	$rfcDuplicado = $resDup[0];
-
-				   //--Se extrae el ID del RFC de la base de datos
-                    /*
-				    	$id_Dup = "SELECT id_plaza FROM plazas_ctrlp_m2 WHERE rfc = '$rfcT'";
-				    	$rfc_idDup = mysqli_query($conexion, $id_Dup);
-				    	$res_idDup = mysqli_fetch_row($rfc_idDup);
-				    	$id_rfcDuplicado = $res_idDup[0];
-				    	*/
-
-
-
-
-				    	if ($rfcDuplicado != $rfcT ){
+						$sql=mysqli_query($conexion,"SELECT * FROM plazas_ctrlp_m2 WHERE codigoFederalPuestos = '$codigoFederalPuestos' AND rfc = '$rfcT'");//Consulta a la tabla productos
+						$num=mysqli_num_rows($sql);//Cuenta el numero de registros devueltos por la consulta
+						if ($num==0)//Si es == 0 inserto
+						{
+							//-----Tomamos el nombre que se extrae completo y lo partimos en apellidos y nombres
+							$posdiag = strpos($nombreT,"/");
+							$poscoma = strpos($nombreT,",");
+							$nombreTam = strlen($nombreT);
 	
-				    	$queryExcel= "INSERT INTO plazas_ctrlp_m2 (ramo, unidadResponsable, grupoPersonal, gfuncionalResposabilidad, zonaEconomica, nivel, codigoPuesto, rangoSalarial, codigoFederalPuestos, regimenDeSeguridadSocial, curvaSalarial, tipoPlaza, tipoPersonal, tipoNombramiento, grupoJerarquicoDePersonal, argumentoDePuestos, fechaInicioVigencia, fechaFinalVigencia, numDePlazas, numDeHoras, indiceTabulador, subIndiceTabulador, rfc, observacionesExtras, estatus, usuarioEdicion, fechaCaptura, quincenaAplicada, anio) VALUE ('$ramoT', '$urT', '$gpT', '$gfrT', '$zeT', '$nivelT', '$codigoT','$rsT','$codFedPueT','$rssT','$csT','$tpzsT','$tpT','$tnT', '$gjpT','$apT','$fivT','$ffvT','$pzsT','$nhT','$itT','$stT','$rfcT','$observacionesT','$estatusT', '$usuarioSeguir', '$fecha', '$qnaAplicada', '$anio')";
+							$apelli_1 = substr($nombreT, 0, $poscoma);
+							$apelli_2 = substr($nombreT, $poscoma+1, -($nombreTam-$posdiag));
+							$nombreS = substr($nombreT, $posdiag+1, $nombreTam);
+							//-----------------------------------
+							  //----Si el RFC no existe en la tabla ct_empleados creamos un registro nuevo
+							$sqlDup = "SELECT rfc FROM ct_empleados WHERE rfc = '$rfcT'";
+							$empDup = mysqli_query($conexion, $sqlDup);
+							$numEmp = mysqli_num_rows($empDup);
+							if($numEmp == 0 AND $empDup = mysqli_query($conexion, $sqlDup)){
+								$valDup = mysqli_fetch_row($empDup);
+								$empleadoReg = $valDup[0];
+								$sqlEmpleado = "INSERT INTO ct_empleados (rfc, apellido_1, apellido_2, nombre) VALUE ('$rfcT','$apelli_1','$apelli_2','$nombreS')";
+								$sqlInsertarEmpleado = mysqli_query($conexion, $sqlEmpleado);
+							}
+							if ($insert=mysqli_query($conexion,"INSERT INTO plazas_ctrlp_m2 (ramo, unidadResponsable, grupoPersonal, gfuncionalResposabilidad, zonaEconomica, nivel, codigoPuesto, rangoSalarial, codigoFederalPuestos, regimenDeSeguridadSocial, curvaSalarial, tipoPlaza, tipoPersonal, tipoNombramiento, grupoJerarquicoDePersonal, argumentoDePuestos, fechaInicioVigencia, fechaFinalVigencia, numDePlazas, numDeHoras, indiceTabulador, subIndiceTabulador, rfc, clavePresupuestal, observacionesExtras, cfpAsignado, comprobanteExistencia_cfp, estatus, tipoMovimiento, usuarioEdicion, fechaCaptura, quincenaAplicada, anio, color_accion) VALUES ('$ramo', '$unidadResponsable', '$grupoPersonal', '$gfuncionalResposabilidad', '$zonaEconomica', '$nivel', '$codigoPuesto', '$rangoSalarial', '$codigoFederalPuestos', '$regimenDeSeguridadSocial', '$curvaSalarial', '$tipoPlaza', '$tipoPersonal', '$tipoNombramiento', '$grupoJerarquicoDePersonal', '$argumentoDePuestos', '$fechaInicioVigencia', '$fechaFinalVigencia', '$numDePlazas', '$numDeHoras', '$indiceTabulador', '$subIndiceTabulador', '$rfcT', '$clavePresupuestal', '$observacionesExtras', '$cfpAsignado', '$comprobanteExistencia_cfp', '$estatus', '$tipoMovimiento' ,'$usuarioSeguir', '$fechaSistema', '$qnaAplicada', '$anio', 'blanco')"))
+							{
+								echo $msj='<font color=green>Producto <b>'.$codigoFederalPuestos.'</b> Guardado</font><br/>';
+								$ingresado+=1;
+							}//fin del if que comprueba que se guarden los datos
+							else//sino ingresa el producto
+							{
+								echo $msj='<font color=red>Producto <b>'.$codigoFederalPuestos.' </b> NO Guardado </font><br/>';
+								$error+=1;
+							}
+						}//fin de if que comprueba que no haya en registro duplicado
+						else
+						{
+							$duplicado+=1;
+							echo $duplicate='<font color=red>El Producto codigo <b>'.$codigoFederalPuestos.'</b> Esta duplicado<br></font>';
+						}
+					}
 
-				    	if($querylast = mysqli_query($conexion, $queryExcel)){
+						echo "<font color=green>".number_format($ingresado,2)." Productos Almacenados con exito<br/>";
+						echo "<font color=red>".number_format($duplicado,2)." Productos Duplicados<br/>";
+						echo "<font color=red>".number_format($error,2)." Errores de almacenamiento<br/>";
 
-				    		   ?>
-
-                        <tr>
-                            <td><?php echo $urT ?></td>
-							<td><?php echo $nivelT ?></td>
-							<td><?php echo $codigoT ?></td>
-							<td><?php echo $codFedPueT ?></td>
-							<td><?php echo $estatusT ?></td>
-							<td><?php echo $qnaAplicada ?></td>
-							<td><?php echo $ramoT ?></td>
-							<td><?php echo $rsT ?></td>
-                        </tr>
-
-                        <?php
-
-				    	}
-				    	
-
-
-
-				    }else{
-			            
-				    	$dupdata[$i-2] = $i;
-				    	//echo $dupdata[$i-2];
-				    }
-
-
-
-				   
-			        }
-  			        //echo '</table>';
-
-  			        ?>
-  			        </tbody>
-		</table>
-	</div>
-	</center>
-<?php
-
-                        if(count($dupdata)> 1){
-                        $arrayDupdata = implode(",", $dupdata);
-                        echo "<script type='text/javascript'>alert('La(s) fila(s) $arrayDupdata del archivo Excel ya habia(n) sido registrada(s).');</script>";
-  			        	//echo "<script> alert('La(s) fila(s) $arrayDupdata del archivo Excel ya habia(n) sido registrada(s).'); ";
-  			        }
-
-
-
-
-			        }
-		?>
-
-			<br>
-		  <a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
-	
+				}
+			    	?>
+		<a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
 
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
@@ -466,8 +285,7 @@ tbody {
 		      </div>
 		    </div>
 		  </nav>		
-		  <br>
-		<center>			
+		  <br>	
 
 		<center>	
 
@@ -507,7 +325,7 @@ tbody {
 											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
 												$termino = 1;
 												sleep(3);
-												$concatenarNombreC = $dir_subida.strtoupper("archivo_Plantilla.".$extencion3);
+												$concatenarNombreC = $dir_subida.strtoupper("ARCHIVO_PLANTILLA.".$extencion3);
 												error_reporting(0);
 												rename ($fichero_subido,$concatenarNombreC);
 												error_reporting(-1);
@@ -516,23 +334,12 @@ tbody {
 											}	
 											
 											if($termino == 1){
-												leerPlantillaBD();
 												cargarPlantillaBD();
 											}
 							}
 
-						?>	
-
-
-					</form>
-
-
-
-
+					?>	
+				</form>
 	</center>
-
-	
 	</body>
-
 </html>
-

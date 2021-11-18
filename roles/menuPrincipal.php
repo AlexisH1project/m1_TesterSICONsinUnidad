@@ -346,13 +346,19 @@
 	          </li>
 	      </center>
 	          <li class=" estilo-color">
+	            <a href=  <?php echo ("'../m2_plantilla/controller/movs.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja MOVS</a>
+	          </li>
+	          <li class=" estilo-color">
 	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'../m2_plantilla/vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar Excel</a>
+	              <a href= <?php echo ("'../m2_plantilla/vista/leerMovs.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar MOVS</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar plazas</a>
 	          </li>
 	          <br>
 	          <br>
