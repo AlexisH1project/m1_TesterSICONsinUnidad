@@ -31,6 +31,12 @@
 		
 		$colorAccion = "";
 
+		// ******************************************sacamos el año
+		$ConsultaAnio = "SELECT * FROM ct_anios ORDER BY id_anio DESC";
+		$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+		$row_anio = mysqli_fetch_row($resultadoA);
+
+
 			$hoy = "select CURDATE()";
 		   	$tiempo ="select curTime()";
 // **************************************	sacamos el año
@@ -51,7 +57,7 @@
 					   $bandera = 1;
 				   }
 			   }
-if($bandera == 1 AND $rechazoActual[1] == "" AND $laQna == $rechazoActual[2] AND $anioActual[0] == $rechazoActual[3]){
+if($bandera == 1 AND $rechazoActual[1] == "" AND $laQna == $rechazoActual[2] AND $row_anio[1] == $rechazoActual[3]){
 		echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
 		echo "<script>window.location.href = '../blancoLulu.php?usuario_rol=$usuarioEdito'</script>";
 }else{
@@ -164,7 +170,7 @@ if($bandera == 1 AND $rechazoActual[1] == "" AND $laQna == $rechazoActual[2] AND
 			
 			if($id_movIdentify != "x"){
 
-				$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$anioActual[0]', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+				$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$row_anio[1]', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
 
 				}else{
 
@@ -176,7 +182,7 @@ if($bandera == 1 AND $rechazoActual[1] == "" AND $laQna == $rechazoActual[2] AND
 			
 				if($id_movIdentify!= "x"){
 
-					$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$anioActual[0]', fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
+					$sql = "UPDATE fomope SET color_estado = '$colorAccion', usuario_name = '$usuarioEdito', tipoEntrega = '$tipoEntregaAdd', tipoDeAccion = '$radioAdd_rechazar', quincenaAplicada = '$laQna', anio = '$row_anio[1]', fechaAutorizacion =  '$row[0] - $usuarioEdito', analistaCap = '$analista',  fechaCaptura = '$row[0] - $usuarioEdito' WHERE id_movimiento = '$id_movIdentify' "; 
  //cuando la fecha de autorizacion ya tenga un dato significa que puede pasar 
 				}else{
 

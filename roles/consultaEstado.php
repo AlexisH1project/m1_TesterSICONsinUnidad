@@ -251,13 +251,22 @@ tbody {
                 <div class="col-lg-12">
                     <div class="row">
                     	<div class="container-4">
-                         
-                            <select class="select-css" id="elanio" name="elanio">
-                                <option value="">AÑO</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                            </select>
+							<select class="select-css" id="elanio" name="elanio">
+									<option value="">AÑO</option>
+							 <?php
+										
+										$ConsultaAnio = "SELECT * FROM ct_anios";
+										$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+										$contadorA=0;
+
+										while($misdatosAnio = mysqli_fetch_assoc($resultadoA)){ 
+											$contadorA++;
+							?>
+										<option  data-subtext="<?php echo $misdatosAnio["id_anio"]; ?>"><?php echo $misdatosAnio["num_anio"]; ?></option>
+							<?php 
+										}
+							?>
+							</select>	
               
                     </div>
                         <div class="col-lg-3 col-md-3 col-sm-12 p-0">

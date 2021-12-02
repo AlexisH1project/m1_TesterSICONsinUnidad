@@ -19,6 +19,46 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<style type="text/css">
+			#table_porCap td {
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#table_porCap.hide_porCap tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_qr td {
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_qr.hide_qr tr > *:nth-child(n) {
+				display: none;
+			}
+			
+			#tab_rechQr td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_rechQr.hide_rechQr tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_edR td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_edR.hide_edR tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_nomina td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_nomina.hide_nomina tr > *:nth-child(n) {
+				display: none;
+			}
+	
 			
 			p.one {
 			  border-style: solid;
@@ -160,7 +200,7 @@
 	<body>
 
 			<script type="text/javascript">
-					
+				
 					function autNomina(datos){
 							var losDtos = document.getElementById("idDatosA").value = datos;
 					}
@@ -592,10 +632,10 @@
 			<div class="col-sm-12">
 				
 				<div class="card bg-secondary text-white">
-						<div class="card-body plantilla-inputg"><h2>QR</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_qr").classList.toggle("hide_qr")'>QR</button></h2></div>
 				</div>
 		<form name="radioALL1" id="radioALL1" action="" method="POST"> 
-				<table class="table table-hover table-white">
+				<table id= "tab_qr" class="table table-hover table-white">
 					<thead>
 						<tr>
 						<!-- <td>Observacion</td>
@@ -681,9 +721,9 @@
 		<div class="col-sm-12">
 				
 				<div class="card bg-secondary text-white">
-						<div class="card-body plantilla-inputg"><h2>Rechazos QR</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_rechQr").classList.toggle("hide_rechQr")'>Rechazos QR</button></h2></div>
 				</div>
-				<table class="table table-hover table-white">
+				<table id="tab_rechQr" class="table table-hover table-white">
 					<thead>
 						<tr>
 						<!-- <td>Observacion</td>
@@ -808,9 +848,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Capturar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("table_porCap").classList.toggle("hide_porCap")'>Por Capturar</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="table_porCap" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -898,9 +938,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Editar Rechazados</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_edR").classList.toggle("hide_edR")'>Editar Rechazados</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_edR" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -986,9 +1026,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Nomina</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_nomina").classList.toggle("hide_nomina")'>Nomina</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_nomina" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>

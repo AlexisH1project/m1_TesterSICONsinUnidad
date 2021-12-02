@@ -688,8 +688,35 @@
 								<label  class="plantilla-label" for="laQna">*QNA: </label>
 									<select class="form-control border border-dark custom-select" id="qnaOption" name="qnaOption" required>
 											<option  value="<?php echo $newQna ?>" ><?php echo $newQna ?> </option>
-											<option  value="<?php echo $newQna+1 ?>" ><?php echo $newQna+1 ?> </option>
-											<option  value="<?php echo $newQna-1 ?>" ><?php echo $newQna-1 ?> </option>
+											<option  value="<?php 
+															if($newQna == 24){
+																 echo 1;
+															}else{
+															 echo $newQna+1;
+															} 
+															?>"> 
+															<?php 
+																if($newQna == 24){
+																	 echo 1;
+																}else{
+																 echo $newQna+1;
+																 }
+															?> 
+											</option>
+											<option  value="<?php 
+																if($newQna == 1){
+																	echo 24;
+																}else{
+																	echo $newQna-1;
+																}
+															?>"><?php
+																if($newQna == 1){
+																	echo 24;
+																}else{
+																	echo $newQna-1;
+																}	
+																?> 
+											</option>
 										         
 									</select>
 							</div>
@@ -697,9 +724,15 @@
 
 				
 
-							<div class="form-group col-md-3">
+							
+							<div class="form-group col-md-2">
 								<label  class="plantilla-label estilo-colorg" for="elAnio">AÑO: </label>
-								<input type="text" class="form-control" id="anio" name="anio" value="<?php echo $anioActual[2] ?>" readonly >
+									<?php 	
+										$ConsultaAnio = "SELECT * FROM ct_anios ORDER BY id_anio DESC";
+										$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+										$row_anio = mysqli_fetch_row($resultadoA);
+									?>	
+									<input type="text" class="form-control" id="anio" name="anio" value="<?php echo $row_anio[1] ?>" readonly >
 							</div>
 					<div class="form-group col-md-4">
 						<label class="plantilla-label estilo-colorg" for="ofunid">*Oficio Unidad:</label>

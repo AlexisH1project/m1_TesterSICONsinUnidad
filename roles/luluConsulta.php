@@ -18,7 +18,24 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 			<style type="text/css">
-			
+			#tab_porEsc td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_porEsc.hide_porEsc tr > *:nth-child(n){
+				display:none;
+			}
+
+			#tab_ed td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_ed.hide_ed tr > *:nth-child(n){
+				display: none;
+			}
+
+
+
 			p.one {
 			  border-style: solid;
 			  border-color: hsl(0, 100%, 50%); /* red */
@@ -500,9 +517,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Escanear</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_porEsc").classList.toggle("hide_porEsc")'> Por Escanear</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_porEsc" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -618,9 +635,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Editar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick="document.getElementById('tab_ed').classList.toggle('hide_ed')"> Editar</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_ed" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
