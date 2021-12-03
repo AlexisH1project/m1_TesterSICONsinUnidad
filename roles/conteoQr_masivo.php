@@ -527,8 +527,13 @@ function showFiles($from, $curp, $generarID, $laQna){
 	$sqlCarpDocs = "SELECT * FROM ct_documentos_qr";
 	$conectar = mysqli_query($conexion, $sqlCarpDocs);
 	while($rowCarpDocs=mysqli_fetch_row($conectar)){ 
+		
 		if(file_exists($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF")){
-			copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+			if($rowCarpDocs[2] == "FMP"){
+				continue;
+			}else{
+				copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+			}
 			// echo "doccsssssssss::::  ".$rowCarpDocs[2];
 		}
 	}
