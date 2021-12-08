@@ -2,8 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Consulta</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>cargar movs</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -20,7 +19,7 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<link rel="stylesheet" href="css/estilossicon.css">
-			<style type="text/css">
+	<style type="text/css">
 
 		  <style>
 		  .modal-header, h4, .close {
@@ -109,21 +108,25 @@ tbody {
 		</script>
 	</head>
 	<body onload="nobackbutton();" >
-		<?php
-
-		        require_once "../controller/librerias/conexion_excel.php";
-				include "../controller/librerias/configuracion.php";
-				include "../controller/formulasPlazas.php";
-				include_once "../controller/librerias/Classes/PHPExcel/IOFactory.php";
-
+		<?php 
 
 				$usuarioSeguir =  $_GET['usuario_rol'];
 
+		class CargarPlantilla{
+				public $arrayDuplicados;
+				public $existeError;
+
+				function getExiteErr(){
+					return $this -> existeError;
+
+				}
+
 			    function cargarPlantillaBD(){
-
-
-			    	include "../controller/librerias/configuracion.php";
-
+					$arrayDuplicados[] = array();
+					$this -> arrayDuplicados = $arrayDuplicados;
+					$this -> existeError = 0;
+										
+					include "../controller/librerias/configuracion.php";
 			    	$usuarioSeguir =  $_GET['usuario_rol'];
 					$nombreArchivo = '../controller/documentos/MOVS_PLAZAS.csv';
                     $dupdata;
@@ -196,8 +199,6 @@ tbody {
 						$ingresado=0;//Variable que almacenara los insert exitosos
 						$error=0;//Variable que almacenara los errores en almacenamiento
 						$duplicado=0;//Variable que almacenara los registros duplicados
-
-
 					    //----------------Sacamos la Fecha 
 						$hoy = "select CURDATE()";
 						$tiempo ="select curTime()";
@@ -216,11 +217,9 @@ tbody {
 							while($rowFechas = mysqli_fetch_row($SiQueryQna)){
 									$qnaAplicada = $rowFechas[0];
 									//echo "qna".$qnaAplicada."</br>";
-								
 							}
 						}
                   
-						$arrayDuplicados[] = array();
 					if($numero == 24){
 						foreach($linea as $indice=>$value) //Iteracion el array para extraer cada uno de los valores almacenados en cada items
 						{
@@ -252,6 +251,7 @@ tbody {
 							$oficioSolicitud = $value["oficioSolicitud"];
 							$oficioRespuesta = $value["oficioRespuesta"];
 
+							$arrayErr = array('idMov' => $folio_shcp , 'status' => $estatus1, 'motivoM' =>  $estatus,'cfp' => $cfp );
 // no se me hizo necesario poner esta validacion ---> $sql=mysqli_query($conexion,"SELECT * FROM movimientos_m2 WHERE codFederalPuestos = '$cfp'");//Consulta a la tabla productos
 // no se me hizo necesario poner esta validacion ---> $num=mysqli_num_rows($sql);//Cuenta el numero de registros devueltos por la consulta
 						//-----Tomamos el nombre que se extrae completo y lo partimos en apellidos y nombres
@@ -299,14 +299,19 @@ tbody {
 										}//fin del if que comprueba que se guarden los datos
 										else//sino ingresa el producto
 										{
-											echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+											$this -> existeError = 1;
+											array_push($value, "Existe error en Actualizar la plaza o al Guardar MOV ".$cfp);
+											array_push($this -> arrayDuplicados, $value);
+											// echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
 											$error+=1;
 										}
 									// }
 								}else
 								{
 									$duplicado+=1;
-									array_push($arrayDuplicados, $value);
+									$this -> existeError = 1;
+									array_push($value, "No existe plaza o la plaza ya fue cancelada");
+									array_push($this -> arrayDuplicados, $value);
 								// 	echo $duplicate='<font color=red>El Producto codigo <b>'.$cfp.'</b> Esta duplicado<br></font>';
 								}
 						}else//fin de if que comprueba que no haya en registro duplicado
@@ -329,13 +334,18 @@ tbody {
 												}//fin del if que comprueba que se guarden los datos
 												else//sino ingresa el producto
 												{
-													echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													// echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													$this -> existeError = 1;
+													array_push($value, "Existe error en Actualizar la plaza o al Guardar MOV ".$cfp);
+													array_push($this -> arrayDuplicados, $value);
 													$error+=1;
 												}
 											}else
 											{
 												$duplicado+=1;
-												array_push($arrayDuplicados, $value);
+												$this -> existeError = 1;
+												array_push($value, "No existe plaza o la plaza ya fue cancelada");
+												array_push($this -> arrayDuplicados, $value);
 											// 	echo $duplicate='<font color=red>El Producto codigo <b>'.$cfp.'</b> Esta duplicado<br></font>';
 											}
 									}								
@@ -359,13 +369,19 @@ tbody {
 												}//fin del if que comprueba que se guarden los datos
 												else//sino ingresa el producto
 												{
-													echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													$this -> existeError = 1;
+													// echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													array_push($value, "Existe error en Actualizar la plaza o al Guardar MOV ".$cfp);
+													array_push($this -> arrayDuplicados, $value);
 													$error+=1;
 												}
 											}else
 											{
 												$duplicado+=1;
-												array_push($arrayDuplicados, $value);
+												$this -> existeError = 1;
+												array_push($value, "No existe plaza o la plaza ya fue cancelada ".$cfp);
+												array_push($this -> arrayDuplicados, $value);
+
 											// 	echo $duplicate='<font color=red>El Producto codigo <b>'.$cfp.'</b> Esta duplicado<br></font>';
 											}
 									}else
@@ -378,7 +394,7 @@ tbody {
 											// $numeXt = mysqli_num_rows($sqlExistP);//Cuenta el numero de registros devueltos por la consulta
 												// if ($numeXt == 0)
 												// {
-													$queryUpdatePlaza = "UPDATE plazas_ctrlp_m2 SET cfpAsignado = '$cfp2', 	comprobanteExistencia_cfp = '1', estatus = 'Autorizado', tipoMovimiento = 'Cambio de Adscripción', color_accion = 'blanco' WHERE codigoFederalPuestos = '$cfp'";
+													$queryUpdatePlaza = "UPDATE plazas_ctrlp_m2 SET cfpAsignado = '$cfp2', 	comprobanteExistencia_cfp = '1', estatus = 'Autorizado', tipoMovimiento = 'Nueva Creación', color_accion = 'blanco' WHERE codigoFederalPuestos = '$cfp'";
 												// }
 												// if ($num3 == 0)
 												// {
@@ -391,7 +407,10 @@ tbody {
 													}//fin del if que comprueba que se guarden los datos
 													else//sino ingresa el producto
 													{
-														echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+														// echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+														$this -> existeError = 1;
+														array_push($value, "Existe error al crear la plaza");
+														array_push($this -> arrayDuplicados, $value);
 														$error+=1;
 													}
 												// }else
@@ -420,7 +439,9 @@ tbody {
 												}//fin del if que comprueba que se guarden los datos
 												else//sino ingresa el producto
 												{
-													echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													$this -> existeError = 1;
+													// echo $msj='<font color=red>Producto <b>'.$cfp.' </b> NO Guardado </font><br/>';
+													array_push($value, "Existe error en Actualizar la plaza o al Guardar MOV ".$cfp);
 													$error+=1;
 												}
 																			// }else
@@ -431,27 +452,44 @@ tbody {
 																			// }
 											}else{
 												$duplicado+=1;
-												array_push($arrayDuplicados, $value);
+												$this -> existeError = 1;
+												array_push($value, "No existe plaza o la plaza ya fue cancelada ".$cfp);
+												array_push($this -> arrayDuplicados, $value);
 												// echo $duplicate='<font color=red>El Producto codigo <b>'.$cfp.'</b> Esta duplicado<br></font>';
 											}
 
 										}else{
 											$duplicado+=1;
-											array_push($arrayDuplicados, $value);
+											$this -> existeError = 1;
+											array_push($value, "No cumple con las especificaciones que se necesitan ".$cfp);
+											array_push($this -> arrayDuplicados, $value);
 											// echo $duplicate='<font color=red>El Producto codigo <b>'.$cfp.'</b> Esta duplicado<br></font>';
 										}
 						}//finaliza el for (con los datos correctos en el excel)
-
-						echo "<font color=green>".number_format($ingresado,2)." Productos Almacenados con exito<br/>";
-						echo "<font color=red>".number_format($duplicado,2)." Productos Duplicados<br/>";
+				?>
+					
+						<?php
+					
+						echo ' <script>window.location.href = "./generarFiltroExcel/reporteErroresMovs.php?arrayErr="'.serialize($this -> arrayDuplicados).' </script>';
+					
+						// generarReporteErrores($arrayDuplicados);
+						echo "<font color=green>".number_format($ingresado,2)." Movimientos con exito<br/>";
+						echo "<font color=red>".number_format($duplicado,2)." Movimientos Duplicados<br/>";
 						// echo "<font color=red>".$error." Errores de almacenamiento<br/>";
 						echo "<font color=red> MOVIMIENTOS QUE NO SE PUDIERON ALMACENAR:<br/>";
-						print_r($arrayDuplicados);
-				} //cerramos IF que las columnas sean 24
-			} //cerramos funcion cargarPlantillaBD()
-			    	?>
-		<a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+						// print_r($arrayDuplicados);
+						
+					} //cerramos IF que las columnas sean 24
+				} //cerramos funcion cargarPlantillaBD()
 
+				function getArrayDuplicados(){
+					return $this -> arrayDuplicados;
+				}
+	} // cerramos la Class
+			    	?>
+			
+		<a  href= <?php echo ("'../../roles/menuPrincipal.php?usuario_rol=$usuarioSeguir'");?>><img class="img-responsive" src="img/ss1.png" height="90" width="280"/></a>
+		<div id="resp"></div>
 		<nav class="navbar fixed-top navbar-expand-lg navbar-dark plantilla-input fixed-top">
 		    <div class="container">
 		      <div class="collapse navbar-collapse" id="navbarResponsive">
@@ -492,6 +530,7 @@ tbody {
 							
 
 						<?php	
+						$termino=0;
 
 							if(isset($_POST['leerExcel'])){
 											$dir_subida = '../controller/documentos/';
@@ -513,12 +552,33 @@ tbody {
 											}	
 											
 											if($termino == 1){
-												cargarPlantillaBD();
+												echo '<script>alert("Se leyo correctamente la plantilla");</script>';
+												// $generarPlantilla = new CargarPlantilla();
+												// $generarPlantilla->cargarPlantillaBD();
+
 											}
 							}
 
 					?>	
 				</form>
+				<form method="post" action="./generarFiltroExcel/reporteErroresMovs.php">
+					<?php
+					if($termino == 1){
+						$generarPlantilla = new CargarPlantilla();
+						$generarPlantilla->cargarPlantillaBD();
+						$arrayGet = $generarPlantilla->getArrayDuplicados();
+						$existeErr = $generarPlantilla->getExiteErr();
+						$arrayS = serialize($arrayGet);
+						if($existeErr == 1){ // si es 1 significa que existe un error 
+					?>
+					<input type='hidden' name='arrayErr' class='btn btn btn-success text-white bord' value='<?php  echo base64_encode($arrayS); ?>'>
+					<input type='submit' name='accionBoton' class='derecha btn btn-outline-warning' value="Rechazados">
+					<?php 
+						}
+					}
+					?>
+				</form>
 	</center>
+	
 	</body>
 </html>
