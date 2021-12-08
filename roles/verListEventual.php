@@ -296,8 +296,8 @@ function asignarIDfecha(){
 					// Arreglo con todos los nombres de los archivos
 					
 					$sqlReg =  "SELECT COUNT(*) id_docqr FROM ct_documentos_qr";
-										$resTotalReg = mysqli_query($conexion,$sqlReg);
-										$rowTotal = mysqli_fetch_row($resTotalReg);
+					$resTotalReg = mysqli_query($conexion,$sqlReg);
+					$rowTotal = mysqli_fetch_row($resTotalReg);
 
 // *********************** hacemos el mismo ciclo para poder imprimir los arcchivos que les importa como primera vista 
 										// declaramos el arreglo en el que se encuentran los documentos que quieren ver en un principio

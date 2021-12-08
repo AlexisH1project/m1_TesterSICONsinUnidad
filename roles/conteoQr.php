@@ -707,7 +707,11 @@ $(document).ready(function(){
 					continue;
 				}else{
 					if(file_exists($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF")){
-						copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+						if($rowCarpDocs[2] == "ACTA" OR	$rowCarpDocs[2] == "BAN" OR	$rowCarpDocs[2] == "CED" OR	$rowCarpDocs[2] == "CONS" OR	$rowCarpDocs[2] == "CURP" OR $rowCarpDocs[2] == "IDE" OR $rowCarpDocs[2] == "RFC"){
+							copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_0_X.PDF");
+						}else{
+							copy($from.$rowCarpDocs[2]."\\".$curp."_".$rowCarpDocs[2].".PDF", $to.$rowCarpDocs[2]."/".$curp."_".$rowCarpDocs[2]."_".$laQna."_".$generarID.".PDF");
+						}
 						// echo "doccsssssssss::::  ".$rowCarpDocs[2];
 					}
 				}
