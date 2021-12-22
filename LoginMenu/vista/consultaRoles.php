@@ -64,6 +64,9 @@
             }if($ROL == 8){
                         //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
                     header('Location:../../roles/menuPrincipal.php?usuario_rol='.urlencode($user));//cambiar//cambiar
+            }if($ROL == 9){
+                //echo '<script language="javascript">alert("Datos correctos/ Puedes dar Alta");</script>';
+                header('Location:../../roles/guardarVista_exp_comp.php?usuario_rol='.urlencode($user));//cambiar//cambiar
             }
 
 
