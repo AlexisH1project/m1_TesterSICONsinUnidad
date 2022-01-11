@@ -1229,6 +1229,7 @@ tbody {
 							<th scope="titulo" style="text-align: center" style="width: 400px" class="sticky">RFC</th>
 						    <th scope="titulo" style="text-align: center"   style="text-align: center" class="sticky">CURP</th>
 						    <th scope="titulo"  style="text-align: center" class="sticky">QNA</th>
+						    <th scope="titulo"  style="text-align: center" class="sticky">AÑO</th>
 						    <th scope="titulo"  style="text-align: center" class="sticky">NOMBRE</th>
 						   </tr>
 						</thead>
@@ -1261,6 +1262,7 @@ tbody {
 							<td><?php echo $ver3[7] ?></td>
 							<td><?php echo $ver3[1] ?></td>
 							<td><?php echo $ver3[5] ?></td>
+							<td><?php echo $ver3[6] ?></td>
 							<td><?php echo $ver3[12]." ".$ver3[10]." ".$ver3[11] ?></td>
 							
 							<td><?php
