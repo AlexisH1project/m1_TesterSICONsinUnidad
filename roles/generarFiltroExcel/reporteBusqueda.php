@@ -357,6 +357,7 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BL'.$fila, $imprimirRow[64]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BM'.$fila, $imprimirRow[65]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BN'.$fila, $imprimirRow[66]);     
+		                $objPHPExcel->getActiveSheet()->setCellValue('BO'.$fila, $imprimirRow[72]);     
 
 		                $fila++;
 					}else{

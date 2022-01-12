@@ -1031,7 +1031,7 @@ $(document).ready(function(){
 								// echo $arrayDoc[0];
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
 									$nombreAsignar = $arrayDoc[$i];
-									if($nombreAsignar == "OS" || $nombreAsignar == "FO" || $nombreAsignar == "AA" || $nombreAsignar == "AFVP"){
+									if($nombreAsignar == "OS" || $nombreAsignar == "FO" || $nombreAsignar == "AA" || $nombreAsignar == "AFVP" || $nombreAsignar == "EP"){
 										$sqlAgregar = "UPDATE fomope_qr SET  $nombreAsignar = 'si', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento_qr = '$optionSelec'";
 										if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 	
