@@ -312,15 +312,6 @@
 			      	$('#enviarReg').hide();
 			}
 
-			function eliminarRequier2(){
-					$("#MotivoRechazoCap").removeAttr("required");
-					$("#nameArchivo").removeAttr("required");
-					$('#rechazoInicial').hide();
-			      	$('#guardarAdj').hide();
-					var btn_2 = document.getElementById('bandejaEntrada');
-			        btn_2.style.display = 'inline';
-			}
-
 			function listaDeDoc(text, listaEnviar){
 				document.getElementById("listaDoc").value = text;
 				document.getElementById("guardarDoc").value = listaEnviar;
@@ -553,6 +544,10 @@
 <div class="col-md-8 col-md-offset-8">
 				<!-- <form name="captura2" action="./Controller/agregarNewRegistro.php" method="POST">  -->
 <!-- <form method="post" name="ffomope" action="">  -->
+			<div class="col-sm-12 ">
+					<h3><output type="text" id="qnaSeleccionada" name="qnaSeleccionada"></output> </h3>
+			</div>
+	
 <form  enctype="multipart/form-data" id="formDatos" name="captura1" action="" method="POST"> 
 				 		<div class="form-row">
 							<input type="text" class="form-control" id="userName" name="userName" value="<?php echo $usuarioSeguir ?>" style="display:none">
@@ -737,7 +732,7 @@
 													       die("Error cargando el conjunto de caracteres utf8");
 													}
 
-													$consulta = "SELECT * FROM m1ct_documentos";
+													$consulta = "SELECT * FROM ct_documentos_bajas";
 													$resultado = mysqli_query($conexion , $consulta);
 													$contador=0;
 
@@ -777,7 +772,7 @@
 
 					<div class="col">
 						  	<div class="md-form md-0">
-								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento"><br>
+								<input type="submit" id="guardarAdj" name="guardarAdj" onclick="eliminarRequier()" class="btn btn-outline-info tamanio-button" value="Guardar Documento o Enviar Registro"><br>
 							</div>	
 							<div class="md-form md-0">
 								<input type="submit" class="btn btn-primary" id="bandejaEntrada" name="accionB" onclick="irAbandeja()" style="display: none;" value="bandeja principal">
@@ -828,10 +823,16 @@
 									$apellido2Add = strtoupper($_POST['apellido2']);	
 									$nombreAdd = strtoupper($_POST['nombre']);
 									$fechaIngresoAdd = $_POST['fechaIngreso'];
-									$motivoR = $_POST['comentarioR'];
+									if(isset($_POST['comentarioR'])){
+										$motivoR = $_POST['comentarioR'];
+									}
 									$fechaDel = $_POST['del2'];
 									$fechaAl = $_POST['al3'];
-									$leerMov = $_POST['id_env'];
+									if(isset($_POST['id_env'])){
+										$leerMov = $_POST['id_env'];
+									}else{
+										$leerMov = "-"; // mandamos este dato ya que la consulta es si existe "X"
+									}
 									$nombreArch = $_POST['documentoSelct'];
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
@@ -853,10 +854,9 @@
 									//$codigo_movimiento =$_POST['cod2_1'];
 									//$concepto =$_POST['concept'];//descripción del movimiento		 
 									$movimientoYcodigo = $_POST['cod2_1'];
-									$nombreCompletoMov = explode("_", $_POST['cod2_1']);
+									$nombreCompletoMov = explode("_", $movimientoYcodigo);
 									$codigo_movimiento = $nombreCompletoMov[0];
 									$concepto = $nombreCompletoMov[1];
-								
 									$estado_en =$_POST['cod3_1'];
 									$consecutivo_maestro_impuestos =$_POST['consema'];
 									$observaciones =$_POST['observ'];
@@ -892,7 +892,7 @@
 
                                    	if ($leerMov == "x") { //$res1Check<1
                                    	
-                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('guinda','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', 'AMBOS','$motivoR','$qna_Add','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
+                                   		$newsql = "INSERT INTO fomope (color_estado,usuario_name,unidad,rfc,curp,apellido_1,apellido_2,nombre,fechaIngreso,tipoEntrega,tipoDeAccion,justificacionRechazo,quincenaAplicada,anio,oficioUnidad,fechaOficio,fechaRecibido,codigo,n_puesto,clavePresupuestaria,codigoMovimiento,descripcionMovimiento,vigenciaDel,vigenciaAl,entidad,consecutivoMaestroPuestos,puestos,observaciones,fechaEnviadaRubricaDspo,fechaEnviadaRubricaDipsp,fechaEnviadaRubricaDgrho,fechaRecepcionSpc,fechaEnvioSpc,fechaReciboDspo,folioSpc,fechaCapturaNomina,fechaEntregaArchivo,fechaEntregaRLaborales,OfEntregaRLaborales,fomopeDigital,fechaEntregaUnidad,OfEntregaUnidad,analistaCap,fechaCaptura ) VALUES ('cafeB','$usuarioEdito','$unidadAdd','$rfcAdd','$curpAdd','$apellido1Add','$apellido2Add','$nombreAdd','$fechaIngresoAdd','', 'AMBOS','$motivoR','$qna_Add','$anio_Add','$of_unidad','','$fechaIngresoAdd','$codigo','$no_puesto','$clave_presupuestaria','$codigo_movimiento','$concepto','$fechaDel','$fechaAl','$estado_en','$consecutivo_maestro_impuestos','','$observaciones','','','','','','','','','','','','','','','BAJAS','$row[0] - $usuarioEdito')";
 
                                    		if($datasub = mysqli_query($conexion,$newsql)){
                                    			if($datasub2 = mysqli_query($conexion,$datosDobles)){
@@ -924,7 +924,7 @@
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
-									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+									$sqlRolDoc = "SELECT id_doc, documentos FROM ct_documentos_bajas WHERE nombre_documento = '$nombreArch'";
 									$resRol=mysqli_query($conexion, $sqlRolDoc);
 									$idDoc = mysqli_fetch_row($resRol);
 									$banderaBoton=1;
@@ -993,6 +993,7 @@
 													</div>	
 													</center>
 												';*/
+												
 																									   	
 											} else{
 											    echo "<script> alert('Existe un error al guardar el archivo'); ";
@@ -1006,14 +1007,14 @@
 							include "configuracion.php";
 							$existenD =0;
 ////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/documentos/';
+					$dir_subida = './Controller/DOCUMENTOS_BAJAS/';
 					// Arreglo con todos los nombres de los archivos
 					
-					$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+					$sqlReg =  "SELECT COUNT(*) id_doc FROM ct_documentos_bajas";
 										$resTotalReg = mysqli_query($conexion,$sqlReg);
 										$rowTotal = mysqli_fetch_row($resTotalReg);
-					for ($i = 0; $i < $rowTotal[0] ; $i++){
-						$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+					for ($i = 1; $i <= $rowTotal[0] ; $i++){
+						$sqlNombreDoc2 = "SELECT * FROM ct_documentos_bajas WHERE id_doc = '$i'";
 										$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 										$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 							$imprime = 0;

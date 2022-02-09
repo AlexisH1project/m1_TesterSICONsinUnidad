@@ -264,7 +264,7 @@
 									window.location.href = './gEstructuraNomEv.php?usuario_rol='+userRol;
 								}
 							},1000);
-							window.location.href = './Controller/generaReporteNomina.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
+							window.location.href = './Controller/generaReporteNominaEv.php?idMov='+elementosSelectR+'&usuario_rol='+userRol;
 						}
 					     //return false;
 					} 

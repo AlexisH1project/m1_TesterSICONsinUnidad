@@ -453,7 +453,7 @@
 						<div class="form-row">
 							<div class="form-group col-md-12" >
 								<label class="plantilla-label estilo-colorg" for="unexp_1">Unidad:</label>
-								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 111" value="<?php echo $ver[3] ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
+								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 111" value="<?php if(isset($_POST['unexp_1'])){ echo $_POST['unexp_1']; }else{ echo $ver[3];} ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
 							</div>
 						</div>
 
@@ -462,14 +462,14 @@
 							<div class="col">
 						      <div class="md-form mt-0">
 						       <label class="plantilla-label estilo-colorg" for="rfcL_1" >RFC: </label>
-						    	<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="RFC" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13" value="<?php echo $ver[4] ?>" required>
+						    	<input type="text"  type="text" class="form-control rfcL border border-dark" id="rfcL_1" name="rfcL_1" placeholder="RFC" onkeyup="javascript:this.value=this.value.toUpperCase();" placeholder="Ingresa rfc" maxlength="13" value="<?php if(isset($_POST['rfcL_1'])){ echo $_POST['rfcL_1']; }else{ echo $ver[4];} ?>" required>
 						      </div>
 						    </div>
 							
 						    <div class="col">
 						      <div class="md-form mt-0">
 						        <label class="plantilla-label estilo-colorg" for="CURP">CURP: </label>
-						   		 <input type="text" class="form-control border border-dark" id="curp" name="curp" placeholder="Ingresa CURP" maxlength="18" value="<?php echo $ver[5] ?>" required>
+						   		 <input type="text" class="form-control border border-dark" id="curp" name="curp" placeholder="Ingresa CURP" maxlength="18" value="<?php if(isset($_POST['curp'])){ echo $_POST['curp']; }else{ echo $ver[5];}  ?>" required>
 						      </div>
 						    </div>
 						</div>
@@ -482,19 +482,19 @@
 				  			    <input type="text" style="display: none;" class="form-control border border-dark" id="listaDoc" name="listaDoc" placeholder="" value="<?php if(isset($_POST["listaDoc"])){ echo $_POST["listaDoc"];} ?>" >
 				  			<div class="col">
 						      <div class="md-form mt-0">
-						        <input type="text" class="form-control border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" value="<?php echo $ver[6] ?>" maxlength="30"required>
+						        <input type="text" class="form-control border border-dark" id="apellido1" name="apellido1" placeholder="Apellido Paterno" value="<?php if(isset($_POST['apellido1'])){ echo $_POST['apellido1']; }else{ echo $ver[6];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						      <div class="md-form mt-0">
-						        <input type="text" class="form-control border border-dark" id="apellido2" name="apellido2" placeholder="Apellido Materno" value="<?php echo $ver[7] ?>" maxlength="30"required>
+						        <input type="text" class="form-control border border-dark" id="apellido2" name="apellido2" placeholder="Apellido Materno" value="<?php if(isset($_POST['apellido2'])){ echo $_POST['apellido2']; }else{ echo $ver[7];} ?>" maxlength="30"required>
 						      </div>
 						    </div>
 
 						    <div class="col">
 						      <div class="md-form mt-0">
-						        <input type="text" class="form-control border border-dark" id="nombre" name="nombre" placeholder="Nombre" value="<?php echo $ver[8] ?>" maxlength="40" required>
+						        <input type="text" class="form-control border border-dark" id="nombre" name="nombre" placeholder="Nombre" value="<?php if(isset($_POST['nombre'])){ echo $_POST['nombre']; }else{ echo $ver[8];} ?>" maxlength="40" required>
 						      </div>
 						    </div>
 						</div>
@@ -503,7 +503,7 @@
 
 				  		<div class="form-group col-md-12" >
 					  		<label class="plantilla-label estilo-colorg" for="fechaIngreso"> FECHA DE RECIBIDO: </label>
-						    <input type="date" class="form-control border border-dark" id="fechaIngreso" name="fechaIngreso" placeholder="Ingresa Fecha del ingreso" value="<?php echo $ver[9] ?>" required>
+						    <input type="date" class="form-control border border-dark" id="fechaIngreso" name="fechaIngreso" placeholder="Ingresa Fecha del ingreso" value="<?php if(isset($_POST['fechaIngreso'])){ echo $_POST['fechaIngreso']; }else{ echo $ver[9];} ?>" required>
 						    
 				  		</div>
 				  <div class="form-row">
@@ -511,7 +511,7 @@
 							<div class="text-center">
 								<label  class="plantilla-label estilo-colorg" for="del">*Del:</label>
 							</div>
-							<input type="date" class="form-control border border-dark" id="del" name="del" placeholder="Del" value="<?php echo $ver[24] ?>" required>
+							<input type="date" class="form-control border border-dark" id="del" name="del" placeholder="Del" value="<?php if(isset($_POST['del'])){ echo $_POST['del']; }else{ echo $ver[24]; }  ?>" required>
 							<small name= "alertVigencia" id= "alertVigencia" class="text-danger">
 				        	</small> 
 						</div>
@@ -519,7 +519,7 @@
 							<div class="text-center">
 								<label class="plantilla-label estilo-colorg" for="al">al:</label>
 							</div>
-						<input  type="date" class="form-control border border-dark" value="<?php echo $ver[25] ?>" id="al" name="al" placeholder="al"> <!--required-->
+						<input  type="date" class="form-control border border-dark" value="<?php if(isset($_POST['al'])){ echo $_POST['al']; }else{ echo $ver[25]; } ?>" id="al" name="al" placeholder="al"> <!--required-->
 						</div>
 					</div>
 				  		<div class="form-group col-md-12" >	
@@ -629,7 +629,7 @@
 
 								
 
-									$dir_subida = './Controller/DOCUMENTOS_MOV/';
+									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
 											// Arreglo con todos los nombres de los archivos
 											$files = array_diff(scandir($dir_subida), array('.', '..')); 
 											
@@ -642,7 +642,9 @@
 												$extencion = $data2[$indice-1];
 											    // Nombre del archivo
 											    $extractRfc = $data[0];
-											    $nameAdj = $data[1];
+												if(isset($data[1])){
+													$nameAdj = $data[1];
+												}
 											    // Extensión del archivo 
                          //----------------Sacamos la Hora 
 											$hoy = "select CURDATE()";
@@ -653,17 +655,6 @@
 												 }
 												 $hora = str_replace ( ":", '',$rowhora[0] ); 
 												 $fecha = str_replace ( "-", '',$rowfecha[0] ); 
-
-											    // Nombre del archivo
-											    $extractRfc = $data[0];
-											    $nameAdj = $data[1];
-											    // Extensión del archivo 
-
-
-											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
-											      		unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
-											        	break;
-											    }
 											}
 
 											$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);

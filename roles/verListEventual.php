@@ -37,6 +37,23 @@
 			  width:50%;
 			  float:left;
 		}
+
+		.btn-flotante {
+				font-size: 16px; /* Cambiar el tamaño de la tipografia */
+				text-transform: uppercase; /* Texto en mayusculas */
+				font-weight: bold; /* Fuente en negrita o bold */
+				color: #ffffff; /* Color del texto */
+				border-radius: 5px; /* Borde del boton */
+				letter-spacing: 2px; /* Espacio entre letras */
+				background-color: #E91E63; /* Color de fondo */
+				padding: 18px 30px; /* Relleno del boton */
+				position: absolute;
+				/* bottom: 600px; */
+				right: 10px;
+				/* transition: all 300ms ease 0ms;
+				box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+				z-index: 99; */
+		}
 		  
 		  </style>
 		  <script type="text/javascript">
@@ -102,6 +119,12 @@
 				}
 			
 			}
+
+			function refreshDocs(nombre,curp,rfc){
+				$('#content').html('<div class="loading"><center><img src="img/loader.gif" alt="loading" /><br/>Un momento, por favor...</center></div>');
+				window.location.href = 'Controller/descargaDocRefresh.php?usuario='+nombre+'&curp='+curp+'&rfc='+rfc+'&destino=1';
+				return true;
+			}
 		</script>
 
 
@@ -116,7 +139,7 @@
 	            $sql="SELECT * from fomope_qr WHERE id_movimiento_qr = '$noFomope' ";
 	            $result=mysqli_query($conexion,$sql);
 	            $rowQr = mysqli_fetch_row($result);
-
+				
 
 		//header("Content-type: application/PDF");
 		//readfile("\\\\PWIDGRHOSISFO01\\pdfs\\AADJ661227C70.PDF"); //C:/xampp2/htdocs/SICON_w/roles/Controller/
@@ -177,7 +200,31 @@ function asignarIDfecha(){
 				<br>
 				<h3>Consulta de Estado FOMOPE</h3>
 				<br>
-				
+
+	<!-- ponemos el botton para actualizar los documentos    -->
+			<?php
+				$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
+				$resultRols = mysqli_query($conexion, $queyRols);
+				$columnasUsuario = mysqli_fetch_assoc($resultRols);
+
+				if($columnasUsuario['id_rol'] == "2" || $columnasUsuario['id_rol'] == "3" || $columnasUsuario['id_rol'] == "4" ){
+					if($rowQr[2]=="PERSONAL DE CONFIANZA (ALTA)" OR $rowQr[2]=="PERSONAL DE CONFIANZA (BAJA)" OR $rowQr[2]=="ESTRUCTURA"){
+			?>
+				<div id="content" class="p-4 p-md-5 pt-5">
+				</div>
+				<form method="GET" name="docs" action=""> 
+						<div style="text-align: center">
+							<input type="button" class = "btn-flotante" onclick="refreshDocs('<?php echo $usuarioSeguir ?>', '<?php echo $rowQr[13] ?>', '<?php echo $rowQr[7] ?>')" id="refresh" name="refresh" value="ACTUALIZAR DOCUMENTOS">
+						</div>
+						<br><br>
+				</from>	
+			
+			<?php
+					}
+				}
+			?>
+	<!-- terminamos la consulta del rol para saber a quien mostrar el noton -->
+
 					<table class="table table-striped table-bordered">
 
 						<?php 
@@ -193,7 +240,14 @@ function asignarIDfecha(){
 							$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
 							$resultRols = mysqli_query($conexion, $queyRols);
 							$columnasUsuario = mysqli_fetch_assoc($resultRols);
-
+							echo("
+							<br>
+							<br>
+							<div class='col-sm-4 '>
+							<div class='plantilla-inputv text-dark '>
+								<div class='card-body'><h2 align=''></h2><i><b>$ver[10] $ver[8] $ver[9]</b></i></div>
+							</div>
+							</div>");
 							// 	for($i=47; $i<=117; $i++){
 							// 		if($ver[$i] == ""){
 										
@@ -242,8 +296,8 @@ function asignarIDfecha(){
 					// Arreglo con todos los nombres de los archivos
 					
 					$sqlReg =  "SELECT COUNT(*) id_docqr FROM ct_documentos_qr";
-										$resTotalReg = mysqli_query($conexion,$sqlReg);
-										$rowTotal = mysqli_fetch_row($resTotalReg);
+					$resTotalReg = mysqli_query($conexion,$sqlReg);
+					$rowTotal = mysqli_fetch_row($resTotalReg);
 
 // *********************** hacemos el mismo ciclo para poder imprimir los arcchivos que les importa como primera vista 
 										// declaramos el arreglo en el que se encuentran los documentos que quieren ver en un principio
@@ -251,7 +305,7 @@ function asignarIDfecha(){
 									array("Fomope Loteado y firmado","FO"),
 									array("Oficio Sellado","OS")
 								);
-                    // ----- hacemos el ciclo en donde recorremos las dos pocisiones del areglo bidimencional anterior
+                    // ----- hacemos el ciclo en donde recorremos las dos posicion del areglo bidimencional anterior
 					for ($i = 0; $i < 2 ; $i++){
 							$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 						$banderaSI = 0;
@@ -283,7 +337,7 @@ function asignarIDfecha(){
 										    $data2 = explode(".",$file);
 											$indice = count($data2);										
 											$extencion = $data2[$indice-1];
-
+											$banderaDocSINqna = 0;
 
                                             if($conId==2){
                                             	$extractCurp = $data[0];
@@ -297,8 +351,13 @@ function asignarIDfecha(){
 
                                             }else if($conId==4){
                                             	$extractCurp = $data[0];
-                                            	$extractDoc = $data[1];
-                                            	$extractQna = $data[2];
+												if(is_numeric($data[2]) || $data[2] == ""){
+													$extractDoc = $data[1];
+													$extractQna = $data[2]; 
+												}else{
+													$extractDoc = $data[1]."_".$data[2];
+													$banderaDocSINqna = 1;
+												}
                                             	$QuitarExtencion = explode(".", $data[3]);
                                             	$extractDate = $QuitarExtencion[0];
                                             	$anio = substr($extractDate, 0, -10);
@@ -328,7 +387,8 @@ function asignarIDfecha(){
                                             	$anio = substr($extractDate, 0, -10);
 
                                             }
-									 		if($ver[13] == $extractCurp && $nameFIleP[$i][1] == $extractDoc){
+											
+									 		if($ver[13] == $extractCurp && $nameFIleP[$i][1] == $extractDoc ){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
@@ -355,10 +415,18 @@ function asignarIDfecha(){
 									 			if($conId==2 || $conId==3){
 										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
-									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }else if ($conId==4 ){
+													if($banderaDocSINqna == 1){
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractDate."."."$extencion";
+													}else{
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													}
 													$banderaSI = 1;
-									 		    } 
+									 		    }elseif($conId==5){
+													$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													$banderaSI = 1;
+												 }
+												 
 								if($banderaSI == 1){
 
 						?>	
@@ -426,7 +494,7 @@ function asignarIDfecha(){
 										    $data2 = explode(".",$file);
 											$indice = count($data2);										
 											$extencion = $data2[$indice-1];
-
+											$banderaDocSINqna = 0;
 
                                             if($conId==2){
                                             	$extractCurp = $data[0];
@@ -440,8 +508,13 @@ function asignarIDfecha(){
 
                                             }else if($conId==4){
                                             	$extractCurp = $data[0];
-                                            	$extractDoc = $data[1];
-                                            	$extractQna = $data[2];
+												if(is_numeric($data[2]) || $data[2] == ""){
+													$extractDoc = $data[1];
+													$extractQna = $data[2];
+												}else{
+													$banderaDocSINqna = 1;
+													$extractDoc = $data[1]."_".$data[2];
+												}
                                             	$QuitarExtencion = explode(".", $data[3]);
                                             	$extractDate = $QuitarExtencion[0];
                                               	
@@ -468,7 +541,22 @@ function asignarIDfecha(){
                                             	$idMovDoc = $data[5];
                                             	$anio = substr($extractDate, 0, -10);
                                             }
-									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc){
+											$banderaAcuses = 0 ;
+
+											if($rowNombreDoc2[2] == "OF_SOLM" || $rowNombreDoc2[2] == "AA" || $rowNombreDoc2[2] == "ANTEC" || $rowNombreDoc2[2] == "AFVP" || $rowNombreDoc2[2] == "ACU_UR"){
+												$queryConsultaId = "SELECT * FROM doc_conjunto_qr WHERE id_movimiento_qr = '$noFomope' AND id_fechaHora = '$extractCurp' AND documento = '$rowNombreDoc2[2]'";
+												if($resQyConsultaId = mysqli_query($conexion, $queryConsultaId)){
+													$totalFilas    =    mysqli_num_rows($resQyConsultaId); 
+													if($totalFilas > 0){
+														$rowConsultaIdoc = mysqli_fetch_assoc($resQyConsultaId);
+														if($rowConsultaIdoc['id_fechaHora'] == $extractCurp ){
+															$banderaAcuses = 1;
+														}
+													}
+												}
+											}
+
+									 		if($ver[13] == $extractCurp && $rowNombreDoc2[2] == $extractDoc || $banderaAcuses == 1 ){
 									 			$duplicado++;
 									 			if ($conId==6 || $conId==7){
 									 		    	if($idMovDoc == $noFomope){
@@ -488,10 +576,17 @@ function asignarIDfecha(){
 									 			if($conId==2 || $conId==3){
 										 			$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."."."$extencion";
 													$banderaSI = 1;
-									 		    }else if ($conId==4 || $conId==5){
-									 		    	$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+									 		    }else if ($conId==4 ){
+													if($banderaDocSINqna == 1){
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractDate."."."$extencion";
+													}else{
+														$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													}
 													$banderaSI = 1;
-									 		    } 
+									 		    }elseif($conId==5){
+													$nombreAdescargar =  $dir_subidaMov.$extractDoc."/".$extractCurp."_".$extractDoc."_".$extractQna."_".$extractDate."."."$extencion";
+													$banderaSI = 1;
+												 }
 								if($banderaSI == 1){
 
 						?>	
@@ -527,6 +622,8 @@ function asignarIDfecha(){
 								
 						
 </table>
+
+					
 	<div class="modal fade bd-example-modal-lg" id="modalPDF" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
 			<div class="modal-content">

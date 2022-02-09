@@ -132,7 +132,11 @@ function agregaform(datos){
  		//document.body.innerHTML += '<form id="dynForm" action="./editarAnalista.php" method="post"><input type="hidden" name="noFomope" value="'+d[0]+'"></form>';
 		//document.getElementById("dynForm").submit();
 		window.location.href = './Controller/autorizarNomina.php?noFomope='+d[0]+'&usuario='+d[1]; 
-	}else{
+	}else if(d[2] == '7'){
+		//document.body.innerHTML += '<form id="dynForm" action="./editarAnalista.php" method="post"><input type="hidden" name="noFomope" value="'+d[0]+'"></form>';
+	   //document.getElementById("dynForm").submit();
+ 		window.location.href = 'form_FOMOPEAnalista.php?noFomope='+d[0]+'&usuario='+d[1]+'&id_rol='+d[2];
+   }else{
 
  		document.body.innerHTML += '<form id="dynForm" action="./verdeLulu.php" method="post"><input type="hidden" name="noFomope" value="'+d[1]+'"></form>';
 		document.getElementById("dynForm").submit();

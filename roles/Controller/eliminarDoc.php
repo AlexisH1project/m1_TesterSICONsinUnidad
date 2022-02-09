@@ -36,9 +36,9 @@ $dir_subida2 = './DOCUMENTOS_SUPR/';
 	
 $separarNombreRuta = explode("/", $_POST['ruta']); 
 
-	if($separarNombreRuta[0] == "DOCUMENTOS_MOV"){
+	if($separarNombreRuta[0] == "DOCUMENTOS_MOV" || $separarNombreRuta[0] == "documentos"){
 		echo "<script> alert('Documento Eliminado'); window.location.href = '../verList.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
-	}else{
+	}elseif($separarNombreRuta[0] == "DOCUMENTOS_RES"){
 		echo "<script> alert('Documento Eliminado'); window.location.href = '../verListEventuales.php?usuario_rol=$usuarioSeguir&idMov=$noFomope'</script>";
 	}
 

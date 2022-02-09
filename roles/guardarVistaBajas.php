@@ -384,7 +384,7 @@
 									       die("Error cargando el conjunto de caracteres utf8");
 									}
 
-									$consulta = "SELECT * FROM m1ct_documentos ORDER BY  id_doc";
+									$consulta = "SELECT * FROM ct_documentos_bajas ORDER BY  id_doc";
 									$resultado = mysqli_query($conexion , $consulta);
 									$contador=0;
 
@@ -482,7 +482,7 @@
 
 									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
 									// consultamos para saber el id y el nombre corto del nombre 
-									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+									$sqlRolDoc = "SELECT id_doc, documentos FROM ct_documentos_bajas WHERE nombre_documento = '$nombreArch'";
 										$resRol=mysqli_query($conexion, $sqlRolDoc);
 										$idDoc = mysqli_fetch_row($resRol);
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
@@ -540,11 +540,11 @@
 												$dir_subida = './Controller/DOCUMENTOS_BAJAS/';
 												// Arreglo con todos los nombres de los archivos
 												
-												$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+												$sqlReg =  "SELECT COUNT(*) id_doc FROM ct_documentos_bajas";
 																	$resTotalReg = mysqli_query($conexion,$sqlReg);
 																	$rowTotal = mysqli_fetch_row($resTotalReg);
-												for ($i = 0; $i < $rowTotal[0] ; $i++){
-													$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+												for ($i = 1; $i < $rowTotal[0] ; $i++){
+													$sqlNombreDoc2 = "SELECT * FROM ct_documentos_bajas WHERE id_doc = '$i'";
 																	$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 																	$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 														$imprime = 0;
@@ -616,7 +616,11 @@
 								for($i=0; $i < count($arrayDoc)-1 ; $i++){
 									//echo "<script> alert ('$arrayDoc[$i]');</script>";
 									$nombreAsignar = $arrayDoc[$i];
-									$sqlAgregar = "UPDATE fomope SET $arrayDoc[$i] = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
+									if($nombreAsignar == "doc77"){
+										$sqlAgregar = "UPDATE fomope SET $arrayDoc[$i] = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
+									}else{
+										$sqlAgregar = "UPDATE fomope SET usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
+									}
 									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
 
 									}else{

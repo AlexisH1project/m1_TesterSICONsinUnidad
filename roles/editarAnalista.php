@@ -323,9 +323,8 @@
 	        	</center>
 	        	
 	         <li class=' estilo-color'>
-	            <a href=  <?php if($id_rol1 == 3){echo ("'./CapturistaTostado.php?usuario_rol=$usuarioSeguir'"); } elseif ($id_rol1 == 2) {
-	            	
-	            echo ("'./analista.php?usuario_rol=$usuarioSeguir'"); }?>  > <img src='./img/2_ic.png' alt='x' height='17' width='20'/>      Bandeja</a>
+	            <a href=  <?php if($id_rol1 == 3){echo ("'./CapturistaTostado.php?usuario_rol=$usuarioSeguir'"); } elseif ($id_rol1 == 2) {	            	
+	            echo ("'./analista.php?usuario_rol=$usuarioSeguir'"); }elseif($id_rol1 == 7){echo ("'./bandejaBajas.php?usuario_rol=$usuarioSeguir'");} ?>  > <img src='./img/2_ic.png' alt='x' height='17' width='20'/>      Bandeja</a>
 			</li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
@@ -358,11 +357,6 @@
 	          <li class=" estilo-color">
              
 	          </li>
-	           
-	            
-			         
-
-
 	        </ul>
 
 	       <!-- <div class="mb-5">
@@ -407,8 +401,6 @@
 		      
 		         <h5 class=" estilo-color">Departamento Dirección General de Recursos Humanos y Organización/Dirección integral de puestos y servicios personales</h5>
 		        </ul>
-		       
-		     
 		         
 		      </div>
 		      <br>
@@ -419,9 +411,6 @@
 		    <br>
 		  </nav>
 
-
-
-		
 		
         <!-- Page Content  -->
       <div id="content" class="p-4 p-md-5 pt-5">
@@ -433,13 +422,7 @@
 				 		// echo $fechaSistema . " ";
 				 		// echo $diaActual . " ";
 				 		//$qnaEnviar = $rowQna[0];
-			 
-			
-
-
 		 ?>
-
-
 		<center>
 			
 <div class="formulario_fomope">
@@ -487,9 +470,17 @@
 					$banderaMov = 0;  // si entramos y encontramos doc en la carpeta documentosMov
 
 					////////////// inicia la busqueda del archivo en carpeta 
-					$dir_subida = './Controller/DOCUMENTOS/';
-					$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
-					$rutaEnviar = './DOCUMENTOS_MOV/';
+					if($ver[45] == "BAJAS"){
+						$dir_subida = './Controller/DOCUMENTOS/';
+						$dir_subidaMov = './Controller/DOCUMENTOS_BAJAS/';
+						$rutaEnviar = './DOCUMENTOS_BAJAS/';
+						$catalogoDocs = "ct_documentos_bajas";
+					}else{
+						$dir_subida = './Controller/DOCUMENTOS/';
+						$dir_subidaMov = './Controller/DOCUMENTOS_MOV/';
+						$rutaEnviar = './DOCUMENTOS_MOV/';
+						$catalogoDocs = "m1ct_documentos";
+					}
 
 					// Arreglo con todos los nombres de los archivos
 					$files = array_diff(scandir($dir_subida), array('.', '..')); 
@@ -530,10 +521,12 @@
 											$extencion = $data2[$indice-1];
 										    // Nombre del archivo
 										    $extractRfc = $data[0];
-										    $extractDoc = $data[1];
-									 		if($ver[4] == $extractRfc && $data[6] == $noFomope){
+											if(isset($data[1])){
+												$extractDoc = $data[1];
+											}
+									 		if($ver[4] == $extractRfc && $data[6] == $noFomope && isset($data[1]) || $ver[5] == $extractRfc && $data[6] == $noFomope && isset($data[1])){
 									 			$banderaMov = 1;
-													$sqlNombreDoc2 = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+													$sqlNombreDoc2 = "SELECT nombre_documento FROM $catalogoDocs WHERE documentos = '$extractDoc'";
 														$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
 														$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
 										 					echo "
@@ -563,13 +556,15 @@
 						$extencion = $data2[$indice-1];
 					    // Nombre del archivo
 					    $extractRfc = $data[0];
-					    $extractDoc = $data[1];
+						if(isset($data[1])){
+							$extractDoc = $data[1];
+						}
 					    // Extensión del archivo 
 
-					    if($ver[4] == $extractRfc){
+					    if(isset($data[1]) && $ver[4] == $extractRfc){
 					    	$existenD++;
 					    		//$losDocEnCarpeta[$contDoc] = $data[1];
-					    		$sqlNombreDoc = "SELECT nombre_documento FROM m1ct_documentos WHERE documentos = '$extractDoc'";
+					    		$sqlNombreDoc = "SELECT nombre_documento FROM $catalogoDocs WHERE documentos = '$extractDoc'";
 										$resNombreDoc = mysqli_query($conexion,$sqlNombreDoc);
 										$rowNombreDoc = mysqli_fetch_row($resNombreDoc);
 										if($conId == 7){
@@ -577,7 +572,6 @@
 									 			}else{
 									 				$nombreAdescargar = $data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 									 			}
-										$documentosPC = $documentosPC."_".$data[1];
 										echo "
 												<tr>
 												<td>$rowNombreDoc[0]</td>
@@ -694,8 +688,35 @@
 								<label  class="plantilla-label" for="laQna">*QNA: </label>
 									<select class="form-control border border-dark custom-select" id="qnaOption" name="qnaOption" required>
 											<option  value="<?php echo $newQna ?>" ><?php echo $newQna ?> </option>
-											<option  value="<?php echo $newQna+1 ?>" ><?php echo $newQna+1 ?> </option>
-											<option  value="<?php echo $newQna-1 ?>" ><?php echo $newQna-1 ?> </option>
+											<option  value="<?php 
+															if($newQna == 24){
+																 echo 1;
+															}else{
+															 echo $newQna+1;
+															} 
+															?>"> 
+															<?php 
+																if($newQna == 24){
+																	 echo 1;
+																}else{
+																 echo $newQna+1;
+																 }
+															?> 
+											</option>
+											<option  value="<?php 
+																if($newQna == 1){
+																	echo 24;
+																}else{
+																	echo $newQna-1;
+																}
+															?>"><?php
+																if($newQna == 1){
+																	echo 24;
+																}else{
+																	echo $newQna-1;
+																}	
+																?> 
+											</option>
 										         
 									</select>
 							</div>
@@ -703,9 +724,15 @@
 
 				
 
-							<div class="form-group col-md-3">
+							
+							<div class="form-group col-md-2">
 								<label  class="plantilla-label estilo-colorg" for="elAnio">AÑO: </label>
-								<input type="text" class="form-control" id="anio" name="anio" value="<?php echo $anioActual[2] ?>" readonly >
+									<?php 	
+										$ConsultaAnio = "SELECT * FROM ct_anios ORDER BY id_anio DESC";
+										$resultadoA = mysqli_query($conexion , $ConsultaAnio);
+										$row_anio = mysqli_fetch_row($resultadoA);
+									?>	
+									<input type="text" class="form-control" id="anio" name="anio" value="<?php echo $row_anio[1] ?>" readonly >
 							</div>
 					<div class="form-group col-md-4">
 						<label class="plantilla-label estilo-colorg" for="ofunid">*Oficio Unidad:</label>

@@ -18,7 +18,24 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 			<style type="text/css">
-			
+			#tab_porEsc td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_porEsc.hide_porEsc tr > *:nth-child(n){
+				display:none;
+			}
+
+			#tab_ed td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_ed.hide_ed tr > *:nth-child(n){
+				display: none;
+			}
+
+
+
 			p.one {
 			  border-style: solid;
 			  border-color: hsl(0, 100%, 50%); /* red */
@@ -152,6 +169,16 @@
 				font-size: 13px;
 			}
 
+			.ex2 img:hover {
+				height: 56px;
+				width: 65px;
+				margin-left: -50px;
+				/*** aquí va la sombra ***/
+				-webkit-box-shadow: 0 0 5px #999;
+				-moz-box-shadow: 0 0 5px #999;
+				-ms-box-shadow: 0 0 5px #999;
+				box-shadow: 0 0 5px #999;
+			}
 		</style>
 
 	</head>
@@ -218,6 +245,9 @@
 					<td>
 						<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="agregaf('<?php echo $usuarioSeguir ?>')" id="" >Capturar Fomope</button>
 						<button type="button" class="btn btn btn-danger tamanio-buttonc plantilla-inputcaptura text-white bord" onclick="conteoQr('<?php echo $usuarioSeguir ?>')" id="qr" >Conteo QR +</button>
+					<div id="ex4">
+						<a href=  <?php echo ("'./conteoQr_masivo.php?usuario_rol=$usuarioSeguir''"); ?> class = "ex2"><img src="./img/qr_conteo2.png" alt="x" height="46" width="55"/><span></span></a>
+					</div>
 					</td>
 				</div>
 			</div>
@@ -318,37 +348,37 @@
 
 							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-
-							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
-								
-							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
-								
-							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
-								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (anio='$anioBuscar')";
-								
-							}
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+	
+								}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar')";
+									
+								}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
+									
+								}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
+									
+									$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion FROM fomope WHERE (anio='$anioBuscar')";
+									
+								}
 
 
 
@@ -487,9 +517,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Escanear</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_porEsc").classList.toggle("hide_porEsc")'> Por Escanear</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_porEsc" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -605,9 +635,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Editar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick="document.getElementById('tab_ed').classList.toggle('hide_ed')"> Editar</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_ed" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>

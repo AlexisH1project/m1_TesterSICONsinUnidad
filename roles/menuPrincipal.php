@@ -3,33 +3,22 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Autorizar FOMOPE</title>
+		<title>menu_sicon</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<link href='jquery/jquery-ui.min.css' type='text/css' rel='stylesheet'>
-		<link href='jquery/jquery-ui.css' type='text/css' rel='stylesheet'>
 
-		<script type="text/javascript" src="./include/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="./include/jquery.validate.js"></script>
+		<link href='css/jquery-ui.min.css' type='text/css' rel='stylesheet'>
+		<link href='css/jquery-ui.css' type='text/css' rel='stylesheet'>
 
-		
-
-		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 		<script src="js/funciones.js"></script>
-
-		<script src="jquery/jquery-3.4.1.min.js" type="text/javascript"></script>
-		<script src="jquery/jquery-ui.min.js" type="text/javascript"></script>
-		<script src="jquery/jquery-ui.js" type="text/javascript"></script>
-		<script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js" ></script>	
-
-	<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
+		<script src="js/jquery-3.4.1.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" href="css/style.css">
@@ -50,6 +39,43 @@
 				font-size: 100px;
 				color:  #6f7271 ;
 				font-weight: bold;
+			}
+
+/* ************************ Menu deslizable  */
+
+		   *{
+			margin: 0;
+			padding: 0;
+			}
+			header{
+			font-family: Helvetica;
+			width: 480px;
+			margin: 0 auto;
+			}
+			ul{
+			list-style: none;
+			}
+			#menu li>a{
+			background-color: white;
+			color: white;
+			padding: 10px;
+			display: block;
+			text-decoration: none;
+			min-width: 100px;
+			}
+			#menu li>a:hover{
+			color: #fff;
+			background-color: #eaeaea;
+			}
+			#menu>li{
+			float: left;
+			text-align:center
+			}
+			#menu>li>ul{
+			display: none;
+			}
+			#menu>li:hover>ul {
+			display:block;
 			}
 		  </style>
 
@@ -167,24 +193,36 @@
 				<div class="p-4 ">
 
 		  		<img class="img-responsive" src="img/ss1.png" height="50" width="190">
-	        <ul class="list-unstyled components mb-5">
+	       <ul class="list-unstyled components mb-5">
 	        	<br>
 	        	<center>
-	        	<li class=" estilo-color">
-	            <a ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></span></a>
+	        		<li class=" estilo-color">
+	            <a  ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></a>
 	          </li>
-	      </center>
+	        	</center>
 	          <li class=" estilo-color">
-	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
+	            <a href= <?php  echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir'");?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
-	           <li class=" estilo-color">
-	            <a href=  <?php echo ("'./FiltroDescargar.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport2.png" alt="x" height="17" width="20"/>      Descarga de Documentos</a>
+	          <li class=" estilo-color">
+	              <a  href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
 	          <li class=" estilo-color">
 	            <a href=  <?php echo ("'./generarReporte.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/icreport.png" alt="x" height="17" width="20"/>Generar Reporte</a>
 	          </li>
+	           <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVista.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
+	          </li>
 	          <li class=" estilo-color">
-	              <a href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	              <a  href= <?php echo ("'./correosUR.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/1_ic.png" alt="x" height="17" width="17"/> Correos</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVistaEventuales.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos <center><b><i>(QR)</i></b></center></a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./qrtxt.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/qr.png" alt="x" height="17" width="20"/> Guardar txt QR</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./gEstructuraNom.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
 	          </li>
 	          <br>
 	          <br>
@@ -195,7 +233,6 @@
 	          <li class=" estilo-color">
 	              <a class="nav-link" href=  "../LoginMenu/vista/cerrarsesion.php" ><img src="./img/iclogout.png" alt="x" height="17" width="17"/> Cerrar Sesión</a>
 	          </li>
-	          
 	          </li>
 	          <li class=" estilo-color">
              
@@ -278,7 +315,9 @@
 			  <li class=" estilo-color">
 	              <a href= <?php echo ("'./gEstructuraNomEv.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/icreport2.png" alt="x" height="17" width="20"/> Descargar Registros QR</a>
 	          </li>
-	          <br>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./capturaRetardada.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/crearRpasados2.png" alt="x" height="20" width="25"/> Capturas Faltantes</a>
+	          </li>
 	          <br>
 	          <br>
 	          <br>
@@ -333,14 +372,26 @@
 	          </li>
 	      </center>
 	          <li class=" estilo-color">
+	            <a href=  <?php echo ("'../m2_plantilla/controller/movs.php?usuario_rol=$usuarioSeguir'"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja MOVS</a>
+	          </li>
+	          <li class=" estilo-color">
 	            <a href=  <?php echo ("'./Controller/consultaRoles.php?usuarioSeguir=$usuarioSeguir''"); ?> ><img src="./img/2_ic.png" alt="x" height="17" width="20"/>      Bandeja</a>
 	          </li>
 	          <li class=" estilo-color">
 	              <a href= <?php echo ("'../m2_plantilla/vista/consultaEstadoPlazas.php?usuario_rol=$usuarioSeguir'");?>><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
 	          </li>
-	          <li class=" estilo-color">
-	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Extraer Excel</a>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'../m2_plantilla/vista/leerExcel.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar plazas</a>
 	          </li>
+			 <ul id="menu">
+				<li class=" estilo-color">
+					<a hfer=""> <b>⁞</b> <img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar MOVS</a>
+					<ul>
+						<li class=" estilo-color"><a class="dropdown-item" href= <?php echo ("'../m2_plantilla/vista/leerMovs.php?usuario_rol=$usuarioSeguir'");?>>MOVS carga masiva</a></li>
+						<li class=" estilo-color"><a class="dropdown-item" href= <?php echo("'../m2_plantilla/vista/mov_cap.php?usuario_rol=$usuarioSeguir'"); ?>>MOV capturar</a></li>
+					</ul>
+				</li>
+			</ul>	
 	          <br>
 	          <br>
 	          <br>
@@ -363,7 +414,6 @@
 	     
 	      </div>
     	</nav>
-		
 
 		<?php 	
 		}else if ($nombreU[1] == 7) {
@@ -483,7 +533,51 @@
 
 	<?php
 
-		}else{ // ROL == 2 
+		}else if($nombreU[1] == 9){ 
+	?>
+			<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar" class=" bordv">
+				<div class="custom-menu">
+					<button type="button" id="sidebarCollapse" class="btn btn-outline-secondary">
+	          <i class="fa fa-bars"></i>
+	          <br>
+	          <span class="sr-only">Menú</span>
+	        </button>
+        </div>
+				<div class="p-4 ">
+
+		  		<img class="img-responsive" src="img/ss1.png" height="50" width="190">
+	        <ul class="list-unstyled components mb-5">
+	        	<br>
+	        	<center>
+	        		<li class=" estilo-color">
+	            <a  ><img src="./img/iclogin.png" alt="x" height="17" width="17"/><?php echo (" $nombreU[0]"); ?></a>
+	          </li>
+	        	</center>
+	          <li class=" estilo-color">
+	              <a  href= <?php echo ("'./consultaEstado.php?usuario_rol=$usuarioSeguir'");?> ><img src="./img/ic-consulta.png" alt="x" height="17" width="17"/> Consulta</a>
+	          </li>
+			  <li class=" estilo-color">
+	              <a href= <?php echo ("'./guardarVista_exp_comp.php?usuario_rol=$usuarioSeguir'");?>><img  src="./img/upload1.png" alt="x" height="17" width="20"/> Guardar Documentos</a>
+	          </li>
+	          <br>
+	          <br>
+	          <br>
+	          <br>
+	          <br>
+	          <br>
+	          <br>
+	          <li class=" estilo-color">
+	              <a class="nav-link" href=  "../LoginMenu/vista/cerrarsesion.php" ><img src="./img/iclogout.png" alt="x" height="17" width="17"/> Cerrar Sesión</a>
+	          </li>
+
+	        </ul>
+
+	      </div>
+    	</nav>	
+			
+	<?php		
+		}else {// ROL == 2 
 		 ?>
 
 	 <br>

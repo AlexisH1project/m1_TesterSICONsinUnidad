@@ -130,7 +130,7 @@
 						if($botonAccion == 'Reporte Fomopes Operados' && ( $estadoF == 'DSPO Rechazo' || $estadoF == 'Unidad Edición' || $estadoF == 'DDSCH Autorización' || $estadoF == 'DDSCH Edición' || $estadoF == 'Eliminado')){
 							continue;
 						}
-						$objPHPExcel->setActiveSheetIndexByName('Estructura');
+						$objPHPExcel->setActiveSheetIndexByName('Tradicional');
 						$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $imprimirRow[0]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $estadoF); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $imprimirRow[2]); 
@@ -260,6 +260,8 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BC'.$fila, $imprimirRow[129]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('BD'.$fila, $imprimirRow[130]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('BE'.$fila, $imprimirRow[131]); 
+		                $objPHPExcel->getActiveSheet()->setCellValue('BF'.$fila, $imprimirRow[113]); 
+		                $objPHPExcel->getActiveSheet()->setCellValue('BG'.$fila, $imprimirRow[114]); 
 
 		                $fila++;
 					}else{
@@ -268,8 +270,8 @@
 				}    
    
                         $fila--;
-                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BE".$fila);
-						$objPHPExcel->getActiveSheet()->getStyle("A8:BE".$fila)->applyFromArray($estiloTituloColumnas);
+                    	$objPHPExcel->getActiveSheet()->setSharedStyle($estiloInformacion, "A8:BG".$fila);
+						$objPHPExcel->getActiveSheet()->getStyle("A8:BG".$fila)->applyFromArray($estiloTituloColumnas);
 		}
     if($arr2[1][0] != NULL){
     	$fila = 8;
@@ -279,8 +281,16 @@
 					$sqlImp2  = "SELECT * FROM fomope_qr WHERE id_movimiento_qr = '$arr2[$i]'";
 					if($resImp2 = mysqli_query($conexion, $sqlImp2)){
 						$imprimirRow = mysqli_fetch_row($resImp2);
-                        
-										
+                        $estatusQr = $imprimirRow[1];
+						$colorQr = $imprimirRow[51];
+
+						if($botonAccion == 'Reporte Fomopes Operados' ){
+							if($estatusQr == 'rojo' || $estatusQr == 'Rechazado duplicado'){
+								continue;
+							}elseif($colorQr == "negro_2" || $colorQr == "negro_1" || $colorQr == "amarillo" || $colorQr == "amarillo0" || $colorQr == "azul"){
+								continue;
+							}
+						}				
 						$objPHPExcel->getActiveSheet()->setCellValue('A'.$fila, $imprimirRow[0]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('B'.$fila, $imprimirRow[1]); 
 		                $objPHPExcel->getActiveSheet()->setCellValue('C'.$fila, $imprimirRow[2]); 
@@ -347,6 +357,7 @@
 		                $objPHPExcel->getActiveSheet()->setCellValue('BL'.$fila, $imprimirRow[64]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BM'.$fila, $imprimirRow[65]);     
 		                $objPHPExcel->getActiveSheet()->setCellValue('BN'.$fila, $imprimirRow[66]);     
+		                $objPHPExcel->getActiveSheet()->setCellValue('BO'.$fila, $imprimirRow[72]);     
 
 		                $fila++;
 					}else{

@@ -95,13 +95,13 @@
 			}
 
 			function verDoc(nombre,laExtencion){
-				window.location.href = 'Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
+				window.location.href = './Controller/controllerDescarga.php?nombreDecarga='+nombre+'&extencion='+laExtencion;
 			}
 
 			function enviarRutaDoc(nombre){
 				var ruta = nombre;
-				let extencion = ruta.split('.');
-				ext =  extencion[2];
+				let extencion = ruta.split('_.');
+				ext =  extencion[1];
 				if(ext == "PDF" || ext == "pdf"){
 					$('#modalPDF').modal('show');
 					$('#idframePDF').attr('src',nombre);
@@ -164,7 +164,14 @@
 							// echo $noFomope;
 							$result=mysqli_query($conexion,$sql);
 							$ver = mysqli_fetch_row($result);
-
+							echo("
+							<br>
+							<br>
+							<div class='col-sm-4 '>
+							<div class='plantilla-inputv text-dark '>
+								<div class='card-body'><h2 align=''></h2><i><b>$ver[8] $ver[6] $ver[7]</b></i></div>
+							</div>
+							</div>");
 							$queyRols = "SELECT * from usuarios WHERE usuario = '$usuarioSeguir'";
 							$resultRols = mysqli_query($conexion, $queyRols);
 							$columnasUsuario = mysqli_fetch_assoc($resultRols);
@@ -334,11 +341,25 @@
 											if(isset($data[1])){
 												$extractDoc = $data[1];
 											}
-									 		if($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope && isset($data[1])){
+											$banderaAcuses = 0 ;
+
+											if($rowNombreDoc2[2] == "doc79" || $rowNombreDoc2[2] == "doc80" || $rowNombreDoc2[2] == "doc81" || $rowNombreDoc2[2] == "doc22"){
+												$queryConsultaId = "SELECT * FROM doc_conjunto WHERE id_movimiento = '$noFomope'";
+												if($resQyConsultaId = mysqli_query($conexion, $queryConsultaId)){
+													$totalFilas    =    mysqli_num_rows($resQyConsultaId); 
+													if($totalFilas > 0){
+														$rowConsultaIdoc = mysqli_fetch_assoc($resQyConsultaId);
+														if($rowConsultaIdoc['id_fechaHora'] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && isset($data[1])){
+															$banderaAcuses = 1;
+														}
+													}
+												}
+											}
+									 		if(($ver[4] == $extractRfc && $rowNombreDoc2[2] == strtolower($extractDoc) && $data[6] == $noFomope && isset($data[1])) || $banderaAcuses == 1){
 									 			$banderaMov = 1;
 									 			$duplicado++;
 									 			if($duplicado > 1){
-						
+
 										 					echo "
 													<tr>
 													<td>$rowNombreDoc2[1]</td>
@@ -397,8 +418,8 @@
 															";
 											 			}
 											 			if($conId == 7){
-											 				$nombreAdescargar = $dir_subidaMov.strtolower($data[1])."/".$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
-											 			}else{
+															$nombreAdescargar = $dir_subida.$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_".$data[5]."_."."$extencion";
+														}else{
 											 				$nombreAdescargar = $dir_subida.$data[0]."_".$data[1]."_".$data[2]."_".$data[3]."_".$data[4]."_."."$extencion";
 											 			}
 														$banderaSI = 1;

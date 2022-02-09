@@ -14,8 +14,8 @@
 			$hora = str_replace ( ":", '',$row2[0] ); 
 			$fecha = str_replace ( "-", '',$row[0] ); 
 		}
-		$nameDoc = "registroQR_".$fecha.$hora."_ingreso.txt";	
-		$nameDoc2 = "registroQR_".$fecha.$hora."_reingreso.txt";	
+		$nameDoc = "DIPI00.txt";	
+		$nameDoc2 = "DIPR00.txt";	
 		$creaArchivo = fopen("txt/".$nameDoc2, "a");
 		$creaArchivo2 = fopen("txt/".$nameDoc, "a");
 		$file = fopen("txt/".$nameDoc2, "w");

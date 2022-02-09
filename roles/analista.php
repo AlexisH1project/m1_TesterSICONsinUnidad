@@ -20,7 +20,54 @@
 		<script src="js/jquery-ui.min.js" type="text/javascript"></script>
 		<script src="js/jquery-ui.js" type="text/javascript"></script>
 		<style type="text/css">
+			#table_porCap td {
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#table_porCap.hide_porCap tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_qr td {
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_qr.hide_qr tr > *:nth-child(n) {
+				display: none;
+			}
 			
+			#tab_rechQr td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_rechQr.hide_rechQr tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_edR td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_edR.hide_edR tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_nomina td{
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_nomina.hide_nomina tr > *:nth-child(n) {
+				display: none;
+			}
+
+			#tab_porA td {
+				padding: 1em;
+				border: 1px solid black;
+			}
+			#tab_porA.hide_porA tr > *:nth-child(n) {
+				display: none;
+			}
+
 			p.one {
 			  border-style: solid;
 			  border-color: hsl(0, 100%, 50%); /* red */
@@ -193,6 +240,30 @@
 				<h5 class=" plantilla-subtitulop" > DEPARTAMENTO DE SEGUIMIENTO DE PLANTILLAS OCUPACIONALES - DSPO</h5>
 			
 				<script type="text/javascript">
+					$(document).ready(function(){
+						$('.selectall_qr').click(function() {
+								var checked=false;
+								var aa =  document.getElementsByName("radios1");
+								checked = document.getElementById('radio_all_qr').checked;
+
+								for (var i =0; i < aa.length; i++) 
+								{
+									aa[i].checked = checked;
+								}
+							
+						});
+						$('.selectall').click(function() {
+								var checked=false;
+								var aa =  document.getElementsByName("radios");
+								checked = document.getElementById('radio_all').checked;
+
+								for (var i =0; i < aa.length; i++) 
+								{
+									aa[i].checked = checked;
+								}
+							
+						});
+					});
 
 					function obtenerRadioSeleccionado(formulario, nombre, userRol){
 						var contador = 0;
@@ -245,17 +316,7 @@
 							window.location.href = './Controller/autorizarNomina.php?noFomope='+d[0]+'&usuario='+d[1]; 
 		
 					}
-
-					/*$(document).ready(function()
-						{
-						$("#autorizarTodo").click(function () {	 
-					     	longitud = document.getElementById(#autorizarTodo).length;
-							alert(longitud.val());
-
-							alert($('input:checkbox[name=radios]:checked').val());
-							$("#radioALL").submit();
-							});
-						 });*/
+				
 				</script>
 				
 			<form method="post" action=""> 
@@ -359,44 +420,51 @@
 
 
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
-					if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
+							if($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar != ""){
 
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
-
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar != "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE ( quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND quincenaAplicada='$qnaBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND quincenaAplicada='$qnaBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar != "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc='$rfcBuscar' AND anio='$anioBuscar')";
+								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (rfc LIKE '%$rfcBuscar%' AND anio='$anioBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar != "" && $anioBuscar == "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (  quincenaAplicada='$qnaBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (  qna='$qnaBuscar')";
 								
 							}elseif ($rfcBuscar == "" && $qnaBuscar == "" && $anioBuscar != "") {
 								
 								$sql="SELECT id_movimiento,color_estado,unidad,rfc,quincenaAplicada,fechaIngreso,codigoMovimiento, fechaAutorizacion, fechaCaptura FROM fomope WHERE (anio='$anioBuscar')";
+								$sql2 = "SELECT * FROM fomope_qr WHERE (anio='$anioBuscar')";
 								
 							}
 
 
 							$sqlColor="SELECT colorAsignado FROM usuarios WHERE usuario='$usuarioSeguir'";
 
-
+// ************************************** vamos a desplegar los resultados obtenidos por la busqueda tradicional 
 							if ($result = mysqli_query($conexion,$sql)) {
 
 								$totalFilas    =    mysqli_num_rows($result);  
@@ -407,7 +475,7 @@
 											<br>
 											<div class="col-sm-12 ">
 											<div class="plantilla-inputv text-dark ">
-											    <div class="card-body"><h2 align="center">No existe resultados de la busqueda, vuelve intentar.</h2></div>
+											    <div class="card-body"><h2 align="center">No existe resultado de movimientos tradicionales en la busqueda, vuelve intentar.</h2></div>
 										</div>
 										</div>');
 								}else{
@@ -521,6 +589,98 @@
 								echo '<script type="text/javascript">alert("Error en la conexion");</script>';
 								echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
 							}
+// ************* finaliza la busquesa de la bandeja 
+
+// ******************************************************se comienza la busqueda para los movs de QR 
+	if ($result = mysqli_query($conexion,$sql2)) {
+
+		$totalFilas    =    mysqli_num_rows($result);  
+		if($totalFilas == 0){
+			
+			echo('
+				<br>
+				<br>
+				<div class="col-sm-12 ">
+				<div class="plantilla-inputv text-dark ">
+					<div class="card-body"><h2 align="center">No existe resultados de movimientos QR en la busqueda, vuelve intentar.</h2></div>
+			</div>
+			</div>');
+		}else{
+
+
+		while($ver=mysqli_fetch_row($result)){ 
+		switch ($ver[51]) {
+				case 'negro_2':
+					$estadoF = 'DSPO Rechazo';
+					break;
+				case 'negro':
+					$estadoF = 'Unidad Edición';
+					break;
+				case 'amarillo':
+					$estadoF = 'DSPO captura';
+					break;		
+				case 'amarillo0':
+					$estadoF = 'DDSCH Autorización';
+					break;
+				case 'cafe':
+					$estadoF = 'DSPO Autorización';
+					break;	
+				case 'negro_1':
+					$estadoF = 'DDSCH Rechazo por Duplicado';
+					break;
+				case 'azul':
+					$estadoF= 'DGRHO Autorización';
+					break;
+				case 'rosa':
+					$estadoF = 'DSPO nomina';
+					break;		
+				case 'verde':
+					$estadoF = 'DDSCH loteo';
+					break;
+				case 'verde2':
+					$estadoF = 'DDSCH Autorización Loteo';
+					break;	
+				case 'gris':
+					$estadoF = 'DDSCH Edición';
+					break;
+				case 'guinda':
+					$estadoF = 'Finalizado';
+					break;		
+				default:
+					
+					break;
+			}
+
+?>
+<tr>
+
+	<td><?php echo $estadoF ?></td>
+	<td><?php echo $ver[26] ?></td>
+	<td><?php echo $ver[7] ?></td>
+	<td><?php echo $ver[3] ?></td>
+	<td><?php echo $ver[40] ?></td>
+	<td><?php echo $ver[5] ?></td>
+	<td><?php echo $ver[48] ?></td>
+	<td><?php echo $ver[53] ?></td>	
+
+<?php
+		if($ver[2]=="ESTRUCTURA" || $ver[2] == "PERSONAL DE CONFIANZA (ALTA)" || $ver[2] == "PERSONAL DE CONFIANZA (REINGRESO)"){
+?>
+<td>
+			<button type="button" class="btn btn-outline-secondary" onclick="verDatosQr('<?php echo $ver[0] ?>' , '<?php echo $usuarioSeguir ?>' )" id="ver">Ver</button>
+</td>
+</tr>
+<?php 
+		}
+	}
+}
+}else{
+	echo '<script type="text/javascript">alert("Error en la conexion");</script>';
+	echo '<script type="text/javascript">alert("error '. mysqli_error($conexion).'");</script>';
+}
+
+// *************finaliza la busqueda QR
+
 						}
 						 ?>
 		</table>
@@ -528,15 +688,17 @@
 			<div class="col-sm-12">
 				
 				<div class="card bg-secondary text-white">
-						<div class="card-body plantilla-inputg"><h2>QR</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_qr").classList.toggle("hide_qr")'>QR</button></h2></div>
 				</div>
 		<form name="radioALL1" id="radioALL1" action="" method="POST"> 
-				<table class="table table-hover table-white">
+				<table id="tab_qr" class="table table-hover table-white">
 					<thead>
 						<tr>
 						<!-- <td>Observacion</td>
 						<td>ID Fomope</td> -->
-						  <th scope="titulo">Autorizar</th>
+						  <th scope="titulo">Autorizar<br>
+							  <label><input type="checkbox" id="radio_all_qr" class="selectall_qr" /> Todo</label>
+						  </th>
 						  <th scope="titulo">Unidad</th>
 						  <th scope="titulo">RFC</th>
 						  <th scope="titulo">QNA</th>
@@ -583,8 +745,8 @@
 					<tr>
 						
 						<td>
-							<div class="custom-control custom-radio">
-							  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios1"></label>
+							<div class="custom-control custom-radio" >
+							  <label><input type="checkbox" value="<?php echo $ver[0] ?>" name="radios1" ></label>
 							</div>
 						</td>
 						<td><?php echo $row['unidad'] ?></td>
@@ -618,9 +780,9 @@
 		<div class="col-sm-12">
 				
 				<div class="card bg-secondary text-white">
-						<div class="card-body plantilla-inputg"><h2>Rechazos QR</h2></div>
+						<div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_rechQr").classList.toggle("hide_rechQr")'>Rechazos QR</button></h2></div>
 				</div>
-				<table class="table table-hover table-white">
+				<table id="tab_rechQr" class="table table-hover table-white">
 					<thead>
 						<tr>
 						<!-- <td>Observacion</td>
@@ -693,14 +855,16 @@
 				
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Autorizar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_porA").classList.toggle("hide_porA")'>Por Autorizar</button></h2></div>
 					</div>
 			<form name="radioALL" id="radioALL" action="" method="POST"> 
 
-					<table class="table table-hover table-white">
+					<table id="tab_porA" class="table table-hover table-white">
 						<thead>
 						    <tr>
-						       <th scope="titulo">Autorizar</th>
+						       <th scope="titulo">Autorizar<br>
+							 	  <label><input type="checkbox" id="radio_all" class="selectall" /> Todo</label>
+							   </th>
 						      <th scope="titulo">Estado Fomope</th>
 						      <th scope="titulo">Unidad</th>
 						      <th scope="titulo">RFC</th>
@@ -875,9 +1039,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Por Capturar</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("table_porCap").classList.toggle("hide_porCap")'>Por Capturar</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id= "table_porCap" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -969,9 +1133,9 @@
 						  <div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Editar Rechazados</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_edR").classList.toggle("hide_edR")'>Editar Rechazados</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_edR" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -1064,9 +1228,9 @@
 			<div class="col-sm-12">
 				
 					<div class="card bg-secondary text-white">
-						    <div class="card-body plantilla-inputg"><h2>Nomina</h2></div>
+						    <div class="card-body plantilla-inputg"><h2><button class="btn btn-secondary" onclick='document.getElementById("tab_nomina").classList.toggle("hide_nomina")'>Nomina</button></h2></div>
 					</div>
-					<table class="table table-hover table-white">
+					<table id="tab_nomina" class="table table-hover table-white">
 						<thead>
 						    <tr>
 							<!-- <td>Observacion</td>
@@ -1121,15 +1285,8 @@
 							<td><?php echo $ver[6] ?></td>
 							<td><?php echo $ver[7] ?></td>
 							<td><?php echo $ver[8] ?></td>
-
-
 							<td>
-									
-
-						
 										<input type="button" id="autNomina" class="btn btn-outline-secondary" data-toggle="modal"  data-target="#exampleModalN" onclick="autNomina('<?php echo $datos ?>')" value="Nomina" >
-																 
-
 							</td>
 						</tr>
 						<?php 
