@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>FOMOPE Autorizar</title>
+		<title>Guardar expediente</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" type="text/css" href="css/estilo_form.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -116,7 +116,7 @@
 					// El select
 					let $tdSelect = document.createElement("td");
 					var checkbox = document.createElement('input');
-					checkbox.type = "radio";
+					checkbox.type = "checkbox";
 					checkbox.name = "radioMov";
 					checkbox.value = radioCheck;
 					checkbox.id = "idRadioMov";
@@ -164,7 +164,7 @@
 								url: 'resultados_rfc.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:3,
+									buscarid:buscarid,request:4,
 									
 								},
 								success: function(data){
@@ -184,7 +184,7 @@
 									document.getElementById("apellido1").value = infEmpleado[0].apellido1 ;
 									document.getElementById("apellido2").value = infEmpleado[0].apellido2 ;
 									document.getElementById("nombre").value = infEmpleado[0].nombre ;
-									
+									document.getElementById("total_movs").value = infEmpleado.length;
 								  for(var i=1; i < infEmpleado.length; i++){ 
 								        console.log("Documento"+infEmpleado[i].doc);
 									    if(infEmpleado[i].id != null){
@@ -217,8 +217,8 @@
 												
 												let $tdSelect = document.createElement("td");
 												var checkbox = document.createElement('input');
-												checkbox.type = "radio";
-												checkbox.name = "radioMov";
+												checkbox.type = "checkbox";
+												checkbox.name = "radioMov"+i;
 												checkbox.value = infEmpleado[i].id;
 												checkbox.id = "idRadioMov";
 												
@@ -413,7 +413,8 @@ $(document).ready(function(){
 				var nombreComp = {
 					"nombre" : elNombre,
 					"apellido1" : elApellido1,
-					"apellido2" : elApellido2
+					"apellido2" : elApellido2,
+					"query" : 1
 				};
 
 				$.ajax({
@@ -465,8 +466,8 @@ $(document).ready(function(){
 												// El select
 												let $tdSelect = document.createElement("td");
 												var checkbox = document.createElement('input');
-												checkbox.type = "radio";
-												checkbox.name = "radioMov";
+												checkbox.type = "checkbox";
+												checkbox.name = "radioMov"+i;
 												checkbox.value = infEmpleado[i].id;
 												checkbox.id = "idRadioMov";
 												
@@ -727,9 +728,9 @@ $(document).ready(function(){
 		  </nav>
 		
 		<center>			
-				<h3>Sistema para guardar archivos digitales .pdf</h3>
+				<h3>Sistema para guardar archivos digitales .PDF</h3>
 				<br>
-				<h5>DDSCH</h5>
+				<h5>DIPSP</h5>
 
 				<?php
 					if(isset($_POST["listaDoc"])){ 
@@ -834,7 +835,7 @@ $(document).ready(function(){
 						      </div>
 						    </div>
 							<input type="button" name="buscar_sinRfc" onclick= "elimRequeridos();" class="btn btn-outline-light button5" value="buscar por nombre"><br> 
-
+							<input type="hidden" name="total_movs" id="total_movs">
 						    <div class="form-group">
 						    
 
@@ -889,36 +890,46 @@ $(document).ready(function(){
 												}
 							$banderaBoton = 0;
 
-					if(isset($_POST['guardarAdj'])){
+if(isset($_POST['guardarAdj'])){
 					
 									$nombre = strtoupper($_POST['nombre'] );
 									$elRfc =  strtoupper($_POST['rfcL_1']);
 									$elApellido1 = strtoupper ($_POST['apellido1']);
 									$elApellido2 = strtoupper ($_POST['apellido2']);
+									$eltotalMovs = $_POST['total_movs'];
 									$nombreArch = "doc67";
 									$listaCompleta = $_POST['listaDoc'];
 									$concatenarNombDoc = $_POST['guardarDoc'];
+									$optionSelec[0] = 0;
+									$bandera = 0;
+									$file_name_ruta = $_FILES['nameArchivo']['tmp_name'];
+									$file_archivo_name = $_FILES['nameArchivo']['name'];
 									// echo $nombreArch;
-									if(isset($_POST['radioMov'])){
-										$optionSelec = $_POST['radioMov'];
-									}else{
-										$optionSelec = "x";
+									for ($i=1; $i < $eltotalMovs ; $i++) { 
+										if(isset($_POST['radioMov'.$i])){
+											$optionSelec[$i] = $_POST['radioMov'.$i];
+											$bandera = 1; 	
+										}else{
+											$optionSelec[$i] = "x";
+										}
 									}
 									//echo "select:  ".$optionSelec;
 									$banderaBoton = 1;
-	if($optionSelec == "x"){
-		
+	if($bandera == 0){
+		$banderaBoton = 0;
 		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
 	}else if($optionSelec == "undefined"){
+		$banderaBoton = 0;
 		echo "<script> alert('No se guardo documento, por no seleccionar automaticamente el movimiento del personal ya previamente registrado '); </script>";
 	}else{	
 	         //------Buscamos los datos para mostrar en el select y mandar a la funcion en JS para poder cargar solo ese dato
-        							$consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE id_movimiento='$optionSelec'";
-        							if($resultSelect = mysqli_query($conexion, $consulta)){
-        								$rowSelect = mysqli_fetch_row($resultSelect);
-        								$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
-        								//echo $opcionCompleta;
-        							}else{ echo "errror";}
+        							// $consulta = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE id_movimiento='$optionSelec'";
+        							// if($resultSelect = mysqli_query($conexion, $consulta)){
+        							// 	$rowSelect = mysqli_fetch_row($resultSelect);
+        							// 	$opcionCompleta  = "( Codigo: ".$rowSelect[1]." ) ( Fecha: ".$rowSelect[2]." ) (Qna: ".$rowSelect[4].") (Año: ".$rowSelect[3]." )";
+        							// 	//echo $opcionCompleta;
+        							// }else{ echo "errror";}
+					for ($z=1; $z < $eltotalMovs; $z++) { 
 
 									 $hoy = "select CURDATE()";
 
@@ -936,40 +947,9 @@ $(document).ready(function(){
 									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
 									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
-									$dir_subida2 = './Controller/DOCUMENTOS_SUPR/';
-
-											// Arreglo con todos los nombres de los archivos
-											$files = array_diff(scandir($dir_subida), array('.', '..')); 
-											
-											/*foreach($files as $file){
-											    // Divides en dos el nombre de tu archivo utilizando el . 
-											    $data = explode("_",$file);
-											    $data2 = explode(".",$file);
-												$indice = count($data2);	
-
-												$extencion = $data2[$indice-1];
-											    // Nombre del archivo
-											    $extractRfc = $data[0];
-											    $nameAdj = $data[1];
-												//echo "<script> alert(''); </script>";
-
-											    // Extensión del archivo 
-											    if($elRfc == $extractRfc AND strtoupper($idDoc[1]) == $nameAdj){
-													//echo "<script> alert('$idDoc[1]'); </script>";
-	
-															$fichero_subido2 = $dir_subida2 . $file;
-															$extencion2 = explode(".",$fichero_subido2);
-															$tamnio = count($extencion2);
-
-															$extencion3 = $extencion2[$tamnio-1]; //el ".pdf"
-															$concatenarNombreC = $dir_subida2.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$numEliminado."_.".$extencion3);
-															copy($dir_subida.$file, $concatenarNombreC);
-														unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre."_.".$extencion);
-											        	break;
-											   	}
-											}*/
+									
 									//guardamos el archivo que se selecciono en la carpeta 
-										$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
+										$fichero_subido = $dir_subida . basename($file_archivo_name);
 											$extencion2 = explode(".",$fichero_subido);
 											$tamnio = count($extencion2);
 
@@ -984,110 +964,42 @@ $(document).ready(function(){
 												 }
 												 $hora = str_replace ( ":", '',$row2[0] ); 
 												 $fecha = str_replace ( "-", '',$row[0] ); 
-			// -------------- Guardamos archivo en carpeta				
-											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
-												sleep(3);
-												if($idDoc[1] == "doc76" || $idDoc[1] == "doc77" || $idDoc[1] == "doc78" || $idDoc[1] == "doc79" || $idDoc[1] == "doc80" || $idDoc[1] == "doc81"){
-													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$optionSelec."_.".$extencion3);
+			// -------------- Guardamos archivo en carpeta		
+										if($optionSelec[$z] == "x") {
+											continue; 
+										}else{
+											$valor_array_select = $optionSelec[$z];
+											// sleep(3);
+											if (copy($file_name_ruta, $fichero_subido)) {
+												// echo "El two valor seria el siguiente: " . $optionSelec[$z];
+												// echo "num::: " . $eltotalMovs;
+
+													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$valor_array_select."_.".$extencion3);
 													rename ($fichero_subido,$concatenarNombreC);
-												}else{
-													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$optionSelec."_.".$extencion3);
-													rename ($fichero_subido,$concatenarNombreC);
-												}
+
 													$arrayDoc = explode("_", $nombreCompletoArch);
 												 	$tamanioList = count($arrayDoc);
 
-													$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$optionSelec', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up doc', '$idDoc[1]')";
+													$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$valor_array_select', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up doc', '$idDoc[1]')";
 													$resultH = mysqli_query($conexion,$queryHistorial);	
-
-
-		//los mandamos a la funcion para que al volver a cargar la pagina no se pierdan los datos de ese input
-												echo "
-													<script>
-															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
-													</script >";
-												// echo "<script> datosSelect('$optionSelec', '$opcionCompleta'); </script>";
-												echo "<script> movTable('$optionSelec','$rowSelect[1] ','$rowSelect[2]','$rowSelect[4]','$rowSelect[3]', '$rowSelect[5]', '$rowSelect[6]'); </script>";
-
 											
 													$arrayNumDoc = explode("_", $enviarDoc);		
-													$numeroDeDocs = count($arrayNumDoc);											
+													$numeroDeDocs = count($arrayNumDoc);	
 										?>
 										<!-- ***************************************************************************************** -->	
 
-								<table class="table table-striped table-bordered tbody thead2 tr" style="margin-bottom: 0">
-
-													<?php 
-														include "configuracion.php";
-														$existenD =0;
-							////////////// inicia la busqueda del archivo en carpeta 
-												$dir_subida = './Controller/DOCUMENTOS_MOV/';
-												// Arreglo con todos los nombres de los archivos
-												
-												$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
-																	$resTotalReg = mysqli_query($conexion,$sqlReg);
-																	$rowTotal = mysqli_fetch_row($resTotalReg);
-												for ($i = 0; $i < $rowTotal[0] ; $i++){
-													$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
-																	$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
-																	$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
-														$imprime = 0;
-													
-													if($imprime == 0 AND ($rowNombreDoc2[2] == "doc67" OR $rowNombreDoc2[2] == "doc68") ){
-															echo "
-																			<tr>
-																			<td>$rowNombreDoc2[1]</td>
-																			<td>";
-												    		//$contDoc++;
-
-													?>
-
-													<?php	
-
-															if($banderaBoton == 1){
-																	for ($j=0; $j < $numeroDeDocs ; $j++) { 	
-																		
-																 		if($rowNombreDoc2[2] == $arrayNumDoc[$j] ){  //strtolower($documentoPC[$j])::: strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
-																 				
-																
-													?>
-																			<button class="btn btn-success" > ✔ </button>
-																			</td>
-																					
-													<?php
-																			break;
-																		}else if($j == $numeroDeDocs-1){
-													?>
-																			<button class="btn btn-danger" > X </button>
-																			</td>
-													<?php						
-																		}
-																	}
-																}else{
-
-													?>
-																			<button class="btn btn-danger" > X </button>
-																			</td>
-
-													<?php
-																}
-														}
-													}
-													 ?>
-
-												
-
-												</table>
-								
+							
 							<!-- ***************************************************************************************** -->	
 
 										<?php													
 											} else{
-											    echo "<script> alert('Existe un error al guardar el archivo'); ";
+											    echo "<script> alert('Existe un error al guardar el archivo'); </script> ";
 											}
-
-
-								$arrayDoc = explode("_", $enviarDoc) ;
+										}
+								} // termina for array 
+								
+							} // fin del else  para guardar docs
+								// $arrayDoc = explode("_", $enviarDoc) ;
 								//actualizamos la base para poder tener el registro de los documentos
 								include "./configuracion.php";
 								$usuarioSeguir = $_GET['usuario_rol'];
@@ -1097,20 +1009,86 @@ $(document).ready(function(){
 								 if ($resultHoy = mysqli_query($conexion,$hoy)) {
 								 		$rowHoy = mysqli_fetch_row($resultHoy);
 								 }
-								for($i=0; $i < count($arrayDoc)-1 ; $i++){
-									//echo "<script> alert ('$arrayDoc[$i]');</script>";
-									$nombreAsignar = strtolower($arrayDoc[$i]);
-									$sqlAgregar = "UPDATE fomope SET $nombreAsignar = '$nombreAsignar', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$optionSelec'";
-									if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
-
-									}else{
-										echo "<script> alert ('error');</script>";
+								 for ($i=1; $i < $eltotalMovs ; $i++) { 
+									 $id_selec = $optionSelec[$i];
+									if(	$id_selec != "x"){
+										$sqlAgregar = "UPDATE fomope SET doc67 = 'doc67', usuarioAdjuntarDoc = '$usuarioSeguir $rowHoy[0]'  WHERE id_movimiento = '$id_selec'";
+										if ($resUpdate = mysqli_query($conexion, $sqlAgregar)){
+	
+										}else{
+											echo "<script> alert ('error');</script>";
+										}
 									}
-
 								}
 
-							}
-	}
+					?>
+						<table class="table table-striped table-bordered tbody thead2 tr" style="margin-bottom: 0">
+
+								<?php 
+									include "configuracion.php";
+									$existenD =0;
+								////////////// inicia la busqueda del archivo en carpeta 
+								$dir_subida = './Controller/DOCUMENTOS_MOV/';
+								// Arreglo con todos los nombres de los archivos
+
+								$sqlReg =  "SELECT COUNT(*) id_doc FROM m1ct_documentos";
+												$resTotalReg = mysqli_query($conexion,$sqlReg);
+												$rowTotal = mysqli_fetch_row($resTotalReg);
+								for ($i = 0; $i < $rowTotal[0] ; $i++){
+								$sqlNombreDoc2 = "SELECT * FROM m1ct_documentos WHERE id_doc = '$i'";
+												$resNombreDoc2 = mysqli_query($conexion,$sqlNombreDoc2);
+												$rowNombreDoc2 = mysqli_fetch_row($resNombreDoc2);
+									$imprime = 0;
+
+								if($imprime == 0 AND $rowNombreDoc2[2] == "doc67" ){ //OR $rowNombreDoc2[2] == "doc68"
+										echo "
+														<tr>
+														<td>$rowNombreDoc2[1]</td>
+														<td>";
+										//$contDoc++;
+
+								?>
+
+								<?php	
+
+										if($banderaBoton == 1){
+												for ($j=0; $j < $numeroDeDocs ; $j++) { 	
+													
+													if($rowNombreDoc2[2] == $arrayNumDoc[$j] ){  //strtolower($documentoPC[$j])::: strtolower hacemos muscualas porque recibe de la pc mayusculas y en la base es "doc"
+															
+											
+								?>
+														<button class="btn btn-success" > ✔ </button>
+														</td>
+																
+								<?php
+														break;
+													}else if($j == $numeroDeDocs-1){
+								?>
+														<button class="btn btn-danger" > X </button>
+														</td>
+								<?php						
+													}
+												}
+											}else{
+
+								?>
+														<button class="btn btn-danger" > X </button>
+														</td>
+
+								<?php
+											}
+									}
+								}
+								?>
+
+
+
+								</table>
+
+				<?php
+
+	} // fin del ISSET
 		
 
 					if(isset($_POST['borrar'])){

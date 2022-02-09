@@ -388,7 +388,7 @@
 					<a hfer=""> <b>⁞</b> <img  src="./img/upload1.png" alt="x" height="17" width="20"/> Importar MOVS</a>
 					<ul>
 						<li class=" estilo-color"><a class="dropdown-item" href= <?php echo ("'../m2_plantilla/vista/leerMovs.php?usuario_rol=$usuarioSeguir'");?>>MOVS carga masiva</a></li>
-						<li class=" estilo-color"><a class="dropdown-item" href= "">MOV capturar</a></li>
+						<li class=" estilo-color"><a class="dropdown-item" href= <?php echo("'../m2_plantilla/vista/mov_cap.php?usuario_rol=$usuarioSeguir'"); ?>>MOV capturar</a></li>
 					</ul>
 				</li>
 			</ul>	

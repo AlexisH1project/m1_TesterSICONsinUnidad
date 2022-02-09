@@ -5,12 +5,19 @@
     $nombre = $_POST['nombre'];
     $apellido1 = $_POST['apellido1'];
     $apellido2 = $_POST['apellido2'];
+    if(isset($_POST['query'])){
+        if($_POST['query'] == 1){
+             $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE rfc='$row[1]' AND color_estado != 'negro' AND color_estado != 'negro1' AND color_estado != 'rojo'";
+        }else{
+            $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE rfc='$row[1]'";
+        }
+    }
     
         $consulta2 = "SELECT * FROM ct_empleados WHERE nombre= '$nombre' AND apellido_1 = '$apellido1' AND apellido_2 = '$apellido2'";
         $resultado2 = mysqli_query($conexion,$consulta2);
         $row = mysqli_fetch_row($resultado2); 
 
-        $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE rfc='$row[1]'";
+        // $consulta3 = "SELECT id_movimiento, codigoMovimiento, vigenciaDel, anio, qnaDeAfectacion, unidad, doc67 FROM fomope WHERE rfc='$row[1]' AND color_estado != 'negro' AND color_estado != 'negro1' AND color_estado != 'rojo'";
         $resultado3 = mysqli_query($conexion,$consulta3);
       
         $value[0] = array( 
