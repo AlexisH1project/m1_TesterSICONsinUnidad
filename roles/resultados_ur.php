@@ -31,5 +31,34 @@
         echo json_encode($buscar_arr);
         exit;
     }
-
+// *********************************** opcion de sub_unidad
+    if($request == 3){
+        $busqueda = $_POST['buscarid'];
+            // **************** sacamos sub_unidad
+        $sql_sub_ur = "SELECT * FROM ct_agenda_ur WHERE ur='$busqueda'";
+        $sql_count = "SELECT COUNT(*) FROM ct_agenda_ur WHERE ur='$busqueda'";
+        $res_c = mysqli_query($conexion, $sql_count);
+        $contenido = mysqli_fetch_row($res_c);
+        if($contenido[0] >0){
+            $resultado_sub_ur = mysqli_query($conexion,$sql_sub_ur);
+            $i=0;
+            while($ver=mysqli_fetch_row($resultado_sub_ur)){ 
+                $value[$i] = array( 
+                    "id_miembro"=>$ver[0],
+                    "sub_ur"=>$ver[2],
+                    "descripcion_ur"=>$ver[3]
+                );
+                $i++;
+            }
+        }else{
+            $value[0] = array( 
+                "id_miembro"=>'x',
+                "sub_ur"=>'x',
+                "descripcion_ur"=>'x'
+            );
+        }
+            echo json_encode($value);
+            exit;
+            
+        }
 ?>
