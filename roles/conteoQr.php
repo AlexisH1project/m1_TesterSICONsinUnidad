@@ -623,6 +623,11 @@ $(document).ready(function(){
 		<br>
 
 					<?php 
+<<<<<<< HEAD
+				
+					echo "<script>}else {
+									alert('¡Haz denegado el registro!');
+=======
 						include "configuracion.php";
 
 			if(isset($_POST['buscar'])){	
@@ -692,6 +697,7 @@ $(document).ready(function(){
 											</div>");	
 										}
 									}
+>>>>>>> 6b6bd1e94555ef7dbdfd46cdc71753064928adc8
 								}
 							  }else {
 								$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre, sub_unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre', '$sub_ur') ";
