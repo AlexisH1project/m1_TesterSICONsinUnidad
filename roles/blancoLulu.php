@@ -71,7 +71,16 @@
 
 
 		<script type="text/javascript">
-			
+			$(document).ready(function(){
+				var unidad = $("#unexp_1").val();
+				console.log(unidad);
+			});
+
+
+			function buscar_sub_ur(unidad){
+				// var unidad = $("#unexp_1").val();
+				console.log(unidad.val());
+			}
 
 			$(document).ready(function(){
 				$(document).on('keydown', '.unexp', function(){
@@ -99,16 +108,54 @@
 								url: 'resultados_ur.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:2
+									buscarid:buscarid,request:3
 								},
-								dataType: 'json',
 								success:function(response){
 									var len = response.length;
-									if(len > 0){
-										var idx2 = response[0]['idx2'];
-										var unexp = response[0]['unexp'];
-										document.getElementById('unexp_'+indice).value = unexp;
+									var inf_unidada = eval(response);
+									console.log(response);
+									// console.log(inf_unidada[2]);
+									if(inf_unidada.length == "1"){
+            							// remove_op.remove();  
+										var selectobject = document.getElementById("select_sub_ur");
+										console.log("antes de :: "+ selectobject.length);
+										$("#x2").remove();
+										for (let i=0; i<30; i++) {
+											$("#"+i).remove();
+										}
+										let option = document.createElement("option");
+										var opcion_txt = "NO hay Sub Unidad";
+										console.log(opcion_txt);
+										option.innerHTML = opcion_txt; //Metemos el texto en la opción
+										option.value = "x"; 
+										option.id = "x"; 
+										selectobject.appendChild(option); //Metemos la opción en el selec
+									}else{
+										console.log("si hay");
+										console.log(inf_unidada.length);
+										$("#x").remove(); // eliminamos el "no hay sub unidad"
+										var select = document.getElementById("select_sub_ur"); // mandamos a llamar al selct
+										// creamos el option con el primer mensaje 
+										let option = document.createElement("option");
+										option.innerHTML = "Selecciona una sub unidad ..."; //Metemos el texto en la opción
+										option.value = "x2";
+										option.id = "x2"; 
+        								select.appendChild(option); //Metemos la opción en el select
+
+										for (let index = 0; index < inf_unidada.length; index++) {
+											var element = inf_unidada[index];
+											let option = document.createElement("option");
+											var opcion_txt = element.sub_ur+" "+element.descripcion_ur;
+											console.log(opcion_txt);
+											option.innerHTML = opcion_txt; //Metemos el texto en la opción
+											option.value = element.id_miembro;
+											option.id = index; 
+        									select.appendChild(option); //Metemos la opción en el select
+										}
 									}
+								
+									// return select;
+									
 								}
 							});
 							return false;
@@ -178,6 +225,8 @@
 				    var e = $("#apellido2").val();
 				    var f = $("#nombre").val();
 				    var g = $("#fechaIngreso").val();
+					var opcion_ur = document.getElementById("select_sub_ur");
+					var selected = opcion_ur.options[opcion_ur.selectedIndex].value;
 				    //var h = $("#TipoEntregaArchivo").val();
 				    var i = $("#del2").val();
 
@@ -196,11 +245,16 @@
 					 }
 				     var tamCURP = c.length;
 
+                    if (selected == "x2") {
+                        alert("Falta seleccionar una sub unidad");
+                        return false;
+                    }else{
 				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| $('input:radio[name=TipoEntregaArchivo]:checked').val() =="Ninguno" || i=="" ) {
 				        alert("Falta completar campo");		
 				        return false;
-				      } else 
+				      }else
 				      	formulario.submit();
+					}
 		 }
 		
 			function eliminarRequier(){
@@ -487,6 +541,12 @@
 								<label class="plantilla-label estilo-colorg" for="unexp_1">Unidad:</label>
 								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 513" value="<?php if(isset($_POST["unexp_1"])){ echo $_POST["unexp_1"];} ?>" onkeyup="javascript:this.value=this.value.toUpperCase();" required>
 							</div>
+							<div class="form-group col-md-12">
+								<label class="plantilla-label estilo-colorg" for="sub_uni">Sub Unidad:</label>
+								<select class = "form-select" name="select_sub_ur" id="select_sub_ur">
+								</select>
+							</div>
+
 						</div>
 
 						<div class="form-row">

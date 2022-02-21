@@ -182,15 +182,48 @@
 								url: 'resultados_ur.php',
 								type: 'post',
 								data: {
-									buscarid:buscarid,request:2
+									buscarid:buscarid,request:3
 								},
-								dataType: 'json',
 								success:function(response){
 									var len = response.length;
-									if(len > 0){
-										// var idx2 = response[0]['idx'];
-										// var unexp = response[0]['unexp'];
-										// document.getElementById('unexp_'+indice).value = "ss";
+									var inf_unidada = eval(response);
+									console.log(inf_unidada);
+									if(inf_unidada.length == "1"){
+										var selectobject = document.getElementById("select_sub_ur");
+										console.log("antes de :: "+ selectobject.length);
+										$("#x2").remove();
+										for (let i=0; i<30; i++) {
+											$("#"+i).remove();
+										}
+										let option = document.createElement("option");
+										var opcion_txt = "NO hay Sub Unidad";
+										console.log(opcion_txt);
+										option.innerHTML = opcion_txt; //Metemos el texto en la opción
+										option.value = "x"; 
+										option.id = "x"; 
+										selectobject.appendChild(option); //Metemos la opción en el selec
+									}else{
+										console.log("si hay");
+										console.log(inf_unidada.length);
+										$("#x").remove(); // eliminamos el "no hay sub unidad"
+										var select = document.getElementById("select_sub_ur"); // mandamos a llamar al selct
+										// creamos el option con el primer mensaje 
+										let option = document.createElement("option");
+										option.innerHTML = "Selecciona una sub unidad ..."; //Metemos el texto en la opción
+										option.value = "x2";
+										option.id = "x2"; 
+        								select.appendChild(option); //Metemos la opción en el select
+
+										for (let index = 0; index < inf_unidada.length; index++) {
+											var element = inf_unidada[index];
+											let option = document.createElement("option");
+											var opcion_txt = element.sub_ur+" "+element.descripcion_ur;
+											console.log(opcion_txt);
+											option.innerHTML = opcion_txt; //Metemos el texto en la opción
+											option.value = element.id_miembro;
+											option.id = index; 
+        									select.appendChild(option); //Metemos la opción en el select
+										}
 									}
 								}
 							});
@@ -476,6 +509,11 @@ $(document).ready(function(){
 								<label class="plantilla-label estilo-colorg" for="unexp_1">Unidad:</label>
 								<input onkeypress="return pulsar(event)" type="text" class="form-control unexp border border-dark" id="unexp_1" name="unexp_1" placeholder="Ej. 513" required>
 							</div>
+							<div class="form-group col-md-12">
+								<label class="plantilla-label estilo-colorg" for="sub_uni">Sub Unidad:</label>
+								<select class = "form-select" name="select_sub_ur" id="select_sub_ur">
+								</select>
+							</div>
 						</div>
 					
 						<div class="col">
@@ -600,9 +638,11 @@ $(document).ready(function(){
 							$elNombre = strtoupper($_POST['nombreUser']);
 							$elAp1 = strtoupper($_POST['apellido1']);
 							$elAp2 = strtoupper($_POST['apellido2']);
+							$sub_ur = $_POST['select_sub_ur'];
 
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
+				if($sub_ur != "x2"){
 							if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 								$row = mysqli_fetch_row($resultHoy);
 								$fecha = str_replace ( "-", '',$row[0] ); 
@@ -627,7 +667,7 @@ $(document).ready(function(){
 									echo "<script>alert('Ya existe registro con estos datos, verificar.'); </script>";
 									
 								}else {
-									$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre') ";
+									$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre, sub_unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre', '$sub_ur') ";
 									if(mysqli_query($conexion,$sql)){
 										if(file_exists($from2.$elRfc.".pdf")){
 											copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
@@ -654,7 +694,7 @@ $(document).ready(function(){
 									}
 								}
 							  }else {
-								$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre') ";
+								$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre, sub_unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre', '$sub_ur') ";
 									if(mysqli_query($conexion,$sql)){
 										if(file_exists($from2.$elRfc.".pdf")){
 											copy($from2.$elRfc.".pdf" , $to.$elCurp."_FMP_".$newQna."_".$fecha.".PDF");
@@ -683,7 +723,10 @@ $(document).ready(function(){
 							}else{
 								echo "se pudo ";
 							}
+						}else{
+							echo "<script> alert('Es necesario seleccionar una sub unidad');</script>";
 						}
+					}
 						?>
 
 					
