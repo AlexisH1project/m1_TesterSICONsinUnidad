@@ -623,11 +623,7 @@ $(document).ready(function(){
 		<br>
 
 					<?php 
-<<<<<<< HEAD
-				
-					echo "<script>}else {
-									alert('¡Haz denegado el registro!');
-=======
+
 						include "configuracion.php";
 
 			if(isset($_POST['buscar'])){	
@@ -643,11 +639,18 @@ $(document).ready(function(){
 							$elNombre = strtoupper($_POST['nombreUser']);
 							$elAp1 = strtoupper($_POST['apellido1']);
 							$elAp2 = strtoupper($_POST['apellido2']);
-							$sub_ur = $_POST['select_sub_ur'];
+							$sub_unidad_post = $_POST['select_sub_ur'];
 
 							$hoy = "select CURDATE()";
 							$tiempo ="select curTime()";
-				if($sub_ur != "x2"){
+				if($sub_unidad_post != "x2"){
+
+							//**************************** SACAMOS SUB UR  */
+							$sql_clave_ur = "SELECT * FROM ct_agenda_ur WHERE id_miembro = '$sub_unidad_post'";
+							if($res_ur = mysqli_query($conexion, $sql_clave_ur)){
+								$row_subur = mysqli_fetch_assoc($res_ur);
+								$sub_ur = $row_subur['sub_ur'];
+							}
 							if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
 								$row = mysqli_fetch_row($resultHoy);
 								$fecha = str_replace ( "-", '',$row[0] ); 
@@ -697,7 +700,7 @@ $(document).ready(function(){
 											</div>");	
 										}
 									}
->>>>>>> 6b6bd1e94555ef7dbdfd46cdc71753064928adc8
+
 								}
 							  }else {
 								$sql = "INSERT INTO conteo_qr (curp, fecha, hora, usuarioAgrego, qna, anio, rfc, analistaAsignada, unidad, apellido_p, apellido_m, nombre, sub_unidad) VALUES ('$elCurp', '$row[0]', '$row2[0]', '$usuarioSeguir', '$newQna', '$elanio[0]', '$elRfc', '$asignadoA', '$laUnidad', '$elAp1', '$elAp2', '$elNombre', '$sub_ur') ";

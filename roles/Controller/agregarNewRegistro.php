@@ -28,9 +28,16 @@
 		$ofEntregaUnidadAdd = 'Pendiente'; //strtoupper($_POST['ofEntregaUnidad'];
 		$bandera = 0;
 		$analista = $_POST['usuar'];
-		$sub_unidad = $_POST['select_sub_ur'];
+		$sub_unidad_post = $_POST['select_sub_ur'];
 		
 		$colorAccion = "";
+
+		//**************************** SACAMOS SUB UR  */
+		$sql_clave_ur = "SELECT * FROM ct_agenda_ur WHERE id_miembro = '$sub_unidad_post'";
+		if($res_ur = mysqli_query($conexion, $sql_clave_ur)){
+			$row_subur = mysqli_fetch_assoc($res_ur);
+			$sub_unidad = $row_subur['sub_ur'];
+		}
 
 		// ******************************************sacamos el año
 		$ConsultaAnio = "SELECT * FROM ct_anios ORDER BY id_anio DESC";
