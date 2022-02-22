@@ -74,13 +74,27 @@
 			$(document).ready(function(){
 				var unidad = $("#unexp_1").val();
 				console.log(unidad);
+				var cod = document.getElementById("select_sub_ur").value;
+				console.log(cod);
+				
+				/* Para obtener el texto */
+				var combo = document.getElementById("select_sub_ur");
+				var selected = combo.options[combo.selectedIndex].text;
+				console.log(selected);
 			});
 
 
-			function buscar_sub_ur(unidad){
-				// var unidad = $("#unexp_1").val();
-				console.log(unidad.val());
+			function buscar_sub_ur(){
+				var cod = document.getElementById("select_sub_ur").value;
+				alert(cod);
+				
+				/* Para obtener el texto */
+				var combo = document.getElementById("select_sub_ur");
+				var selected = combo.options[combo.selectedIndex].text;
+				alert(selected);
 			}
+			
+
 
 			$(document).ready(function(){
 				$(document).on('keydown', '.unexp', function(){
@@ -225,8 +239,6 @@
 				    var e = $("#apellido2").val();
 				    var f = $("#nombre").val();
 				    var g = $("#fechaIngreso").val();
-					var opcion_ur = document.getElementById("select_sub_ur");
-					var selected = opcion_ur.options[opcion_ur.selectedIndex].value;
 				    //var h = $("#TipoEntregaArchivo").val();
 				    var i = $("#del2").val();
 
@@ -244,17 +256,11 @@
 
 					 }
 				     var tamCURP = c.length;
-
-                    if (selected == "x2") {
-                        alert("Falta seleccionar una sub unidad");
-                        return false;
-                    }else{
 				      if (a=="" || tamRFC<13 || tamCURP<18 || d==""|| e==""|| f==""|| g==""|| $('input:radio[name=TipoEntregaArchivo]:checked').val() =="Ninguno" || i=="" ) {
 				        alert("Falta completar campo");		
 				        return false;
 				      }else
 				      	formulario.submit();
-					}
 		 }
 		
 			function eliminarRequier(){
@@ -545,6 +551,8 @@
 								<label class="plantilla-label estilo-colorg" for="sub_uni">Sub Unidad:</label>
 								<select class = "form-select" name="select_sub_ur" id="select_sub_ur">
 								</select>
+								<input type="text" class="form-control unexp border border-dark" id="input_subur_txt" name="input_subur_txt"  value="<?php if(isset($_POST["input_subur_txt"])){ echo $_POST["input_subur_txt"];} ?>" >
+								<input type="text" class="form-control unexp border border-dark" id="input_subur_id" name="input_subur_id"  value="<?php if(isset($_POST["input_subur_id"])){ echo $_POST["input_subur_id"];} ?>" >
 							</div>
 
 						</div>
@@ -693,155 +701,168 @@
 												';	
 												}
 						$banderaBoton=0; //admin2
-							if(isset($_POST['guardarAdj'])){
-								    $unidad= $_POST['unexp_1'];
-									$nombre = strtoupper($_POST['nombre'] );
-									$elRfc =  strtoupper($_POST['rfcL_1']);
-									$elCurp = strtoupper($_POST['curp']);
-									$elApellido1 = strtoupper ($_POST['apellido1']);
-									$elApellido2 = strtoupper ($_POST['apellido2']);
-									$nombreArch = $_POST['documentoSelct'];
-									$listaCompleta = $_POST['listaDoc'];
-									$concatenarNombDoc = $_POST['guardarDoc'];
-									$lafechaIng = $_POST['fechaIngreso'];
-									$iniciolab = $_POST['del2'];
-									$finalizalab = $_POST['al3'];
-									$leerMov = $_POST['id_env'];
-									$bandera = 0;
-									$datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
+                            if (isset($_POST['guardarAdj'])) {
+                                $unidad= $_POST['unexp_1'];
+                                $nombre = strtoupper($_POST['nombre']);
+                                $elRfc =  strtoupper($_POST['rfcL_1']);
+                                $elCurp = strtoupper($_POST['curp']);
+                                $elApellido1 = strtoupper($_POST['apellido1']);
+                                $elApellido2 = strtoupper($_POST['apellido2']);
+                                $nombreArch = $_POST['documentoSelct'];
+                                $listaCompleta = $_POST['listaDoc'];
+                                $concatenarNombDoc = $_POST['guardarDoc'];
+                                $lafechaIng = $_POST['fechaIngreso'];
+                                $iniciolab = $_POST['del2'];
+                                $finalizalab = $_POST['al3'];
+                                $leerMov = $_POST['id_env'];
+                                $bandera = 0;
+                                $select_subur = $_POST['select_sub_ur'];
+								echo "<script> buscar_sub_ur(); </script>"; 
+                                $datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
 
-									$sqlVRechazo = "SELECT color_estado FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC";
-									if($resRechazo = mysqli_query($conexion, $sqlVRechazo)){
-										$rechazoActual = mysqli_fetch_row($resRechazo);
-										if($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1"){
-											if($rechazoActual[0] == "negro"){
-												$direccion= "DDSCH";
-											}else {
-												$direccion= "DSPO";
-											}
-											$bandera = 1;
+                                $sqlVRechazo = "SELECT color_estado FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC";
+                                if ($resRechazo = mysqli_query($conexion, $sqlVRechazo)) {
+                                    $rechazoActual = mysqli_fetch_row($resRechazo);
+                                    if ($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1") {
+                                        if ($rechazoActual[0] == "negro") {
+                                            $direccion= "DDSCH";
+                                        } else {
+                                            $direccion= "DSPO";
+                                        }
+                                        $bandera = 1;
+                                    }
+                                }
+
+                                if ($bandera == 1) {
+                                    echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
+                                }else {
+                                    if($select_subur != "x2"){
+                                    	//**************************** SACAMOS SUB UR  */
+										$sql_clave_ur = "SELECT * FROM ct_agenda_ur WHERE id_miembro = '$select_subur'";
+										if($res_ur = mysqli_query($conexion, $sql_clave_ur)){
+											$row_subur = mysqli_fetch_assoc($res_ur);
+											$sub_ur = $row_subur['sub_ur'];
 										}
-									}
-		if($bandera == 1){
-			echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
-		}else{
-									if($datasub2 = mysqli_query($conexion,$datosDobles)){
-                                   		$extid =mysqli_fetch_row($datasub2);
-								    	$res1Check = mysqli_num_rows($datasub2);
-								    	if ($res1Check == NULL){
-								    		$res1Check = 0;
-								    	}else{
-								    		$res1Check = 1;
-								    		$banderaid = $extid[0];
-								    	}                                 		
-                                   	}
-									
-                                   	if ($leerMov == "x") { //$res1Check<1
-                                   		$newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab' )";
+                                    if ($datasub2 = mysqli_query($conexion, $datosDobles)) {
+                                        $extid =mysqli_fetch_row($datasub2);
+                                        $res1Check = mysqli_num_rows($datasub2);
+                                        if ($res1Check == null) {
+                                            $res1Check = 0;
+                                        } else {
+                                            $res1Check = 1;
+                                            $banderaid = $extid[0];
+                                        }
+                                    }
+                                    
+                                    if ($leerMov == "x") { //$res1Check<1
+                                        $newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl, sub_unidad) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab', '$sub_ur' )";
 
-                                   		if($datasub = mysqli_query($conexion,$newsql)){
-                                   			if($datasub2 = mysqli_query($conexion,$datosDobles)){
-		                                   		$extid =mysqli_fetch_row($datasub2);
-										    	$res1Check = mysqli_num_rows($datasub2);
-		                                   		$banderaid = $extid[0];
-		                                   		//	echo $banderaid;
-		                                   	}	
-                                   		}		
-                                   	}
-									$nombreCompletoArch = $nombreArch."_".$listaCompleta;
-									// consultamos para saber el id y el nombre corto del nombre 
-									$sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
-									$resRol=mysqli_query($conexion, $sqlRolDoc);
-									$idDoc = mysqli_fetch_row($resRol);
-									$banderaBoton=1;
+                                        if ($datasub = mysqli_query($conexion, $newsql)) {
+                                            if ($datasub2 = mysqli_query($conexion, $datosDobles)) {
+                                                $extid =mysqli_fetch_row($datasub2);
+                                                $res1Check = mysqli_num_rows($datasub2);
+                                                $banderaid = $extid[0];
+                                                //	echo $banderaid;
+                                            }
+                                        }
+                                    }
+                                    $nombreCompletoArch = $nombreArch."_".$listaCompleta;
+                                    // consultamos para saber el id y el nombre corto del nombre
+                                    $sqlRolDoc = "SELECT id_doc, documentos FROM m1ct_documentos WHERE nombre_documento = '$nombreArch'";
+                                    $resRol=mysqli_query($conexion, $sqlRolDoc);
+                                    $idDoc = mysqli_fetch_row($resRol);
+                                    $banderaBoton=1;
 
-									$enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
+                                    $enviarDoc = $idDoc[1].'_'.$concatenarNombDoc;
 
-									$dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
-											// Arreglo con todos los nombres de los archivos
-											$files = array_diff(scandir($dir_subida), array('.', '..')); 
-											
-											foreach($files as $file){
-											    // Divides en dos el nombre de tu archivo utilizando el . 
-											    $data = explode("_",$file);
-											    $data2 = explode(".",$file);
-												$indice = count($data2);	
+                                    $dir_subida = './Controller/DOCUMENTOS_MOV/'.$idDoc[1].'/';
+                                    // Arreglo con todos los nombres de los archivos
+                                    $files = array_diff(scandir($dir_subida), array('.', '..'));
+                                            
+                                    foreach ($files as $file) {
+                                        // Divides en dos el nombre de tu archivo utilizando el .
+                                        $data = explode("_", $file);
+                                        $data2 = explode(".", $file);
+                                        $indice = count($data2);
 
-												$extencion = $data2[$indice-1];
-                    	//----------------Sacamos la Hora 
-											$hoy = "select CURDATE()";
-											$tiempo ="select curTime()";
+                                        $extencion = $data2[$indice-1];
+                                        //----------------Sacamos la Hora
+                                        $hoy = "select CURDATE()";
+                                        $tiempo ="select curTime()";
 
-												 if ($resultHoy = mysqli_query($conexion,$hoy) AND $resultTime = mysqli_query($conexion,$tiempo)) {
-												 		$row = mysqli_fetch_row($resultHoy);
-												 		$row2 = mysqli_fetch_row($resultTime);
-												 }
-												 $hora = str_replace ( ":", '',$row2[0] ); 
-												 $fecha = str_replace ( "-", '',$row[0] ); 
+                                        if ($resultHoy = mysqli_query($conexion, $hoy) and $resultTime = mysqli_query($conexion, $tiempo)) {
+                                            $row = mysqli_fetch_row($resultHoy);
+                                            $row2 = mysqli_fetch_row($resultTime);
+                                        }
+                                        $hora = str_replace(":", '', $row2[0]);
+                                        $fecha = str_replace("-", '', $row[0]);
 
-											    // Nombre del archivo
-											    $extractRfc = $data[0];
-											     $nameAdj=strtoupper($idDoc[1]);
-											    
-											    // Extensión del archivo 
+                                        // Nombre del archivo
+                                        $extractRfc = $data[0];
+                                        $nameAdj=strtoupper($idDoc[1]);
+                                                
+                                        // Extensión del archivo
 
-											    if($elRfc == $extractRfc AND $idDoc[1] == $nameAdj){
-											      		unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
-											        	break;
-											    }
-											}
+                                        if ($elRfc == $extractRfc and $idDoc[1] == $nameAdj) {
+                                            unlink($dir_subida.$elRfc."_".$nameAdj."_".$elApellido1."_".$elApellido2."_".$nombre.".".$extencion);
+                                            break;
+                                        }
+                                    }
 
-											$fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
-											$extencion2 = explode(".",$fichero_subido);
-											$tamnio = count($extencion2);
+                                    $fichero_subido = $dir_subida . basename($_FILES['nameArchivo']['name']);
+                                    $extencion2 = explode(".", $fichero_subido);
+                                    $tamnio = count($extencion2);
 
-											$extencion3 = $extencion2[$tamnio-1];
+                                    $extencion3 = $extencion2[$tamnio-1];
 
-											if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
-												sleep(3);
-												if($idDoc[1] == "doc76" || $idDoc[1] == "doc77" || $idDoc[1] == "doc78" || $idDoc[1] == "doc79" || $idDoc[1] == "doc80" || $idDoc[1] == "doc81"){
-													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$banderaid."_.".$extencion3);
-												}else{
-													$concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
-												}
+                                    if (move_uploaded_file($_FILES['nameArchivo']['tmp_name'], $fichero_subido)) {
+                                        sleep(3);
+                                        if ($idDoc[1] == "doc76" || $idDoc[1] == "doc77" || $idDoc[1] == "doc78" || $idDoc[1] == "doc79" || $idDoc[1] == "doc80" || $idDoc[1] == "doc81") {
+                                            $concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_X_".$banderaid."_.".$extencion3);
+                                        } else {
+                                            $concatenarNombreC = $dir_subida.strtoupper($elRfc."_".$idDoc[1]."_".$elApellido1."_".$elApellido2."_".$nombre."_".$fecha.$hora."_".$banderaid."_.".$extencion3);
+                                        }
 
-												rename ($fichero_subido,$concatenarNombreC);
-												$arrayDoc = explode("_", $nombreCompletoArch);
-											 	$tamanioList = count($arrayDoc);
+                                        rename($fichero_subido, $concatenarNombreC);
+                                        $arrayDoc = explode("_", $nombreCompletoArch);
+                                        $tamanioList = count($arrayDoc);
 
-												$queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docI', '$idDoc[1]')";
-												$resultH = mysqli_query($conexion,$queryHistorial);		
-												 
-											echo "
+                                        $queryHistorial = "INSERT INTO historial (id_movimiento, usuario, fechaMovimiento, horaMovimiento, accion, documento) VALUES ('$banderaid', '$usuarioSeguir', '$row[0]', '$row2[0]', 'up docI', '$idDoc[1]')";
+                                        $resultH = mysqli_query($conexion, $queryHistorial);
+                                                 
+                                        echo "
 													<script>
 															listaDeDoc( '$nombreCompletoArch', '$enviarDoc');
 													</script >";
-											$arrayNumDoc = explode("_", $enviarDoc);		
-											$numeroDeDocs = count($arrayNumDoc);
-												/*	echo '
-													<br>	<br>		<br>
-													<center>
-													<div class="col-md-8 col-md-offset-8">
-														<ul class="list-group">';
-															for($i=0; $i<=$tamanioList-1; $i++){
-																if($arrayDoc[$i] == ""){
-																	
-																}else{
-																	echo "
-																	<li class='list-group-item'>$arrayDoc[$i]</li>
-																	";	
-																}
-															}
-												echo '
-														</ul>
-													</div>	
-													</center>
-												';*/
-																									   	
-											} else{
-											    echo "<script> alert('Existe un error al guardar el archivo'); ";
-											}
-							}
+                                        $arrayNumDoc = explode("_", $enviarDoc);
+                                        $numeroDeDocs = count($arrayNumDoc);
+                                    /*	echo '
+                                        <br>	<br>		<br>
+                                        <center>
+                                        <div class="col-md-8 col-md-offset-8">
+                                            <ul class="list-group">';
+                                                for($i=0; $i<=$tamanioList-1; $i++){
+                                                    if($arrayDoc[$i] == ""){
+
+                                                    }else{
+                                                        echo "
+                                                        <li class='list-group-item'>$arrayDoc[$i]</li>
+                                                        ";
+                                                    }
+                                                }
+                                    echo '
+                                            </ul>
+                                        </div>
+                                        </center>
+                                    ';*/
+                                    } else {
+                                        echo "<script> alert('Existe un error al guardar el archivo'); ";
+                                    }
+									}else{
+										echo "<script> alert('Es necesario seleccionar una sub unidad');</script>";
+
+									}// fin si no hay sub unidad
+                            } 
 	}
 						?>	
 <input type="text" style="display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
