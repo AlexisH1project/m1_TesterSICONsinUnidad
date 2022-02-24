@@ -82,20 +82,7 @@
 				var selected = combo.options[combo.selectedIndex].text;
 				console.log(selected);
 			});
-
-
-			function buscar_sub_ur(){
-				var cod = document.getElementById("select_sub_ur").value;
-				alert(cod);
-				
-				/* Para obtener el texto */
-				var combo = document.getElementById("select_sub_ur");
-				var selected = combo.options[combo.selectedIndex].text;
-				alert(selected);
-			}
 			
-
-
 			$(document).ready(function(){
 				$(document).on('keydown', '.unexp', function(){
 					var id = this.id;
@@ -551,8 +538,6 @@
 								<label class="plantilla-label estilo-colorg" for="sub_uni">Sub Unidad:</label>
 								<select class = "form-select" name="select_sub_ur" id="select_sub_ur">
 								</select>
-								<input type="text" class="form-control unexp border border-dark" id="input_subur_txt" name="input_subur_txt"  value="<?php if(isset($_POST["input_subur_txt"])){ echo $_POST["input_subur_txt"];} ?>" >
-								<input type="text" class="form-control unexp border border-dark" id="input_subur_id" name="input_subur_id"  value="<?php if(isset($_POST["input_subur_id"])){ echo $_POST["input_subur_id"];} ?>" >
 							</div>
 
 						</div>
@@ -716,33 +701,33 @@
                                 $finalizalab = $_POST['al3'];
                                 $leerMov = $_POST['id_env'];
                                 $bandera = 0;
-                                $select_subur = $_POST['select_sub_ur'];
-								echo "<script> buscar_sub_ur(); </script>"; 
+								if(isset($_POST['select_sub_ur'])){
+									$select_subur = $_POST['select_sub_ur'];
+								}else{
+									$select_subur = "";
+								}
+
                                 $datosDobles = "SELECT id_movimiento FROM fomope WHERE unidad = '$unidad' AND rfc = '$elRfc' AND apellido_1 = '$elApellido1' AND apellido_2 = '$elApellido2' AND nombre = '$nombre' AND curp ='$elCurp' AND fechaIngreso = '$lafechaIng' AND vigenciaDel = '$iniciolab' AND vigenciaAl = '$finalizalab' ORDER BY id_movimiento DESC";
 
-                                $sqlVRechazo = "SELECT color_estado FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC";
-                                if ($resRechazo = mysqli_query($conexion, $sqlVRechazo)) {
-                                    $rechazoActual = mysqli_fetch_row($resRechazo);
-                                    if ($rechazoActual[0] == "negro" || $rechazoActual[0] == "negro1") {
-                                        if ($rechazoActual[0] == "negro") {
-                                            $direccion= "DDSCH";
-                                        } else {
-                                            $direccion= "DSPO";
-                                        }
-                                        $bandera = 1;
-                                    }
-                                }
+                                // $sqlVRechazo = "SELECT COUNT(*) color_estado FROM fomope WHERE rfc = '$elRfc' ORDER BY id_movimiento DESC";
+                                // if ($resRechazo = mysqli_query($conexion, $sqlVRechazo)) {
+                                //     $rechazoActual = mysqli_fetch_row($resRechazo);
+                                //     if ($rechazoActual[0] == "negro" || $rechazoActual[2] == "negro1") {
+                                //         if ($rechazoActual[0] == "negro") {
+                                //             $direccion= "DDSCH";
+                                //         } else {
+                                //             $direccion= "DSPO";
+                                //         }
+                                //         $bandera = 1;
+                                //     }
+                                // }
 
-                                if ($bandera == 1) {
-                                    echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
-                                }else {
+                                // if ($bandera == 1) {
+                                //     echo '<script type="text/javascript"> alert("No puede ser registrado este movimiento, ya que existe un último movimiento de esta persona en bandeja de rechazo en la '.$direccion.'. Se sugiere editar el rechazo."); </script>';
+                                // }else {
                                     if($select_subur != "x2"){
                                     	//**************************** SACAMOS SUB UR  */
-										$sql_clave_ur = "SELECT * FROM ct_agenda_ur WHERE id_miembro = '$select_subur'";
-										if($res_ur = mysqli_query($conexion, $sql_clave_ur)){
-											$row_subur = mysqli_fetch_assoc($res_ur);
-											$sub_ur = $row_subur['sub_ur'];
-										}
+										
                                     if ($datasub2 = mysqli_query($conexion, $datosDobles)) {
                                         $extid =mysqli_fetch_row($datasub2);
                                         $res1Check = mysqli_num_rows($datasub2);
@@ -755,6 +740,11 @@
                                     }
                                     
                                     if ($leerMov == "x") { //$res1Check<1
+										$sql_clave_ur = "SELECT * FROM ct_agenda_ur WHERE id_miembro = '$select_subur'";
+										if($res_ur = mysqli_query($conexion, $sql_clave_ur)){
+											$row_subur = mysqli_fetch_assoc($res_ur);
+											$sub_ur = $row_subur['sub_ur'];
+										}
                                         $newsql = "INSERT INTO fomope (unidad,rfc,apellido_1,apellido_2, nombre, curp, fechaIngreso, vigenciaDel, vigenciaAl, sub_unidad) VALUES ('$unidad','$elRfc','$elApellido1','$elApellido2','$nombre','$elCurp','$lafechaIng','$iniciolab','$finalizalab', '$sub_ur' )";
 
                                         if ($datasub = mysqli_query($conexion, $newsql)) {
@@ -862,7 +852,7 @@
 										echo "<script> alert('Es necesario seleccionar una sub unidad');</script>";
 
 									}// fin si no hay sub unidad
-                            } 
+                            // } 
 	}
 						?>	
 <input type="text" style="display: none;" name="id_env" id="id_enviar" value="<?php echo $banderaid?>">
