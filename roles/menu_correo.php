@@ -41,7 +41,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="#">
+							<a href="./reporte_correo_estruct.php">
 								<span class="icon">
 									<i aria-hidden="true" class="icon-blog">
                                         <img src="./img/icreport.png" height="60" width="45">

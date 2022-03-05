@@ -96,7 +96,7 @@ class Correo{
         }
     }
 
-    public function enviar_prueba($array_imprimir, $array_status, $remitente){
+    public function enviar_prueba($array_imprimir, $array_status, $remitente, $nombre_archivo){
 // ******* dtos de envio del usuario ******
         if ($this->destino_ur($array_imprimir) == "0") {
             echo "NO SE PUEDE ENVIAR correo <br>";
@@ -107,6 +107,7 @@ class Correo{
             // print_r($array_status);
             $rango =  count($array_imprimir);
             echo $this->correo_enviar."<br>";
+            echo $nombre_archivo."<br>";
             // echo $this->correo_cc ."<br>";
             // echo $this->name_destinatario ."<br>";
             $this->message = "HOLA ES LA TABLA";

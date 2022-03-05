@@ -334,35 +334,35 @@
 							//echo "User Has submitted the form and entered this name : <b> $qnaBuscar </b>";
 							if( $qnaBuscar != "" && $anioBuscar != ""){
 		
-								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 		
 							}elseif ( $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE ( color_estado ='guinda' AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE ( color_estado ='guinda' AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar != "" && $anioBuscar != "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar == "" && $anioBuscar == "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar' AND anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE ( qna='$qnaBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE (anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE (anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar != "" && $anioBuscar == "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE (  qna='$qnaBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE (  qna='$qnaBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}elseif ( $qnaBuscar == "" && $anioBuscar != "") {
 								
-								$sql="SELECT * FROM fomope_qr WHERE (anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES') ORDER BY sub_unidad DESC";
+								$sql="SELECT * FROM fomope_qr WHERE (anio='$anioBuscar'  AND tipoRegistro = 'EVENTUALES' AND sub_unidad != '') ORDER BY sub_unidad DESC";
 								
 							}
 

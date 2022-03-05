@@ -1,10 +1,9 @@
 
 <?php
-
+	// require './generar_excel.php';
     include "../configuracion.php";
 	include "../Controller/Correo.php";
-
-
+	
 //             // $nombreUser = $_POST['usuario_rol'];
            	$nombreUser = "name_usr";
             $total_estatus = $_POST['contador_estatus']-1;
@@ -39,12 +38,12 @@
 							// echo "guardamos en un arreglo_anterior<br>";
 						}else{
 							// echo "enviamos correo".$aux_ur."<br>";
+							$archivo_adj = llenar_info_excel_eventual($array_aux_reg, $array_aux_estatus);							
 							$correo_crear = new Correo();
-							$correo_crear->enviar_prueba($array_aux_reg, $array_aux_estatus ,$nombreUser );
+							$correo_crear->enviar_prueba($array_aux_reg, $array_aux_estatus ,$nombreUser, $archivo_adj);
 
 							// $archivo_excel = new Generar_excel();
 							// $correo_crear->enviar(); *****************************************************************>>>>>>>>>>>>>>>>>>>
-							// $archivo_excel->llenar_info_excel_eventual($array_aux_reg, $array_aux_estatus);
 							// echo "reset array, volvemos a guardar <br>";
 							unset($array_aux_reg); // unset elimina los valores de un array 
 							unset($array_aux_estatus);
@@ -58,10 +57,12 @@
 						echo "hay fallas";
 					}
 				}    
+				$archivo_adj = llenar_info_excel_eventual($array_aux_reg, $array_aux_estatus );
+				
 				$correo_crear = new Correo();
-				$correo_crear->enviar_prueba($array_aux_reg, $array_aux_estatus, $nombreUser);
+				$correo_crear->enviar_prueba($array_aux_reg, $array_aux_estatus, $nombreUser, $archivo_adj);
+
 				// $crear_archivo = new Generar_excel();
-				// $crear_archivo->llenar_info_excel_eventual($array_aux_reg, $array_aux_estatus);
 	
 				// $correo_crear->enviar();
 			
